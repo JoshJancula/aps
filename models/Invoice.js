@@ -1,5 +1,3 @@
-var Sequelize = require('sequelize')
-
 module.exports = function (sequelize, DataTypes) {
     var Invoice = sequelize.define("Invoice", {
         
@@ -48,17 +46,20 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: true,
         },
-        Vehicle: {
-            type: Sequelize.ARRAY(Sequelize.TEXT),
+        RO: {
+            type: DataTypes.STRING,
             unique: false,
-            defaultValue: [],
-            field: 'accepted_candidates', 
             allowNull: true,
         }
     });
 
     Invoice.associate = function (models) {
         Invoice.belongsTo(models.Franchise, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
+        Invoice.hasMany(models.Vehicle, {
             foreignKey: {
                 allowNull: false
             }

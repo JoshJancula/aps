@@ -12,7 +12,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 // app.use('./routes');
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '/client/dist/client')));
+app.set('view engine', 'jade');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -32,9 +33,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// require("./routes/html-routes.js")(app);
-// require("./routes/people-routes.js")(app);
-// require("./routes/number-routes.js")(app);
 
 // Syncing sequelize models and then starting our Express app
 // =============================================================

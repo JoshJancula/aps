@@ -4,11 +4,11 @@
       "password": "suvmute1llhojiy9",
       "database": "y4wkz8u7hg9831ch",
       "host": "m7wltxurw8d2n21q.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-      "dialect": "postgres"
+      "dialect": "mysql"
     },
     "test": {
       "username": "root",
-      "password": "root",
+      "password": null,
       "database": "database_test",
       "host": "127.0.0.1",
       "dialect": "mysql"
@@ -18,6 +18,6 @@
       "password": "suvmute1llhojiy9",
       "database": "y4wkz8u7hg9831ch",
       "host": "m7wltxurw8d2n21q.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-      "dialect": "postgres"
+      "dialect": "mysql"
     }
   }
