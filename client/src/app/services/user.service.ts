@@ -7,27 +7,46 @@ import { Http } from '@angular/http';
 export class UserService {
 
 	private url = `https://aps-josh.herokuapp.com/api/users`;
-	private localUrl = `localhost:8080/api/users`;
+	private localUrl = `http://localhost:8080/api/users`;
 	constructor(private http: Http) { }
 
 	getUsers() {
-		return this.http.get(this.url);
+		if (window.location.host === 'localhost:4200') {
+			return this.http.get(this.localUrl);
+		} else {
+			return this.http.get(this.url);
+		}
 	}
 
 	getUser(id: string) {
-		return this.http.get(this.url.replace('users?', `users/${id}?`));
+		if (window.location.host === 'localhost:4200') {
+			return this.http.get(this.localUrl.replace('users?', `users/${id}?`));
+		} else {
+			return this.http.get(this.url.replace('users?', `users/${id}?`));
+		}
 	}
 
 	createUser(newUser: string) {
-		const url = `localhost:8080/api/users`;
-		return this.http.post('/api/users', newUser);
+		if (window.location.host === 'localhost:4200') {
+			return this.http.post(this.localUrl, newUser);
+		} else {
+			return this.http.post(this.url, newUser);
+		}
 	}
 
 	updateUser(id: string, updatedUser: string) {
-		return this.http.put(this.url.replace('users?', `users/${id}?`), updatedUser);
+		if (window.location.host === 'localhost:4200') {
+			return this.http.put(this.localUrl.replace('users?', `users/${id}?`), updatedUser);
+		} else {
+			return this.http.put(this.url.replace('users?', `users/${id}?`), updatedUser);
+		}
 	}
 
 	deleteUser(id: string) {
-		return this.http.delete(this.url.replace('users?', `users/${id}?`));
+		if (window.location.host === 'localhost:4200') {
+			return this.http.delete(this.localUrl.replace('users?', `users/${id}?`));
+		} else {
+			return this.http.delete(this.url.replace('users?', `users/${id}?`));
+		}
 	}
 }

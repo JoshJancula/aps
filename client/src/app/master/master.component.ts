@@ -8,7 +8,7 @@ import { UserService } from '../services/user.service';
 })
 export class MasterComponent implements OnInit {
 
-	user: any = {
+	User: any = {
 		Username: '',
 		FirstName: '',
 		LastName: '',
@@ -18,14 +18,23 @@ export class MasterComponent implements OnInit {
 		Phone: '',
 		Active: true,
 	};
+	users = [];
 
 	constructor(private userService: UserService) { }
 
 	ngOnInit() {
+		this.userService.getUsers().subscribe(res => {
+			const data = res.json();
+			console.log('data: ', data);
+			data.forEach(item => {
+				this.users.push({ FirstName: item.FirstName, LastName: item.LastName, Role: item.Role });
+			});
+			console.log('users: ', this.users);
+		});
 	}
 
 	submit() {
-		this.userService.createUser(JSON.stringify(this.user)).subscribe(res => {
+		this.userService.createUser(this.User).subscribe(res => {
 			console.log('res: ', JSON.stringify(res));
 		});
 	}

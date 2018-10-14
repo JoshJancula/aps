@@ -41,34 +41,13 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
         }
     });
-    
-    User.beforeCreate(function (next) {
-        var user = this;
-        if (this.isModified('Password') || this.isNew) {
-            bcrypt.genSalt(10, function (err, salt) {
-                if (err) {
-                    return next(err);
-                }
-                bcrypt.hash(user.Password, salt, null, function (err, hash) {
-                    if (err) {
-                        return next(err);
-                    }
-                    user.Password = hash;
-                    next();
-                });
-            });
-        } else {
-            return next();
-        }
+
+    User.hook("beforeCreate", function (user) {
+        user.password = bcrypt.hashSync(user.Password, bcrypt.genSaltSync(10), null);
     });
 
-    User.comparePassword = function (passw, cb) {
-        bcrypt.compare(passw, this.Password, function (err, isMatch) {
-            if (err) {
-                return cb(err);
-            }
-            cb(null, isMatch);
-        });
+    User.prototype.validPassword = function (password) {
+        return bcrypt.compareSync(password, this.Password);
     };
 
     User.associate = function (models) {

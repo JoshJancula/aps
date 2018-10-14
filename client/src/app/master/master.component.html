@@ -1,34 +1,49 @@
 <p>
   Master Control Panel
+  <!-- <button  (click)="createUser();" mat-button>Create user</button> -->
 </p>
-<div class="content">
+<div class="row">
+  <div class='col-md-4'>
   <mat-card>
     <div class="card-heading">Create User</div>
     <mat-form-field>
-      <input matInput placeholder="Username" [(ngModel)]="user.Username" />
+      <input matInput placeholder="Username" [(ngModel)]="User.Username" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Password" [(ngModel)]="user.Password" />
+      <input matInput placeholder="Password" [(ngModel)]="User.Password" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="FirstName" [(ngModel)]="user.FirstName" />
+      <input matInput placeholder="First Name" [(ngModel)]="User.FirstName" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="LastName" [(ngModel)]="user.LastName" />
+      <input matInput placeholder="Last Name" [(ngModel)]="User.LastName" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Role" [(ngModel)]="user.Role" />
+      <input matInput placeholder="Role" [(ngModel)]="User.Role" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Email" [(ngModel)]="user.Email" />
+      <input matInput placeholder="Email" [(ngModel)]="User.Email" />
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Phone" [(ngModel)]="user.Phone" />
+      <input matInput placeholder="Phone" [(ngModel)]="User.Phone" />
     </mat-form-field>
     <div class="drawer-toggle-container">
       <label>Active</label>
-      <mat-slide-toggle color="primary" [(ngModel)]="user.Active"></mat-slide-toggle>
+      <mat-slide-toggle color="primary" [(ngModel)]="User.Active"></mat-slide-toggle>
     </div>
     <button class='submit' (click)="submit();" mat-button>Save user</button>
   </mat-card>
 </div>
+<div class='col-md-4'>
+    <mat-card>
+      <div class="card-heading">Users</div>
+      <div *ngFor="let user of users">
+        <h2>Name</h2>
+        <h3>{{user.FirstName}} {{user.LastName}}</h3>
+        <h2>Role</h2>
+        <p>{{user.Role}}</p>
+      </div>
+    </mat-card>
+  </div>
+</div>
+

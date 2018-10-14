@@ -1,5 +1,8 @@
 // Requiring our models
 const db = require("../models");
+const passport = require('passport');
+require('../config/passport')(passport);
+const jwt = require('jsonwebtoken');
 
 // Routes
 // =============================================================
@@ -74,7 +77,7 @@ module.exports = function(app) {
         user.comparePassword(req.body.Password, function (err, isMatch) {
           if (isMatch && !err) {
             // if user is found and password is right create a token
-            var token = jwt.sign(user.toJSON(), config.secret);
+            let token = jwt.sign(user.toJSON(), config.secret);
             // return the information including token as JSON
             res.json({success: true, token: 'JWT ' + token});
           } else {
