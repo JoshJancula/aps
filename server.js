@@ -6,7 +6,7 @@ const db = require("./models");
 const PORT = process.env.PORT || 8080;
 const app = express();
 const path = require('path');
-// const cors = require('cors'); 
+const cors = require('cors'); 
 
 
 app.use(passport.initialize());
@@ -16,18 +16,12 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, '/client/dist/client')));
 app.set('view engine', 'jade');
 
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', 'https://aps-josh.herokuapp.com');
-//   res.header('Access-Control-Allow-Origin', 'http://localhost:4200')
-// 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-// 	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-// 	res.header('Access-Control-Allow-Credentials', 'true');
-// 	next();
-// });
-// app.use(cors());
+
+app.use(cors());
 app.all('*', function(req, res, next) {
   var origin = req.get('origin'); 
   res.header('Access-Control-Allow-Origin', origin);
+  console.log('origin: ', origin);
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();

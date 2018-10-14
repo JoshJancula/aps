@@ -11,10 +11,11 @@ export class UserService {
 	constructor(private http: Http) { }
 
 	getUsers() {
+		console.log('this.http: ', this.http);
 		if (window.location.host === 'localhost:4200') {
 			return this.http.get(this.localUrl);
 		} else {
-			return this.http.get('/api/users');
+			return this.http.get(this.url);
 		}
 	}
 
@@ -22,7 +23,7 @@ export class UserService {
 		if (window.location.host === 'localhost:4200') {
 			return this.http.get(this.localUrl.replace('users?', `users/${id}?`));
 		} else {
-			return this.http.get(`/api/users/${id}?`);
+			return this.http.get(this.url.replace('users?', `users/${id}?`));
 		}
 	}
 
@@ -30,7 +31,7 @@ export class UserService {
 		if (window.location.host === 'localhost:4200') {
 			return this.http.post(this.localUrl, newUser);
 		} else {
-			return this.http.post(`/api/users`, newUser);
+			return this.http.post(this.url, newUser);
 		}
 	}
 
@@ -38,7 +39,7 @@ export class UserService {
 		if (window.location.host === 'localhost:4200') {
 			return this.http.put(this.localUrl.replace('users?', `users/${id}?`), updatedUser);
 		} else {
-			return this.http.put(`/api/users/${id}?`, updatedUser);
+			return this.http.put(this.url.replace('users?', `users/${id}?`), updatedUser);
 		}
 	}
 
@@ -46,7 +47,7 @@ export class UserService {
 		if (window.location.host === 'localhost:4200') {
 			return this.http.delete(this.localUrl.replace('users?', `users/${id}?`));
 		} else {
-			return this.http.delete(`/api/users/${id}?`);
+			return this.http.delete(this.url.replace('users?', `users/${id}?`));
 		}
 	}
 }
