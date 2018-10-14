@@ -6,6 +6,8 @@ const db = require("./models");
 const PORT = process.env.PORT || 8080;
 const app = express();
 const path = require('path');
+const cors = require('cors'); 
+
 
 app.use(passport.initialize());
 app.use(logger('dev'));
@@ -22,7 +24,6 @@ app.set('view engine', 'jade');
 // 	res.header('Access-Control-Allow-Credentials', 'true');
 // 	next();
 // });
-var cors = require('cors'); 
 app.use(cors());
 app.all('*', function(req, res, next) {
   var origin = req.get('origin'); 
