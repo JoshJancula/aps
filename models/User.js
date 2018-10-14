@@ -1,51 +1,51 @@
 var bcrypt = require('bcrypt-nodejs');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
     var User = sequelize.define("User", {
-      Username: { 
-       id: { 
-        type: DataTypes.INTEGER,
-        primaryKey: true
-      },
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      FirstName: { 
-          type: DataTypes.STRING,
-          allowNull: false,
-      },
-      LastName: { 
-          type: DataTypes.STRING,
-           unique: false,
-          allowNull: false,
-      },
-      Role: { 
-        type: DataTypes.STRING,
-         unique: false,
-        allowNull: false,
-    },
-    Email: { 
-        type: DataTypes.STRING,
-         unique: false,
-        allowNull: false,
-    },
-    Phone: { 
-        type: DataTypes.STRING,
-         unique: false,
-        allowNull: true,
-    },
-    Active: { 
-        type: DataTypes.BOOLEAN,
-         unique: false,
-        allowNull: false,
-    },
-    Timesheet: { 
-        type: DataTypes.STRING,
-         unique: false,
-        allowNull: false,
-    }
-      
+        Username: {
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+        },
+        FirstName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        LastName: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        Role: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        Email: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        Phone: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
+        Active: {
+            type: DataTypes.BOOLEAN,
+            unique: false,
+            allowNull: false,
+        },
+        Timesheet: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        }
+
     }); // check to make sure password is correct
     User.beforeCreate(function (next) {
         var user = this;
@@ -66,7 +66,7 @@ module.exports = function(sequelize, DataTypes) {
             return next();
         }
     });
-    
+
     User.comparePassword = function (passw, cb) {
         bcrypt.compare(passw, this.Password, function (err, isMatch) {
             if (err) {
@@ -77,14 +77,24 @@ module.exports = function(sequelize, DataTypes) {
     };
 
     User.associate = function (models) {
-    User.belongsTo(models.Franchise, {
-        foreignKey: {
-          allowNull: false
-        }
-      });
+        User.belongsTo(models.Franchise, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
+        User.hasMany(models.Message, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
+        User.hasMany(models.Post, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
     }
 
     return User;
-  };
-  
+};
+
 

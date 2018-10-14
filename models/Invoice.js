@@ -50,7 +50,12 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             unique: false,
             allowNull: true,
-        }
+        },
+        Description: {
+            type: DataTypes.TEXT,
+            unique: false,
+            allowNull: true,
+        },
     });
 
     Invoice.associate = function (models) {

@@ -9,12 +9,12 @@ module.exports = function (sequelize, DataTypes) {
         Make: {
             type: DataTypes.JSON,
             unique: false,
-            allowNull: false,
+            allowNull: true,
         },
         Model: {
             type: DataTypes.STRING,
             unique: false,
-            allowNull: false,
+            allowNull: true,
         },
         Color: {
             type: DataTypes.STRING,
@@ -31,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {
     Vehicle.associate = function (models) {
         Vehicle.belongsToMany(models.Invoice, {
             through: 'Vehicle',
-            foreignKey: 'Vehicle',
+            foreignKey: "Vehicle",
             as: 'Vehicles'
           });
     }
