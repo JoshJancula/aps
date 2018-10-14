@@ -6,7 +6,7 @@ const db = require("./models");
 const PORT = process.env.PORT || 8080;
 const app = express();
 const path = require('path');
-const cors = require('cors'); 
+// const cors = require('cors'); 
 
 
 app.use(passport.initialize());
@@ -16,22 +16,39 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, '/client/dist/client')));
 app.set('view engine', 'jade');
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'https://aps-josh.herokuapp.com');
-  res.header('Access-Control-Allow-Origin', 'http://localhost:4200')
-	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-	res.header('Access-Control-Allow-Credentials', 'true');
-	next();
-});
-app.use(cors());
-// app.all('*', function(req, res, next) {
-//   var origin = req.get('origin'); 
-//   res.header('Access-Control-Allow-Origin', origin);
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   res.header('Access-Control-Allow-Headers', 'Content-Type');
-//   next();
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', 'https://aps-josh.herokuapp.com');
+//   res.header('Access-Control-Allow-Origin', 'http://localhost:4200')
+// 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+// 	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+// 	res.header('Access-Control-Allow-Credentials', 'true');
+// 	next();
 // });
+// app.use(cors());
+app.all('*', function(req, res, next) {
+  var origin = req.get('origin'); 
+  res.header('Access-Control-Allow-Origin', origin);
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+  // intercept OPTIONS method
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  }
+  else {
+    next();
+  }
+};
+
+  app.use(allowCrossDomain);
+
 
 require("./routes/franchise-routes.js")(app);
 require("./routes/user-routes.js")(app);
