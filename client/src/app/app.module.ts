@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { MatCardModule, MatSlideToggleModule, MatSliderModule, MatRadioModule, MatAutocompleteModule } from '@angular/material';
 import { MatSidenavModule, MatButtonModule, MatListModule, MatGridListModule, MatSnackBarModule } from '@angular/material';
-import { MatMenuModule, MatToolbarModule, MatPaginatorModule, MatPaginatorIntl, MatCheckboxModule } from '@angular/material';
+import { MatMenuModule, MatToolbarModule, MatPaginatorModule, MatCheckboxModule } from '@angular/material';
 import { MatNativeDateModule, MatSortModule, MatSelectModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { MatDialogModule, MatExpansionModule, MatIconModule, MatChipsModule, MatDatepickerModule } from '@angular/material';
 import { MatTabsModule, MatTableModule } from '@angular/material';
@@ -36,7 +36,6 @@ import { MasterComponent } from './master/master.component';
     MatMenuModule,
     MatToolbarModule,
     MatPaginatorModule,
-    MatPaginatorIntl,
     MatCheckboxModule,
     MatNativeDateModule,
     MatSortModule,
