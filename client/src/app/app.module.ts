@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { LoginComponent } from './login/login.component';
 import { MasterComponent } from './master/master.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
 	entryComponents: [
@@ -56,6 +58,37 @@ import { MasterComponent } from './master/master.component';
 		BrowserAnimationsModule,
 		FormsModule,
 		ReactiveFormsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MatCardModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatSlideToggleModule,
+		MatSliderModule,
+		MatButtonModule,
+		MatDialogModule,
+		MatExpansionModule,
+		MatToolbarModule,
+		MatSidenavModule,
+		MatSelectModule,
+		MatMenuModule,
+		MatTableModule,
+		MatSortModule,
+		MatPaginatorModule,
+		MatCheckboxModule,
+		MatRadioModule,
+		MatListModule,
+		MatGridListModule,
+		MatSnackBarModule,
+		MatChipsModule,
+		MatDatepickerModule,
+		MatNativeDateModule,
+		MatIconModule,
+		MatTabsModule,
+		MatAutocompleteModule,
+		BrowserAnimationsModule,
+		HttpClientModule,
+		HttpModule,
 		RouterModule.forRoot([
 			{ path: '', component: MasterComponent },
 			{ path: 'master', component: MasterComponent }

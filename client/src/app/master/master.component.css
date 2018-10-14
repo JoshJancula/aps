@@ -1,0 +1,12 @@
+.content .mat-card {
+    width: 200px;
+}
+
+.mat-slide-toggle {
+    margin-left: 50%;
+}
+
+.submit {
+    margin-top: 5%;
+    margin-left: 55%;
+}

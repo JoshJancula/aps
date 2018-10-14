@@ -39,14 +39,9 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
             unique: false,
             allowNull: false,
-        },
-        Timesheet: {
-            type: DataTypes.STRING,
-            unique: false,
-            allowNull: false,
         }
-
-    }); // check to make sure password is correct
+    });
+    
     User.beforeCreate(function (next) {
         var user = this;
         if (this.isModified('Password') || this.isNew) {

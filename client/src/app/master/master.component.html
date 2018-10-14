@@ -1,3 +1,34 @@
 <p>
   Master Control Panel
 </p>
+<div class="content">
+  <mat-card>
+    <div class="card-heading">Create User</div>
+    <mat-form-field>
+      <input matInput placeholder="Username" [(ngModel)]="user.Username" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password" [(ngModel)]="user.Password" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="FirstName" [(ngModel)]="user.FirstName" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="LastName" [(ngModel)]="user.LastName" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Role" [(ngModel)]="user.Role" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" [(ngModel)]="user.Email" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Phone" [(ngModel)]="user.Phone" />
+    </mat-form-field>
+    <div class="drawer-toggle-container">
+      <label>Active</label>
+      <mat-slide-toggle color="primary" [(ngModel)]="user.Active"></mat-slide-toggle>
+    </div>
+    <button class='submit' (click)="submit();" mat-button>Save user</button>
+  </mat-card>
+</div>
