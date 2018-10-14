@@ -15,51 +15,55 @@ import { LoginComponent } from './login/login.component';
 import { MasterComponent } from './master/master.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    MasterComponent
-  ],
-  imports: [
-    BrowserModule,
-    MatCardModule,
-    MatSlideToggleModule,
-    MatSliderModule,
-    MatRadioModule,
-    MatAutocompleteModule,
-    MatSidenavModule,
-    MatButtonModule,
-    MatListModule,
-    MatGridListModule,
-    MatGridListModule,
-    MatSnackBarModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
-    MatNativeDateModule,
-    MatSortModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatIconModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatTabsModule,
-    MatTableModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot([
-      { path: '', component: MasterComponent },
-      { path: '/master', component: MasterComponent }
-    ])
-  ],
-  providers: [
-    BluetoothSerial
-  ],
-  bootstrap: [AppComponent]
+	entryComponents: [
+		LoginComponent,
+		MasterComponent
+	],
+	declarations: [
+		AppComponent,
+		LoginComponent,
+		MasterComponent
+	],
+	imports: [
+		BrowserModule,
+		MatCardModule,
+		MatSlideToggleModule,
+		MatSliderModule,
+		MatRadioModule,
+		MatAutocompleteModule,
+		MatSidenavModule,
+		MatButtonModule,
+		MatListModule,
+		MatGridListModule,
+		MatGridListModule,
+		MatSnackBarModule,
+		MatMenuModule,
+		MatToolbarModule,
+		MatPaginatorModule,
+		MatCheckboxModule,
+		MatNativeDateModule,
+		MatSortModule,
+		MatSelectModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatDialogModule,
+		MatExpansionModule,
+		MatIconModule,
+		MatChipsModule,
+		MatDatepickerModule,
+		MatTabsModule,
+		MatTableModule,
+		BrowserAnimationsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		RouterModule.forRoot([
+			{ path: '', component: MasterComponent },
+			{ path: 'master', component: MasterComponent }
+		])
+	],
+	providers: [
+		BluetoothSerial
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }
