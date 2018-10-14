@@ -14,14 +14,15 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, '/client/dist/client')));
 app.set('view engine', 'jade');
 
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', 'https://aps-josh.herokuapp.com');
-//   res.header('Access-Control-Allow-Origin', 'http://localhost:4200')
-// 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-// 	// res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-// 	// res.header('Access-Control-Allow-Credentials', 'true');
-// 	next();
-// });
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'https://aps-josh.herokuapp.com');
+  res.header('Access-Control-Allow-Origin', 'https://aps-josh.herokuapp.com/api/users');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200')
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	res.header('Access-Control-Allow-Credentials', 'true');
+	next();
+});
 
 require("./routes/franchise-routes.js")(app);
 require("./routes/user-routes.js")(app);
