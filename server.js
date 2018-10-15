@@ -8,23 +8,22 @@ const app = express();
 const path = require('path');
 const cors = require('cors'); 
 
-
+app.use(cors());
 app.use(passport.initialize());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use('/', express.static(path.join(__dirname, '/client/dist/client')));
-app.set('view engine', 'html');
+app.set('view engine', 'jade');
 
-app.all('*', (req, res) => {
-  res.status(200).sendFile(__dirname + '/client/dist/client/index.html');
-});
 
-app.use(cors());
 app.all('*', function(req, res, next) {
   var origin = req.get('origin'); 
   res.header('Access-Control-Allow-Origin', origin);
   console.log('origin: ', origin);
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Origin', 'https://aps-josh.herokuapp.com');
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
