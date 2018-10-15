@@ -3,7 +3,8 @@
   <!-- <button  (click)="createUser();" mat-button>Create user</button> -->
 </p>
 <div class="row">
-  <div class='col-md-4'>
+  <div class='col-md-5'>
+    <div class='row'>
   <mat-card>
     <div class="card-heading">Create User</div>
     <mat-form-field>
@@ -27,23 +28,32 @@
     <mat-form-field>
       <input matInput placeholder="Phone" [(ngModel)]="User.Phone" />
     </mat-form-field>
-    <div class="drawer-toggle-container">
-      <label>Active</label>
+      <label style="margin-left: 5%;">Active</label>
       <mat-slide-toggle color="primary" [(ngModel)]="User.Active"></mat-slide-toggle>
-    </div>
-    <button class='submit' (click)="submit();" mat-button>Save user</button>
+   <br/>
+      <button class='submit' (click)="submit();" mat-button>Save user</button>
   </mat-card>
 </div>
+</div>
 <div class='col-md-4'>
+  <div class='row' style="padding-left: 5%;">
     <mat-card>
       <div class="card-heading">Users</div>
       <div *ngFor="let user of users">
-        <h2>Name</h2>
-        <h3>{{user.FirstName}} {{user.LastName}}</h3>
-        <h2>Role</h2>
-        <p>{{user.Role}}</p>
+        <p>Name: {{user.FirstName}} {{user.LastName}}<br>Role: {{user.Role}}</p>
       </div>
     </mat-card>
+    <mat-card style='margin-top: 3%;'> 
+        <div class="card-heading">Test login</div>
+        <mat-form-field>
+            <input matInput placeholder="Username" [(ngModel)]="testUsername" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Password" [(ngModel)]="testPassword" />
+          </mat-form-field>
+          <button  (click)="testLogin();" mat-button>Test login</button>
+      </mat-card>
+  </div>
   </div>
 </div>
 

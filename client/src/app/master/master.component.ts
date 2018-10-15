@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 @Component({
+	// tslint:disable-next-line:component-selector
 	selector: 'app-master',
 	templateUrl: './master.component.html',
 	styleUrls: ['./master.component.css']
@@ -19,6 +20,8 @@ export class MasterComponent implements OnInit {
 		Active: true,
 	};
 	users = [];
+	testPssword = '';
+	testUsername = '';
 
 	constructor(private userService: UserService) { }
 
@@ -36,6 +39,14 @@ export class MasterComponent implements OnInit {
 	submit() {
 		this.userService.createUser(this.User).subscribe(res => {
 			console.log('res: ', JSON.stringify(res));
+		});
+	}
+
+	testLogin() {
+		this.userService.loginUser(this.testUsername, this.testPssword).subscribe(res => {
+			console.log('login response: ', JSON.stringify(res));
+		}, error => {
+			console.log('error: ', error);
 		});
 	}
 
