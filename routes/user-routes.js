@@ -76,6 +76,7 @@ module.exports = function(app) {
         // check if password matches
         user.comparePassword(req.body.Password, function (err, isMatch) {
           if (isMatch && !err) {
+            console.log('isMatch: ', isMatch, ' password was: ', req.body.Password);
             // if user is found and password is right create a token
             let token = jwt.sign(user.toJSON(), config.secret);
             // return the information including token as JSON
@@ -87,6 +88,11 @@ module.exports = function(app) {
       }
     });
   });
+
+//   app.post("/api/signin", passport.authenticate("local"), function(req, res) {
+//     // res.redirect("/master");
+//     console.log('res: ', res);
+// });
   
   
 

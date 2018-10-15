@@ -42,13 +42,14 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
+    User.prototype.validPassword = function (password) {
+        return bcrypt.compareSync(password, this.Password);
+    };
+
     User.hook("beforeCreate", function (user) {
         user.password = bcrypt.hashSync(user.Password, bcrypt.genSaltSync(10), null);
     });
 
-    User.prototype.validPassword = function (password) {
-        return bcrypt.compareSync(password, this.Password);
-    };
 
     User.associate = function (models) {
         User.belongsTo(models.Franchise, {
