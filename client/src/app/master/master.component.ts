@@ -20,7 +20,7 @@ export class MasterComponent implements OnInit {
 		Active: true,
 	};
 	users = [];
-	testPssword = '';
+	testPassword = '';
 	testUsername = '';
 
 	constructor(private userService: UserService) { }
@@ -43,7 +43,7 @@ export class MasterComponent implements OnInit {
 	}
 
 	testLogin() {
-		this.userService.loginUser(this.testUsername, this.testPssword).subscribe(res => {
+		this.userService.loginUser(this.testUsername, this.testPassword).subscribe(res => {
 			console.log('login response: ', JSON.stringify(res));
 		}, error => {
 			console.log('error: ', error);
