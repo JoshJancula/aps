@@ -26,6 +26,10 @@ export class MasterComponent implements OnInit {
 	constructor(private userService: UserService) { }
 
 	ngOnInit() {
+		setTimeout(() => this.getUsers(), 5000);
+	}
+
+	getUsers() {
 		this.userService.getUsers().subscribe(res => {
 			const data = res.json();
 			console.log('data: ', data);
@@ -44,7 +48,7 @@ export class MasterComponent implements OnInit {
 
 	testLogin() {
 		this.userService.loginUser(this.testUsername, this.testPassword).subscribe(res => {
-			console.log('login response: ', JSON.stringify(res));
+			console.log('login response: ', res);
 		}, error => {
 			console.log('error: ', error);
 		});
