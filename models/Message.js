@@ -1,25 +1,38 @@
 module.exports = function (sequelize, DataTypes) {
     var Message = sequelize.define("Message", {
-
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
-        }
+        },
+        Author: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        Recipient: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        Content: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        MessageType: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        Read: {
+            type: DataTypes.BOOLEAN,
+            unique: false,
+            allowNull: false,
+        },   
+    }, {
+        timestamps: true,
     });
-
-    Message.associate = function (models) {
-        Message.belongsToMany(models.User, {
-            through: 'Message',
-            foreignKey: "Message",
-            as: 'Messages'
-        });
-        Message.hasMany(models.Post, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    }
 
     return Message;
 };

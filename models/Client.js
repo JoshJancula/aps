@@ -3,6 +3,7 @@ module.exports = function (sequelize, DataTypes) {
 
         Name: {
             id: {
+                autoIncrement: true,
                 type: DataTypes.INTEGER,
                 primaryKey: true
             },
@@ -27,14 +28,6 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
         }
     });
-
-    Client.associate = function (models) {
-        Client.belongsTo(models.Franchise, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    }
 
     return Client;
 };

@@ -11,6 +11,14 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             unique: true,
         },
+        Password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        FirstName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         FirstName: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -43,25 +51,11 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     User.hook("beforeCreate", function (user) {
-        user.password = bcrypt.hashSync(user.Password, bcrypt.genSaltSync(10), null);
+        user.Password = bcrypt.hashSync(user.Password, bcrypt.genSaltSync(10), null);
     });
-
-    User.prototype.validPassword = function (password) {
-        return bcrypt.compareSync(password, this.Password);
-    };
 
     User.associate = function (models) {
         User.belongsTo(models.Franchise, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-        User.hasMany(models.Message, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-        User.hasMany(models.Post, {
             foreignKey: {
                 allowNull: false
             }

@@ -7,22 +7,12 @@ module.exports = function (sequelize, DataTypes) {
             primaryKey: true
         },
         Employee: {
-            type: DataTypes.JSON,
+            type: DataTypes.STRING,
             unique: false,
             allowNull: false,
         },
         Client: {
             type: DataTypes.STRING,
-            unique: false,
-            allowNull: false,
-        },
-        createdAt: {
-            type: DataTypes.DATE,
-            unique: false,
-            allowNull: false,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
             unique: false,
             allowNull: false,
         },
@@ -33,7 +23,6 @@ module.exports = function (sequelize, DataTypes) {
         },
         Paid: {
             type: DataTypes.BOOLEAN,
-            unique: false,
             allowNull: false,
         },
         PaymentMethod: {
@@ -56,15 +45,12 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: true,
         },
+    }, {
+        timestamps: true,
     });
 
     Invoice.associate = function (models) {
         Invoice.belongsTo(models.Franchise, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-        Invoice.hasMany(models.Vehicle, {
             foreignKey: {
                 allowNull: false
             }

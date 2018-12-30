@@ -22,12 +22,12 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
         },
         ScheduledBy: {
-            type: DataTypes.JSON,
+            type: DataTypes.STRING,
             unique: false,
             allowNull: false,
         },
         AssignedEmployee: {
-            type: DataTypes.JSON,
+            type: DataTypes.STRING,
             unique: false,
             allowNull: false,
         },

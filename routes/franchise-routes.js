@@ -8,7 +8,7 @@ module.exports = function(app) {
   // GET route for getting all franchise locations
   app.get("/api/franchises", function(req, res) {
     db.Franchise.findAll({
-        include: [db.User, db.Client, db.User, db.Appointment, db.Invoice],
+        include: [db.User, db.Appointment, db.Invoice],
     }).then(function(x) {
       res.json(x);
     });
@@ -20,7 +20,7 @@ module.exports = function(app) {
       where: {
         id: req.params.id
       },
-      include: [db.User, db.Client, db.User, db.Appointment, db.Invoice],
+      include: [db.User, db.Appointment, db.Invoice],
     }).then(function(x) {
       res.json(x);
     });

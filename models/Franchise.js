@@ -3,6 +3,7 @@ module.exports = function (sequelize, DataTypes) {
         Name: {
             id: {
                 type: DataTypes.INTEGER,
+                autoIncrement: true,
                 primaryKey: true
             },
             type: DataTypes.STRING,
@@ -19,12 +20,6 @@ module.exports = function (sequelize, DataTypes) {
     Franchise.associate = function (models) {
         // Associating the franchise with the following
         Franchise.hasMany(models.User, {
-            onDelete: "cascade"
-        });
-        Franchise.hasMany(models.Appointment, {
-            onDelete: "cascade"
-        });
-        Franchise.hasMany(models.Client, {
             onDelete: "cascade"
         });
     };
