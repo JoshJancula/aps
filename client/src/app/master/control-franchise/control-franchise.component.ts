@@ -3,7 +3,7 @@ import { FranchiseService } from '../../services/franchise.service';
 import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
-
+import { MessageService } from '../../services/message.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -21,7 +21,7 @@ export class ControlFranchiseComponent implements OnInit {
 	editing = false;
 	selectedId = '';
 
-	constructor(private franchiseService: FranchiseService, private utilService: UtilService) {
+	constructor(private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
 		this.loadFranchises();
 	 }
 
@@ -33,6 +33,11 @@ export class ControlFranchiseComponent implements OnInit {
 		this.utilService.franchises.subscribe(response => {
 			this.franchises = response;
 		});
+	}
+
+	notifySocket() {
+		const data = {MessageType: 'update', Action: 'franchises'};
+		this.messagingService.sendUpdate(data);
 	}
 
 	submitFranchise() {
@@ -47,7 +52,7 @@ export class ControlFranchiseComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		this.utilService.processFranchises();
+		this.notifySocket();
 		this.clearForm();
 	}
 
@@ -75,7 +80,7 @@ export class ControlFranchiseComponent implements OnInit {
 		this.franchiseService.deleteFranchise(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
-				this.utilService.processFranchises();
+				this.notifySocket();
 			} else {
 				console.log('error deleting');
 			}

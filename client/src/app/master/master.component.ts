@@ -6,6 +6,8 @@ import { ControlAppointmentComponent } from './control-appointment/control-appoi
 import { UtilService } from '../services/util.service';
 import { HttpEventType } from '@angular/common/http';
 import { UserService } from '../services/user.service';
+import { MessageService } from '../services/message.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -20,14 +22,47 @@ export class MasterComponent implements OnInit {
 	clientMode = false;
 	appointmentMode = false;
 	invoiceMode = false;
+	messageConnection: any;
+	updateConnection: any;
 	@ViewChild('controlUser') controlUser: ControlUserComponent;
 	@ViewChild('controlFranchise') controlFranchise: ControlFranchiseComponent;
 	@ViewChild('controlClient') controlClient: ControlClientComponent;
 	@ViewChild('controlAppointment') controlAppointment: ControlAppointmentComponent;
-	constructor(private utilService: UtilService, private userService: UserService) { }
+	// tslint:disable-next-line:max-line-length
+	constructor(private authService: AuthService, private utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
+		this.messagingService.initSocket();
+			this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
+				console.log('socket response: ', response);
+			});
+			this.subscribeToUpdates();
+		setTimeout(() => this.sendConnectionMessage(), 500);
 	}
+
+	sendConnectionMessage() {
+		const message = {
+			AuthorId: this.authService.currentUser.id,
+			MessageType: 'connect',
+		};
+		this.messagingService.sendConnectionInfo(message);
+	}
+
+	subscribeToUpdates() {
+		this.updateConnection = this.messagingService.onUpdate().subscribe((response: any) => {
+			console.log('response: ', response);
+			this.processUpdate(response.Action);
+		});
+	}
+
+	processUpdate(action) {
+		switch (action) {
+			case 'updateClients': this.utilService.processClients(); break;
+			case 'updateFranchises': this.utilService.processFranchises(); break;
+			case 'updateUsers': this.utilService.processUsers(); break;
+		}
+	}
+
 
 	clearStorage() {
 		localStorage.removeItem('jwtToken');

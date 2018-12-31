@@ -7,6 +7,9 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 const path = require('path');
 const cors = require('cors');
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const Message = db.sequelize.import('./models/Message.js');
 
 app.use(cors());
 app.use(passport.initialize());
@@ -57,5 +60,55 @@ app.use(function (err, req, res, next) {
 db.sequelize.sync().then(function () {
   app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
+    console.log('===================================');
+
+    io.on('connection', (socket) => {
+
+      console.log('socket: ', socket);
+
+      // on connection get all messages
+      // Message.findAll({
+      //   where: {},
+      // }).then(function (messages) {
+      //   socket.emit('message', {
+      //     messages
+      //   });
+      // });
+
+      // socket.on('read', function (data) {
+      //   Message.update({
+      //     Read: data.Read
+      //   }, {
+      //       where: {
+      //         id: data.id
+      //       }
+      //     }).then(function (x) {
+      //       console.log('message status updated');
+      //     })
+      //     .catch(function (err) {
+      //       res.json(err);
+      //     });
+      // });
+
+      // when new message is created
+      // socket.on('message', function (data) {
+      //   Message.create({
+      //     Author: data.Author,
+      //     Recipient: data.Recipient,
+      //     Content: data.Content,
+      //     MessageType: data.MessageType,
+      //     Read: data.Read
+      //   }).then(function (data) {
+      //     socket.emit('message', {
+      //       data
+      //     });
+      //     socket.broadcast.emit('message', {
+      //       data
+      //     });
+      //   });
+      // });
+
+    });
+
   });
 });

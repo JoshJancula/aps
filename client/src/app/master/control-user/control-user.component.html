@@ -46,7 +46,7 @@
         <div class="card-heading">Users</div>
         <div *ngFor="let user of users">
           <p>Name: {{user.FirstName}} {{user.LastName}}<br>Role: {{user.Role}}</p>
-          <button (click)="editUser(user.id);">Edit</button>
+          <button (click)="editUser(user.id);"  mat-button>Edit</button>
         </div>
       </mat-card>
       <mat-card style='margin-top: 3%;'> 

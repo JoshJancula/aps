@@ -20,8 +20,8 @@
         <div class="card-heading">All Franchises</div>
         <div *ngFor="let franchise of franchises">
           <p>Name: {{franchise.Name}}<br>Active: {{franchise.Active}}</p>
-          <button (click)="editFranchise(franchise.id);">Edit</button>
-          <button (click)="deleteFranchise(franchise.id);">Delete</button>
+          <button (click)="editFranchise(franchise.id);" mat-button>Edit</button>
+          <button (click)="deleteFranchise(franchise.id);" mat-button>Delete</button>
         </div>
       </mat-card>
     </div>

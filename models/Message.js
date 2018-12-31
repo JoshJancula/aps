@@ -10,7 +10,17 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: false,
         },
+        AuthorId: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
         Recipient: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        RecipientId: {
             type: DataTypes.STRING,
             unique: false,
             allowNull: false,

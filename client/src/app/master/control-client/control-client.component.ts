@@ -4,6 +4,7 @@ import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { UtilService } from '../../services/util.service';
 import { PhonePipe } from 'src/app/phone.pipe';
+import { MessageService } from '../../services/message.service';
 
 
 @Component({
@@ -31,12 +32,18 @@ export class ControlClientComponent implements OnInit {
 	editing = false;
 	selectedId = '';
 
-	constructor(private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
+	// tslint:disable-next-line:max-line-length
+	constructor(private messagingService: MessageService, private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
 		this.loadFranchises();
 		this.getClients();
 	 }
 
 	ngOnInit() {
+	}
+
+	notifySocket() {
+		const data = {MessageType: 'update', Action: 'clients'};
+		this.messagingService.sendUpdate(data);
 	}
 
 	getClients() {
@@ -67,7 +74,8 @@ export class ControlClientComponent implements OnInit {
 				console.log('respnse: ', response);
 			});
 		}
-		this.utilService.processClients();
+		// this.utilService.processClients();
+		this.notifySocket();
 		this.clearForm();
 	}
 
@@ -105,7 +113,8 @@ export class ControlClientComponent implements OnInit {
 		this.clientService.deleteClient(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
-				this.utilService.processClients();
+				// this.utilService.processClients();
+				this.notifySocket();
 			} else {
 				console.log('error deleting');
 			}
