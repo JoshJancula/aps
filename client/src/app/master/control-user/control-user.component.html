@@ -16,8 +16,11 @@
         <input matInput placeholder="Last Name" [(ngModel)]="User.LastName" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Role" [(ngModel)]="User.Role" />
-      </mat-form-field>
+          <mat-select placeholder="Role" (selectionChange)="role = ''"
+           [(ngModel)]="User.Role">
+            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+          </mat-select>
+        </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Email" [(ngModel)]="User.Email" />
       </mat-form-field>
@@ -43,7 +46,7 @@
         <div class="card-heading">Users</div>
         <div *ngFor="let user of users">
           <p>Name: {{user.FirstName}} {{user.LastName}}<br>Role: {{user.Role}}</p>
-          <button (click)="deleteUser(User.id);">View more</button>
+          <button (click)="editUser(user.id);">Edit</button>
         </div>
       </mat-card>
       <mat-card style='margin-top: 3%;'> 

@@ -15,8 +15,11 @@ export class UtilService {
 	private userSubject = new BehaviorSubject(this.userStore);
 	users = this.userSubject.asObservable();
 	private franchiseStore = [];
-	private franchiseSubject = new BehaviorSubject(this.userStore);
+	private franchiseSubject = new BehaviorSubject(this.franchiseStore);
 	franchises = this.franchiseSubject.asObservable();
+	private clientStore = [];
+	private clientSubject = new BehaviorSubject(this.clientStore);
+	clients = this.clientSubject.asObservable();
 
 	getFranchises() {
 		const url = `https://aps-josh.herokuapp.com/api/franchises`;
@@ -72,6 +75,34 @@ export class UtilService {
 			if (events.type === HttpEventType.Response) {
 				this.userStore = JSON.parse(JSON.stringify(events.body));
 				this.userSubject.next(this.userStore);
+			}
+		});
+	}
+
+	getClients() {
+		const url = `https://aps-josh.herokuapp.com/api/clients`;
+		const localUrl = `http://localhost:8080/api/clients`;
+		if (localStorage.getItem('jwtToken')) {
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Authorization': localStorage.getItem('jwtToken'),
+				}),
+				reportProgress: true,
+				observe: 'events' as 'events'
+			};
+			if (window.location.host === 'localhost:4200') {
+				return this.http.get(localUrl, httpOptions);
+			} else {
+				return this.http.get(url, httpOptions);
+			}
+		}
+	}
+
+	processClients() {
+		this.getClients().subscribe((events) => {
+			if (events.type === HttpEventType.Response) {
+				this.clientStore = JSON.parse(JSON.stringify(events.body));
+				this.clientSubject.next(this.clientStore);
 			}
 		});
 	}

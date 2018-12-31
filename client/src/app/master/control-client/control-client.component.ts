@@ -33,18 +33,16 @@ export class ControlClientComponent implements OnInit {
 
 	constructor(private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
 		this.loadFranchises();
+		this.getClients();
 	 }
 
 	ngOnInit() {
-		this.getClients();
 	}
 
 	getClients() {
-		this.clientService.getClients().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				console.log('clients: ', events.body);
-				this.clients = events.body;
-			}
+		this.utilService.processClients();
+		this.utilService.clients.subscribe(response => {
+			this.clients = response;
 		});
 	}
 
@@ -69,7 +67,7 @@ export class ControlClientComponent implements OnInit {
 				console.log('respnse: ', response);
 			});
 		}
-		this.getClients();
+		this.utilService.processClients();
 		this.clearForm();
 	}
 
@@ -107,7 +105,7 @@ export class ControlClientComponent implements OnInit {
 		this.clientService.deleteClient(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
-				this.getClients();
+				this.utilService.processClients();
 			} else {
 				console.log('error deleting');
 			}

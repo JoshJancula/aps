@@ -1,0 +1,60 @@
+<div class="row">
+  <div class='col-md-5'>
+    <div class='row'>
+      <mat-card>
+        <div class="card-heading" *ngIf='editing === false'>Add Invoice</div>
+        <div class="card-heading" *ngIf='editing === true'>Edit Invoice</div>
+        <mat-form-field>
+          <input matInput placeholder="Client" [(ngModel)]="Invoice.Client" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Employee" [(ngModel)]="Invoice.Employee" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Service type" [(ngModel)]="Invoice.ServiceType" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Total" [(ngModel)]="Invoice.Total" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Payment method" [(ngModel)]="Invoice.PaymentMethod" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="PO#" [(ngModel)]="Invoice.PO" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="RO" [(ngModel)]="Invoice.RO" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Franchise" (selectionChange)="franchise = ''" [(ngModel)]="Invoice.FranchiseId">
+            <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Comments" [(ngModel)]="Invoice.Comments" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Description" [(ngModel)]="Invoice.Description" />
+        </mat-form-field>
+        <br>
+        <label style="margin-left: 5%;">Active</label>
+        <mat-slide-toggle color="primary" [(ngModel)]="Invoice.Paid"></mat-slide-toggle>
+        <br>
+        <button class='submit' (click)="submitInvoice();" mat-button>Save Appointment</button>
+        <button (click)="clearForm();" mat-button>Clear form</button>
+      </mat-card>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class='row' style="padding-left: 5%;">
+      <!-- <mat-card>
+            <div class="card-heading">Appointments</div>
+            <div *ngFor="let appointment of appointments">
+              <p>Name: {{client.Name}}</p>
+              <button (click)="deleteClient(client.id);">Delete</button>
+              <button (click)="editClient(client.id);">Edit</button>
+            </div>
+          </mat-card> -->
+    </div>
+  </div>
+</div>

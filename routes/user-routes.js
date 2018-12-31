@@ -23,6 +23,7 @@ module.exports = function (app) {
           LastName: y.LastName,
           FranchiseId: y.FranchiseId,
           Phone: y.Phone,
+          Email: y.Email,
           Role: y.Role,
           id: y.id
           }
@@ -42,11 +43,13 @@ module.exports = function (app) {
         },
       }).then(function (y) {
         const user = {
+          Active: y.Active,
           Username: y.Username,
           FirstName: y.FirstName,
           LastName: y.LastName,
           FranchiseId: y.FranchiseId,
           Phone: y.Phone,
+          Email: y.Email,
           Role: y.Role,
           id: y.id
           }
@@ -58,6 +61,7 @@ module.exports = function (app) {
   // PUT route for updating users
   app.put("/api/users/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
+      console.log('req.body: ', req.body);
       db.User.update({
         FirstName: req.body.FirstName,
         LastName: req.body.LastName,

@@ -19,6 +19,8 @@ import { PhonePipe } from './phone.pipe';
 import { ControlUserComponent } from './master/control-user/control-user.component';
 import { ControlFranchiseComponent } from './master/control-franchise/control-franchise.component';
 import { ControlClientComponent } from './master/control-client/control-client.component';
+import { ControlAppointmentComponent } from './master/control-appointment/control-appointment.component';
+import { ControlInvoiceComponent } from './master/control-invoice/control-invoice.component';
 
 @NgModule({
 	entryComponents: [
@@ -31,7 +33,9 @@ import { ControlClientComponent } from './master/control-client/control-client.c
 		MasterComponent,
 		ControlUserComponent,
 		ControlFranchiseComponent,
-		ControlClientComponent
+		ControlClientComponent,
+		ControlAppointmentComponent,
+		ControlInvoiceComponent
 	],
 	imports: [
 		BrowserModule,

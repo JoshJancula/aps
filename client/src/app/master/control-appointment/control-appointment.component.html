@@ -1,0 +1,50 @@
+<div class="row">
+  <div class='col-md-5'>
+    <div class='row'>
+      <mat-card>
+        <div class="card-heading" *ngIf='editing === false'>Add Appointment</div>
+        <div class="card-heading" *ngIf='editing === true'>Edit Appointment</div>
+        <mat-form-field>
+          <input matInput placeholder="Client" [(ngModel)]="Appointment.Client" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Location" [(ngModel)]="Appointment.Location" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Contact Person" [(ngModel)]="Appointment.ContactPerson" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Contact Person phone" [(ngModel)]="Appointment.ContactPersonPhone" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Scheduled by" [(ngModel)]="Appointment.ScheduledBy" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Assigned employee" [(ngModel)]="Appointment.AssignedEmployee" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Franchise" (selectionChange)="franchise = ''" [(ngModel)]="Appointment.FranchiseId">
+            <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Comments" [(ngModel)]="Appointment.Comments" />
+        </mat-form-field>
+        <button class='submit' (click)="submitAppointment();" mat-button>Save Appointment</button>
+        <button (click)="clearForm();" mat-button>Clear form</button>
+      </mat-card>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class='row' style="padding-left: 5%;">
+      <!-- <mat-card>
+          <div class="card-heading">Appointments</div>
+          <div *ngFor="let appointment of appointments">
+            <p>Name: {{client.Name}}</p>
+            <button (click)="deleteClient(client.id);">Delete</button>
+            <button (click)="editClient(client.id);">Edit</button>
+          </div>
+        </mat-card> -->
+    </div>
+  </div>
+</div>

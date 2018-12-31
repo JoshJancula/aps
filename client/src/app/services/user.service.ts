@@ -73,7 +73,7 @@ export class UserService {
 		}
 	}
 
-	updateUser(id: string, updatedUser: string) {
+	updateUser(id: string, updatedUser) {
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -81,9 +81,9 @@ export class UserService {
 				})
 			};
 			if (window.location.host === 'localhost:4200') {
-				return this.http.put(this.localUrl.replace('users?', `users/${id}`), updatedUser, httpOptions);
+				return this.http.put(this.localUrl.replace('users', `users/${id}`), updatedUser, httpOptions);
 			} else {
-				return this.http.put(this.url.replace('users?', `users/${id}`), updatedUser, httpOptions);
+				return this.http.put(this.url.replace('users', `users/${id}`), updatedUser, httpOptions);
 			}
 		}
 	}

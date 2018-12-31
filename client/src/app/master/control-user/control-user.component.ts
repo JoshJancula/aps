@@ -30,22 +30,22 @@ export class ControlUserComponent implements OnInit {
 	franchises: any;
 	editing = false;
 	selectedId = '';
+	roles = ['Super', 'Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
 
 	constructor(private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe) {
 		this.getUsers();
 		this.loadFranchises();
-	 }
+	}
 
 	ngOnInit() {
-		// this.getUsers();
-		this.franchises = this.utilService.franchises;
 	}
 
 	getUsers() {
 		this.utilService.processUsers();
 		this.utilService.users.subscribe(response => {
+			this.users = [];
 			response.forEach(item => {
-				this.users.push({ FirstName: item.FirstName, LastName: item.LastName, Role: item.Role });
+				this.users.push({ FirstName: item.FirstName, LastName: item.LastName, Role: item.Role, id: item.id });
 			});
 		});
 	}
@@ -54,7 +54,7 @@ export class ControlUserComponent implements OnInit {
 		this.utilService.processFranchises();
 		this.utilService.franchises.subscribe(response => {
 			this.franchises = response;
-			});
+		});
 	}
 
 	submitUser() {
@@ -74,8 +74,6 @@ export class ControlUserComponent implements OnInit {
 	testLogin() {
 		this.userService.loginUser(this.testUsername, this.testPassword).subscribe(res => {
 			console.log('login response: ', res.json());
-			localStorage.removeItem('jwtToken');
-			localStorage.setItem('jwtToken', res.json().token);
 		}, error => {
 			console.log('error: ', error);
 		});
@@ -97,13 +95,14 @@ export class ControlUserComponent implements OnInit {
 	}
 
 	editUser(id) {
+		console.log('id: ', id);
 		this.editing = true;
 		this.userService.getUser(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
 				const data = JSON.parse(JSON.stringify(events.body));
+				console.log('data: ', data);
 				this.User = data;
 				this.selectedId = data.id;
-				console.log('this.User: ', this.User);
 			}
 		});
 	}

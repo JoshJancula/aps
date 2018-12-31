@@ -6,11 +6,15 @@
   <button  (click)="openFranchises();" mat-button>Franchises</button><br>
   <button  (click)="clearStorage();" mat-button>Clear storage</button><br>
   <button  (click)="openClients();" mat-button>Clients</button><br>
+  <button  (click)="openAppointments();" mat-button>Appointments</button><br>
+  <button  (click)="openInvoices();" mat-button>Invoices</button><br>
 </div>
 <div class='col-md-10'>
     <app-control-user *ngIf='userMode === true;'></app-control-user>
     <app-control-franchise *ngIf='franchiseMode === true;'></app-control-franchise>    
     <app-control-client *ngIf='clientMode === true;'></app-control-client>
+    <app-control-appointment *ngIf="appointmentMode === true"></app-control-appointment>
+    <app-control-invoice *ngIf='invoiceMode === true'></app-control-invoice>
 </div>
 </div>
 
