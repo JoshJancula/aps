@@ -74,7 +74,7 @@ export class ControlClientComponent implements OnInit {
 				console.log('respnse: ', response);
 			});
 		}
-		// this.utilService.processClients();
+		this.utilService.processClients();
 		this.notifySocket();
 		this.clearForm();
 	}
@@ -113,7 +113,7 @@ export class ControlClientComponent implements OnInit {
 		this.clientService.deleteClient(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
-				// this.utilService.processClients();
+				this.utilService.processClients();
 				this.notifySocket();
 			} else {
 				console.log('error deleting');

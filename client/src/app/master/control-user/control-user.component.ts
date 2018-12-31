@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { UtilService } from 'src/app/services/util.service';
 import { PhonePipe } from '../../phone.pipe';
 import { HttpEventType } from '@angular/common/http';
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -32,7 +33,8 @@ export class ControlUserComponent implements OnInit {
 	selectedId = '';
 	roles = ['Super', 'Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
 
-	constructor(private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe) {
+	// tslint:disable-next-line:max-line-length
+	constructor(private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
 		this.getUsers();
 		this.loadFranchises();
 	}
@@ -48,6 +50,11 @@ export class ControlUserComponent implements OnInit {
 				this.users.push({ FirstName: item.FirstName, LastName: item.LastName, Role: item.Role, id: item.id });
 			});
 		});
+	}
+
+	notifySocket() {
+		const data = {MessageType: 'update', Action: 'franchises'};
+		this.messagingService.sendUpdate(data);
 	}
 
 	loadFranchises() {
@@ -68,6 +75,7 @@ export class ControlUserComponent implements OnInit {
 			});
 		}
 		this.utilService.processUsers();
+		this.notifySocket();
 		this.clearForm();
 	}
 
@@ -87,6 +95,7 @@ export class ControlUserComponent implements OnInit {
 		this.userService.deleteUser(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
+				this.notifySocket();
 				this.utilService.processUsers();
 			} else {
 				console.log('error deleting');

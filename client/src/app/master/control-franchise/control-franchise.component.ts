@@ -52,6 +52,7 @@ export class ControlFranchiseComponent implements OnInit {
 				console.log(res);
 			});
 		}
+		this.utilService.processFranchises();
 		this.notifySocket();
 		this.clearForm();
 	}
@@ -80,6 +81,7 @@ export class ControlFranchiseComponent implements OnInit {
 		this.franchiseService.deleteFranchise(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
+				this.utilService.processFranchises();
 				this.notifySocket();
 			} else {
 				console.log('error deleting');
