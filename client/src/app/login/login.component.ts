@@ -20,12 +20,12 @@ export class LoginComponent implements OnInit {
 
 	navigate(role) {
 		switch (role) {
-			case 'super': this.router.navigate([`/master`], {}); break;
-			case 'tech': this.router.navigate([`/master`], {}); break;
-			case 'owner': this.router.navigate([`/master`], {}); break;
-			case 'manager': this.router.navigate([`/master`], {}); break;
-			case 'reception': this.router.navigate([`/master`], {}); break;
-			case 'shophand': this.router.navigate([`/master`], {}); break;
+			case 'Super': this.router.navigate([`/master`], {}); break;
+			case 'Tech': this.router.navigate([`/master`], {}); break;
+			case 'Owner': this.router.navigate([`/master`], {}); break;
+			case 'Manager': this.router.navigate([`/master`], {}); break;
+			case 'Reception': this.router.navigate([`/master`], {}); break;
+			case 'Shop hand': this.router.navigate([`/master`], {}); break;
 		}
 	}
 
