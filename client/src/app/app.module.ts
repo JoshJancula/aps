@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { MasterComponent } from './master/master.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { PhonePipe } from './phone.pipe';
 import { ControlUserComponent } from './master/control-user/control-user.component';
 import { ControlFranchiseComponent } from './master/control-franchise/control-franchise.component';
 import { ControlClientComponent } from './master/control-client/control-client.component';
@@ -96,12 +97,13 @@ import { ControlClientComponent } from './master/control-client/control-client.c
 		HttpClientModule,
 		HttpModule,
 		RouterModule.forRoot([
-			{ path: '', component: MasterComponent },
+			{ path: '', component: LoginComponent },
 			{ path: 'master', component: MasterComponent }
 		])
 	],
 	providers: [
-		BluetoothSerial
+		BluetoothSerial,
+		PhonePipe
 	],
 	bootstrap: [AppComponent]
 })

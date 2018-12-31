@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FranchiseService } from '../../services/franchise.service';
 import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
+import { UtilService } from 'src/app/services/util.service';
 
 
 @Component({
@@ -17,50 +18,64 @@ export class ControlFranchiseComponent implements OnInit {
 		Active: true
 	};
 	franchises: any;
-	showMore = false;
+	editing = false;
+	selectedId = '';
 
-	constructor(private franchiseService: FranchiseService) { }
+	constructor(private franchiseService: FranchiseService, private utilService: UtilService) {
+		this.loadFranchises();
+	 }
 
 	ngOnInit() {
-		 this.getFranchises();
 	}
 
-	getFranchises() {
-		this.franchiseService.getFranchises().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-			this.franchises = events.body;
-			}
+	loadFranchises() {
+		this.utilService.processFranchises();
+		this.utilService.franchises.subscribe(response => {
+			this.franchises = response;
 		});
 	}
 
 	submitFranchise() {
-		this.franchiseService.createFranchise(this.Franchise).subscribe(res => {
-			console.log('response: ', res);
-		}, error => {
-			console.log('error: ', error);
-		});
+		if (this.editing === false) {
+			this.franchiseService.createFranchise(this.Franchise).subscribe(res => {
+				console.log('response: ', res);
+			}, error => {
+				console.log('error: ', error);
+			});
+		} else {
+			this.franchiseService.updateFranchise(this.selectedId, this.Franchise).subscribe(res => {
+				console.log(res);
+			});
+		}
+		this.utilService.processFranchises();
+		this.clearForm();
 	}
 
-	getFranchiseInfo(id) {
+	editFranchise(id) {
+		this.editing = true;
 		this.franchiseService.getFranchise(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
-			const data = events.body;
-			this.Franchise.Name = (<any>data).Name;
-			this.Franchise.Active = (<any>data).Active;
-			this.showMore = true;
+				const data = JSON.parse(JSON.stringify(events.body));
+				this.Franchise = data;
+				this.selectedId = data.id;
 			}
 		});
 	}
 
-	hideMore() {
-		this.showMore = false;
+	clearForm() {
+		this.Franchise = {
+			Name: '',
+			Active: true
+		};
+		this.editing = false;
+		this.selectedId = '';
 	}
 
 	deleteFranchise(id) {
 		this.franchiseService.deleteFranchise(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
-				this.getFranchises();
+				this.utilService.processFranchises();
 			} else {
 				console.log('error deleting');
 			}

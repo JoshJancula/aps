@@ -46,7 +46,15 @@ module.exports = function (app) {
   app.put("/api/invoices/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
       db.Invoice.update({
-        Active: req.body.Active
+        Total: req.body.Total,
+        Paid: req.body.Paid,
+        PaymentMethod: req.body.PaymentMethod,
+        PO: req.body.PO,
+        RO: req.body.RO,
+        VIN: req.body.VIN,
+        Stock: req.body.Stock,
+        Description: req.body.Description,
+        Comments: req.body.Comments,
       }, {
           where: {
             id: req.body.id

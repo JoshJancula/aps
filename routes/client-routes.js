@@ -24,7 +24,6 @@ module.exports = function (app) {
         where: {
           id: req.params.id
         },
-        include: [db.User, db.Appointment, db.Invoice],
       }).then(function (x) {
         res.json(x);
       });
@@ -46,7 +45,14 @@ module.exports = function (app) {
   app.put("/api/clients/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
       db.Client.update({
-        Active: req.body.Active
+        StreetAddress: req.body.StreetAddress,
+        City: req.body.City,
+        State: req.body.State,
+        Zip: req.body.Zip,
+        Description: req.body.Description,
+        Email: req.body.Email,
+        Phone: req.body.Phone,
+        ContactPerson: req.body.ContactPerson
       }, {
           where: {
             id: req.body.id

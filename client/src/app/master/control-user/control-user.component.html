@@ -22,7 +22,7 @@
         <input matInput placeholder="Email" [(ngModel)]="User.Email" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Phone" [(ngModel)]="User.Phone" />
+        <input matInput placeholder="Phone" [(ngModel)]="User.Phone" (blur)="formatPhone();" />
       </mat-form-field>
       <mat-form-field>
           <mat-select placeholder="Franchise" (selectionChange)="franchise = ''"
@@ -43,6 +43,7 @@
         <div class="card-heading">Users</div>
         <div *ngFor="let user of users">
           <p>Name: {{user.FirstName}} {{user.LastName}}<br>Role: {{user.Role}}</p>
+          <button (click)="deleteUser(User.id);">View more</button>
         </div>
       </mat-card>
       <mat-card style='margin-top: 3%;'> 

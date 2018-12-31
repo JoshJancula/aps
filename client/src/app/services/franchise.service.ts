@@ -57,9 +57,9 @@ export class FranchiseService {
 				observe: 'events' as 'events'
 			};
 			if (window.location.host === 'localhost:4200') {
-				return this.http.get(this.localUrl.replace('franchises', `franchises/${id}?`), httpOptions);
+				return this.http.get(this.localUrl.replace('franchises', `franchises/${id}`), httpOptions);
 			} else {
-				return this.http.get(this.url.replace('franchises', `franchises/${id}?`), httpOptions);
+				return this.http.get(this.url.replace('franchises', `franchises/${id}`), httpOptions);
 			}
 		} else {
 			console.log('no token found');
@@ -74,16 +74,16 @@ export class FranchiseService {
 				})
 			};
 			if (window.location.host === 'localhost:4200') {
-				return this.http.delete(this.localUrl.replace('franchises', `franchises/${id}?`), httpOptions);
+				return this.http.delete(this.localUrl.replace('franchises', `franchises/${id}`), httpOptions);
 			} else {
-				return this.http.delete(this.url.replace('franchises', `franchises/${id}?`), httpOptions);
+				return this.http.delete(this.url.replace('franchises', `franchises/${id}`), httpOptions);
 			}
 		} else {
 			console.log('no token found');
 		}
 	}
 
-	updateFranchise(id) {
+	updateFranchise(id, updatedFranchise) {
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -91,9 +91,9 @@ export class FranchiseService {
 				})
 			};
 			if (window.location.host === 'localhost:4200') {
-				return this.http.put(this.localUrl.replace('franchises', `franchises/${id}?`), httpOptions);
+				return this.http.put(this.localUrl.replace('franchises', `franchises/${id}`), updatedFranchise, httpOptions);
 			} else {
-				return this.http.put(this.url.replace('franchises', `franchises/${id}?`), httpOptions);
+				return this.http.put(this.url.replace('franchises', `franchises/${id}`), updatedFranchise, httpOptions);
 			}
 		} else {
 			console.log('no token found');

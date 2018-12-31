@@ -4,6 +4,7 @@ import { ControlFranchiseComponent } from './control-franchise/control-franchise
 import { ControlClientComponent } from './control-client/control-client.component';
 import { UtilService } from '../services/util.service';
 import { HttpEventType } from '@angular/common/http';
+import { UserService } from '../services/user.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -19,14 +20,9 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlUser') controlUser: ControlUserComponent;
 	@ViewChild('controlFranchise') controlFranchise: ControlFranchiseComponent;
 	@ViewChild('controlClient') controlClient: ControlClientComponent;
-	constructor(private utilService: UtilService) { }
+	constructor(private utilService: UtilService, private userService: UserService) { }
 
 	ngOnInit() {
-		this.utilService.getFranchises().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				this.utilService.franchises = events.body;
-				}
-		});
 	}
 
 	clearStorage() {

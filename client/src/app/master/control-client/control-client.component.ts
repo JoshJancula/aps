@@ -3,6 +3,7 @@ import { ClientService } from '../../services/client.service';
 import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { UtilService } from '../../services/util.service';
+import { PhonePipe } from 'src/app/phone.pipe';
 
 
 @Component({
@@ -13,13 +14,12 @@ import { UtilService } from '../../services/util.service';
 })
 export class ControlClientComponent implements OnInit {
 
-	streetAddress = '';
-	city = '';
-	state = '';
-	zip = '';
 	Client: any = {
 		Name: '',
-		Address: '',
+		StreetAddress: '',
+		City: '',
+		State: '',
+		Zip: '',
 		Phone: '',
 		Email: '',
 		ContactPerson: '',
@@ -27,15 +27,16 @@ export class ControlClientComponent implements OnInit {
 		FranchiseId: ''
 	};
 	clients: any;
-	showMore = false;
 	franchises: any;
+	editing = false;
+	selectedId = '';
 
-	constructor(private clientService: ClientService, private utilService: UtilService) { }
+	constructor(private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
+		this.loadFranchises();
+	 }
 
 	ngOnInit() {
 		this.getClients();
-		this.franchises = this.utilService.franchises;
-		console.log('franchises: ', this.franchises);
 	}
 
 	getClients() {
@@ -47,28 +48,59 @@ export class ControlClientComponent implements OnInit {
 		});
 	}
 
-	submitClient() {
-		this.Client.Address = this.streetAddress + ', ' + this.city + ', ' + this.state + ' ' + this.zip;
-		console.log('client: ', this.Client);
-		this.clientService.createClient(this.Client).subscribe(res => {
-			console.log('response: ', res);
-		}, error => {
-			console.log('error: ', error);
+	loadFranchises() {
+		this.utilService.processFranchises();
+		this.utilService.franchises.subscribe(response => {
+			this.franchises = response;
 		});
 	}
 
-	getClientInfo(id) {
+
+	submitClient() {
+		if (this.editing === false) {
+			console.log('client: ', this.Client);
+			this.clientService.createClient(this.Client).subscribe(res => {
+				console.log('response: ', res);
+			}, error => {
+				console.log('error: ', error);
+			});
+		} else {
+			this.clientService.updateClient(this.selectedId, this.Client).subscribe(response => {
+				console.log('respnse: ', response);
+			});
+		}
+		this.getClients();
+		this.clearForm();
+	}
+
+	editClient(id) {
+		this.editing = true;
+		console.log('id for get client: ', id);
 		this.clientService.getClient(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
-				const data = events.body;
-				this.Client.Name = (<any>data).Name;
-				this.showMore = true;
+				const data = JSON.parse(JSON.stringify(events.body));
+				this.Client = data;
+				this.selectedId = data.id;
+				console.log('this.client: ', this.Client);
 			}
 		});
 	}
 
-	hideMore() {
-		this.showMore = false;
+	clearForm() {
+		this.Client = {
+			Name: '',
+			StreetAddress: '',
+			City: '',
+			State: '',
+			Zip: '',
+			Phone: '',
+			Email: '',
+			ContactPerson: '',
+			Description: '',
+			FranchiseId: ''
+		};
+		this.editing = false;
+		this.selectedId = '';
 	}
 
 	deleteClient(id) {
@@ -84,6 +116,10 @@ export class ControlClientComponent implements OnInit {
 
 	states() {
 		return this.utilService.states;
+	}
+
+	formatPhone() {
+		this.Client.Phone = this.phonePipe.transform(this.Client.Phone);
 	}
 
 }

@@ -57,9 +57,9 @@ export class ClientService {
 				observe: 'events' as 'events'
 			};
 			if (window.location.host === 'localhost:4200') {
-				return this.http.get(this.localUrl.replace('clients', `clients/${id}?`), httpOptions);
+				return this.http.get(this.localUrl.replace('clients', `clients/${id}`), httpOptions);
 			} else {
-				return this.http.get(this.url.replace('clients', `clients/${id}?`), httpOptions);
+				return this.http.get(this.url.replace('clients', `clients/${id}`), httpOptions);
 			}
 		} else {
 			console.log('no token found');
@@ -74,16 +74,16 @@ export class ClientService {
 				})
 			};
 			if (window.location.host === 'localhost:4200') {
-				return this.http.delete(this.localUrl.replace('clients', `clients/${id}?`), httpOptions);
+				return this.http.delete(this.localUrl.replace('clients', `clients/${id}`), httpOptions);
 			} else {
-				return this.http.delete(this.url.replace('clients', `clients/${id}?`), httpOptions);
+				return this.http.delete(this.url.replace('clients', `clients/${id}`), httpOptions);
 			}
 		} else {
 			console.log('no token found');
 		}
 	}
 
-	updateClient(id) {
+	updateClient(id, updatedClient) {
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -91,9 +91,9 @@ export class ClientService {
 				})
 			};
 			if (window.location.host === 'localhost:4200') {
-				return this.http.put(this.localUrl.replace('clients', `clients/${id}?`), httpOptions);
+				return this.http.put(this.localUrl.replace('clients', `clients/${id}`), updatedClient, httpOptions);
 			} else {
-				return this.http.put(this.url.replace('clients', `clients/${id}?`), httpOptions);
+				return this.http.put(this.url.replace('clients', `clients/${id}`), updatedClient, httpOptions);
 			}
 		} else {
 			console.log('no token found');

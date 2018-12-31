@@ -2,24 +2,25 @@
   <div class='col-md-5'>
     <div class='row'>
       <mat-card>
-        <div class="card-heading">Add Client</div>
+        <div class="card-heading" *ngIf='editing === false'>Add Client</div>
+        <div class="card-heading" *ngIf='editing === true'>Edit Client</div>
         <mat-form-field>
           <input matInput placeholder="Name" [(ngModel)]="Client.Name" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Street address" [(ngModel)]="streetAddress" />
+          <input matInput placeholder="Street address" [(ngModel)]="Client.StreetAddress" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="City" [(ngModel)]="city" />
+          <input matInput placeholder="City" [(ngModel)]="Client.City" />
         </mat-form-field>
       	<mat-form-field>
             <mat-select placeholder="State" (selectionChange)="state = ''"
-             [(ngModel)]="state">
+             [(ngModel)]="Client.State">
               <mat-option *ngFor="let state of states()" [value]="state">{{ state }}</mat-option>
             </mat-select>
           </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="ZipCode" [(ngModel)]="zip" />
+          <input matInput placeholder="ZipCode" [(ngModel)]="Client.Zip" />
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Description" [(ngModel)]="Client.Description" />
@@ -31,7 +32,7 @@
           <input matInput placeholder="Email" [(ngModel)]="Client.Email" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Phone" [(ngModel)]="Client.Phone" />
+          <input matInput placeholder="Phone" [(ngModel)]="Client.Phone" (blur)="formatPhone();" />
         </mat-form-field>
         <mat-form-field>
             <mat-select placeholder="Franchise" (selectionChange)="franchise = ''"
@@ -40,6 +41,7 @@
             </mat-select>
           </mat-form-field>
         <button class='submit' (click)="submitClient();" mat-button>Save client</button>
+        <button  (click)="clearForm();" mat-button>Clear form</button>
       </mat-card>
     </div>
   </div>
@@ -49,6 +51,8 @@
         <div class="card-heading">Clients</div>
         <div *ngFor="let client of clients">
           <p>Name: {{client.Name}}</p>
+          <button (click)="deleteClient(client.id);">Delete</button>
+          <button (click)="editClient(client.id);">Edit</button>
         </div>
       </mat-card>
     </div>

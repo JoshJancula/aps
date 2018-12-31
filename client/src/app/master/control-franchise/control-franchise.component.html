@@ -16,22 +16,14 @@
   </div>
   <div class='col-md-9'>
     <div class='row' style="padding-left: 5%;">
-      <div class='col-md-7'>
       <mat-card>
         <div class="card-heading">All Franchises</div>
         <div *ngFor="let franchise of franchises">
           <p>Name: {{franchise.Name}}<br>Active: {{franchise.Active}}</p>
-          <button (click)="getFranchiseInfo(franchise.id);">View more</button>
+          <button (click)="editFranchise(franchise.id);">Edit</button>
           <button (click)="deleteFranchise(franchise.id);">Delete</button>
         </div>
       </mat-card>
-    </div>
-    <div class='col-md-3'>
-      <mat-card *ngIf='showMore === true;'>
-        <p>{{Franchise.Name}}</p>
-        <button (click)="hideMore();">Hide</button>
-      </mat-card>
-    </div>
     </div>
     </div>
   </div>

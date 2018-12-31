@@ -38,13 +38,13 @@ module.exports = function (app) {
 
   // POST route for saving a new franchise
   app.post("/api/franchises", function (req, res) {
-    // if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate(req.headers.authorization, { session: false })) {
       db.Franchise.create(req.body).then(function (x) {
         res.json(x);
       });
-    // } else {
-    //   console.log('error authenticating');
-    // }
+    } else {
+      console.log('error authenticating');
+    }
   });
 
   // PUT route for updating franchise

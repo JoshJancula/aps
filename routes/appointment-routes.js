@@ -49,7 +49,13 @@ module.exports = function (app) {
   app.put("/api/appointments/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
       db.Appointment.update({
-        Active: req.body.Active
+        Date: req.body.Data,
+        Location: req.body.Location,
+        ContactPerson: req.body.ContactPerson,
+        ContactPersonPhone: req.body.ContactPersonPhone,
+        ScheduledBy: req.body.ScheduledBy,
+        AssignedEmployee: req.body.AssignedEmployee,
+        Comments: req.body.Comments,
       }, {
           where: {
             id: req.body.id
