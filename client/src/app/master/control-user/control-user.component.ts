@@ -53,7 +53,7 @@ export class ControlUserComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = {MessageType: 'update', Action: 'franchises'};
+		const data = {MessageType: 'update', Action: 'users'};
 		this.messagingService.sendUpdate(data);
 	}
 
