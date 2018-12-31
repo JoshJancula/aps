@@ -16,7 +16,7 @@
         <input matInput placeholder="Last Name" [(ngModel)]="User.LastName" />
       </mat-form-field>
       <mat-form-field>
-          <mat-select placeholder="Role" (selectionChange)="role = ''"
+          <mat-select placeholder="Role" 
            [(ngModel)]="User.Role">
             <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
           </mat-select>
@@ -28,7 +28,7 @@
         <input matInput placeholder="Phone" [(ngModel)]="User.Phone" (blur)="formatPhone();" />
       </mat-form-field>
       <mat-form-field>
-          <mat-select placeholder="Franchise" (selectionChange)="franchise = ''"
+          <mat-select placeholder="Franchise"
            [(ngModel)]="User.FranchiseId">
             <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
           </mat-select>

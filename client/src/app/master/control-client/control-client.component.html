@@ -14,7 +14,7 @@
           <input matInput placeholder="City" [(ngModel)]="Client.City" />
         </mat-form-field>
       	<mat-form-field>
-            <mat-select placeholder="State" (selectionChange)="state = ''"
+            <mat-select placeholder="State"
              [(ngModel)]="Client.State">
               <mat-option *ngFor="let state of states()" [value]="state">{{ state }}</mat-option>
             </mat-select>
@@ -35,7 +35,7 @@
           <input matInput placeholder="Phone" [(ngModel)]="Client.Phone" (blur)="formatPhone();" />
         </mat-form-field>
         <mat-form-field>
-            <mat-select placeholder="Franchise" (selectionChange)="franchise = ''"
+            <mat-select placeholder="Franchise" 
              [(ngModel)]="Client.FranchiseId">
               <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
             </mat-select>

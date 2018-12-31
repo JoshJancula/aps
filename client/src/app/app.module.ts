@@ -35,7 +35,8 @@ import { ControlInvoiceComponent } from './master/control-invoice/control-invoic
 		ControlFranchiseComponent,
 		ControlClientComponent,
 		ControlAppointmentComponent,
-		ControlInvoiceComponent
+		ControlInvoiceComponent,
+		PhonePipe
 	],
 	imports: [
 		BrowserModule,

@@ -26,7 +26,7 @@
           <input matInput placeholder="RO" [(ngModel)]="Invoice.RO" />
         </mat-form-field>
         <mat-form-field>
-          <mat-select placeholder="Franchise" (selectionChange)="franchise = ''" [(ngModel)]="Invoice.FranchiseId">
+          <mat-select placeholder="Franchise" [(ngModel)]="Invoice.FranchiseId">
             <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
           </mat-select>
         </mat-form-field>
