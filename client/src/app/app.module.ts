@@ -103,8 +103,8 @@ import { ControlInvoiceComponent } from './master/control-invoice/control-invoic
 		HttpModule,
 		RouterModule.forRoot([
 			{ path: '', component: LoginComponent },
-			{ path: 'master', component: MasterComponent }
-		])
+			{ path: 'master', component: MasterComponent },
+		], {useHash: true})
 	],
 	providers: [
 		BluetoothSerial,
