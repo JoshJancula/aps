@@ -1,0 +1,37 @@
+<div class="row">
+    <div class='col-md-3'>
+      <div class='row'>
+    <mat-card>
+      <div class="card-heading">Create Franchise</div>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="Franchise.Name" />
+      </mat-form-field>
+      <br/>
+        <label style="margin-left: 5%;">Active</label>
+        <mat-slide-toggle color="primary" [(ngModel)]="Franchise.Active"></mat-slide-toggle>
+     <br/>
+        <button class='submit' (click)="submitFranchise();" mat-button>Save Franchise</button>
+    </mat-card>
+  </div>
+  </div>
+  <div class='col-md-9'>
+    <div class='row' style="padding-left: 5%;">
+      <div class='col-md-7'>
+      <mat-card>
+        <div class="card-heading">All Franchises</div>
+        <div *ngFor="let franchise of franchises">
+          <p>Name: {{franchise.Name}}<br>Active: {{franchise.Active}}</p>
+          <button (click)="getFranchiseInfo(franchise.id);">View more</button>
+          <button (click)="deleteFranchise(franchise.id);">Delete</button>
+        </div>
+      </mat-card>
+    </div>
+    <div class='col-md-3'>
+      <mat-card *ngIf='showMore === true;'>
+        <p>{{Franchise.Name}}</p>
+        <button (click)="hideMore();">Hide</button>
+      </mat-card>
+    </div>
+    </div>
+    </div>
+  </div>

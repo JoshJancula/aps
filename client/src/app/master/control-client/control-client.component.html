@@ -1,0 +1,56 @@
+<div class="row">
+  <div class='col-md-5'>
+    <div class='row'>
+      <mat-card>
+        <div class="card-heading">Add Client</div>
+        <mat-form-field>
+          <input matInput placeholder="Name" [(ngModel)]="Client.Name" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Street address" [(ngModel)]="streetAddress" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="City" [(ngModel)]="city" />
+        </mat-form-field>
+      	<mat-form-field>
+            <mat-select placeholder="State" (selectionChange)="state = ''"
+             [(ngModel)]="state">
+              <mat-option *ngFor="let state of states()" [value]="state">{{ state }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="ZipCode" [(ngModel)]="zip" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Description" [(ngModel)]="Client.Description" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Contact Person" [(ngModel)]="Client.ContactPerson" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" [(ngModel)]="Client.Email" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Phone" [(ngModel)]="Client.Phone" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Franchise" (selectionChange)="franchise = ''"
+             [(ngModel)]="Client.FranchiseId">
+              <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <button class='submit' (click)="submitClient();" mat-button>Save client</button>
+      </mat-card>
+    </div>
+  </div>
+  <div class='col-md-4'>
+    <div class='row' style="padding-left: 5%;">
+      <mat-card>
+        <div class="card-heading">Clients</div>
+        <div *ngFor="let client of clients">
+          <p>Name: {{client.Name}}</p>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

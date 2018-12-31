@@ -1,59 +1,16 @@
-<p>
-  Master Control Panel
-  <!-- <button  (click)="createUser();" mat-button>Create user</button> -->
-</p>
-<div class="row">
-  <div class='col-md-5'>
-    <div class='row'>
-  <mat-card>
-    <div class="card-heading">Create User</div>
-    <mat-form-field>
-      <input matInput placeholder="Username" [(ngModel)]="User.Username" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Password" [(ngModel)]="User.Password" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="First Name" [(ngModel)]="User.FirstName" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Last Name" [(ngModel)]="User.LastName" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Role" [(ngModel)]="User.Role" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Email" [(ngModel)]="User.Email" />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Phone" [(ngModel)]="User.Phone" />
-    </mat-form-field>
-      <label style="margin-left: 5%;">Active</label>
-      <mat-slide-toggle color="primary" [(ngModel)]="User.Active"></mat-slide-toggle>
-   <br/>
-      <button class='submit' (click)="submit();" mat-button>Save user</button>
-  </mat-card>
+
+<div class='row' style='padding-left: 2%; padding-top: 2%; margin-bottom: 2%'>
+  <div class='col-md-2'>
+  <span style='margin-right: 2%;'> Master Control Panel</span><br>
+  <button (click)="openUsers();" mat-button>Users</button><br>
+  <button  (click)="openFranchises();" mat-button>Franchises</button><br>
+  <button  (click)="clearStorage();" mat-button>Clear storage</button><br>
+  <button  (click)="openClients();" mat-button>Clients</button><br>
 </div>
+<div class='col-md-10'>
+    <app-control-user *ngIf='userMode === true;'></app-control-user>
+    <app-control-franchise *ngIf='franchiseMode === true;'></app-control-franchise>    
+    <app-control-client *ngIf='clientMode === true;'></app-control-client>
 </div>
-<div class='col-md-4'>
-  <div class='row' style="padding-left: 5%;">
-    <mat-card>
-      <div class="card-heading">Users</div>
-      <div *ngFor="let user of users">
-        <p>Name: {{user.FirstName}} {{user.LastName}}<br>Role: {{user.Role}}</p>
-      </div>
-    </mat-card>
-    <mat-card style='margin-top: 3%;'> 
-        <div class="card-heading">Test login</div>
-        <mat-form-field>
-            <input matInput placeholder="Username" [(ngModel)]="testUsername" />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Password" [(ngModel)]="testPassword" />
-          </mat-form-field>
-          <button  (click)="testLogin();" mat-button>Test login</button>
-      </mat-card>
-  </div>
-  </div>
 </div>
 

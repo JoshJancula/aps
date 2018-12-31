@@ -40,7 +40,22 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: true,
         },
+        VIN: {
+            type: DataTypes.TEXT,
+            unique: false,
+            allowNull: true,
+        },
+        Stock: {
+            type: DataTypes.TEXT,
+            unique: false,
+            allowNull: true,
+        },
         Description: {
+            type: DataTypes.TEXT,
+            unique: false,
+            allowNull: true,
+        },
+        Comments: {
             type: DataTypes.TEXT,
             unique: false,
             allowNull: true,

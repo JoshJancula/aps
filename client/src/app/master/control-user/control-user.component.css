@@ -1,0 +1,27 @@
+.content .mat-card {
+    /* width: 100px; */
+    display: inline-block;
+    /* margin-left: 2%; */
+    margin: 2%;
+}
+
+.content {
+    display: inline-block;
+}
+
+.mat-slide-toggle {
+    margin-left: 20%;
+}
+
+.mat-form-field {
+    margin: 2%;
+}
+
+.submit {
+    margin-top: 5%;
+    /* margin-left: 55%; */
+}
+
+.toggle {
+    display: inline-block;
+}

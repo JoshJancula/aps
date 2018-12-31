@@ -7,25 +7,20 @@ require('../config/passport')(passport);
 // =============================================================
 module.exports = function (app) {
 
-  // GET route for getting all franchise locations
-  app.get("/api/franchises", function (req, res) {
+  // GET route for getting all clients
+  app.get("/api/clients", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
-      db.Franchise.findAll({
-        include: [db.User, db.Appointment, db.Invoice],
+      db.Client.findAll({
       }).then(function (x) {
         res.json(x);
       });
     }
   });
 
-  // GET route for retrieving a single franchise
-  app.get("/api/franchises/:id", function (req, res) {
-    console.log('req.params: ', req.params.id);
-      console.log('req.body: ', req.body.id);
+  // GET route for retrieving a single client
+  app.get("/api/clients/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
-      // console.log('req.params: ', req.params.id);
-      // console.log('req.body: ', req.body.id);
-      db.Franchise.findOne({
+      db.Client.findOne({
         where: {
           id: req.params.id
         },
@@ -36,21 +31,21 @@ module.exports = function (app) {
     }
   });
 
-  // POST route for saving a new franchise
-  app.post("/api/franchises", function (req, res) {
-    // if (passport.authenticate(req.headers.authorization, { session: false })) {
-      db.Franchise.create(req.body).then(function (x) {
+  // POST route for saving a new client
+  app.post("/api/clients", function (req, res) {
+    if (passport.authenticate(req.headers.authorization, { session: false })) {
+      db.Client.create(req.body).then(function (x) {
         res.json(x);
       });
-    // } else {
-    //   console.log('error authenticating');
-    // }
+    } else {
+      console.log('error authenticating');
+    }
   });
 
-  // PUT route for updating franchise
-  app.put("/api/franchises/:id", function (req, res) {
+  // PUT route for updating client
+  app.put("/api/clients/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
-      db.Franchise.update({
+      db.Client.update({
         Active: req.body.Active
       }, {
           where: {
@@ -65,10 +60,10 @@ module.exports = function (app) {
     }
   });
 
-  // DELETE route for deleting a franchise location
-  app.delete("/api/franchises/:id", function (req, res) {
+  // DELETE route for deleting a client location
+  app.delete("/api/clients/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
-      db.Franchise.destroy({
+      db.Client.destroy({
         where: {
           id: req.params.id
         }

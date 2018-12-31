@@ -7,50 +7,48 @@ require('../config/passport')(passport);
 // =============================================================
 module.exports = function (app) {
 
-  // GET route for getting all franchise locations
-  app.get("/api/franchises", function (req, res) {
+  // GET route for getting all appointments
+  app.get("/api/appointments", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
-      db.Franchise.findAll({
-        include: [db.User, db.Appointment, db.Invoice],
+      db.Appointment.findAll({
       }).then(function (x) {
         res.json(x);
       });
     }
   });
 
-  // GET route for retrieving a single franchise
-  app.get("/api/franchises/:id", function (req, res) {
+  // GET route for retrieving a single appointment
+  app.get("/api/appointments/:id", function (req, res) {
     console.log('req.params: ', req.params.id);
       console.log('req.body: ', req.body.id);
     if (passport.authenticate(req.headers.authorization, { session: false })) {
       // console.log('req.params: ', req.params.id);
       // console.log('req.body: ', req.body.id);
-      db.Franchise.findOne({
+      db.Appointment.findOne({
         where: {
           id: req.params.id
         },
-        include: [db.User, db.Appointment, db.Invoice],
       }).then(function (x) {
         res.json(x);
       });
     }
   });
 
-  // POST route for saving a new franchise
-  app.post("/api/franchises", function (req, res) {
-    // if (passport.authenticate(req.headers.authorization, { session: false })) {
-      db.Franchise.create(req.body).then(function (x) {
+  // POST route for saving a new appointment
+  app.post("/api/appointments", function (req, res) {
+    if (passport.authenticate(req.headers.authorization, { session: false })) {
+      db.Appointment.create(req.body).then(function (x) {
         res.json(x);
       });
-    // } else {
-    //   console.log('error authenticating');
-    // }
+    } else {
+      console.log('error authenticating');
+    }
   });
 
-  // PUT route for updating franchise
-  app.put("/api/franchises/:id", function (req, res) {
+  // PUT route for updating appointment
+  app.put("/api/appointments/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
-      db.Franchise.update({
+      db.Appointment.update({
         Active: req.body.Active
       }, {
           where: {
@@ -65,10 +63,10 @@ module.exports = function (app) {
     }
   });
 
-  // DELETE route for deleting a franchise location
-  app.delete("/api/franchises/:id", function (req, res) {
+  // DELETE route for deleting an appointment 
+  app.delete("/api/appointments/:id", function (req, res) {
     if (passport.authenticate(req.headers.authorization, { session: false })) {
-      db.Franchise.destroy({
+      db.Appointment.destroy({
         where: {
           id: req.params.id
         }

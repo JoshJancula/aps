@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 
 
 app.all('*', function(req, res, next) {
-  var origin = req.get('origin'); 
+  const origin = req.get('origin'); 
   res.header('Access-Control-Allow-Origin', origin);
   console.log('origin: ', origin);
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -29,7 +29,9 @@ app.all('*', function(req, res, next) {
 
 require("./routes/franchise-routes.js")(app);
 require("./routes/user-routes.js")(app);
-require("./routes/service-routes.js")(app);
+require("./routes/appointment-routes.js")(app);
+require("./routes/client-routes.js")(app);
+require("./routes/invoice-routes.js")(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -46,7 +48,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+//   res.render('error');
 });
 
 

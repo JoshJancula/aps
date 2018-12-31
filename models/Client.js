@@ -11,11 +11,15 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             unique: true,
         },
-
+        Address: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
         Description: {
             type: DataTypes.STRING,
             unique: false,
-            allowNull: false,
+            allowNull: true,
         },
         Email: {
             type: DataTypes.STRING,
@@ -25,9 +29,22 @@ module.exports = function (sequelize, DataTypes) {
         Phone: {
             type: DataTypes.STRING,
             unique: false,
-            allowNull: false,
-        }
+            allowNull: true,
+        },
+        ContactPerson: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
     });
+
+    Client.associate = function (models) {
+        Client.belongsTo(models.Franchise, {
+            foreignKey: {
+                allowNull: false
+            }
+        });
+    }
 
     return Client;
 };

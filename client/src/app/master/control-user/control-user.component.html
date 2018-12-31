@@ -1,0 +1,60 @@
+<div class="row">
+    <div class='col-md-5'>
+      <div class='row'>
+    <mat-card>
+      <div class="card-heading">Create User</div>
+      <mat-form-field>
+        <input matInput placeholder="Username" [(ngModel)]="User.Username" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Password" [(ngModel)]="User.Password" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="First Name" [(ngModel)]="User.FirstName" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Last Name" [(ngModel)]="User.LastName" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Role" [(ngModel)]="User.Role" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="User.Email" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Phone" [(ngModel)]="User.Phone" />
+      </mat-form-field>
+      <mat-form-field>
+          <mat-select placeholder="Franchise" (selectionChange)="franchise = ''"
+           [(ngModel)]="User.FranchiseId">
+            <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <label style="margin-left: 5%;">Active</label>
+        <mat-slide-toggle color="primary" [(ngModel)]="User.Active"></mat-slide-toggle>
+     <br/>
+        <button class='submit' (click)="submitUser();" mat-button>Save user</button>
+    </mat-card>
+  </div>
+  </div>
+  <div class='col-md-4'>
+    <div class='row' style="padding-left: 5%;">
+      <mat-card>
+        <div class="card-heading">Users</div>
+        <div *ngFor="let user of users">
+          <p>Name: {{user.FirstName}} {{user.LastName}}<br>Role: {{user.Role}}</p>
+        </div>
+      </mat-card>
+      <mat-card style='margin-top: 3%;'> 
+          <div class="card-heading">Test login</div>
+          <mat-form-field>
+              <input matInput placeholder="Username" [(ngModel)]="testUsername" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Password" [(ngModel)]="testPassword" />
+            </mat-form-field>
+            <button  (click)="testLogin();" mat-button>Test login</button>
+        </mat-card>
+    </div>
+    </div>
+  </div>

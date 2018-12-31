@@ -15,6 +15,9 @@ import { LoginComponent } from './login/login.component';
 import { MasterComponent } from './master/master.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { ControlUserComponent } from './master/control-user/control-user.component';
+import { ControlFranchiseComponent } from './master/control-franchise/control-franchise.component';
+import { ControlClientComponent } from './master/control-client/control-client.component';
 
 @NgModule({
 	entryComponents: [
@@ -24,7 +27,10 @@ import { HttpModule } from '@angular/http';
 	declarations: [
 		AppComponent,
 		LoginComponent,
-		MasterComponent
+		MasterComponent,
+		ControlUserComponent,
+		ControlFranchiseComponent,
+		ControlClientComponent
 	],
 	imports: [
 		BrowserModule,

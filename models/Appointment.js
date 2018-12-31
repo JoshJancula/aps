@@ -21,6 +21,16 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: false,
         },
+        ContactPerson: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        ContactPersonPhone: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
         ScheduledBy: {
             type: DataTypes.STRING,
             unique: false,
@@ -29,15 +39,10 @@ module.exports = function (sequelize, DataTypes) {
         AssignedEmployee: {
             type: DataTypes.STRING,
             unique: false,
-            allowNull: false,
+            allowNull: true,
         },
         Comments: {
             type: DataTypes.TEXT,
-            unique: false,
-            allowNull: true
-        },
-        Phone: {
-            type: DataTypes.STRING,
             unique: false,
             allowNull: true
         },

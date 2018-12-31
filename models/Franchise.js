@@ -22,6 +22,15 @@ module.exports = function (sequelize, DataTypes) {
         Franchise.hasMany(models.User, {
             onDelete: "cascade"
         });
+        Franchise.hasMany(models.Appointment, {
+            onDelete: "cascade"
+        });
+        Franchise.hasMany(models.Invoice, {
+            onDelete: "cascade"
+        });
+        Franchise.hasMany(models.Client, {
+            onDelete: "cascade"
+        });
     };
 
     return Franchise;

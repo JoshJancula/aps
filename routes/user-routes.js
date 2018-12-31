@@ -8,85 +8,93 @@ const bcrypt = require('bcrypt-nodejs');
 
 // Routes
 // =============================================================
-module.exports = function(app) {
+module.exports = function (app) {
 
   // GET route for getting all users
-  app.get("/api/users", function(req, res) {
+  app.get("/api/users", function (req, res) {
     db.User.findAll({
-    }).then(function(x) {
+    }).then(function (x) {
       res.json(x);
     });
   });
-  
+
   // GET route for retrieving a single user
-  app.get("/api/users/:id", function(req, res) {
+  app.get("/api/users/:id", function (req, res) {
     db.User.findOne({
       where: {
         id: req.params.id
       },
-    }).then(function(x) {
+    }).then(function (x) {
       res.json(x);
     });
   });
 
   // PUT route for updating users
-  app.put("/api/users/:id", function(req, res) {
+  app.put("/api/users/:id", function (req, res) {
     db.User.update({
-        Active: req.body.Active
-      }, { 
+      Active: req.body.Active
+    }, {
         where: {
           id: req.body.id
         }
-      }).then(function(x) {
+      }).then(function (x) {
         res.json(x);
       })
-      .catch(function(err) {
+      .catch(function (err) {
         res.json(err);
       });
   });
 
   // POST route for saving a new user
-  app.post("/api/users", function(req, res) {
-    db.User.create(req.body).then(function(x) {
+  app.post("/api/users", function (req, res) {
+    db.User.create(req.body).then(function (x) {
       res.json(x);
     });
   });
 
   // DELETE route for deleting a user 
-  app.delete("/api/users/:id", function(req, res) {
-    db.User.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then(function(x) {
-      res.json(x);
-    });
-  });
-  
-  app.post('/api/signin', function(req, res) {
-    db.User.findOne({
+  app.delete("/api/users/:id", function (req, res) {
+    if (passport.authenticate(req.headers.authorization, { session: false })) {
+      db.User.destroy({
         where: {
-            Username: req.body.Username
-          },
-    }).done(function(user, err) {
+          id: req.params.id
+        }
+      }).then(function (x) {
+        res.json(x);
+      });
+    }
+  });
+
+  app.post('/api/signin', function (req, res) {
+    db.User.findOne({
+      where: {
+        Username: req.body.Username
+      },
+    }).done(function (user, err) {
       const pwd = user.dataValues.Password
+      const returnInfo = {
+        Username: user.dataValues.Username,
+        FirstName: user.dataValues.FirstName,
+        LastName: user.dataValues.LastName,
+        FranchiseId: user.dataValues.FranchiseId,
+        Phone: user.dataValues.Phone,
+        Role: user.dataValues.Role,
+        createdAt: user.dataValues.createdAt,
+        id: user.dataValues.id
+      }
       if (err) throw err;
       if (!user) {
-        console.log('there was no user');
-        res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
+        res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
       } else {
         // check if password matches
-          bcrypt.compare(req.body.Password, pwd, function (err, isMatch) {
-          console.log('isMatch: ', isMatch);
+        bcrypt.compare(req.body.Password, pwd, function (err, isMatch) {
           if (isMatch && !err) {
-            console.log('isMatch: ', isMatch, ' password was: ', req.body.Password);
             // if user is found and password is right create a token
             let token = jwt.sign(user.toJSON(), 'mysecret');
             // return the information including token as JSON
-            res.json({success: true, token: 'JWT ' + token, user: user.toJSON()});
+            res.json({ success: true, token: 'JWT ' + token, user: returnInfo });
           } else {
-            console.log('auth failed');
-            res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
+            res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
           }
         });
       }
