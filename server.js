@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const server = app.listen(8081);
-let io = require('socket.io').listen(server);
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -61,7 +61,7 @@ app.use(function (err, req, res, next) {
 // Syncing sequelize models and then starting our Express app
 // =============================================================
 db.sequelize.sync().then(function () {
-    app.listen(PORT, function () {
+    server.listen(PORT, function () {
         console.log("App listening on PORT " + PORT);
         console.log('===================================');
 
