@@ -3,7 +3,7 @@ import * as socketIo from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
 
 const LOCAL_URL = 'http://localhost:8080';
-const SERVER_URL  = `https://aps-josh.herokuapp.com:8080`;
+const SERVER_URL  = `https://aps-josh.herokuapp.com`;
 
 @Injectable({
 	providedIn: 'root'
