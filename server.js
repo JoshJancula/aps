@@ -17,7 +17,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 app.use('/', express.static(path.join(__dirname, '/client/dist/client')));
-// app.set('view engine', 'jade');
+app.set('view engine', 'jade');
 
 
 app.all('*', function (req, res, next) {
@@ -96,23 +96,23 @@ db.sequelize.sync().then(function () {
 
             socket.on('update', function (data) {
                 if (data.Action === 'clients') {
-                    socket.emit('update', {
+                    socket.broadcast.emit('update', {
                         Action: 'updateClients',
                     });
                 } else if (data.Action === 'franchises') {
-                    socket.emit('update', {
+                    socket.broadcast.emit('update', {
                         Action: 'updateFranchises',
                     });
                 } else if (data.Action === 'users') {
-                    socket.emit('update', {
+                    socket.broadcast.emit('update', {
                         Action: 'updateUsers',
                     });
                 } else if (data.Action === 'invoices') {
-                    socket.emit('update', {
+                    socket.broadcast.emit('update', {
                         Action: 'updateInvoices',
                     });
                 } else if (data.Action === 'appointments') {
-                    socket.emit('update', {
+					socket.broadcast.emit('update', {
                         Action: 'updateAppointments',
                     });
                 }

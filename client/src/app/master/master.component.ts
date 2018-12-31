@@ -32,6 +32,7 @@ export class MasterComponent implements OnInit {
 	constructor(private authService: AuthService, private utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
+		this.authService.currentUser.currentPage = 'master';
 		this.messagingService.initSocket();
 			this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
 				console.log('socket response: ', response);
