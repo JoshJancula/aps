@@ -17,7 +17,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 app.use('/', express.static(path.join(__dirname, '/client/dist/client')));
-app.set('view engine', 'jade');
+// app.set('view engine', 'jade');
 
 
 app.all('*', function (req, res, next) {
