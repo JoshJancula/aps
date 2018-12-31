@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { InternalFormsSharedModule } from '@angular/forms/src/directives';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthService {
 		if (window.location.host === 'localhost:4200') {
 			return this.http.post(signinUrl, info);
 		} else {
-			return this.http.get(url.replace('users', 'signin'));
+			return this.http.post(url.replace('users', 'signin'), info);
 		}
 	}
 
