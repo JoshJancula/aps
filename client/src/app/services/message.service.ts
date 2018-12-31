@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import * as socketIo from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
 
-const SERVER_URL = 'http://localhost:8081';
+const LOCAL_URL = 'http://localhost:8081';
+const SERVER_URL  = `https://aps-josh.herokuapp.com/8081`;
 
 @Injectable({
 	providedIn: 'root'
@@ -14,15 +15,17 @@ export class MessageService {
 	constructor() { }
 
 	public initSocket(): void {
-		this.socket = socketIo(SERVER_URL);
+		if (window.location.host === 'localhost:4200') {
+		this.socket = socketIo(LOCAL_URL);
+		} else {
+			this.socket = socketIo(SERVER_URL);
+		}
 	}
 
 	public sendConnectionInfo(message: any): void {
 		if (this.socket === undefined) {
-			console.log('socket was undefined');
 			this.initSocket();
 		}
-		console.log('socket sent ', message);
 		this.socket.emit('connectionInfo', message);
 	}
 
@@ -30,7 +33,6 @@ export class MessageService {
 		if (this.socket === undefined) {
 			this.initSocket();
 		}
-		console.log('socket sent ', message);
 		this.socket.emit('message', message);
 	}
 
