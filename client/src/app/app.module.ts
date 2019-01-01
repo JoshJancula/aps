@@ -21,6 +21,15 @@ import { ControlFranchiseComponent } from './master/control-franchise/control-fr
 import { ControlClientComponent } from './master/control-client/control-client.component';
 import { ControlAppointmentComponent } from './master/control-appointment/control-appointment.component';
 import { ControlInvoiceComponent } from './master/control-invoice/control-invoice.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { AuthService } from './services/auth.service';
+import { FranchiseService } from './services/franchise.service';
+import { UserService } from './services/user.service';
+import { UtilService } from './services/util.service';
+import { ClientService } from './services/client.service';
+import { InvoiceService } from './services/invoice.service';
+import { MessageService } from './services/message.service';
+import { AppointmentService } from './services/appointment.service';
 
 @NgModule({
 	entryComponents: [
@@ -101,6 +110,7 @@ import { ControlInvoiceComponent } from './master/control-invoice/control-invoic
 		BrowserAnimationsModule,
 		HttpClientModule,
 		HttpModule,
+		NgxMaterialTimepickerModule.forRoot(),
 		RouterModule.forRoot([
 			{ path: '', component: LoginComponent },
 			{ path: 'master', component: MasterComponent },
@@ -108,7 +118,15 @@ import { ControlInvoiceComponent } from './master/control-invoice/control-invoic
 	],
 	providers: [
 		BluetoothSerial,
-		PhonePipe
+		PhonePipe,
+		AuthService,
+		FranchiseService,
+		UserService,
+		UtilService,
+		ClientService,
+		InvoiceService,
+		MessageService,
+		AppointmentService,
 	],
 	bootstrap: [AppComponent]
 })

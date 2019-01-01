@@ -8,7 +8,7 @@ import { InternalFormsSharedModule } from '@angular/forms/src/directives';
 export class AuthService {
 
 	// tslint:disable-next-line:max-line-length
-	private _currentUser = { Username: null, Name: null, Role: null, FranchiseId: null, id: null, Phone: null, Email: null, currentPage: null };
+	private _currentUser = { Username: null, Name: null, Role: null, FranchiseId: null, id: null, Phone: null, Email: null };
 
 
 	constructor(private http: Http) { }
@@ -36,7 +36,7 @@ export class AuthService {
 				this._currentUser = JSON.parse(data);
 			} else {
 				// tslint:disable-next-line:max-line-length
-				this._currentUser = { Username: null, Name: null, Role: null, FranchiseId: null, id: null, Phone: null, Email: null, currentPage: null };
+				this._currentUser = { Username: null, Name: null, Role: null, FranchiseId: null, id: null, Phone: null, Email: null };
 			}
 		}
 

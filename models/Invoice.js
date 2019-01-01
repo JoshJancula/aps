@@ -45,6 +45,11 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: true,
         },
+        CheckNumber: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
         RO: {
             type: DataTypes.STRING,
             unique: false,

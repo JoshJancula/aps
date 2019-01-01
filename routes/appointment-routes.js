@@ -55,6 +55,8 @@ module.exports = function (app) {
         ContactPersonPhone: req.body.ContactPersonPhone,
         ScheduledBy: req.body.ScheduledBy,
         AssignedEmployee: req.body.AssignedEmployee,
+        ScheduledById: req.body.ScheduledById,
+        AssignedEmployeeId: req.body.AssignedEmployeeId,
         Comments: req.body.Comments,
       }, {
           where: {

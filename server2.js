@@ -95,27 +95,13 @@ db.sequelize.sync().then(function () {
             });
 
             socket.on('update', function (data) {
-                if (data.Action === 'clients') {
-                    socket.emit('update', {
-                        Action: 'updateClients',
-                    });
-                } else if (data.Action === 'franchises') {
-                    socket.emit('update', {
-                        Action: 'updateFranchises',
-                    });
-                } else if (data.Action === 'users') {
-                    socket.emit('update', {
-                        Action: 'updateUsers',
-                    });
-                } else if (data.Action === 'invoices') {
-                    socket.emit('update', {
-                        Action: 'updateInvoices',
-                    });
-                } else if (data.Action === 'appointments') {
-                    socket.emit('update', {
-                        Action: 'updateAppointments',
-                    });
-                }
+                switch (data.Action) {
+					case 'franchises': socket.broadcast.emit('update', { Action: 'updateFranchises' }); break;
+					case 'clients': socket.broadcast.emit('update', { Action: 'updateClients' }); break;
+					case 'users': socket.broadcast.emit('update', { Action: 'updateUsers' }); break;
+					case 'invoices': socket.broadcast.emit('update', { Action: 'updateInvoices' }); break;
+					case 'appointments': socket.broadcast.emit('update', { Action: 'updateAppointments' }); break;
+				}
             });
 
             // update that the recipient read the message

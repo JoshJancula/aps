@@ -49,6 +49,7 @@ module.exports = function (app) {
         Paid: req.body.Paid,
         PaymentMethod: req.body.PaymentMethod,
         PO: req.body.PO,
+        CheckNumber: req.body.CheckNumber,
         RO: req.body.RO,
         VIN: req.body.VIN,
         Stock: req.body.Stock,

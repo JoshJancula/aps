@@ -4,7 +4,7 @@
       <mat-card>
         <div class="card-heading" *ngIf='editing === false'>Add Invoice</div>
         <div class="card-heading" *ngIf='editing === true'>Edit Invoice</div>
-        <mat-checkbox color="primary" [(ngModel)]="selectFromClients">Select from clients</mat-checkbox>
+        <mat-checkbox *ngIf="editing === false" color="primary" [(ngModel)]="selectFromClients">Select from clients</mat-checkbox>
         <br>
         <mat-form-field *ngIf='selectFromClients === true'>
             <mat-select placeholder="Client" [(ngModel)]="Invoice.Client">
@@ -15,20 +15,22 @@
           <input matInput placeholder="Client" [(ngModel)]="Invoice.Client" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Employee" [(ngModel)]="Invoice.Employee" />
-        </mat-form-field>
-        <mat-form-field>
           <input matInput placeholder="Service type" [(ngModel)]="Invoice.ServiceType" />
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Total" [(ngModel)]="Invoice.Total" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Payment method" [(ngModel)]="Invoice.PaymentMethod" />
-        </mat-form-field>
-        <mat-form-field>
+            <mat-select placeholder="Payment method" [(ngModel)]="Invoice.PaymentMethod">
+              <mat-option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field *ngIf="Invoice.PaymentMethod === 'PO'">
           <input matInput placeholder="PO#" [(ngModel)]="Invoice.PO" />
         </mat-form-field>
+        <mat-form-field *ngIf="Invoice.PaymentMethod === 'Check'">
+            <input matInput placeholder="Check#" [(ngModel)]="Invoice.CheckNumber" />
+          </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="RO#" [(ngModel)]="Invoice.RO" />
         </mat-form-field>

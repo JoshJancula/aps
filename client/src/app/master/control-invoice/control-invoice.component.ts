@@ -4,6 +4,7 @@ import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
 import { MessageService } from '../../services/message.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -22,6 +23,7 @@ export class ControlInvoiceComponent implements OnInit {
 		Paid: '',
 		PaymentMethod: '',
 		PO: '',
+		CheckNumber: '',
 		RO: '',
 		VIN: '',
 		Stock: '',
@@ -35,8 +37,10 @@ export class ControlInvoiceComponent implements OnInit {
 	selectFromClients = false;
 	clients: any;
 	franchises: any;
+	paymentMethods = ['Cash', 'PO', 'Check', 'Other', 'None'];
 
-	constructor(private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
+	// tslint:disable-next-line:max-line-length
+	constructor(private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
 		this.loadInvoices();
 		this.loadFranchises();
 		this.getClients();
@@ -73,7 +77,12 @@ export class ControlInvoiceComponent implements OnInit {
 	}
 
 	submitInvoice() {
+		if (this.Invoice.PaymentMethod === 'None') {
+			this.Invoice.Paid = false;
+		}
 		if (this.editing === false) {
+			this.Invoice.Employee = this.authService.currentUser.Name;
+			this.Invoice.EmployeeId = this.authService.currentUser.id;
 			this.invoiceService.createInvoice(this.Invoice).subscribe(res => {
 				console.log('response: ', res);
 			}, error => {
@@ -103,8 +112,21 @@ export class ControlInvoiceComponent implements OnInit {
 
 	clearForm() {
 		this.Invoice = {
-			Name: '',
-			Active: true
+			Employee: '',
+			EmployeeId: '',
+			ServiceType: '',
+			Client: '',
+			Total: '',
+			Paid: '',
+			PaymentMethod: '',
+			PO: '',
+			CheckNumber: '',
+			RO: '',
+			VIN: '',
+			Stock: '',
+			Description: '',
+			Comments: '',
+			FranchiseId: ''
 		};
 		this.editing = false;
 		this.selectedId = '';
