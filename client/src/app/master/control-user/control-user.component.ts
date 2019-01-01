@@ -96,6 +96,7 @@ export class ControlUserComponent implements OnInit {
 		this.userService.deleteUser(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
+				this.clearForm();
 				this.notifySocket();
 				this.utilService.processUsers();
 			} else {

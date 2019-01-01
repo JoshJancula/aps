@@ -11,6 +11,8 @@
         <mat-slide-toggle color="primary" [(ngModel)]="Franchise.Active"></mat-slide-toggle>
      <br/>
         <button class='submit' (click)="submitFranchise();" mat-button>Save Franchise</button>
+        <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
+        <button *ngIf='editing === true;' (click)="deleteFranchise(Franchise.id);" [disabled]="franchise.Name === 'Master'" mat-button>Delete</button>
     </mat-card>
   </div>
   </div>
@@ -21,7 +23,6 @@
         <div *ngFor="let franchise of franchises">
           <p>Name: {{franchise.Name}}<br>Active: {{franchise.Active}}</p>
           <button (click)="editFranchise(franchise.id);" mat-button>Edit</button>
-          <button (click)="deleteFranchise(franchise.id);" [disabled]="franchise.Name === 'Master'" mat-button>Delete</button>
         </div>
       </mat-card>
     </div>

@@ -81,6 +81,7 @@ export class ControlFranchiseComponent implements OnInit {
 		this.franchiseService.deleteFranchise(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
+				this.clearForm();
 				this.utilService.processFranchises();
 				this.notifySocket();
 			} else {

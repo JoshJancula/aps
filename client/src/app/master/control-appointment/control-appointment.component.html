@@ -57,8 +57,9 @@
           <input matInput placeholder="Comments" [(ngModel)]="Appointment.Comments" />
         </mat-form-field>
         <br>
-        <button class='submit' (click)="submitAppointment();" mat-button>Save Appointment</button>
-        <button (click)="clearForm();" mat-button>Clear form</button>
+        <button class='submit' (click)="submitAppointment();" mat-button>Save Appointment</button><br>
+        <button (click)="clearForm();" mat-button>Clear form</button><br>
+        <button *ngIf='editing === true' (click)="deleteAppointment(Appointment.id);" mat-button>Delete</button>
       </mat-card>
     </div>
   </div>
@@ -79,7 +80,6 @@
               Time: {{ appointment.Time }}<br>
               Assigned employee: {{ appointment.AssignedEmployee }}<br>
             </p>
-            <button (click)="deleteAppointment(appointment.id);" mat-button>Delete</button>
             <button class='editButton' (click)="editAppointment(appointment.id);" mat-button>Edit</button>
           </div>
         </mat-card>

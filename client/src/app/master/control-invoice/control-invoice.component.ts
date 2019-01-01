@@ -35,9 +35,16 @@ export class ControlInvoiceComponent implements OnInit {
 	editing = false;
 	selectedId = '';
 	selectFromClients = false;
+	addRO = false;
+	addStock = false;
+	addVIN = false;
 	clients: any;
 	franchises: any;
 	paymentMethods = ['Cash', 'PO', 'Check', 'Other', 'None'];
+	serviceTypes = ['Pinstriping repair', 'Pinstriping repair & Paint protection', 'New car pinstriping', 'Vinyl wrap', 'Signs', 'Decals', 'Paint protection with install',  'Paint protection no install', 'Other'];
+	stockNumber = '';
+	vehicles = [];
+
 
 	// tslint:disable-next-line:max-line-length
 	constructor(private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
@@ -76,10 +83,24 @@ export class ControlInvoiceComponent implements OnInit {
 		});
 	}
 
+	pushVehicle() {
+		console.log('stock to push: ', this.stockNumber);
+		this.vehicles.push(this.stockNumber);
+		console.log('vehicles: ', this.vehicles);
+		this.stockNumber = '';
+	}
+
+	removeVehicle(vehicle) {
+		console.log('vehicle to remove: ', vehicle);
+		this.vehicles.splice(this.vehicles.indexOf(vehicle), 1);
+	}
+
 	submitInvoice() {
 		if (this.Invoice.PaymentMethod === 'None') {
 			this.Invoice.Paid = false;
 		}
+		this.Invoice.VIN = this.vehicles.toString();
+		console.log('invoice before save: ', this.Invoice);
 		if (this.editing === false) {
 			this.Invoice.Employee = this.authService.currentUser.Name;
 			this.Invoice.EmployeeId = this.authService.currentUser.id;
@@ -99,6 +120,7 @@ export class ControlInvoiceComponent implements OnInit {
 	}
 
 	editInvoice(id) {
+		this.clearForm();
 		this.editing = true;
 		this.invoiceService.getInvoice(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
@@ -106,6 +128,9 @@ export class ControlInvoiceComponent implements OnInit {
 				console.log('data for getInvoice: ', data);
 				this.Invoice = data;
 				this.selectedId = data.id;
+				if (this.Invoice.VIN !== '') {
+					this.vehicles = JSON.parse('[' + data.VIN + ']');
+				}
 			}
 		});
 	}
@@ -128,6 +153,8 @@ export class ControlInvoiceComponent implements OnInit {
 			Comments: '',
 			FranchiseId: ''
 		};
+		this.vehicles = [];
+		this.stockNumber = '';
 		this.editing = false;
 		this.selectedId = '';
 	}
@@ -136,6 +163,7 @@ export class ControlInvoiceComponent implements OnInit {
 		this.invoiceService.deleteInvoice(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
+				this.clearForm();
 				this.utilService.processInvoices();
 				this.notifySocket();
 			} else {

@@ -42,6 +42,7 @@
           </mat-form-field>
         <button class='submit' (click)="submitClient();" mat-button>Save client</button>
         <button  (click)="clearForm();" mat-button>Clear form</button>
+        <button *ngIf='editing === true' (click)="deleteClient(Client.id);" mat-button>Delete</button>
       </mat-card>
     </div>
   </div>
@@ -51,7 +52,6 @@
         <div class="card-heading">Clients</div>
         <div *ngFor="let client of clients">
           <p>Name: {{client.Name}}</p>
-          <button (click)="deleteClient(client.id);" mat-button>Delete</button>
           <button (click)="editClient(client.id);" mat-button>Edit</button>
         </div>
       </mat-card>

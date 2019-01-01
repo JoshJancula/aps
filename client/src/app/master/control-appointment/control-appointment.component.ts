@@ -157,6 +157,7 @@ export class ControlAppointmentComponent implements OnInit {
 		this.appointmentService.deleteAppointment(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
+				this.clearForm();
 				this.utilService.processAppointments();
 				this.notifySocket();
 			} else {

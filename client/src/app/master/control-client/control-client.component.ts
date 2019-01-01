@@ -113,6 +113,7 @@ export class ControlClientComponent implements OnInit {
 		this.clientService.deleteClient(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
+				this.clearForm();
 				this.utilService.processClients();
 				this.notifySocket();
 			} else {
