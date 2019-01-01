@@ -11,6 +11,11 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: false,
         },
+        Time: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
         Client: {
             type: DataTypes.STRING,
             unique: false,
@@ -36,7 +41,17 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: false,
         },
+        ScheduledById: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
         AssignedEmployee: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
+        AssignedEmployeeId: {
             type: DataTypes.STRING,
             unique: false,
             allowNull: true,

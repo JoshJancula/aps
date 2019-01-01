@@ -3,7 +3,7 @@ import { InvoiceService } from '../../services/invoice.service';
 import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
-
+import { MessageService } from '../../services/message.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -15,9 +15,11 @@ export class ControlInvoiceComponent implements OnInit {
 
 	Invoice: any = {
 		Employee: '',
+		EmployeeId: '',
+		ServiceType: '',
 		Client: '',
 		Total: '',
-		Paid: false,
+		Paid: '',
 		PaymentMethod: '',
 		PO: '',
 		RO: '',
@@ -25,28 +27,42 @@ export class ControlInvoiceComponent implements OnInit {
 		Stock: '',
 		Description: '',
 		Comments: '',
-		ServiceType: '',
 		FranchiseId: ''
 	};
 	invoices: any;
 	editing = false;
 	selectedId = '';
+	selectFromClients = false;
+	clients: any;
 	franchises: any;
 
-	constructor(private invoiceService: InvoiceService, private utilService: UtilService) {
+	constructor(private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
+		this.loadInvoices();
 		this.loadFranchises();
+		this.getClients();
 	}
 
 	ngOnInit() {
-		this.getInvoices();
 	}
 
-	getInvoices() {
-		this.invoiceService.getInvoices().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				this.invoices = JSON.parse(JSON.stringify(events.body));
-			}
+	getClients() {
+		this.utilService.processClients();
+		this.utilService.clients.subscribe(response => {
+			this.clients = response;
 		});
+	}
+
+	loadInvoices() {
+		this.utilService.processInvoices();
+		this.utilService.invoices.subscribe(response => {
+			this.invoices = response;
+			console.log('ivoices: ', response);
+		});
+	}
+
+	notifySocket() {
+		const data = { MessageType: 'update', Action: 'invoices' };
+		this.messagingService.sendUpdate(data);
 	}
 
 	loadFranchises() {
@@ -68,7 +84,8 @@ export class ControlInvoiceComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		this.getInvoices();
+		this.utilService.processInvoices();
+		this.notifySocket();
 		this.clearForm();
 	}
 
@@ -77,6 +94,7 @@ export class ControlInvoiceComponent implements OnInit {
 		this.invoiceService.getInvoice(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
 				const data = JSON.parse(JSON.stringify(events.body));
+				console.log('data for getInvoice: ', data);
 				this.Invoice = data;
 				this.selectedId = data.id;
 			}
@@ -96,7 +114,8 @@ export class ControlInvoiceComponent implements OnInit {
 		this.invoiceService.deleteInvoice(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
-				this.getInvoices();
+				this.utilService.processInvoices();
+				this.notifySocket();
 			} else {
 				console.log('error deleting');
 			}

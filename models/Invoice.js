@@ -11,6 +11,11 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: false,
         },
+        EmployeeId: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
         ServiceType: {
             type: DataTypes.STRING,
             unique: false,

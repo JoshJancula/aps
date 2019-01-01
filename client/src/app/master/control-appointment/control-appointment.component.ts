@@ -3,7 +3,7 @@ import { AppointmentService } from '../../services/appointment.service';
 import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
-
+import { MessageService } from '../../services/message.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -21,27 +21,31 @@ export class ControlAppointmentComponent implements OnInit {
 		ContactPerson: '',
 		ContactPersonPhone: '',
 		ScheduledBy: '',
+		ScheduledById: '',
 		AssignedEmployee: '',
-		Comments: ''
+		Comments: '',
+		FranchiseId: ''
 	};
+	clients: any;
 	appointments: any;
 	franchises: any;
 	editing = false;
 	selectedId = '';
+	selectFromClients = false;
 
-	constructor(private appointmentService: AppointmentService, private utilService: UtilService) {
+	constructor(private messagingService: MessageService, private appointmentService: AppointmentService, private utilService: UtilService) {
+		this.loadAppointments();
+		this.getClients();
 		this.loadFranchises();
 	}
 
 	ngOnInit() {
-		this.getAppointments();
 	}
 
-	getAppointments() {
-		this.appointmentService.getAppointments().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				this.appointments = JSON.parse(JSON.stringify(events.body));
-			}
+	loadAppointments() {
+		this.utilService.processAppointments();
+		this.utilService.appointments.subscribe(response => {
+			this.appointments = response;
 		});
 	}
 
@@ -50,6 +54,22 @@ export class ControlAppointmentComponent implements OnInit {
 		this.utilService.franchises.subscribe(response => {
 			this.franchises = response;
 		});
+	}
+
+	updateLocation(client) {
+		this.Appointment.Location = client.StreetAddress + ', ' + client.City + ', ' + client.State + ' ' + client.Zip;
+	}
+
+	getClients() {
+		this.utilService.processClients();
+		this.utilService.clients.subscribe(response => {
+			this.clients = response;
+		});
+	}
+
+	notifySocket() {
+		const data = { MessageType: 'update', Action: 'appointments' };
+		this.messagingService.sendUpdate(data);
 	}
 
 	submitAppointment() {
@@ -64,7 +84,8 @@ export class ControlAppointmentComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		this.getAppointments();
+		this.utilService.processAppointments();
+		this.notifySocket();
 		this.clearForm();
 	}
 
@@ -88,8 +109,10 @@ export class ControlAppointmentComponent implements OnInit {
 			ContactPerson: '',
 			ContactPersonPhone: '',
 			ScheduledBy: '',
+			ScheduledById: '',
 			AssignedEmployee: '',
-			Comments: ''
+			Comments: '',
+			FranchiseId: ''
 		};
 		this.editing = false;
 		this.selectedId = '';
@@ -99,7 +122,8 @@ export class ControlAppointmentComponent implements OnInit {
 		this.appointmentService.deleteAppointment(id).subscribe(res => {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
-				this.getAppointments();
+				this.utilService.processAppointments();
+				this.notifySocket();
 			} else {
 				console.log('error deleting');
 			}

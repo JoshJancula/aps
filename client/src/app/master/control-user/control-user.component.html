@@ -1,12 +1,12 @@
 <div class="row">
-    <div class='col-md-5'>
+    <div class='col-md-5 col-sm-12'>
       <div class='row'>
     <mat-card>
       <div class="card-heading">Create User</div>
       <mat-form-field>
         <input matInput placeholder="Username" [(ngModel)]="User.Username" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf='editing === false'>
         <input matInput placeholder="Password" [(ngModel)]="User.Password" />
       </mat-form-field>
       <mat-form-field>
@@ -16,9 +16,9 @@
         <input matInput placeholder="Last Name" [(ngModel)]="User.LastName" />
       </mat-form-field>
       <mat-form-field>
-          <mat-select placeholder="Role" 
+          <mat-select placeholder="Role" [disabled]="User.Username === 'josh' "
            [(ngModel)]="User.Role">
-            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+            <mat-option *ngFor="let role of roles" [disabled]="role === 'Super' && authService.currentUser.Role !== 'Super'" [value]="role">{{ role }}</mat-option>
           </mat-select>
         </mat-form-field>
       <mat-form-field>
@@ -40,13 +40,14 @@
     </mat-card>
   </div>
   </div>
-  <div class='col-md-4'>
+  <div class='col-md-4 col-sm-12'>
     <div class='row' style="padding-left: 5%;">
       <mat-card>
         <div class="card-heading">Users</div>
         <div *ngFor="let user of users">
           <p>Name: {{user.FirstName}} {{user.LastName}}<br>Role: {{user.Role}}</p>
           <button (click)="editUser(user.id);"  mat-button>Edit</button>
+          <button [disabled]="user.Username === 'josh' " (click)="deleteUser(user.id);"  mat-button>Delete</button>
         </div>
       </mat-card>
       <mat-card style='margin-top: 3%;'> 

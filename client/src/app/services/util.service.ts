@@ -20,6 +20,12 @@ export class UtilService {
 	private clientStore = [];
 	private clientSubject = new BehaviorSubject(this.clientStore);
 	clients = this.clientSubject.asObservable();
+	private appointmentStore = [];
+	private appointmentSubject = new BehaviorSubject(this.appointmentStore);
+	appointments = this.appointmentSubject.asObservable();
+	private invoiceStore = [];
+	private invoiceSubject = new BehaviorSubject(this.invoiceSubject);
+	invoices = this.invoiceSubject.asObservable();
 
 	getFranchises() {
 		const url = `https://aps-josh.herokuapp.com/api/franchises`;
@@ -103,6 +109,66 @@ export class UtilService {
 			if (events.type === HttpEventType.Response) {
 				this.clientStore = JSON.parse(JSON.stringify(events.body));
 				this.clientSubject.next(this.clientStore);
+			}
+		});
+	}
+
+	getAppointments() {
+		const url = `https://aps-josh.herokuapp.com/api/appointments`;
+		const localUrl = `http://localhost:8080/api/appointments`;
+		if (localStorage.getItem('jwtToken')) {
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Authorization': localStorage.getItem('jwtToken'),
+				}),
+				reportProgress: true,
+				observe: 'events' as 'events'
+			};
+			if (window.location.host === 'localhost:4200') {
+				return this.http.get(localUrl, httpOptions);
+			} else {
+				return this.http.get(url, httpOptions);
+			}
+		} else {
+			console.log('no token found');
+		}
+	}
+
+	processAppointments() {
+		this.getAppointments().subscribe((events) => {
+			if (events.type === HttpEventType.Response) {
+				this.appointmentStore = JSON.parse(JSON.stringify(events.body));
+				this.appointmentSubject.next(this.appointmentStore);
+			}
+		});
+	}
+
+	getInvoices() {
+		const url = `https://aps-josh.herokuapp.com/api/invoices`;
+		const localUrl = `http://localhost:8080/api/invoices`;
+		if (localStorage.getItem('jwtToken')) {
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Authorization': localStorage.getItem('jwtToken'),
+				}),
+				reportProgress: true,
+				observe: 'events' as 'events'
+			};
+			if (window.location.host === 'localhost:4200') {
+				return this.http.get(localUrl, httpOptions);
+			} else {
+				return this.http.get(url, httpOptions);
+			}
+		} else {
+			console.log('no token found');
+		}
+	}
+
+	processInvoices() {
+		this.getInvoices().subscribe((events) => {
+			if (events.type === HttpEventType.Response) {
+				this.invoiceStore = JSON.parse(JSON.stringify(events.body));
+				this.invoiceSubject.next(this.invoiceStore);
 			}
 		});
 	}

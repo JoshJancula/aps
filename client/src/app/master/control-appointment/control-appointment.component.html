@@ -4,7 +4,15 @@
       <mat-card>
         <div class="card-heading" *ngIf='editing === false'>Add Appointment</div>
         <div class="card-heading" *ngIf='editing === true'>Edit Appointment</div>
-        <mat-form-field>
+        <!-- <label></label> -->
+        <mat-checkbox class='primary' [(ngModel)]="selectFromClients">Select from clients</mat-checkbox>
+        <br>
+        <mat-form-field *ngIf='selectFromClients === true'>
+            <mat-select placeholder="Client" [(ngModel)]="Appointment.Client">
+              <mat-option *ngFor="let client of clients" (click)="updateLocation(client);" [value]="client.id">{{ client.Name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field *ngIf='selectFromClients === false'>
           <input matInput placeholder="Client" [(ngModel)]="Appointment.Client" />
         </mat-form-field>
         <mat-form-field>

@@ -5,6 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { PhonePipe } from '../../phone.pipe';
 import { HttpEventType } from '@angular/common/http';
 import { MessageService } from 'src/app/services/message.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -34,7 +35,7 @@ export class ControlUserComponent implements OnInit {
 	roles = ['Super', 'Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
 
 	// tslint:disable-next-line:max-line-length
-	constructor(private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
+	constructor(private authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
 		this.getUsers();
 		this.loadFranchises();
 	}
@@ -47,7 +48,7 @@ export class ControlUserComponent implements OnInit {
 		this.utilService.users.subscribe(response => {
 			this.users = [];
 			response.forEach(item => {
-				this.users.push({ FirstName: item.FirstName, LastName: item.LastName, Role: item.Role, id: item.id });
+				this.users.push({ Username: item.Username, FirstName: item.FirstName, LastName: item.LastName, Role: item.Role, id: item.id });
 			});
 		});
 	}

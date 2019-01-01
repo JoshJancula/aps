@@ -24,7 +24,6 @@ module.exports = function (app) {
         where: {
           id: req.params.id
         },
-        include: [db.User, db.Appointment, db.Invoice],
       }).then(function (x) {
         res.json(x);
       });

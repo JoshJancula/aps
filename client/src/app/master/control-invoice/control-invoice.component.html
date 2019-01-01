@@ -4,7 +4,14 @@
       <mat-card>
         <div class="card-heading" *ngIf='editing === false'>Add Invoice</div>
         <div class="card-heading" *ngIf='editing === true'>Edit Invoice</div>
-        <mat-form-field>
+        <mat-checkbox color="primary" [(ngModel)]="selectFromClients">Select from clients</mat-checkbox>
+        <br>
+        <mat-form-field *ngIf='selectFromClients === true'>
+            <mat-select placeholder="Client" [(ngModel)]="Invoice.Client">
+              <mat-option *ngFor="let client of clients" [value]="client.id">{{ client.Name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field *ngIf='selectFromClients === false'>
           <input matInput placeholder="Client" [(ngModel)]="Invoice.Client" />
         </mat-form-field>
         <mat-form-field>
@@ -23,7 +30,7 @@
           <input matInput placeholder="PO#" [(ngModel)]="Invoice.PO" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="RO" [(ngModel)]="Invoice.RO" />
+          <input matInput placeholder="RO#" [(ngModel)]="Invoice.RO" />
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Franchise" [(ngModel)]="Invoice.FranchiseId">
@@ -37,7 +44,7 @@
           <input matInput placeholder="Description" [(ngModel)]="Invoice.Description" />
         </mat-form-field>
         <br>
-        <label style="margin-left: 5%;">Active</label>
+        <label style="margin-left: 5%;">Paid</label>
         <mat-slide-toggle color="primary" [(ngModel)]="Invoice.Paid"></mat-slide-toggle>
         <br>
         <button class='submit' (click)="submitInvoice();" mat-button>Save Appointment</button>
@@ -47,14 +54,20 @@
   </div>
   <div class='col-md-4'>
     <div class='row' style="padding-left: 5%;">
-      <!-- <mat-card>
-            <div class="card-heading">Appointments</div>
-            <div *ngFor="let appointment of appointments">
-              <p>Name: {{client.Name}}</p>
-              <button (click)="deleteClient(client.id);">Delete</button>
-              <button (click)="editClient(client.id);">Edit</button>
+      <mat-card>
+            <div class="card-heading">Invoices</div>
+            <div *ngFor="let invoice of invoices">
+              <p>
+                #: {{invoice.id}}<br>
+                Date: {{ invoice.createdAt }} <br>
+                Client: {{ invoice.Client }} <br>
+                Employee: {{ invoice.Employee }}<br>
+
+              </p>
+              <button (click)="deleteInvoice(invoice.id);" mat-button>Delete</button>
+              <button (click)="editInvoice(invoice.id);" mat-button>Edit</button>
             </div>
-          </mat-card> -->
+          </mat-card>
     </div>
   </div>
 </div>
