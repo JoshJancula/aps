@@ -193,7 +193,7 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	formatDate(date) {
-		return moment(date).format('MM/DD/YY');
+		return moment(date).format('MMMM Do YYYY');
 	}
 
 }

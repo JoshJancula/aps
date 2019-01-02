@@ -5,6 +5,7 @@ import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
 import { MessageService } from '../../services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
+import * as moment from 'moment';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -19,7 +20,7 @@ export class ControlInvoiceComponent implements OnInit {
 		EmployeeId: '',
 		ServiceType: '',
 		Client: '',
-		Total: '',
+		Total: 0,
 		Paid: '',
 		PaymentMethod: '',
 		PO: '',
@@ -40,10 +41,24 @@ export class ControlInvoiceComponent implements OnInit {
 	addVIN = false;
 	clients: any;
 	franchises: any;
+	vins = [];
+	stocks = [];
+	panelsStriped: any;
+	newCarRate = 0;
+	prices = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 200];
 	paymentMethods = ['Cash', 'PO', 'Check', 'Other', 'None'];
-	serviceTypes = ['Pinstriping repair', 'Pinstriping repair & Paint protection', 'New car pinstriping', 'Vinyl wrap', 'Signs', 'Decals', 'Paint protection with install',  'Paint protection no install', 'Other'];
+	serviceTypes = ['Pinstripe repair', 'Pinstripe repair & Paint protection', 'New car pinstriping', 'Vinyl wrap', 'Signs', 'Decals', 'Paint protection with install', 'Paint protection no install', 'Other'];
 	stockNumber = '';
-	vehicles = [];
+	panelOptions = [
+		{ id: 1, model: 'First panel', value: 0 },
+		{ id: 2, model: 'Second panel', value: 0 },
+		{ id: 3, model: 'Third panel', value: 0 },
+		{ id: 4, model: 'Fourth panel', value: 0 },
+		{ id: 5, model: 'Fifth panel', value: 0 },
+		{ id: 6, model: 'Sixth panel', value: 0 },
+		{ id: 7, model: 'Seventh panel', value: 0 },
+		{ id: 'Whole Car', model: 'Whole car', value: 0 }
+	];
 
 
 	// tslint:disable-next-line:max-line-length
@@ -83,27 +98,46 @@ export class ControlInvoiceComponent implements OnInit {
 		});
 	}
 
+	updateTotal() {
+		this.Invoice.Total = 0;
+		Object.keys(this.panelOptions).forEach(key => {
+			this.Invoice.Total += this.panelOptions[key].value;
+		});
+		const newCars = (this.vins.length + this.stocks.length) * this.newCarRate;
+		this.Invoice.Total += newCars;
+	}
+
 	pushVehicle() {
-		console.log('stock to push: ', this.stockNumber);
-		this.vehicles.push(this.stockNumber);
-		console.log('vehicles: ', this.vehicles);
-		this.stockNumber = '';
+		if (this.addStock === true) {
+			this.stocks.push(this.stockNumber);
+			this.stockNumber = '';
+		} else {
+			this.vins.push(this.stockNumber);
+			this.stockNumber = '';
+		}
+		this.updateTotal();
 	}
 
 	removeVehicle(vehicle) {
-		console.log('vehicle to remove: ', vehicle);
-		this.vehicles.splice(this.vehicles.indexOf(vehicle), 1);
+		if (this.stocks.indexOf(vehicle), 1) {
+			this.stocks.splice(this.stocks.indexOf(vehicle), 1);
+		}
+		if (this.vins.indexOf(vehicle), 1) {
+			this.vins.splice(this.vins.indexOf(vehicle), 1);
+		}
 	}
 
 	submitInvoice() {
 		if (this.Invoice.PaymentMethod === 'None') {
 			this.Invoice.Paid = false;
 		}
-		this.Invoice.VIN = this.vehicles.toString();
-		console.log('invoice before save: ', this.Invoice);
+		this.totalPanels();
+		this.Invoice.VIN = this.vins.toString();
+		this.Invoice.Stock = this.stocks.toString();
 		if (this.editing === false) {
 			this.Invoice.Employee = this.authService.currentUser.Name;
 			this.Invoice.EmployeeId = this.authService.currentUser.id;
+			this.Invoice.FranchiseId = this.authService.currentUser.FranchiseId;
 			this.invoiceService.createInvoice(this.Invoice).subscribe(res => {
 				console.log('response: ', res);
 			}, error => {
@@ -119,17 +153,43 @@ export class ControlInvoiceComponent implements OnInit {
 		this.clearForm();
 	}
 
+	totalPanels() {
+		if (this.Invoice.ServiceType === 'New car pinstriping' || this.Invoice.ServiceType === 'Pinstripe repair & Paint protection') {
+			switch (this.panelsStriped) {
+				case 'Whole Car': this.Invoice.Description = this.Invoice.Description = `One vehicle pinstriped`; break;
+				case 1: this.Invoice.Description = `One panel striped for $$${this.panelOptions[0].value}.`; break;
+				case 2: this.Invoice.Description =  `Two panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}`; break;
+				case 3: this.Invoice.Description =  `Three panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}`; break;
+				case 4: this.Invoice.Description =  `Four panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value} `; break;
+				case 4: this.Invoice.Description =  `Five panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value} `; break;
+				case 6: this.Invoice.Description =  `Six panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value}\n Sixth Panel: $${this.panelOptions[5].value}`; break;
+				case 7: this.Invoice.Description =  `Seven panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value}\n Sixth Panel: $${this.panelOptions[5].value}\n Seventh Panel: $${this.panelOptions[6].value}`; break;
+		}
+	}
+	}
+
+	totalNewCars() {
+		if (this.Invoice.ServiceType === 'New car pinstriping') {
+			const totalCars = this.vins.length + this.stocks.length;
+		this.Invoice.Description = this.Invoice.Description = `${totalCars} vehicle(s) pinstriped`;
+		}
+	}
+
 	editInvoice(id) {
 		this.clearForm();
 		this.editing = true;
 		this.invoiceService.getInvoice(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
 				const data = JSON.parse(JSON.stringify(events.body));
-				console.log('data for getInvoice: ', data);
 				this.Invoice = data;
 				this.selectedId = data.id;
+				// tslint:disable-next-line:radix
+				this.Invoice.Total = parseInt(this.Invoice.Total);
 				if (this.Invoice.VIN !== '') {
-					this.vehicles = JSON.parse('[' + data.VIN + ']');
+					this.vins = JSON.parse('[' + data.VIN + ']');
+				}
+				if (this.Invoice.Stock !== '') {
+					this.stocks = JSON.parse('[' + data.Stock + ']');
 				}
 			}
 		});
@@ -141,7 +201,7 @@ export class ControlInvoiceComponent implements OnInit {
 			EmployeeId: '',
 			ServiceType: '',
 			Client: '',
-			Total: '',
+			Total: 0,
 			Paid: '',
 			PaymentMethod: '',
 			PO: '',
@@ -153,10 +213,42 @@ export class ControlInvoiceComponent implements OnInit {
 			Comments: '',
 			FranchiseId: ''
 		};
-		this.vehicles = [];
+		this.stocks = [];
+		this.vins = [];
 		this.stockNumber = '';
 		this.editing = false;
 		this.selectedId = '';
+		this.selectFromClients = false;
+		this.panelsStriped = '';
+		this.newCarRate = 0;
+		this.panelOptions = [
+			{ id: 1, model: 'First panel', value: 0 },
+			{ id: 2, model: 'Second panel', value: 0 },
+			{ id: 3, model: 'Third panel', value: 0 },
+			{ id: 4, model: 'Fourth panel', value: 0 },
+			{ id: 5, model: 'Fifth panel', value: 0 },
+			{ id: 6, model: 'Sixth panel', value: 0 },
+			{ id: 7, model: 'Seventh panel', value: 0 },
+			{ id: 'Whole Car', model: 'Whole car', value: 0 }
+		];
+	}
+
+	clearTotals() {
+		this.stocks = [];
+		this.vins = [];
+		this.panelsStriped = '';
+		this.newCarRate = 0;
+		this.panelOptions = [
+			{ id: 1, model: 'First panel', value: 0 },
+			{ id: 2, model: 'Second panel', value: 0 },
+			{ id: 3, model: 'Third panel', value: 0 },
+			{ id: 4, model: 'Fourth panel', value: 0 },
+			{ id: 5, model: 'Fifth panel', value: 0 },
+			{ id: 6, model: 'Sixth panel', value: 0 },
+			{ id: 7, model: 'Seventh panel', value: 0 },
+			{ id: 'Whole Car', model: 'Whole car', value: 0 }
+		];
+		this.Invoice.Total = 0;
 	}
 
 	deleteInvoice(id) {
@@ -170,6 +262,10 @@ export class ControlInvoiceComponent implements OnInit {
 				console.log('error deleting');
 			}
 		});
+	}
+
+	formatDate(date) {
+		return moment(date).format('MMMM Do YYYY');
 	}
 
 }

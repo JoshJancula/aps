@@ -7,69 +7,117 @@
         <mat-checkbox *ngIf="editing === false" color="primary" [(ngModel)]="selectFromClients">Select from clients</mat-checkbox>
         <br>
         <mat-form-field *ngIf='selectFromClients === true'>
-            <mat-select placeholder="Client" [(ngModel)]="Invoice.Client">
-              <mat-option *ngFor="let client of clients" [value]="client.Name">{{ client.Name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
+          <mat-select placeholder="Client" [(ngModel)]="Invoice.Client">
+            <mat-option *ngFor="let client of clients" [value]="client.Name">{{ client.Name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field *ngIf='selectFromClients === false'>
           <input matInput placeholder="Client" [(ngModel)]="Invoice.Client" />
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Products and services" [(ngModel)]="Invoice.ServiceType">
-            <mat-option *ngFor="let service of serviceTypes" [value]="service">{{ service }}</mat-option>
+            <mat-option *ngFor="let service of serviceTypes" (click)='clearTotals();' [value]="service">{{ service }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Total" [(ngModel)]="Invoice.Total" />
-        </mat-form-field>
-        <mat-form-field>
-            <mat-select placeholder="Payment method" [(ngModel)]="Invoice.PaymentMethod">
-              <mat-option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</mat-option>
+        <mat-form-field *ngIf="Invoice.ServiceType ===  'New car pinstriping'">
+            <mat-select placeholder="Rate per car" [(ngModel)]="newCarRate">
+                <mat-option *ngFor="let price of prices" (click)="updateTotal();" [value]="price">${{ price }}</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+        <div *ngIf="Invoice.ServiceType === 'Pinstripe repair' || Invoice.ServiceType === 'Pinstripe repair & Paint protection' && editing === false">
+          <mat-form-field>
+            <mat-select placeholder="Panels striped" [(ngModel)]="panelsStriped">
+              <mat-option *ngFor="let panel of panelOptions" [value]="panel.id">{{ panel.id }}</mat-option>
             </mat-select>
           </mat-form-field>
-        <mat-form-field *ngIf="Invoice.PaymentMethod === 'PO'">
-          <input matInput placeholder="PO#" [(ngModel)]="Invoice.PO" />
-        </mat-form-field>
-        <mat-form-field *ngIf="Invoice.PaymentMethod === 'Check'">
-            <input matInput placeholder="Check#" [(ngModel)]="Invoice.CheckNumber" />
-          </mat-form-field>
-          <button  class='submit' (click)="addRO = true; addStock = false; addVIN = false;" mat-button>Add RO#</button>
-          <button class='submit' (click)="addStock = true; addRO = false; addVIN = false;" mat-button>Add Stock #(s)</button>
-          <button class='submit'  mat-button>Scan VIN #(s)</button>
-          <button class='submit' (click)="addStock = false; addRO = false; addVIN = true;"  mat-button>Manually add VIN #</button>
           <br>
+          <div *ngIf="panelsStriped !== ''">
+          <div *ngFor="let panel of panelOptions">
+            <div *ngIf="panelsStriped === 'Whole car'">
+          <mat-form-field >
+              <mat-select placeholder="{{panel.model}} price" [(ngModel)]="panel.value">
+                <mat-option *ngFor="let price of prices" (click)="updateTotal();" [value]="price">${{ price }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div *ngIf="panelsStriped !== 'Whole car'">
+            <mat-form-field  *ngIf="panel.id <= panelsStriped">
+                <mat-select placeholder="{{panel.model}} price" [(ngModel)]="panel.value">
+                  <mat-option *ngFor="let price of prices" (click)="updateTotal();" [value]="price">${{ price }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+             </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div *ngIf="editing === true " readonly>
+         {{ Invoice.Description }}
+      </div>
+
+        <!-- buttons for input options -->
+        <button class='submit' (click)="addRO = true; addStock = false; addVIN = false;" mat-button>Add RO#</button>
+        <button class='submit' (click)="addStock = true; addRO = false; addVIN = false;" mat-button>Add Stock#(s)</button>
+        <!-- <button class='submit'  mat-button>Scan VIN #(s)</button> -->
+        <button class='submit' (click)="addStock = false; addRO = false; addVIN = true;" maxlength="8" minlength="8"
+          mat-button>Add VIN#(s)</button>
+        <br>
+        <!-- stock numbers populate here -->
+        <div *ngIf='stocks.length > 0 || vins.length > 0'>
+          <div *ngFor="let stock of stocks">
+            {{ stock }} <span style='font-size: 8px'>Stock#</span>
+            <button (click)="removeVehicle(stock);" mat-button>Remove</button>
+          </div>
+          <div *ngFor="let vin of vins">
+            {{ vin }} <span style='font-size: 8px'>VIN#</span>
+            <button (click)="removeVehicle(vin);" mat-button>Remove</button>
+          </div>
+        </div>
+        <!-- manual input stocks vins and ro -->
+        <mat-form-field *ngIf='addStock === true'>
+          <input matInput placeholder="Stock#" [(ngModel)]="stockNumber" />
+        </mat-form-field>
+        <mat-form-field *ngIf='addVIN === true'>
+          <input matInput placeholder="VIN#" [(ngModel)]="stockNumber" />
+          <mat-hint align="start">Last 8 characters</mat-hint>
+        </mat-form-field>
+        <button *ngIf="addStock === true || addVIN === true" class='submit' (click)="pushVehicle();" mat-button>Add</button>
         <mat-form-field *ngIf='addRO === true'>
           <input matInput placeholder="RO#" [(ngModel)]="Invoice.RO" />
         </mat-form-field>
 
-        <div *ngIf='vehicles.length > 0'> 
-          <div *ngFor="let vehicle of vehicles">
-            {{vehicle}}
-            <button (click)="removeVehicle(vehicle);" mat-button>Remove</button>
-          </div>
-        </div>
-        <mat-form-field *ngIf='addStock === true'>
-          <input matInput placeholder="Stock#"  [(ngModel)]="stockNumber"/>
-        </mat-form-field>
-        <mat-form-field *ngIf='addVIN === true'>
-          <input matInput placeholder="VIN#"  [(ngModel)]="stockNumber"/>
-        </mat-form-field>
-        <button *ngIf="addStock === true || addVIN === true" class='submit' (click)="pushVehicle();"  mat-button>Add</button>
+        <!-- total cost and payment info -->
         <mat-form-field>
+          <input matInput placeholder="Total" [(ngModel)]="Invoice.Total" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Payment method" [(ngModel)]="Invoice.PaymentMethod">
+            <mat-option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="Invoice.PaymentMethod === 'PO'">
+          <input matInput placeholder="PO#" [(ngModel)]="Invoice.PO" />
+        </mat-form-field>
+        <mat-form-field *ngIf="Invoice.PaymentMethod === 'Check'">
+          <input matInput placeholder="Check#" [(ngModel)]="Invoice.CheckNumber" />
+        </mat-form-field>
+        <!-- <mat-form-field>
           <mat-select placeholder="Franchise" [(ngModel)]="Invoice.FranchiseId">
             <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
+
+        <!-- comments and discription if applicable -->
         <mat-form-field>
           <input matInput placeholder="Comments" [(ngModel)]="Invoice.Comments" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Description" [(ngModel)]="Invoice.Description" />
         </mat-form-field>
         <br>
         <label style="margin-left: 5%;">Paid</label>
         <mat-slide-toggle color="primary" [(ngModel)]="Invoice.Paid"></mat-slide-toggle>
         <br>
+        <!-- buttons -->
         <button class='submit' (click)="submitInvoice();" mat-button>Save Invoice</button>
         <button (click)="clearForm();" mat-button>Clear form</button>
         <button *ngIf='editing === true' (click)="deleteInvoice(Invoice.id);" mat-button>Delete</button>
@@ -79,18 +127,18 @@
   <div class='col-md-4'>
     <div class='row' style="padding-left: 5%;">
       <mat-card>
-            <div class="card-heading">Invoices</div>
-            <div *ngFor="let invoice of invoices">
-              <p>
-                #: {{invoice.id}}<br>
-                Date: {{ invoice.createdAt }} <br>
-                Client: {{ invoice.Client }} <br>
-                Employee: {{ invoice.Employee }}<br>
+        <div class="card-heading">Invoices</div>
+        <div *ngFor="let invoice of invoices">
+          <p>
+            #: {{invoice.id}}<br>
+            Date: {{ formatDate(invoice.createdAt) }} <br>
+            Client: {{ invoice.Client }} <br>
+            Employee: {{ invoice.Employee }}<br>
 
-              </p>
-              <button (click)="editInvoice(invoice.id);" mat-button>Edit</button>
-            </div>
-          </mat-card>
+          </p>
+          <button (click)="editInvoice(invoice.id);" mat-button>Edit</button>
+        </div>
+      </mat-card>
     </div>
   </div>
 </div>

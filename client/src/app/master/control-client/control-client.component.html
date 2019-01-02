@@ -20,7 +20,7 @@
             </mat-select>
           </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="ZipCode" [(ngModel)]="Client.Zip" />
+          <input matInput placeholder="ZipCode" maxlength="5"  [(ngModel)]="Client.Zip" />
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Description" [(ngModel)]="Client.Description" />
@@ -32,7 +32,7 @@
           <input matInput placeholder="Email" [(ngModel)]="Client.Email" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Phone" [(ngModel)]="Client.Phone" (blur)="formatPhone();" />
+          <input matInput placeholder="Phone" maxlength="14" type="number" [(ngModel)]="Client.Phone" (input)="formatPhone();" />
         </mat-form-field>
         <mat-form-field>
             <mat-select placeholder="Franchise" 
