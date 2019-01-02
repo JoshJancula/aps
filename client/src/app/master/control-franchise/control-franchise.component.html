@@ -1,10 +1,10 @@
 <div class="row">
-    <div class='col-md-3'>
+    <div class='col-md-3 col-sm-12'>
       <div class='row'>
     <mat-card>
       <div class="card-heading">Create Franchise</div>
       <mat-form-field>
-        <input matInput placeholder="Name" [(ngModel)]="Franchise.Name" />
+        <input matInput placeholder="Name" [readonly]="editing === true" [(ngModel)]="Franchise.Name" />
       </mat-form-field>
       <br/>
         <label style="margin-left: 5%;">Active</label>
@@ -16,7 +16,7 @@
     </mat-card>
   </div>
   </div>
-  <div class='col-md-9'>
+  <div class='col-md-9 col-sm-12'>
     <div class='row' style="padding-left: 5%;">
       <mat-card>
         <div class="card-heading">All Franchises</div>

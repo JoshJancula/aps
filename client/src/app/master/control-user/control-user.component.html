@@ -25,7 +25,7 @@
         <input matInput placeholder="Email" [(ngModel)]="User.Email" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Phone" maxlength="14" type="number" [(ngModel)]="User.Phone" (change)="formatPhone();" />
+        <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="User.Phone" (change)="formatPhone();" />
       </mat-form-field>
       <mat-form-field>
           <mat-select placeholder="Franchise"
@@ -33,7 +33,8 @@
             <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <label style="margin-left: 5%;">Active</label>
+        <br>
+        <label>Active</label>
         <mat-slide-toggle color="primary" [(ngModel)]="User.Active"></mat-slide-toggle>
      <br/>
         <button class='submit' (click)="submitUser();" mat-button>Save user</button>
@@ -43,7 +44,7 @@
   </div>
   </div>
   <div class='col-md-4 col-sm-12'>
-    <div class='row' style="padding-left: 5%;">
+    <div class='row'>
       <mat-card>
         <div class="card-heading">Users</div>
         <div *ngFor="let user of users">
@@ -51,7 +52,7 @@
           <button (click)="editUser(user.id);"  mat-button>Edit</button>
         </div>
       </mat-card>
-      <mat-card style='margin-top: 3%;'> 
+      <mat-card> 
           <div class="card-heading">Test login</div>
           <mat-form-field>
               <input matInput placeholder="Username" [(ngModel)]="testUsername" />

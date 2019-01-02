@@ -34,3 +34,29 @@
 .options:hover {
     color: blue;
 }
+
+.addIcon {
+    display: none;
+}
+
+.mainRow {
+    padding: 3%;
+}
+
+@media (max-width: 707px) {
+.desktopView {
+    display: none;
+} 
+
+.addIcon{
+    display: block;
+    z-index: 20;
+    height: 90px;
+    width: 90px;
+    position: sticky;       
+    bottom: 30px;
+    left: calc(80vw);
+    cursor: pointer;
+}
+
+}

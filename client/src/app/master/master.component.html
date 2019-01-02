@@ -1,5 +1,5 @@
 
-<div class='row' style='padding-left: 2%; padding-top: 2%; margin-bottom: 2%'>
+<div class='row mainRow'>
   <div class='col-md-2 desktopView'>
   <div class='row'> <h3> Master Control Panel</h3></div>
   <div class='options' (click)="openUsers();" mat-button>Users</div>
@@ -16,5 +16,6 @@
     <app-control-appointment *ngIf="appointmentMode === true"></app-control-appointment>
     <app-control-invoice *ngIf='invoiceMode === true'></app-control-invoice>
 </div>
+<button class='addIcon'  (click)='openPopup();'><mat-icon>home</mat-icon></button>
 </div>
 

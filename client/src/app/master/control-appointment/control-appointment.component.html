@@ -1,5 +1,5 @@
 <div class="row">
-  <div class='col-md-5'>
+  <div class='col-md-5 col-sm-12'>
     <div class='row'>
       <mat-card>
         <div class="card-heading" *ngIf='editing === false'>Add Appointment</div>
@@ -15,10 +15,10 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field *ngIf='selectFromClients === false'>
-          <input matInput placeholder="Client" [(ngModel)]="Appointment.Client" />
+          <input matInput placeholder="Client" [readonly]="editing === true" [(ngModel)]="Appointment.Client" />
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="Location" [(ngModel)]="Appointment.Location" />
+            <input matInput placeholder="Location" [readonly]="editing === true" [(ngModel)]="Appointment.Location" />
           </mat-form-field>
           <br>
           <mat-checkbox color='primary' (change)="setTime();" [(ngModel)]="anytime">Anytime</mat-checkbox>
@@ -40,7 +40,7 @@
           <input matInput placeholder="Contact Person" [(ngModel)]="Appointment.ContactPerson" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Contact Person phone" maxlength="14" type="number" (blur)="formatPhone();" [(ngModel)]="Appointment.ContactPersonPhone" />
+          <input matInput placeholder="Contact Person phone" maxlength="14" (blur)="formatPhone();" [(ngModel)]="Appointment.ContactPersonPhone" />
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Assigned employee" [(ngModel)]="Appointment.AssignedEmployee">
@@ -63,7 +63,7 @@
       </mat-card>
     </div>
   </div>
-  <div class='col-md-4'>
+  <div class='col-md-4 col-sm-12'>
     <div class='row' style="padding-left: 5%;">
       <mat-card>
           <div class="card-heading">Appointments</div>

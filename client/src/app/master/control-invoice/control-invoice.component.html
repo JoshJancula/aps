@@ -1,5 +1,5 @@
 <div class="row">
-  <div class='col-md-5'>
+  <div class='col-md-5 col-sm-12'>
     <div class='row'>
       <mat-card>
         <div class="card-heading" *ngIf='editing === false'>Add Invoice</div>
@@ -7,15 +7,15 @@
         <mat-checkbox *ngIf="editing === false" color="primary" [(ngModel)]="selectFromClients">Select from clients</mat-checkbox>
         <br>
         <mat-form-field *ngIf='selectFromClients === true'>
-          <mat-select placeholder="Client" [(ngModel)]="Invoice.Client">
+          <mat-select placeholder="Client" [disabled]="editing === true" [(ngModel)]="Invoice.Client">
             <mat-option *ngFor="let client of clients" [value]="client.Name">{{ client.Name }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field *ngIf='selectFromClients === false'>
-          <input matInput placeholder="Client" [(ngModel)]="Invoice.Client" />
+          <input matInput placeholder="Client" [readonly]="editing === true" [(ngModel)]="Invoice.Client" />
         </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Products and services" [(ngModel)]="Invoice.ServiceType">
+        <mat-form-field  >
+          <mat-select placeholder="Products and services" [disabled]="editing === true" [(ngModel)]="Invoice.ServiceType">
             <mat-option *ngFor="let service of serviceTypes" (click)='clearTotals();' [value]="service">{{ service }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -59,9 +59,8 @@
 
         <!-- buttons for input options -->
         <button class='submit' (click)="addRO = true; addStock = false; addVIN = false;" mat-button>Add RO#</button>
-        <button class='submit' (click)="addStock = true; addRO = false; addVIN = false;" mat-button>Add Stock#(s)</button>
-        <!-- <button class='submit'  mat-button>Scan VIN #(s)</button> -->
-        <button class='submit' (click)="addStock = false; addRO = false; addVIN = true;" maxlength="8" minlength="8"
+        <button class='submit' [disabled]="editing === true" (click)="addStock = true; addRO = false; addVIN = false;" mat-button>Add Stock#(s)</button>
+        <button class='submit' [disabled]="editing === true" (click)="addStock = false; addRO = false; addVIN = true;" maxlength="8" 
           mat-button>Add VIN#(s)</button>
         <br>
         <!-- stock numbers populate here -->
@@ -124,7 +123,7 @@
       </mat-card>
     </div>
   </div>
-  <div class='col-md-4'>
+  <div class='col-md-4 col-sm-12'>
     <div class='row' style="padding-left: 5%;">
       <mat-card>
         <div class="card-heading">Invoices</div>
