@@ -94,14 +94,38 @@ db.sequelize.sync().then(function () {
                 });
             });
 
+            // socket.on('update', function (data) {
+            //     switch (data.Action) {
+			// 		case 'franchises': socket.broadcast.emit('update', { Action: 'updateFranchises' }); break;
+			// 		case 'clients': socket.broadcast.emit('update', { Action: 'updateClients' }); break;
+			// 		case 'users': socket.broadcast.emit('update', { Action: 'updateUsers' }); break;
+			// 		case 'invoices': socket.broadcast.emit('update', { Action: 'updateInvoices' }); break;
+			// 		case 'appointments': socket.broadcast.emit('update', { Action: 'updateAppointments' }); break;
+			// 	}
+            // });
+
             socket.on('update', function (data) {
-                switch (data.Action) {
-					case 'franchises': socket.broadcast.emit('update', { Action: 'updateFranchises' }); break;
-					case 'clients': socket.broadcast.emit('update', { Action: 'updateClients' }); break;
-					case 'users': socket.broadcast.emit('update', { Action: 'updateUsers' }); break;
-					case 'invoices': socket.broadcast.emit('update', { Action: 'updateInvoices' }); break;
-					case 'appointments': socket.broadcast.emit('update', { Action: 'updateAppointments' }); break;
-				}
+                if (data.Action === 'clients') {
+                    socket.broadcast.emit('update', {
+                        Action: 'updateClients',
+                    });
+                } else if (data.Action === 'franchises') {
+                    socket.broadcast.emit('update', {
+                        Action: 'updateFranchises',
+                    });
+                } else if (data.Action === 'users') {
+                    socket.broadcast.emit('update', {
+                        Action: 'updateUsers',
+                    });
+                } else if (data.Action === 'invoices') {
+                    socket.broadcast.emit('update', {
+                        Action: 'updateInvoices',
+                    });
+                } else if (data.Action === 'appointments') {
+					socket.broadcast.emit('update', {
+                        Action: 'updateAppointments',
+                    });
+                }
             });
 
             // update that the recipient read the message

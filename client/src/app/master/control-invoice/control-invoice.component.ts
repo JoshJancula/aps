@@ -148,8 +148,8 @@ export class ControlInvoiceComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		this.utilService.processInvoices();
 		this.notifySocket();
+		this.utilService.processInvoices();
 		this.clearForm();
 	}
 
