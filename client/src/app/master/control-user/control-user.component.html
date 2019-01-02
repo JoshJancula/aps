@@ -25,7 +25,7 @@
         <input matInput placeholder="Email" [(ngModel)]="User.Email" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="User.Phone" (input)="formatPhone();" />
+        <input matInput placeholder="Phone" maxlength="14" type="number" [(ngModel)]="User.Phone" (change)="formatPhone();" />
       </mat-form-field>
       <mat-form-field>
           <mat-select placeholder="Franchise"

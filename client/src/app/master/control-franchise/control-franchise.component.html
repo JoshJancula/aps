@@ -12,7 +12,7 @@
      <br/>
         <button class='submit' (click)="submitFranchise();" mat-button>Save Franchise</button>
         <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
-        <button *ngIf='editing === true;' (click)="deleteFranchise(Franchise.id);" [disabled]="franchise.Name === 'Master'" mat-button>Delete</button>
+        <button *ngIf='editing === true;' (click)="deleteFranchise(Franchise.id);" [disabled]="Franchise.Name === 'Master'" mat-button>Delete</button>
     </mat-card>
   </div>
   </div>
