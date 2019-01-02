@@ -1,0 +1,8 @@
+.options {
+    cursor: pointer;
+    padding: 2%;
+}
+
+.options:hover {
+    color: blue;
+}

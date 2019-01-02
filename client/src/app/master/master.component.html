@@ -1,15 +1,15 @@
 
 <div class='row' style='padding-left: 2%; padding-top: 2%; margin-bottom: 2%'>
-  <div class='col-md-2'>
-  <span style='margin-right: 2%;'> Master Control Panel</span><br>
-  <button (click)="openUsers();" mat-button>Users</button><br>
-  <button  (click)="openFranchises();" mat-button>Franchises</button><br>
-  <!-- <button  (click)="clearStorage();" mat-button>Clear storage</button><br> -->
-  <button  (click)="openClients();" mat-button>Clients</button><br>
-  <button  (click)="openAppointments();" mat-button>Appointments</button><br>
-  <button  (click)="openInvoices();" mat-button>Invoices</button><br>
+  <div class='col-md-2 desktopView'>
+  <div class='row'> <h3> Master Control Panel</h3></div>
+  <div class='options' (click)="openUsers();" mat-button>Users</div>
+  <div class='options' (click)="openFranchises();">Franchises</div>
+  <div class='options' (click)="openClients();" >Clients</div>
+  <div class='options' (click)="openAppointments();">Appointments</div>
+  <div class='options' (click)="openInvoices();" >Invoices</div>
+  <div class='options' (click)="openPopup();" >Open popup</div>
 </div>
-<div class='col-md-10'>
+<div class='col-md-10 col-sm-12'>
     <app-control-user *ngIf='userMode === true;'></app-control-user>
     <app-control-franchise *ngIf='franchiseMode === true;'></app-control-franchise>    
     <app-control-client *ngIf='clientMode === true;'></app-control-client>

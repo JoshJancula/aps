@@ -8,6 +8,8 @@ import { HttpEventType } from '@angular/common/http';
 import { UserService } from '../services/user.service';
 import { MessageService } from '../services/message.service';
 import { AuthService } from '../services/auth.service';
+import {MatBottomSheet, MatBottomSheetRef } from '@angular/material';
+import { BottomPopupComponent } from '../bottom-popup/bottom-popup.component';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -28,8 +30,9 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlFranchise') controlFranchise: ControlFranchiseComponent;
 	@ViewChild('controlClient') controlClient: ControlClientComponent;
 	@ViewChild('controlAppointment') controlAppointment: ControlAppointmentComponent;
+	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
 	// tslint:disable-next-line:max-line-length
-	constructor(private authService: AuthService, private utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
+	constructor(private bottomSheetRef: MatBottomSheet, private authService: AuthService, private utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
 		this.messagingService.initSocket();
@@ -38,6 +41,19 @@ export class MasterComponent implements OnInit {
 			});
 			this.subscribeToUpdates();
 		setTimeout(() => this.sendConnectionMessage(), 500);
+	}
+
+	openPopup() {
+		const sheet = this.bottomSheetRef.open(BottomPopupComponent);
+		sheet.afterDismissed().subscribe((res) => {
+			switch (res) {
+				case 'clients': this.openClients(); break;
+				case 'franchises': this.openFranchises(); break;
+				case 'users': this.openUsers(); break;
+				case 'invoices': this.openInvoices(); break;
+				case 'appointments': this.openAppointments(); break;
+			}
+		});
 	}
 
 	sendConnectionMessage() {

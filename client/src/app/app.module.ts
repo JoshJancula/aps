@@ -30,11 +30,14 @@ import { ClientService } from './services/client.service';
 import { InvoiceService } from './services/invoice.service';
 import { MessageService } from './services/message.service';
 import { AppointmentService } from './services/appointment.service';
+import { MatBottomSheetModule } from '@angular/material';
+import { BottomPopupComponent } from './bottom-popup/bottom-popup.component';
 
 @NgModule({
 	entryComponents: [
 		LoginComponent,
-		MasterComponent
+		MasterComponent,
+		BottomPopupComponent
 	],
 	declarations: [
 		AppComponent,
@@ -45,7 +48,9 @@ import { AppointmentService } from './services/appointment.service';
 		ControlClientComponent,
 		ControlAppointmentComponent,
 		ControlInvoiceComponent,
-		PhonePipe
+		BottomPopupComponent,
+		PhonePipe,
+		BottomPopupComponent
 	],
 	imports: [
 		BrowserModule,
@@ -63,6 +68,7 @@ import { AppointmentService } from './services/appointment.service';
 		MatMenuModule,
 		MatToolbarModule,
 		MatPaginatorModule,
+		MatBottomSheetModule,
 		MatCheckboxModule,
 		MatNativeDateModule,
 		MatSortModule,
