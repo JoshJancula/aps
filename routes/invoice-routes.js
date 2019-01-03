@@ -9,7 +9,7 @@ module.exports = function (app) {
 
   // GET route for getting all invoices
   app.get("/api/invoices", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Invoice.findAll({
       }).then(function (x) {
         res.json(x);
@@ -19,7 +19,7 @@ module.exports = function (app) {
 
   // GET route for retrieving a single invoice
   app.get("/api/invoices/:id", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Invoice.findOne({
         where: {
           id: req.params.id
@@ -32,7 +32,7 @@ module.exports = function (app) {
 
   // POST route for saving a new invoice
   app.post("/api/invoices", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Invoice.create(req.body).then(function (x) {
         res.json(x);
       });
@@ -43,7 +43,7 @@ module.exports = function (app) {
 
   // PUT route for updating invoice
   app.put("/api/invoices/:id", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Invoice.update({
         Total: req.body.Total,
         Paid: req.body.Paid,
@@ -70,7 +70,7 @@ module.exports = function (app) {
 
   // DELETE route for deleting a invoice location
   app.delete("/api/invoices/:id", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Invoice.destroy({
         where: {
           id: req.params.id

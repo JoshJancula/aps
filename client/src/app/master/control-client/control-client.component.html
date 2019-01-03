@@ -40,6 +40,7 @@
               <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
             </mat-select>
           </mat-form-field>
+          <br>
         <button class='submit' (click)="submitClient();" mat-button>Save client</button>
         <button  (click)="clearForm();" mat-button>Clear form</button>
         <button *ngIf='editing === true' (click)="deleteClient(Client.id);" mat-button>Delete</button>

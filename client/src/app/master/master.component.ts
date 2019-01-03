@@ -19,11 +19,11 @@ import { BottomPopupComponent } from '../bottom-popup/bottom-popup.component';
 })
 export class MasterComponent implements OnInit {
 
-	userMode = true;
+	userMode = false;
 	franchiseMode = false;
 	clientMode = false;
 	appointmentMode = false;
-	invoiceMode = false;
+	invoiceMode = true;
 	messageConnection: any;
 	updateConnection: any;
 	@ViewChild('controlUser') controlUser: ControlUserComponent;

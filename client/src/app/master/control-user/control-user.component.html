@@ -4,7 +4,7 @@
     <mat-card>
       <div class="card-heading">Create User</div>
       <mat-form-field>
-        <input matInput placeholder="Username" [(ngModel)]="User.Username" />
+        <input matInput placeholder="Username" [readonly]="editing === true" [(ngModel)]="User.Username" />
       </mat-form-field>
       <mat-form-field *ngIf='editing === false'>
         <input matInput placeholder="Password" [(ngModel)]="User.Password" />
@@ -39,7 +39,7 @@
      <br/>
         <button class='submit' (click)="submitUser();" mat-button>Save user</button>
         <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
-        <button *ngIf='editing === true' [disabled]="user.Username === 'josh' " (click)="deleteUser(User.id);"  mat-button>Delete</button>
+        <button *ngIf='editing === true' [disabled]="User.Username === 'josh' " (click)="deleteUser(User.id);"  mat-button>Delete</button>
     </mat-card>
   </div>
   </div>

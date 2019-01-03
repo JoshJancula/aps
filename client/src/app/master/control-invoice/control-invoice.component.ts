@@ -47,8 +47,10 @@ export class ControlInvoiceComponent implements OnInit {
 	newCarRate = 0;
 	prices = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 200];
 	paymentMethods = ['Cash', 'PO', 'Check', 'Other', 'None'];
-	serviceTypes = ['Pinstripe repair', 'Pinstripe repair & Paint protection', 'New car pinstriping', 'Vinyl wrap', 'Signs', 'Decals', 'Paint protection with install', 'Paint protection no install', 'Other'];
+	serviceTypes = ['Pinstripe repair', 'Pinstripe repair & Paint protection', 'New car pinstriping', 'Vinyl wrap', 'Signs', 'Decals', 'Paint protection with install', 'Paint protection no install', 'Window tint', 'Other'];
 	stockNumber = '';
+	manualAmountInput = false;
+	ppfAdded = [];
 	panelOptions = [
 		{ id: 1, model: 'First panel', value: 0 },
 		{ id: 2, model: 'Second panel', value: 0 },
@@ -58,6 +60,19 @@ export class ControlInvoiceComponent implements OnInit {
 		{ id: 6, model: 'Sixth panel', value: 0 },
 		{ id: 7, model: 'Seventh panel', value: 0 },
 		{ id: 'Whole Car', model: 'Whole car', value: 0 }
+	];
+	ppfOptions = [
+		{ id: 1, model: 'Edge guard', value: 0 },
+		{ id: 2, model: 'Door cup', value: 0 },
+		{ id: 3, model: 'Whole fender', value: 0 },
+		{ id: 4, model: 'Partial fender', value: 0 },
+		{ id: 5, model: 'Full hood', value: 0 },
+		{ id: 6, model: 'Partial hood', value: 0 },
+		{ id: 7, model: 'Front bumper', value: 0 },
+		{ id: 8, model: 'Rear bumper', value: 0 },
+		{ id: 9, model: 'Mirror(s)', value: 0 },
+		{ id: 10, model: 'Stone guard', value: 0 },
+		{ id: 11, model: 'Other', value: 0 },
 	];
 
 
@@ -69,6 +84,19 @@ export class ControlInvoiceComponent implements OnInit {
 	}
 
 	ngOnInit() {
+	}
+
+	clearZeros() {
+		this.panelOptions.forEach(opt => {
+			if (opt.value === 0) {
+				opt.value = null;
+			}
+		});
+	}
+
+	addPPF(ppf) {
+		const converted = { id: this.ppfAdded.length + 1, model: ppf.model, value: ppf.value };
+		this.ppfAdded.push(converted);
 	}
 
 	getClients() {
@@ -105,6 +133,13 @@ export class ControlInvoiceComponent implements OnInit {
 		});
 		const newCars = (this.vins.length + this.stocks.length) * this.newCarRate;
 		this.Invoice.Total += newCars;
+		this.getPPFValues(newCars);
+	}
+
+	getPPFValues(newCars) {
+		this.ppfAdded.forEach(ppf => {
+			newCars += ppf.value;
+		});
 	}
 
 	pushVehicle() {
@@ -125,6 +160,10 @@ export class ControlInvoiceComponent implements OnInit {
 		if (this.vins.indexOf(vehicle), 1) {
 			this.vins.splice(this.vins.indexOf(vehicle), 1);
 		}
+	}
+
+	removePPF(ppf) {
+		this.ppfAdded.splice(this.ppfAdded.indexOf(ppf), 1);
 	}
 
 	submitInvoice() {
@@ -148,6 +187,7 @@ export class ControlInvoiceComponent implements OnInit {
 				console.log(res);
 			});
 		}
+		console.log('invoice: ', this.Invoice);
 		this.notifySocket();
 		this.utilService.processInvoices();
 		this.clearForm();
@@ -158,20 +198,20 @@ export class ControlInvoiceComponent implements OnInit {
 			switch (this.panelsStriped) {
 				case 'Whole Car': this.Invoice.Description = this.Invoice.Description = `One vehicle pinstriped`; break;
 				case 1: this.Invoice.Description = `One panel striped for $$${this.panelOptions[0].value}.`; break;
-				case 2: this.Invoice.Description =  `Two panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}`; break;
-				case 3: this.Invoice.Description =  `Three panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}`; break;
-				case 4: this.Invoice.Description =  `Four panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value} `; break;
-				case 4: this.Invoice.Description =  `Five panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value} `; break;
-				case 6: this.Invoice.Description =  `Six panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value}\n Sixth Panel: $${this.panelOptions[5].value}`; break;
-				case 7: this.Invoice.Description =  `Seven panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value}\n Sixth Panel: $${this.panelOptions[5].value}\n Seventh Panel: $${this.panelOptions[6].value}`; break;
+				case 2: this.Invoice.Description = `Two panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}`; break;
+				case 3: this.Invoice.Description = `Three panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}`; break;
+				case 4: this.Invoice.Description = `Four panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value} `; break;
+				case 4: this.Invoice.Description = `Five panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value} `; break;
+				case 6: this.Invoice.Description = `Six panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value}\n Sixth Panel: $${this.panelOptions[5].value}`; break;
+				case 7: this.Invoice.Description = `Seven panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}\n Fourth Panel: $${this.panelOptions[3].value}\n Fifth Panel: $${this.panelOptions[4].value}\n Sixth Panel: $${this.panelOptions[5].value}\n Seventh Panel: $${this.panelOptions[6].value}`; break;
+			}
 		}
-	}
 	}
 
 	totalNewCars() {
 		if (this.Invoice.ServiceType === 'New car pinstriping') {
 			const totalCars = this.vins.length + this.stocks.length;
-		this.Invoice.Description = this.Invoice.Description = `${totalCars} vehicle(s) pinstriped`;
+			this.Invoice.Description = this.Invoice.Description = `${totalCars} vehicle(s) pinstriped`;
 		}
 	}
 
@@ -231,6 +271,10 @@ export class ControlInvoiceComponent implements OnInit {
 			{ id: 7, model: 'Seventh panel', value: 0 },
 			{ id: 'Whole Car', model: 'Whole car', value: 0 }
 		];
+		this.ppfAdded = [];
+		this.addRO = false;
+		this.addStock = false;
+		this.addVIN = false;
 	}
 
 	clearTotals() {

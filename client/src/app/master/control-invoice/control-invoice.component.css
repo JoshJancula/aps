@@ -25,3 +25,20 @@
 .toggle {
     display: inline-block;
 }
+
+.addVehicle {
+    float: right;
+}
+
+.mat-icon {
+    margin-left: 2%;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    padding-top: 67%;
+}
+
+.vehicles {
+    margin: 2%;
+    border-bottom: 1px solid grey;
+}

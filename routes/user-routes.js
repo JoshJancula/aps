@@ -12,7 +12,7 @@ module.exports = function (app) {
 
   // GET route for getting all users
   app.get("/api/users", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.User.findAll({
       }).then(function (x) {
         let z = [];
@@ -36,7 +36,7 @@ module.exports = function (app) {
 
   // GET route for retrieving a single user
   app.get("/api/users/:id", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.User.findOne({
         where: {
           id: req.params.id
@@ -60,7 +60,7 @@ module.exports = function (app) {
 
   // PUT route for updating users
   app.put("/api/users/:id", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       console.log('req.body: ', req.body);
       db.User.update({
         FirstName: req.body.FirstName,
@@ -83,7 +83,7 @@ module.exports = function (app) {
 
   // POST route for saving a new user
   app.post("/api/users", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.User.create(req.body).then(function (x) {
         res.json(x);
       });
@@ -92,8 +92,8 @@ module.exports = function (app) {
 
   // DELETE route for deleting a user 
   app.delete("/api/users/:id", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
-      if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
+      if (passport.authenticate('jwt', { session: false })) {
         db.User.destroy({
           where: {
             id: req.params.id
@@ -106,7 +106,7 @@ module.exports = function (app) {
   });
 
   app.post('/api/signin', function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.User.findOne({
         where: {
           Username: req.body.Username

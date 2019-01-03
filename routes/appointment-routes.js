@@ -9,7 +9,7 @@ module.exports = function (app) {
 
   // GET route for getting all appointments
   app.get("/api/appointments", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Appointment.findAll({
       }).then(function (x) {
         res.json(x);
@@ -21,7 +21,7 @@ module.exports = function (app) {
   app.get("/api/appointments/:id", function (req, res) {
     console.log('req.params: ', req.params.id);
       console.log('req.body: ', req.body.id);
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       // console.log('req.params: ', req.params.id);
       // console.log('req.body: ', req.body.id);
       db.Appointment.findOne({
@@ -36,7 +36,7 @@ module.exports = function (app) {
 
   // POST route for saving a new appointment
   app.post("/api/appointments", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Appointment.create(req.body).then(function (x) {
         res.json(x);
       });
@@ -47,7 +47,7 @@ module.exports = function (app) {
 
   // PUT route for updating appointment
   app.put("/api/appointments/:id", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Appointment.update({
         Date: req.body.Data,
         Location: req.body.Location,
@@ -73,7 +73,7 @@ module.exports = function (app) {
 
   // DELETE route for deleting an appointment 
   app.delete("/api/appointments/:id", function (req, res) {
-    if (passport.authenticate(req.headers.authorization, { session: false })) {
+    if (passport.authenticate('jwt', { session: false })) {
       db.Appointment.destroy({
         where: {
           id: req.params.id
