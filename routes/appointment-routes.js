@@ -1,7 +1,6 @@
-// Requiring our models
 const db = require("../models");
-const passport = require('passport');
-require('../config/passport')(passport);
+const JancstaPort = require('../config/jancsta');
+const jancsta = new JancstaPort();
 
 // Routes
 // =============================================================
@@ -9,7 +8,8 @@ module.exports = function (app) {
 
   // GET route for getting all appointments
   app.get("/api/appointments", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Appointment.findAll({
       }).then(function (x) {
         res.json(x);
@@ -19,9 +19,10 @@ module.exports = function (app) {
 
   // GET route for retrieving a single appointment
   app.get("/api/appointments/:id", function (req, res) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
     console.log('req.params: ', req.params.id);
       console.log('req.body: ', req.body.id);
-    if (passport.authenticate('jwt', { session: false })) {
+    if (jancsta) {
       // console.log('req.params: ', req.params.id);
       // console.log('req.body: ', req.body.id);
       db.Appointment.findOne({
@@ -36,7 +37,8 @@ module.exports = function (app) {
 
   // POST route for saving a new appointment
   app.post("/api/appointments", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Appointment.create(req.body).then(function (x) {
         res.json(x);
       });
@@ -47,7 +49,8 @@ module.exports = function (app) {
 
   // PUT route for updating appointment
   app.put("/api/appointments/:id", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Appointment.update({
         Date: req.body.Data,
         Location: req.body.Location,
@@ -73,7 +76,8 @@ module.exports = function (app) {
 
   // DELETE route for deleting an appointment 
   app.delete("/api/appointments/:id", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Appointment.destroy({
         where: {
           id: req.params.id

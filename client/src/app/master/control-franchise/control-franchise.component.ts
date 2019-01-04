@@ -52,8 +52,8 @@ export class ControlFranchiseComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		this.utilService.processFranchises();
-		this.notifySocket();
+		setTimeout(() => this.utilService.processFranchises(), 500);
+		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
 	}
 

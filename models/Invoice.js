@@ -70,6 +70,11 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: true,
         },
+        VehicleDescription: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
         Comments: {
             type: DataTypes.TEXT,
             unique: false,

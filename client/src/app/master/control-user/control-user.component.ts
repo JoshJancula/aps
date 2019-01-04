@@ -75,8 +75,8 @@ export class ControlUserComponent implements OnInit {
 				console.log('res: ', res);
 			});
 		}
-		this.utilService.processUsers();
-		this.notifySocket();
+		setTimeout(() => this.utilService.processUsers(), 500);
+		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
 	}
 

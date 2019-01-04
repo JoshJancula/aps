@@ -29,6 +29,7 @@
           </mat-select>
         </mat-form-field>
 
+        <!-- pinstriping invoice code -->
         <div *ngIf="Invoice.ServiceType === 'Pinstripe repair' || Invoice.ServiceType === 'Pinstripe repair & Paint protection' && editing === false">
           <mat-form-field>
             <mat-select placeholder="Panels striped" [(ngModel)]="panelsStriped">
@@ -38,7 +39,7 @@
           <br>
           <div *ngIf="panelsStriped !== ''">
             <div *ngFor="let panel of panelOptions">
-              <div *ngIf="panelsStriped === 'Whole car'">
+              <div *ngIf="panelsStriped === 8">
                 <mat-form-field *ngIf='manualAmountInput === false'>
                   <mat-select placeholder="{{panel.model}} price" [(ngModel)]="panel.value">
                     <mat-option *ngFor="let price of prices" (click)="updateTotal();" [value]="price">${{ price }}</mat-option>
@@ -48,7 +49,7 @@
                   <input matInput placeholder="{{panel.model}} price" [(ngModel)]="panel.value" />
                 </mat-form-field>
               </div>
-              <div *ngIf="panelsStriped !== 'Whole car' ">
+              <div *ngIf="panelsStriped !== 8 ">
                 <mat-form-field *ngIf="panel.id <= panelsStriped && manualAmountInput === false">
                   <mat-select placeholder="{{panel.model}} price" [(ngModel)]="panel.value">
                     <mat-option *ngFor="let price of prices" (click)="updateTotal();" [value]="price">${{ price }}</mat-option>
@@ -60,6 +61,21 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <mat-checkbox *ngIf="Invoice.ServiceType === 'Pinstripe repair' || Invoice.ServiceType === 'Pinstripe repair' || Invoice.ServiceType === 'Pinstripe repair & Paint protection' && editing === false" color="primary" [(ngModel)]="customPinstriping">Add custom pinstriping?</mat-checkbox>
+        <div *ngIf="customPinstriping === true">
+            <mat-form-field *ngIf='manualAmountInput === false'>
+                <mat-select placeholder="Price" [(ngModel)]="customPinstripes.value">
+                  <mat-option *ngFor="let price of prices" (click)="updateTotal();" [value]="price">${{ price }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field *ngIf='manualAmountInput === true'>
+                <input matInput placeholder="Price" [(ngModel)]="customPinstripes.value" />
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput placeholder="Description" [(ngModel)]="customPinstripes.description" />
+                </mat-form-field>
         </div>
 
          <!-- if stripes with ppf -->
@@ -85,7 +101,7 @@
             </div>
           </div>
 
-          <div *ngIf="Invoice.ServiceType === 'Other' || Invoice.ServiceType === 'Signs' || Invoice.ServiceType === 'Decals' || Invoice.ServiceType === 'Vinyl wrap' ">
+          <div *ngIf="Invoice.ServiceType !== 'Pinstripe repair & Paint protection' && Invoice.ServiceType !== 'Pinstripe repair' && Invoice.ServiceType !== '' && Invoice.ServiceType !== 'Window tint' ">
               <mat-form-field *ngIf='manualAmountInput === false'>
                   <mat-select placeholder="Price" [(ngModel)]="Invoice.Total">
                     <mat-option *ngFor="let price of prices"  [value]="price">${{ price }}</mat-option>
@@ -94,8 +110,8 @@
                 <mat-form-field *ngIf='manualAmountInput === true'>
                   <input matInput placeholder="Price" [(ngModel)]="Invoice.Total" />
                 </mat-form-field>
-                <mat-form-field >
-                    <input matInput placeholder="Description/ details" [(ngModel)]="Invoice.Description" />
+                <mat-form-field *ngIf="Invoice.ServiceType !== 'New car pinstriping'">
+                    <input matInput placeholder="Description" [(ngModel)]="Invoice.Description" />
                   </mat-form-field>
           </div>
 
@@ -150,6 +166,13 @@
           <input matInput placeholder="RO#" [(ngModel)]="Invoice.RO" />
         </mat-form-field>
 
+        <!-- add description if they want -->
+        <mat-checkbox color="primary" *ngIf="Invoice.ServiceType === 'Pinstripe repair & Paint protection' || Invoice.ServiceType === 'Pinstripe repair' || Invoice.ServiceType === 'Window tint' || Invoice.ServiceType === 'New car pinstriping' " [(ngModel)]="addDescription">Add Vehicle description?</mat-checkbox>
+        <mat-form-field  *ngIf='addDescription === true'>
+            <input matInput placeholder="Make, model, color..." [(ngModel)]="Invoice.VehicleDescription" />
+          </mat-form-field>
+
+         
         <!-- total cost and payment info -->
         <mat-form-field *ngIf="Invoice.ServiceType !== '' && Invoice.Total !== 0">
           <input matInput placeholder="Total" [readonly]='editing === false' [(ngModel)]="Invoice.Total" />

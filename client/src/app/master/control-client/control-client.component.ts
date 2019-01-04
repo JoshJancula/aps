@@ -74,8 +74,8 @@ export class ControlClientComponent implements OnInit {
 				console.log('respnse: ', response);
 			});
 		}
-		this.utilService.processClients();
-		this.notifySocket();
+		setTimeout(() => this.utilService.processClients(), 500);
+		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
 	}
 

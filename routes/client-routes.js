@@ -1,7 +1,5 @@
-// Requiring our models
 const db = require("../models");
-const passport = require('passport');
-require('../config/passport')(passport);
+const JancstaPort = require('../config/jancsta');
 
 // Routes
 // =============================================================
@@ -9,7 +7,8 @@ module.exports = function (app) {
 
   // GET route for getting all clients
   app.get("/api/clients", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Client.findAll({
       }).then(function (x) {
         res.json(x);
@@ -19,7 +18,8 @@ module.exports = function (app) {
 
   // GET route for retrieving a single client
   app.get("/api/clients/:id", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Client.findOne({
         where: {
           id: req.params.id
@@ -32,7 +32,8 @@ module.exports = function (app) {
 
   // POST route for saving a new client
   app.post("/api/clients", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Client.create(req.body).then(function (x) {
         res.json(x);
       });
@@ -43,7 +44,8 @@ module.exports = function (app) {
 
   // PUT route for updating client
   app.put("/api/clients/:id", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Client.update({
         StreetAddress: req.body.StreetAddress,
         City: req.body.City,
@@ -68,7 +70,8 @@ module.exports = function (app) {
 
   // DELETE route for deleting a client location
   app.delete("/api/clients/:id", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.Client.destroy({
         where: {
           id: req.params.id

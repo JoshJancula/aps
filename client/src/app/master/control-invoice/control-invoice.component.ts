@@ -29,7 +29,9 @@ export class ControlInvoiceComponent implements OnInit {
 		VIN: '',
 		Stock: '',
 		Description: '',
+		VehicleDescription: '',
 		Comments: '',
+		Vehicle: '',
 		FranchiseId: ''
 	};
 	invoices: any;
@@ -39,11 +41,15 @@ export class ControlInvoiceComponent implements OnInit {
 	addRO = false;
 	addStock = false;
 	addVIN = false;
+	addDescription = false;
+	additionalServices = false;
 	clients: any;
 	franchises: any;
 	vins = [];
 	stocks = [];
 	panelsStriped: any;
+	customPinstriping = false;
+	customPinstripes = { description: '', value: 0 };
 	newCarRate = 0;
 	prices = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 200];
 	paymentMethods = ['Cash', 'PO', 'Check', 'Other', 'None'];
@@ -59,7 +65,7 @@ export class ControlInvoiceComponent implements OnInit {
 		{ id: 5, model: 'Fifth panel', value: 0 },
 		{ id: 6, model: 'Sixth panel', value: 0 },
 		{ id: 7, model: 'Seventh panel', value: 0 },
-		{ id: 'Whole Car', model: 'Whole car', value: 0 }
+		{ id: 8, model: 'Whole car', value: 0 }
 	];
 	ppfOptions = [
 		{ id: 1, model: 'Edge guard', value: 0 },
@@ -70,9 +76,16 @@ export class ControlInvoiceComponent implements OnInit {
 		{ id: 6, model: 'Partial hood', value: 0 },
 		{ id: 7, model: 'Front bumper', value: 0 },
 		{ id: 8, model: 'Rear bumper', value: 0 },
-		{ id: 9, model: 'Mirror(s)', value: 0 },
+		{ id: 9, model: 'Mirror', value: 0 },
 		{ id: 10, model: 'Stone guard', value: 0 },
-		{ id: 11, model: 'Other', value: 0 },
+		{ id: 11, model: 'Other', value: 0 }
+	];
+	windowOptions = [
+		{ id: 1, model: 'Roll up window', quantity: 0, value: 0 },
+		{ id: 2, model: 'Butterfly window', quantity: 0, value: 0 },
+		{ id: 3, model: 'Back windshield', quantity: 0, value: 0 },
+		{ id: 4, model: 'Tint removal', quantity: 0, value: 0 },
+		{ id: 5, model: 'Other', quantity: 0, value: 0 }
 	];
 
 
@@ -133,12 +146,12 @@ export class ControlInvoiceComponent implements OnInit {
 		});
 		const newCars = (this.vins.length + this.stocks.length) * this.newCarRate;
 		this.Invoice.Total += newCars;
-		this.getPPFValues(newCars);
+		this.getPPFValues();
 	}
 
-	getPPFValues(newCars) {
+	getPPFValues() {
 		this.ppfAdded.forEach(ppf => {
-			newCars += ppf.value;
+			this.Invoice.Total += ppf.value;
 		});
 	}
 
@@ -188,15 +201,15 @@ export class ControlInvoiceComponent implements OnInit {
 			});
 		}
 		console.log('invoice: ', this.Invoice);
-		this.notifySocket();
-		this.utilService.processInvoices();
+		setTimeout(() => this.notifySocket(), 500);
+		setTimeout(() => this.utilService.processInvoices(), 500);
 		this.clearForm();
 	}
 
 	totalPanels() {
 		if (this.Invoice.ServiceType === 'New car pinstriping' || this.Invoice.ServiceType === 'Pinstripe repair & Paint protection') {
 			switch (this.panelsStriped) {
-				case 'Whole Car': this.Invoice.Description = this.Invoice.Description = `One vehicle pinstriped`; break;
+				case 8: this.Invoice.Description = this.Invoice.Description = `One vehicle pinstriped`; break;
 				case 1: this.Invoice.Description = `One panel striped for $$${this.panelOptions[0].value}.`; break;
 				case 2: this.Invoice.Description = `Two panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}`; break;
 				case 3: this.Invoice.Description = `Three panels striped at the rate of:\n First Panel: $${this.panelOptions[0].value}\n Second Panel: $${this.panelOptions[1].value}\n Thrid Panel: $${this.panelOptions[2].value}`; break;
@@ -250,6 +263,7 @@ export class ControlInvoiceComponent implements OnInit {
 			VIN: '',
 			Stock: '',
 			Description: '',
+			VehicleDescription: '',
 			Comments: '',
 			FranchiseId: ''
 		};
@@ -269,12 +283,22 @@ export class ControlInvoiceComponent implements OnInit {
 			{ id: 5, model: 'Fifth panel', value: 0 },
 			{ id: 6, model: 'Sixth panel', value: 0 },
 			{ id: 7, model: 'Seventh panel', value: 0 },
-			{ id: 'Whole Car', model: 'Whole car', value: 0 }
+			{ id: 8, model: 'Whole car', value: 0 }
+		];
+		this.windowOptions = [
+			{ id: 1, model: 'Roll up window', quantity: 0, value: 0 },
+			{ id: 2, model: 'Butterfly window', quantity: 0, value: 0 },
+			{ id: 3, model: 'Back windshield', quantity: 0, value: 0 },
+			{ id: 4, model: 'Tint removal', quantity: 0, value: 0 },
+			{ id: 5, model: 'Other', quantity: 0, value: 0 }
 		];
 		this.ppfAdded = [];
 		this.addRO = false;
 		this.addStock = false;
 		this.addVIN = false;
+		this.addDescription = false;
+		this.customPinstriping = false;
+		this.customPinstripes = { description: '', value: 0 };
 	}
 
 	clearTotals() {
@@ -290,7 +314,7 @@ export class ControlInvoiceComponent implements OnInit {
 			{ id: 5, model: 'Fifth panel', value: 0 },
 			{ id: 6, model: 'Sixth panel', value: 0 },
 			{ id: 7, model: 'Seventh panel', value: 0 },
-			{ id: 'Whole Car', model: 'Whole car', value: 0 }
+			{ id: 8, model: 'Whole car', value: 0 }
 		];
 		this.Invoice.Total = 0;
 	}

@@ -108,8 +108,8 @@ export class ControlAppointmentComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		this.utilService.processAppointments();
-		this.notifySocket();
+		setTimeout(() => this.utilService.processAppointments(), 500);
+		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
 	}
 

@@ -1,9 +1,6 @@
-// Requiring our models
 const db = require("../models");
-const passport = require('passport');
-require('../config/passport')(passport);
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt-nodejs');
+const JancstaPort = require('../config/jancsta');
+const bcrypt = require('bcryptjs');
 
 
 // Routes
@@ -12,7 +9,8 @@ module.exports = function (app) {
 
   // GET route for getting all users
   app.get("/api/users", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.User.findAll({
       }).then(function (x) {
         let z = [];
@@ -36,7 +34,8 @@ module.exports = function (app) {
 
   // GET route for retrieving a single user
   app.get("/api/users/:id", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.User.findOne({
         where: {
           id: req.params.id
@@ -60,7 +59,8 @@ module.exports = function (app) {
 
   // PUT route for updating users
   app.put("/api/users/:id", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       console.log('req.body: ', req.body);
       db.User.update({
         FirstName: req.body.FirstName,
@@ -83,7 +83,8 @@ module.exports = function (app) {
 
   // POST route for saving a new user
   app.post("/api/users", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
       db.User.create(req.body).then(function (x) {
         res.json(x);
       });
@@ -92,8 +93,8 @@ module.exports = function (app) {
 
   // DELETE route for deleting a user 
   app.delete("/api/users/:id", function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
-      if (passport.authenticate('jwt', { session: false })) {
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
         db.User.destroy({
           where: {
             id: req.params.id
@@ -102,45 +103,50 @@ module.exports = function (app) {
           res.json(x);
         });
       }
-    }
   });
 
   app.post('/api/signin', function (req, res) {
-    if (passport.authenticate('jwt', { session: false })) {
       db.User.findOne({
         where: {
           Username: req.body.Username
         },
       }).done(function (user, err) {
-        const pwd = user.dataValues.Password
-        const returnInfo = {
-          Username: user.dataValues.Username,
-          FirstName: user.dataValues.FirstName,
-          LastName: user.dataValues.LastName,
-          FranchiseId: user.dataValues.FranchiseId,
-          Phone: user.dataValues.Phone,
-          Role: user.dataValues.Role,
-          createdAt: user.dataValues.createdAt,
-          id: user.dataValues.id
-        }
         if (err) throw err;
         if (!user) {
           res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
         } else {
+          const pwd = user.dataValues.Password
+          const returnInfo = {
+            Username: user.dataValues.Username,
+            FirstName: user.dataValues.FirstName,
+            LastName: user.dataValues.LastName,
+            FranchiseId: user.dataValues.FranchiseId,
+            Phone: user.dataValues.Phone,
+            Role: user.dataValues.Role,
+            createdAt: user.dataValues.createdAt,
+            id: user.dataValues.id
+          }
           // check if password matches
           bcrypt.compare(req.body.Password, pwd, function (err, isMatch) {
             if (isMatch && !err) {
+              let x;
               // if user is found and password is right create a token
-              let token = jwt.sign(user.toJSON(), 'mysecret');
-              // return the information including token as JSON
-              res.json({ success: true, token: 'JWT ' + token, user: returnInfo });
+              if (user.Role === 'Super' || user.Role === 'Honcho') {
+                x = 'Master';
+              } else {
+                x = 'Subscriber';
+              }
+              bcrypt.genSalt(3, function (err, salt) {
+                bcrypt.hash(x, salt, function (err2, hash) {
+                  res.json({ success: true, token: hash, user: returnInfo });
+                });
+              });
             } else {
-              res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
+              res.status(401).send({ success: false, msg: 'Authentication failed. Invalid password.' });
             }
           });
         }
       });
-    }
   });
 
 };
