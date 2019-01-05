@@ -1,4 +1,4 @@
-.content .mat-card {
+ .mat-card {
     /* width: 100px; */
     display: inline-block;
     /* margin-left: 2%; */
@@ -11,6 +11,19 @@
 
 .mat-slide-toggle {
     margin-left: 20%;
+}
+
+.mainRow {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.contentRow {
+    width: 100vw;
+    min-height: 100vh;
+    padding-bottom: 5%;
+    overflow: auto;
 }
 
 .mat-form-field {
@@ -51,12 +64,18 @@
 .addIcon{
     display: block;
     z-index: 20;
-    height: 90px;
-    width: 90px;
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+    background-color: red;
     position: sticky;       
-    bottom: 30px;
-    left: calc(80vw);
+    bottom: 10px;
+    left: calc(70vw);
     cursor: pointer;
+}
+
+.mainRow {
+    overflow: auto;
 }
 
 }

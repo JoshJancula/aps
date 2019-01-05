@@ -9,13 +9,13 @@
   <div class='options' (click)="openInvoices();" >Invoices</div>
   <div class='options' (click)="openPopup();" >Open popup</div>
 </div>
-<div class='col-md-10 col-sm-12'>
+<div class='col-md-10 col-sm-12 contentRow'>
     <app-control-user *ngIf='userMode === true;'></app-control-user>
     <app-control-franchise *ngIf='franchiseMode === true;'></app-control-franchise>    
     <app-control-client *ngIf='clientMode === true;'></app-control-client>
     <app-control-appointment *ngIf="appointmentMode === true"></app-control-appointment>
     <app-control-invoice *ngIf='invoiceMode === true'></app-control-invoice>
 </div>
-<button class='addIcon'  (click)='openPopup();'><mat-icon>home</mat-icon></button>
+<button class='addIcon' mat-button  (click)='openPopup();'><mat-icon style='color:white;'>home</mat-icon></button>
 </div>
 

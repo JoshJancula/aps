@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
-const JancstaPort = function (token, x) {
+module.exports = function (token, x) {
 
     let control = ''
-
+    console.log('x param passed to jancstaport: ', x);
     switch (x) {
         case 'super': control = 'Master' ; break;
         case 'sub': control = 'Subscriber' ; break;
@@ -12,11 +12,11 @@ const JancstaPort = function (token, x) {
     if (token) {
         bcrypt.compare(control, token).then((res) => {
             if (res) {
-                console.log('sucess');
+                console.log('sucess, tokens match');
                 return true;
             } else {
                 console.log('no match');
-                return false;
+               return false;
             }
         })
             .catch((err) => {
@@ -25,6 +25,5 @@ const JancstaPort = function (token, x) {
     } else {
         return false;
     }
-
+    
 }
-module.exports = JancstaPort;

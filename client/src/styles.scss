@@ -11,8 +11,33 @@
 .mat-card {
     width: 100%;
     margin: 2%;
+    background: #D7D6D6;
+    opacity: .9;
 }
 
 .mat-form-field {
     width: 100%;
+}
+
+html,
+body {
+    height: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body, html {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;  
+    margin: auto;
+    background-color: black;
+    background-image: url('./assets/logo.jpeg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    overflow: hidden !important;
 }
