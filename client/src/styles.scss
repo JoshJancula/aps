@@ -62,6 +62,10 @@ body, html {
     color:white;
 }
 
+.appointment-content .mat-card {
+    opacity: 1 !important;
+}
+
 @media (max-width: 768px) { 
 
     .add {

@@ -5,6 +5,8 @@ import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
 import { MessageService } from '../../services/message.service';
 import * as moment from 'moment';
+import { UserService } from 'src/app/services/user.service';
+import { PhonePipe } from 'src/app/phone.pipe';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -24,9 +26,23 @@ export class ControlFranchiseComponent implements OnInit {
 	searchFranchises = true;
 	addFranchise = false;
 
-	constructor(private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
+	User: any = {
+		Username: '',
+		FirstName: '',
+		LastName: '',
+		Role: '',
+		Password: '',
+		Email: '',
+		Phone: '',
+		FranchiseId: '',
+		Active: true,
+	};
+
+	location: ''; // this is dummy right now;
+
+	constructor(private phonePipe: PhonePipe, private userService: UserService, private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
 		this.loadFranchises();
-	 }
+	}
 
 	ngOnInit() {
 	}
@@ -50,7 +66,7 @@ export class ControlFranchiseComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = {MessageType: 'update', Action: 'franchises'};
+		const data = { MessageType: 'update', Action: 'franchises' };
 		this.messagingService.sendUpdate(data);
 	}
 
@@ -58,6 +74,9 @@ export class ControlFranchiseComponent implements OnInit {
 		if (this.editing === false) {
 			this.franchiseService.createFranchise(this.Franchise).subscribe(res => {
 				console.log('response: ', res);
+				const data = JSON.parse(JSON.stringify(res));
+				this.User.FranchiseId = data.id;
+				this.submitUser();
 			}, error => {
 				console.log('error: ', error);
 			});
@@ -66,9 +85,8 @@ export class ControlFranchiseComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		setTimeout(() => this.utilService.processFranchises(), 500);
-		setTimeout(() => this.notifySocket(), 500);
-		this.clearForm();
+		// setTimeout(() => this.utilService.processFranchises(), 500);
+		// setTimeout(() => this.notifySocket(), 500);
 	}
 
 	editFranchise(id) {
@@ -84,6 +102,17 @@ export class ControlFranchiseComponent implements OnInit {
 		});
 	}
 
+	submitUser() {
+		this.userService.createUser(this.User).subscribe(res => {
+			console.log('res: ', JSON.stringify(res));
+		});
+		setTimeout(() => this.utilService.processUsers(), 500);
+		setTimeout(() => this.notifySocket(), 500);
+		setTimeout(() => this.utilService.processFranchises(), 600);
+		setTimeout(() => this.notifySocket(), 600);
+		this.clearForm();
+	}
+
 	clearForm() {
 		this.Franchise = {
 			Name: '',
@@ -91,6 +120,22 @@ export class ControlFranchiseComponent implements OnInit {
 		};
 		this.editing = false;
 		this.selectedId = '';
+		this.location = '';
+		this.clearUserForm();
+	}
+
+	clearUserForm() {
+		this.User = {
+			Username: '',
+			FirstName: '',
+			LastName: '',
+			Role: '',
+			Password: '',
+			Email: '',
+			Phone: '',
+			FranchiseId: '',
+			Active: true,
+		};
 	}
 
 	deleteFranchise(id) {
@@ -108,6 +153,10 @@ export class ControlFranchiseComponent implements OnInit {
 
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');
+	}
+
+	formatPhone() {
+		this.User.Phone = this.phonePipe.transform(this.User.Phone);
 	}
 
 }

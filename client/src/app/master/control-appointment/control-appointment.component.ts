@@ -32,15 +32,17 @@ export class ControlAppointmentComponent implements OnInit {
 		FranchiseId: ''
 	};
 	clients: any;
-	appointments: any;
+	appointments = [];
 	franchises: any;
 	editing = false;
 	selectedId = '';
 	selectFromClients = false;
 	users: any;
 	anytime = false;
-	searchAppointments = false;
-	addAppointment = true;
+	searchAppointments = true;
+	addAppointment = false;
+	showTodays = true;
+	searchDate = new Date();
 	@ViewChild('calendar') calendar: any;
 	@ViewChild('calendar2') calendar2: any;
 
@@ -58,7 +60,16 @@ export class ControlAppointmentComponent implements OnInit {
 	loadAppointments() {
 		this.utilService.processAppointments();
 		this.utilService.appointments.subscribe(response => {
-			this.appointments = response;
+			this.filterResponse(response);
+		});
+	}
+
+	filterResponse(res) {
+		this.appointments = [];
+		res.forEach(app => {
+			if (moment(app.Date).format('MM/DD/YY') === moment(this.searchDate).format('MM/DD/YY')) {
+				this.appointments.push(app);
+			}
 		});
 	}
 
@@ -187,7 +198,7 @@ export class ControlAppointmentComponent implements OnInit {
 
 	openCalendar2(event) {
 		event.preventDefault();
-		this.calendar.open();
+		this.calendar2.open();
 	}
 
 	renderAppointments() {

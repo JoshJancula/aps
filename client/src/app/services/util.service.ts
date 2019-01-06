@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from './auth.service';
+
 
 @Injectable({
 	providedIn: 'root'
 })
 export class UtilService {
 
-	constructor(private http: HttpClient) { }
+	constructor(private authService: AuthService, private http: HttpClient) { }
 
-	// tslint:disable-next-line:max-line-length
 	states = ['AL', 'AK', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NC', 'ND', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 	private userStore = [];
 	private userSubject = new BehaviorSubject(this.userStore);
@@ -27,9 +28,17 @@ export class UtilService {
 	private invoiceSubject = new BehaviorSubject(this.invoiceSubject);
 	invoices = this.invoiceSubject.asObservable();
 
+
 	getFranchises() {
-		const url = `https://aps-josh.herokuapp.com/api/franchises`;
-		const localUrl = `http://localhost:8080/api/franchises`;
+		let url;
+		let localUrl;
+		if (this.authService.currentUser.Role === 'Super') {
+			url = `https://aps-josh.herokuapp.com/api/franchises`;
+			localUrl = `http://localhost:8080/api/franchises`;
+		} else {
+			url = `https://aps-josh.herokuapp.com/api/franchises`;
+			localUrl = `http://localhost:8080/api/franchises`;
+		}
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -114,8 +123,15 @@ export class UtilService {
 	}
 
 	getAppointments() {
-		const url = `https://aps-josh.herokuapp.com/api/appointments`;
-		const localUrl = `http://localhost:8080/api/appointments`;
+		let url;
+		let localUrl;
+		if (this.authService.currentUser.Role === 'Super') {
+		 url = `https://aps-josh.herokuapp.com/api/appointments`;
+		 localUrl = `http://localhost:8080/api/appointments`;
+		} else {
+			url = `https://aps-josh.herokuapp.com/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
+			localUrl = `http://localhost:8080/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
+		}
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -172,5 +188,6 @@ export class UtilService {
 			}
 		});
 	}
+
 
 }
