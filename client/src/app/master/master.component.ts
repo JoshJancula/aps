@@ -10,6 +10,7 @@ import { MessageService } from '../services/message.service';
 import { AuthService } from '../services/auth.service';
 import {MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 import { BottomPopupComponent } from '../bottom-popup/bottom-popup.component';
+import { ControlInvoiceComponent } from './control-invoice/control-invoice.component';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -30,7 +31,18 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlFranchise') controlFranchise: ControlFranchiseComponent;
 	@ViewChild('controlClient') controlClient: ControlClientComponent;
 	@ViewChild('controlAppointment') controlAppointment: ControlAppointmentComponent;
+	@ViewChild('controlInvoice') controlInvoice: ControlInvoiceComponent;
 	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
+
+	// controllers = [
+	// 	{ click: this.controlUser.setView(), bool: this.userMode, bool2: this.controlUser.addUser },
+	// 	{ click: this.controlAppointment.setView(), bool: this.appointmentMode, bool2: this.controlAppointment.addAppointment },
+	// 	{ click: this.controlClient.setView(), bool: this.clientMode, bool2: this.controlClient.addClient },
+	// 	{ click: this.controlClient.setView(), bool: this.invoiceMode, bool2: this.controlInvoice.addInvoice },
+	// 	{ click: this.controlFranchise.setView(), bool: this.franchiseMode, bool2: this.controlFranchise.addFranchise },
+	// ];
+
+
 	// tslint:disable-next-line:max-line-length
 	constructor(private bottomSheetRef: MatBottomSheet, private authService: AuthService, private utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 

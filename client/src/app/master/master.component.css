@@ -30,6 +30,14 @@
     margin: 2%;
 }
 
+.controlInvoice, .controlAppointment, .controlUser, .controlFranchise, .controlClient {
+    display: none;
+}
+
+.controlInvoice.show, .controlAppointment.show, .controlUser.show, .controlFranchise.show, .controlClient.show {
+    display: block;
+}
+
 .submit {
     margin-top: 5%;
     /* margin-left: 55%; */
@@ -42,10 +50,17 @@
 .options {
     cursor: pointer;
     padding: 2%;
+    color: red;
 }
 
 .options:hover {
-    color: blue;
+    color: teal;
+}
+
+.options.selected {
+    cursor: pointer;
+    padding: 2%;
+    color: teal;
 }
 
 .addIcon {
@@ -56,7 +71,7 @@
     padding: 3%;
 }
 
-@media (max-width: 707px) {
+@media (max-width: 768px) {
 .desktopView {
     display: none;
 } 

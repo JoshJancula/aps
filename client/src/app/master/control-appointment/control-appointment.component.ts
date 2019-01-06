@@ -39,6 +39,8 @@ export class ControlAppointmentComponent implements OnInit {
 	selectFromClients = false;
 	users: any;
 	anytime = false;
+	searchAppointments = false;
+	addAppointment = true;
 	@ViewChild('calendar') calendar: any;
 	@ViewChild('calendar2') calendar2: any;
 
@@ -58,6 +60,16 @@ export class ControlAppointmentComponent implements OnInit {
 		this.utilService.appointments.subscribe(response => {
 			this.appointments = response;
 		});
+	}
+
+	setView() {
+		if (this.searchAppointments === true) {
+			this.searchAppointments = false;
+			this.addAppointment = true;
+		} else {
+			this.searchAppointments = true;
+			this.addAppointment = false;
+		}
 	}
 
 	getUsers() {

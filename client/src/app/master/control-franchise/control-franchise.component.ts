@@ -20,12 +20,24 @@ export class ControlFranchiseComponent implements OnInit {
 	franchises: any;
 	editing = false;
 	selectedId = '';
+	searchFranchises = true;
+	addFranchise = false;
 
 	constructor(private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
 		this.loadFranchises();
 	 }
 
 	ngOnInit() {
+	}
+
+	setView() {
+		if (this.searchFranchises === true) {
+			this.searchFranchises = false;
+			this.addFranchise = true;
+		} else {
+			this.searchFranchises = true;
+			this.addFranchise = false;
+		}
 	}
 
 	loadFranchises() {

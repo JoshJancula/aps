@@ -1,14 +1,3 @@
-.content .mat-card {
-    /* width: 100px; */
-    display: inline-block;
-    /* margin-left: 2%; */
-    margin: 2%;
-}
-
-.content {
-    display: inline-block;
-}
-
 .mat-slide-toggle {
     margin-left: 20%;
 }
@@ -30,7 +19,7 @@
     float: right;
 }
 
-.mat-icon {
+.form .mat-icon {
     margin-left: 2%;
     height: 20px;
     width: 20px;
@@ -42,3 +31,45 @@
     margin: 2%;
     border-bottom: 1px solid grey;
 }
+
+/* .form, .results {
+    display: none;
+}
+
+.form.show, .results.show {
+    display: block;
+}
+*/
+
+.searchButton {
+    position: sticky;
+    top: 50px;
+    right: 0px;
+    color:white;
+}
+
+.add {
+    position: sticky;
+    top: 100px;
+    right: 0px;
+    color:white;
+} 
+
+@media (max-width: 768px) { 
+
+    .searchButton {
+        position: fixed;
+        top: 40px;
+        right: 0px;
+        color:white;
+    }
+    
+    .add {
+        position: fixed;
+        top: 40px;
+        right: 0px;
+        color:white;
+    }
+
+}
+

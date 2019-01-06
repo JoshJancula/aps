@@ -1,6 +1,6 @@
 <div class="row">
-    <div class='col-md-3 col-sm-12'>
-      <div class='row'>
+    <div class='col-lg-10 col-sm-12'>
+      <div class='row form' [ngClass]="{'show': addFranchise === true}">
     <mat-card>
       <div class="card-heading">Create Franchise</div>
       <mat-form-field>
@@ -15,9 +15,10 @@
         <button *ngIf='editing === true;' (click)="deleteFranchise(Franchise.id);" [disabled]="Franchise.Name === 'Master'" mat-button>Delete</button>
     </mat-card>
   </div>
-  </div>
-  <div class='col-md-9 col-sm-12'>
-    <div class='row'>
+  <!-- </div> -->
+
+  <!-- <div class='col-lg-10 col-sm-12'> -->
+    <div class='row results' [ngClass]="{'show': searchFranchises === true}">
       <mat-card>
         <div class="card-heading">All Franchises</div>
         <div *ngFor="let franchise of franchises">
@@ -27,4 +28,18 @@
       </mat-card>
     </div>
     </div>
+
+     <!-- end data area and display options below -->
+  <div class="col-lg-2 ">
+
+    <button class='add' *ngIf='searchFranchises === false' mat-button (click)="searchFranchises = false; addFranchise = true;">
+      <mat-icon style='color:white'>add</mat-icon>
+      Add Franchise
+    </button>
+    <button class='searchButton' *ngIf='searchFranchises === true' (click)="addFranchise = false; searchFranchises = true;" mat-button>
+      <mat-icon>search</mat-icon>
+      Search Franchises
+    </button>
+
+  </div>
   </div>

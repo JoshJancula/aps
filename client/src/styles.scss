@@ -6,17 +6,17 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~@angular/material/theming';
 @include mat-core();
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 .mat-card {
     width: 100%;
     margin: 2%;
     background: #D7D6D6;
     opacity: .9;
+    border-radius: 10px !important;
 }
 
 .mat-form-field {
-    width: 100%;
+    width: 95%;
 }
 
 html,
@@ -27,6 +27,12 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.headerRow {
+    height: 14vh;
+    background-repeat: no-repeat;
+    background-image: url('https://chambermaster.blob.core.windows.net/images/customers/391/members/6298/logos/MEMBER_LOGO/ATLPinATLWraps.jpg');
 }
 
 body, html {
@@ -40,4 +46,54 @@ body, html {
     background-size: contain;
     background-repeat: no-repeat;
     overflow: hidden !important;
+}
+
+// .desktopIcons {
+//     display: block;
+// }
+
+// .mobileIcons {
+//     display: none;
+// }
+
+@media (max-width: 768px) { 
+
+    // .mobileIcons {
+    //     display: block;
+    // }
+
+    // .desktopIcons {
+    //     display: none;
+    // }
+
+    // .searchMobile {
+    //     position: fixed;
+    //     bottom: 0px;
+    //     left: 0px;
+    //     color:white;
+    //     z-index: 50;
+    // }
+    
+    // .addMobile {
+    //     position: fixed;
+    //     bottom: 0px;
+    //     left: 0px;
+    //     color:white;
+    //     z-index: 50;
+    // }
+
+    .searchButton {
+        position: fixed;
+        top: 50px;
+        right: 0px;
+        color:white;
+    }
+    
+    .add {
+        position: fixed;
+        top: 100px;
+        right: 0px;
+        color:white;
+    }
+
 }

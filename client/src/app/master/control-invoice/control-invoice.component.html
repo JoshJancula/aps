@@ -1,6 +1,6 @@
 <div class="row">
-  <div class='col-md-5 col-sm-12'>
-    <div class='row'>
+  <div class='col-lg-10 col-sm-12'>
+    <div class='row form' *ngIf="addInvoice === true">
       <mat-card>
         <div class="card-heading" *ngIf='editing === false'>Add Invoice</div>
         <div class="card-heading" *ngIf='editing === true'>Edit Invoice</div>
@@ -86,7 +86,7 @@
             <button mat-button color="primary" (click)="addPPF(option);">Add {{ option.model }}</button>
           </span>
           <div *ngFor='let ppf of ppfAdded' class='row'>
-            <div class='col-md-10 col-sm-10'>
+            <div class='col-lg-10 col-sm-10'>
               <mat-form-field *ngIf='manualAmountInput === false'>
                 <mat-select placeholder="{{ppf.model}} price" [(ngModel)]="ppf.value">
                   <mat-option *ngFor="let price of prices" (click)="updateTotal();" [value]="price">${{ price }}</mat-option>
@@ -96,7 +96,7 @@
                 <input matInput placeholder="{{ppf.model}} price" [(ngModel)]="ppf.value" />
               </mat-form-field>
             </div>
-            <div class='col-md-2 col-sm-2'>
+            <div class='col-lg-2 col-sm-2'>
               <mat-icon (click)='removePPF(PPF)'>close</mat-icon>
             </div>
           </div>
@@ -125,12 +125,12 @@
           <div *ngFor="let win of windowOptions">
 
             <div class='row' *ngIf='win.selected === true;'>
-              <div class='col-md-6 col-sm-6'>
+              <div class='col-lg-6 col-sm-6'>
                 <mat-form-field>
                   <input matInput readonly [(ngModel)]="win.model" />
                 </mat-form-field>
               </div>
-              <div class='col-md-3 col-sm-3'>
+              <div class='col-lg-3 col-sm-3'>
                 <mat-form-field *ngIf='manualAmountInput === false'>
                   <mat-select placeholder="Price" [(ngModel)]="win.value">
                     <mat-option *ngFor="let price of prices" [value]="price">${{ price }}</mat-option>
@@ -140,7 +140,7 @@
                   <input matInput placeholder="Price" [(ngModel)]="win.val" />
                 </mat-form-field>
               </div>
-              <div class='col-md-3 col-sm-3'>
+              <div class='col-lg-3 col-sm-3'>
                 <mat-form-field>
                   <mat-select placeholder="Quantity" [(ngModel)]="win.quantity">
                     <mat-option *ngFor="let win of windowOptions" [value]="win.id">{{ win.id }}</mat-option>
@@ -168,26 +168,26 @@
         <br>
         <!-- stock numbers populate here -->
         <div class='row' *ngIf='stocks.length > 0 || vins.length > 0'>
-          <div class='col-md-1 col-sm-0'></div>
-          <div class='col-md-10 col-sm-0'>
+          <div class='col-lg-1 col-sm-0'></div>
+          <div class='col-lg-10 col-sm-0'>
             <div class='row vehicles' *ngFor="let stock of stocks">
-              <div class='col-md-10 col-sm-10'>
+              <div class='col-lg-10 col-sm-10'>
                 <span style='font-size: 12px'>Stock#</span> {{ stock }}
               </div>
-              <div class='col-md-2 col-sm-2'>
+              <div class='col-lg-2 col-sm-2'>
                 <mat-icon style='padding-top: 0%;' (click)="removeVehicle(stock);" mat-button>close</mat-icon>
               </div>
             </div>
             <div class='row vehicles' *ngFor="let vin of vins">
-              <div class='col-md-10 col-sm-10'>
+              <div class='col-lg-10 col-sm-10'>
                 <span style='font-size: 12px'>VIN#</span> {{ vin }}
               </div>
-              <div class='col-md-2 col-sm-2'>
+              <div class='col-lg-2 col-sm-2'>
                 <mat-icon style='padding-top: 30%;' (click)="removeVehicle(vin);" mat-button>close</mat-icon>
               </div>
             </div>
           </div>
-          <div class='col-md-1 col-sm-0'></div>
+          <div class='col-lg-1 col-sm-0'></div>
         </div>
 
         <!-- manual input stocks vins and ro -->
@@ -248,9 +248,10 @@
         <button *ngIf='editing === true' (click)="deleteInvoice(Invoice.id);" mat-button>Delete</button>
       </mat-card>
     </div>
-  </div>
-  <div class='col-md-4 col-sm-12'>
-    <div class='row'>
+  <!-- </div> -->
+  <!-- <div class='col-lg-4 col-sm-12'> -->
+    <div class='row search' *ngIf="searchInvoices === true">
+      <div class='col-sm-12'>
       <mat-card>
         <div class="card-heading">Invoices</div>
         <div *ngFor="let invoice of invoices">
@@ -265,5 +266,18 @@
         </div>
       </mat-card>
     </div>
+    </div>
+  </div>
+
+  <div class="col-lg-2 ">
+    <button class='add' *ngIf='searchInvoices === true' mat-button (click)="searchInvoices = false; addInvoice = true;">
+      <mat-icon style="padding-top: 0px;">add</mat-icon>
+      Add Invoice
+    </button>
+    <button class='searchButton' *ngIf='searchInvoices === false' (click)="addInvoice = false; searchInvoices = true;" mat-button>
+      <mat-icon style="padding-top: 0px;">search</mat-icon>
+      Search Invoices
+    </button>
+
   </div>
 </div>

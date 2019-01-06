@@ -1,67 +1,73 @@
 <div class="row">
-    <div class='col-md-5 col-sm-12'>
-      <div class='row'>
-    <mat-card>
-      <div class="card-heading">Create User</div>
-      <mat-form-field>
-        <input matInput placeholder="Username" [readonly]="editing === true" [(ngModel)]="User.Username" />
-      </mat-form-field>
-      <mat-form-field *ngIf='editing === false'>
-        <input matInput placeholder="Password" [(ngModel)]="User.Password" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="First Name" [(ngModel)]="User.FirstName" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Last Name" [(ngModel)]="User.LastName" />
-      </mat-form-field>
-      <mat-form-field>
-          <mat-select placeholder="Role" [disabled]="User.Username === 'josh' "
-           [(ngModel)]="User.Role">
-            <mat-option *ngFor="let role of roles" [disabled]="role === 'Super' && authService.currentUser.Role !== 'Super'" [value]="role">{{ role }}</mat-option>
+  <div class='col-lg-10 col-md-12 col-sm-12'>
+    <div class='row' class='userForm' [ngClass]="{'show': addUser === true}">
+      <mat-card>
+        <div class="card-heading">Create User</div>
+        <mat-form-field>
+          <input matInput placeholder="Username" [readonly]="editing === true" [(ngModel)]="User.Username" />
+        </mat-form-field>
+        <mat-form-field *ngIf='editing === false'>
+          <input matInput placeholder="Password" [(ngModel)]="User.Password" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="First Name" [(ngModel)]="User.FirstName" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" [(ngModel)]="User.LastName" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Role" [disabled]="User.Username === 'josh' " [(ngModel)]="User.Role">
+            <mat-option *ngFor="let role of roles" [disabled]="role === 'Super' && authService.currentUser.Role !== 'Super'"
+              [value]="role">{{ role }}</mat-option>
           </mat-select>
         </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Email" [(ngModel)]="User.Email" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="User.Phone" (change)="formatPhone();" />
-      </mat-form-field>
-      <mat-form-field>
-          <mat-select placeholder="Franchise"
-           [(ngModel)]="User.FranchiseId">
+        <mat-form-field>
+          <input matInput placeholder="Email" [(ngModel)]="User.Email" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="User.Phone" (change)="formatPhone();" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Franchise" [(ngModel)]="User.FranchiseId">
             <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
           </mat-select>
         </mat-form-field>
         <br>
         <label>Active</label>
         <mat-slide-toggle color="primary" [(ngModel)]="User.Active"></mat-slide-toggle>
-     <br/>
+        <br />
         <button class='submit' (click)="submitUser();" mat-button>Save user</button>
         <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
-        <button *ngIf='editing === true' [disabled]="User.Username === 'josh' " (click)="deleteUser(User.id);"  mat-button>Delete</button>
-    </mat-card>
-  </div>
-  </div>
-  <div class='col-md-4 col-sm-12'>
-    <div class='row'>
+        <button *ngIf='editing === true' [disabled]="User.Username === 'josh' " (click)="deleteUser(User.id);"
+          mat-button>Delete</button>
+      </mat-card>
+    </div>
+    <!-- </div> -->
+    <!-- <div class='col-lg-4 col-sm-12'> -->
+    <div class='row' class='userRow' [ngClass]="{'show': searchUsers === true}">
       <mat-card>
         <div class="card-heading">Users</div>
         <div *ngFor="let user of users">
           <p>Name: {{user.FirstName}} {{user.LastName}}<br>Role: {{user.Role}}</p>
-          <button (click)="editUser(user.id);"  mat-button>Edit</button>
+          <button (click)="editUser(user.id);" mat-button>Edit</button>
         </div>
       </mat-card>
-      <mat-card> 
-          <div class="card-heading">Test login</div>
-          <mat-form-field>
-              <input matInput placeholder="Username" [(ngModel)]="testUsername" />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Password" [(ngModel)]="testPassword" />
-            </mat-form-field>
-            <button  (click)="testLogin();" mat-button>Test login</button>
-        </mat-card>
     </div>
-    </div>
+
   </div>
+  <!-- end data area and display options below -->
+  <div class="col-lg-2 desktopIcons">
+    <button class='add' mat-button *ngIf='searchUsers === false' (click)="searchUsers = false; addUser = true;">
+      <mat-icon style='color:white'>add</mat-icon>
+      Add User
+    </button>
+    <button class='searchButton' *ngIf='searchUsers === true' (click)="addUser = false; searchUsers = true;" mat-button>
+      <mat-icon>search</mat-icon>
+      Search Users
+    </button>
+  </div>
+  
+</div>
+  
+  
+  

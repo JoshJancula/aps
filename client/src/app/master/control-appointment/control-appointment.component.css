@@ -25,3 +25,25 @@
 .toggle {
     display: inline-block;
 }
+
+/* .form, .results {
+    display: none !important;
+}
+
+.form.show, .results.show {
+    display: block !important;
+} */
+
+.searchButton {
+    position: sticky;
+    top: 50px;
+    right: 0px;
+    color:white;
+}
+
+.add {
+    position: sticky;
+    top: 100px;
+    right: 0px;
+    color:white;
+}

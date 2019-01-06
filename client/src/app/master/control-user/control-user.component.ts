@@ -15,6 +15,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ControlUserComponent implements OnInit {
 
+	searchUsers = false;
+	addUser = true;
 	User: any = {
 		Username: '',
 		FirstName: '',
@@ -51,6 +53,16 @@ export class ControlUserComponent implements OnInit {
 				this.users.push({ Username: item.Username, FirstName: item.FirstName, LastName: item.LastName, Role: item.Role, id: item.id });
 			});
 		});
+	}
+
+	setView() {
+		if (this.searchUsers === true) {
+			this.searchUsers = false;
+			this.addUser = true;
+		} else {
+			this.searchUsers = true;
+			this.addUser = false;
+		}
 	}
 
 	notifySocket() {

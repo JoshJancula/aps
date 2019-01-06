@@ -1,13 +1,4 @@
-.content .mat-card {
-    /* width: 100px; */
-    display: inline-block;
-    /* margin-left: 2%; */
-    margin: 2%;
-}
 
-.content {
-    display: inline-block;
-}
 
 .mat-slide-toggle {
     margin-left: 20%;
@@ -25,3 +16,26 @@
 .toggle {
     display: inline-block;
 }
+
+.searchButton {
+    position: sticky;
+    top: 50px;
+    right: 0px;
+    color:white;
+}
+
+.add {
+    position: sticky;
+    top: 100px;
+    right: 0px;
+    color:white;
+}
+
+.userForm, .userRow {
+    display: none;
+}
+
+.userForm.show, .userRow.show {
+    display: flex;
+}
+

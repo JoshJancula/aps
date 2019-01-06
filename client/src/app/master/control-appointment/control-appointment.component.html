@@ -1,10 +1,9 @@
 <div class="row">
-  <div class='col-md-5 col-sm-12'>
-    <div class='row'>
+  <div class='col-lg-10 col-sm-12'>
+    <div class='row form' *ngIf="addAppointment === true">
       <mat-card>
         <div class="card-heading" *ngIf='editing === false'>Add Appointment</div>
         <div class="card-heading" *ngIf='editing === true'>Edit Appointment</div>
-        <!-- <label></label> -->
         <mat-checkbox *ngIf="editing === false" color='primary' (change)="Appointment.Client = ''; Appointment.Location = ''" [(ngModel)]="selectFromClients">Select
           from clients</mat-checkbox>
         <br>
@@ -62,9 +61,9 @@
         <button *ngIf='editing === true' (click)="deleteAppointment(Appointment.id);" mat-button>Delete</button>
       </mat-card>
     </div>
-  </div>
-  <div class='col-md-4 col-sm-12'>
-    <div class='row'>
+  <!-- </div>
+  <div class='col-lg-4 col-sm-12'> -->
+    <div class='row search' *ngIf="searchAppointments === true">
       <mat-card>
           <div class="card-heading">Appointments</div>
           <!-- <mat-form-field >
@@ -84,5 +83,17 @@
           </div>
         </mat-card>
     </div>
+  </div>
+
+  <div class="col-lg-2 ">
+    <button class='add' *ngIf='searchAppointments === true' mat-button (click)="searchAppointments = false; addAppointment = true;">
+      <mat-icon style='color:white'>add</mat-icon>
+      Add Appointment
+    </button>
+    <button class='searchButton' *ngIf='addAppointment === true' (click)="addAppointment = false; searchAppointments = true;" mat-button>
+      <mat-icon>search</mat-icon>
+      Search Appointments
+    </button>
+
   </div>
 </div>

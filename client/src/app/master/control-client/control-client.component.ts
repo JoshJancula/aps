@@ -31,6 +31,8 @@ export class ControlClientComponent implements OnInit {
 	franchises: any;
 	editing = false;
 	selectedId = '';
+	addClient = false;
+	searchClients = true;
 
 	// tslint:disable-next-line:max-line-length
 	constructor(private messagingService: MessageService, private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
@@ -39,6 +41,16 @@ export class ControlClientComponent implements OnInit {
 	 }
 
 	ngOnInit() {
+	}
+
+	setView() {
+		if (this.searchClients === true) {
+			this.searchClients = false;
+			this.addClient = true;
+		} else {
+			this.searchClients = true;
+			this.addClient = false;
+		}
 	}
 
 	notifySocket() {

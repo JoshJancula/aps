@@ -1,6 +1,6 @@
 <div class="row">
-  <div class='col-md-5 col-sm-12'>
-    <div class='row'>
+  <div class='col-lg-10 col-sm-12'>
+    <div class='row form' *ngIf="addClient === true">
       <mat-card>
         <div class="card-heading" *ngIf='editing === false'>Add Client</div>
         <div class="card-heading" *ngIf='editing === true'>Edit Client</div>
@@ -46,9 +46,9 @@
         <button *ngIf='editing === true' (click)="deleteClient(Client.id);" mat-button>Delete</button>
       </mat-card>
     </div>
-  </div>
-  <div class='col-md-4 col-sm-12'>
-    <div class='row'>
+  <!-- </div> -->
+  <!-- <div class='col-lg-4 col-sm-12'> -->
+    <div class='row search' *ngIf="searchClients === true">
       <mat-card>
         <div class="card-heading">Clients</div>
         <div *ngFor="let client of clients">
@@ -57,5 +57,17 @@
         </div>
       </mat-card>
     </div>
+  </div>
+
+  <div class="col-lg-2 ">
+    <button class='add' *ngIf='searchClients === true' mat-button (click)="searchClients = false; addClient = true;">
+      <mat-icon style='color:white'>add</mat-icon>
+      Add Client
+    </button>
+    <button class='searchButton' *ngIf='searchClients === false' (click)="addClient = false; searchClients = true;" mat-button>
+      <mat-icon>search</mat-icon>
+      Search Clients
+    </button>
+
   </div>
 </div>

@@ -34,6 +34,8 @@ export class ControlInvoiceComponent implements OnInit {
 		Vehicle: '',
 		FranchiseId: ''
 	};
+	searchInvoices = false;
+	addInvoice = true;
 	invoices: any;
 	editing = false;
 	selectedId = '';
@@ -105,6 +107,16 @@ export class ControlInvoiceComponent implements OnInit {
 				opt.value = null;
 			}
 		});
+	}
+
+	setView() {
+		if (this.searchInvoices === true) {
+			this.searchInvoices = false;
+			this.addInvoice = true;
+		} else {
+			this.searchInvoices = true;
+			this.addInvoice = false;
+		}
 	}
 
 	addPPF(ppf) {
