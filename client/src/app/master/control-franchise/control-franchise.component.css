@@ -31,20 +31,9 @@
 }
 
 .form.show, .results.show {
-    display: flex;
+    display: block;
 }
 
-.searchButton {
-    position: sticky;
-    top: 50px;
-    right: 0px;
-    color:white;
+.franchiseRow {
+    margin-bottom: 3%;
 }
-
-.add {
-    position: sticky;
-    top: 100px;
-    right: 0px;
-    color:white;
-}
-

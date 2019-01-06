@@ -6,6 +6,7 @@ import { PhonePipe } from '../../phone.pipe';
 import { HttpEventType } from '@angular/common/http';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../../services/auth.service';
+import * as moment from 'moment';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -120,6 +121,8 @@ export class ControlUserComponent implements OnInit {
 	editUser(id) {
 		console.log('id: ', id);
 		this.editing = true;
+		this.searchUsers = false;
+		this.addUser = true;
 		this.userService.getUser(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
 				const data = JSON.parse(JSON.stringify(events.body));
@@ -144,6 +147,10 @@ export class ControlUserComponent implements OnInit {
 		};
 		this.editing = false;
 		this.selectedId = '';
+	}
+
+	formatDate(date) {
+		return moment(date).format('MMMM Do YYYY');
 	}
 
 }

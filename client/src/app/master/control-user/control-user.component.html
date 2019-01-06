@@ -57,11 +57,11 @@
   </div>
   <!-- end data area and display options below -->
   <div class="col-lg-2 desktopIcons">
-    <button class='add' mat-button *ngIf='searchUsers === false' (click)="searchUsers = false; addUser = true;">
+    <button class='add' mat-button *ngIf='searchUsers === true' (click)="searchUsers = false; addUser = true;">
       <mat-icon style='color:white'>add</mat-icon>
       Add User
     </button>
-    <button class='searchButton' *ngIf='searchUsers === true' (click)="addUser = false; searchUsers = true;" mat-button>
+    <button class='searchButton' *ngIf='searchUsers === false' (click)="addUser = false; searchUsers = true;" mat-button>
       <mat-icon>search</mat-icon>
       Search Users
     </button>

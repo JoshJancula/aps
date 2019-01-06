@@ -93,6 +93,8 @@ export class ControlClientComponent implements OnInit {
 
 	editClient(id) {
 		this.editing = true;
+		this.addClient = true;
+		this.searchClients = false;
 		console.log('id for get client: ', id);
 		this.clientService.getClient(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {

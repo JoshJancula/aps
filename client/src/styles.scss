@@ -48,50 +48,32 @@ body, html {
     overflow: hidden !important;
 }
 
-// .desktopIcons {
-//     display: block;
-// }
+.searchButton {
+    position: sticky !important;
+    top: 50px;
+    right: 0px;
+    color:white;
+}
 
-// .mobileIcons {
-//     display: none;
-// }
+.add {
+    position: sticky !important;
+    top: 50px;
+    right: 0px;
+    color:white;
+}
 
 @media (max-width: 768px) { 
 
-    // .mobileIcons {
-    //     display: block;
-    // }
-
-    // .desktopIcons {
-    //     display: none;
-    // }
-
-    // .searchMobile {
-    //     position: fixed;
-    //     bottom: 0px;
-    //     left: 0px;
-    //     color:white;
-    //     z-index: 50;
-    // }
-    
-    // .addMobile {
-    //     position: fixed;
-    //     bottom: 0px;
-    //     left: 0px;
-    //     color:white;
-    //     z-index: 50;
-    // }
-
-    .searchButton {
-        position: fixed;
+    .add {
+        position: fixed !important;
         top: 50px;
         right: 0px;
         color:white;
     }
-    
-    .add {
-        position: fixed;
-        top: 100px;
+
+    .searchButton {
+        position: fixed !important;
+        top: 50px;
         right: 0px;
         color:white;
     }

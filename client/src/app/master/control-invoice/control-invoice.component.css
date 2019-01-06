@@ -2,13 +2,8 @@
     margin-left: 20%;
 }
 
-.mat-form-field {
-    margin: 2%;
-}
-
 .submit {
     margin-top: 5%;
-    /* margin-left: 55%; */
 }
 
 .toggle {
@@ -40,36 +35,4 @@
     display: block;
 }
 */
-
-.searchButton {
-    position: sticky;
-    top: 50px;
-    right: 0px;
-    color:white;
-}
-
-.add {
-    position: sticky;
-    top: 100px;
-    right: 0px;
-    color:white;
-} 
-
-@media (max-width: 768px) { 
-
-    .searchButton {
-        position: fixed;
-        top: 40px;
-        right: 0px;
-        color:white;
-    }
-    
-    .add {
-        position: fixed;
-        top: 40px;
-        right: 0px;
-        color:white;
-    }
-
-}
 

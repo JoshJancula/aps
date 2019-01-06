@@ -128,6 +128,8 @@ export class ControlAppointmentComponent implements OnInit {
 	editAppointment(id) {
 		this.editing = true;
 		this.anytime = false;
+		this.searchAppointments = false;
+		this.addAppointment = true;
 		this.appointmentService.getAppointment(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
 				const data = JSON.parse(JSON.stringify(events.body));

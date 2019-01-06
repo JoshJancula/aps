@@ -22,8 +22,29 @@
       <mat-card>
         <div class="card-heading">All Franchises</div>
         <div *ngFor="let franchise of franchises">
-          <p>Name: {{franchise.Name}}<br>Active: {{franchise.Active}}</p>
+          <div class='row'>
+
+            <div class='col-lg-3'>
+          <p>Name: {{franchise.Name}}<br>
+            Proudly striping since: {{ formatDate(franchise.createdAt) }}<br>
+            Active: {{franchise.Active}}
+          </p>
+         
           <button (click)="editFranchise(franchise.id);" mat-button>Edit</button>
+        </div>
+
+        <div class='col-lg-6'>
+          <p>Staff</p>
+          <div class='row franchiseRow' *ngFor="let user of franchise.Users">
+              {{ user.Role }}<br>
+            Name: {{ user.FirstName }} {{ user.LastName }}<br>
+            Email: {{ user.Email }}<br>
+            Phone: {{ user.Phone }}<br>
+            Date of employment: {{ formatDate(user.createdAt) }}<br>
+          </div>
+        </div>
+
+        </div>
         </div>
       </mat-card>
     </div>
@@ -32,11 +53,11 @@
      <!-- end data area and display options below -->
   <div class="col-lg-2 ">
 
-    <button class='add' *ngIf='searchFranchises === false' mat-button (click)="searchFranchises = false; addFranchise = true;">
+    <button class='add' *ngIf='searchFranchises === true' mat-button (click)="searchFranchises = false; addFranchise = true;">
       <mat-icon style='color:white'>add</mat-icon>
       Add Franchise
     </button>
-    <button class='searchButton' *ngIf='searchFranchises === true' (click)="addFranchise = false; searchFranchises = true;" mat-button>
+    <button class='searchButton' *ngIf='searchFranchises === false' (click)="addFranchise = false; searchFranchises = true;" mat-button>
       <mat-icon>search</mat-icon>
       Search Franchises
     </button>

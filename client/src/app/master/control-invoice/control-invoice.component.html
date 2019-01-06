@@ -252,15 +252,14 @@
   <!-- <div class='col-lg-4 col-sm-12'> -->
     <div class='row search' *ngIf="searchInvoices === true">
       <div class='col-sm-12'>
-      <mat-card>
+      <mat-card style='margin: unset; margin:1%'>
         <div class="card-heading">Invoices</div>
         <div *ngFor="let invoice of invoices">
           <p>
-            #: {{invoice.id}}<br>
+            Invoice#: {{invoice.id}}<br>
             Date: {{ formatDate(invoice.createdAt) }} <br>
             Client: {{ invoice.Client }} <br>
             Employee: {{ invoice.Employee }}<br>
-
           </p>
           <button (click)="editInvoice(invoice.id);" mat-button>Edit</button>
         </div>

@@ -4,6 +4,7 @@ import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
 import { MessageService } from '../../services/message.service';
+import * as moment from 'moment';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -44,6 +45,7 @@ export class ControlFranchiseComponent implements OnInit {
 		this.utilService.processFranchises();
 		this.utilService.franchises.subscribe(response => {
 			this.franchises = response;
+			console.log('franchises: ', this.franchises);
 		});
 	}
 
@@ -70,6 +72,8 @@ export class ControlFranchiseComponent implements OnInit {
 	}
 
 	editFranchise(id) {
+		this.searchFranchises = false;
+		this.addFranchise = true;
 		this.editing = true;
 		this.franchiseService.getFranchise(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
@@ -100,6 +104,10 @@ export class ControlFranchiseComponent implements OnInit {
 				console.log('error deleting');
 			}
 		});
+	}
+
+	formatDate(date) {
+		return moment(date).format('MMMM Do YYYY');
 	}
 
 }

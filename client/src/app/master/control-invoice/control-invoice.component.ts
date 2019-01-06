@@ -242,6 +242,8 @@ export class ControlInvoiceComponent implements OnInit {
 
 	editInvoice(id) {
 		this.clearForm();
+		this.searchInvoices = false;
+		this.addInvoice = true;
 		this.editing = true;
 		this.invoiceService.getInvoice(id).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
