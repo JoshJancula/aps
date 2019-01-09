@@ -63,7 +63,7 @@
     color: teal;
 }
 
-.addIcon {
+.homeIcon {
     display: none;
 }
 
@@ -71,12 +71,32 @@
     padding: 3%;
 }
 
+@media (max-width: 1024px) {
+    .desktopView {
+        display: none;
+    } 
+
+    .homeIcon{
+        display: block;
+        z-index: 20;
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        background-color: red;
+        position: sticky;       
+        bottom: 10px;
+        left: calc(70vw);
+        cursor: pointer;
+    }
+
+}
+
 @media (max-width: 768px) {
 .desktopView {
     display: none;
 } 
 
-.addIcon{
+.homeIcon{
     display: block;
     z-index: 20;
     height: 60px;

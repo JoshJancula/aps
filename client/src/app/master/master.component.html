@@ -23,11 +23,11 @@
     <button *ngIf="control.bool2 === true" class='addMobile' mat-button (click)=control.click>
       <mat-icon style='color:white'>add</mat-icon>
     </button>
-    <button *ngIf="control.bool2 === !true" class='searchMobile' (click)=control.click mat-button>
+    <button *ngIf="control.bool2 === false" class='searchMobile' (click)=control.click mat-button>
       <mat-icon>search</mat-icon>
     </button> 
   </div>
   </div> -->
-<button class='addIcon' mat-button  (click)='openPopup();'><mat-icon style='color:white;'>home</mat-icon></button>
+<button class='homeIcon' mat-button  (click)='openPopup();'><mat-icon style='color:white;'>home</mat-icon></button>
 </div>
 

@@ -69,17 +69,17 @@
     <div class='row search' *ngIf="searchAppointments === true">
       <mat-card>
         <div class='row'>
-          <div class='col-lg-3 col-md-2 col-sm-3'>
+          <div class='col-lg-3 col-md-3 col-sm-3'>
             <div class="card-heading">Appointments</div>
           </div>
-          <div class='col-lg-3 col-md-1'></div>
-          <div class='col-lg-6 col-md-9 col-sm-8'>
+          <div class='col-lg-3 col-md-3 col-sm-3'></div>
+          <div class='col-lg-6 col-md-6 col-sm-8'>
             <div class='row'>
-              <div class='col-lg-6 col-sm-6'>
-                <!-- <mat-checkbox color='primary' [(ngModel)]="showTodays">Today</mat-checkbox> -->
+              <div class='col-lg-6 col-md-6 col-sm-6'>
+                <mat-checkbox color='primary' [(ngModel)]="showTodays">Today</mat-checkbox>
               </div>
-              <div class='col-lg-6 col-sm-6'>
-                <mat-form-field style='cursor: pointer'>
+              <div class='col-lg-6 col-md-6 col-sm-6'>
+                <mat-form-field style='cursor: pointer;'>
                   <input [(ngModel)]="searchDate" (input)="something();" (click)="openCalendar2($event)" matInput  (dateInput)="utilService.processAppointments();" (dateChange)="utilService.processAppointments();" [matDatepicker]="calendar2" placeholder="Date" [min]="getMinDate()" readonly>
                   <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
                   <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>

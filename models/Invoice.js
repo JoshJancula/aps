@@ -16,8 +16,23 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: false,
         },
-        ServiceType: {
-            type: DataTypes.STRING,
+        Stripes: {
+            type: DataTypes.TEXT,
+            unique: false,
+            allowNull: true,
+        },
+        Tint: {
+            type: DataTypes.TEXT,
+            unique: false,
+            allowNull: true,
+        },
+        PPF: {
+            type: DataTypes.TEXT,
+            unique: false,
+            allowNull: true,
+        },
+        OtherServices: {
+            type: DataTypes.TEXT,
             unique: false,
             allowNull: true,
         },

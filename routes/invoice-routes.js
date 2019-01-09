@@ -55,6 +55,11 @@ module.exports = function (app) {
         RO: req.body.RO,
         VIN: req.body.VIN,
         Stock: req.body.Stock,
+        PPF: req.body.PPF,
+        OtherServices: req.body.OtherServices,
+        Stripes: req.body.Stripes,
+        Tint: req.body.Tint,
+        EditedBy: req.body.EditedBy,
         Description: req.body.Description,
         Comments: req.body.Comments,
       }, {
