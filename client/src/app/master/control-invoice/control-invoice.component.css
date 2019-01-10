@@ -34,12 +34,11 @@
     background: #00FFFF;
 }
 
-/* .form, .results {
+ .invoiceForm, .invoiceSearch {
     display: none;
 }
 
-.form.show, .results.show {
+.invoiceForm.show, .invoiceSearch.show {
     display: block;
 }
-*/
 

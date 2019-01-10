@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { InvoiceService } from '../../services/invoice.service';
 import { NgModel } from '../../../../node_modules/@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
 import { MessageService } from '../../services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { InvoiceSearchComponent } from './invoice-search/invoice-search.component';
 import * as moment from 'moment';
 
 @Component({
@@ -15,6 +16,7 @@ import * as moment from 'moment';
 })
 export class ControlInvoiceComponent implements OnInit {
 
+	@ViewChild('invoiceSearch') invoiceSearch: InvoiceSearchComponent;
 	Invoice: any = {
 		Employee: '',
 		EmployeeId: '',
@@ -22,6 +24,7 @@ export class ControlInvoiceComponent implements OnInit {
 		Tint: '',
 		PPF: '',
 		OtherServices: '',
+		CustomPinstripes: '',
 		Client: '',
 		Total: 0,
 		Paid: '',
@@ -39,8 +42,8 @@ export class ControlInvoiceComponent implements OnInit {
 		FranchiseId: ''
 	};
 	serviceSelected = false;
-	searchInvoices = false;
-	addInvoice = true;
+	searchInvoices = true;
+	addInvoice = false;
 	invoices: any;
 	editing = false;
 	selectedId = '';
@@ -57,55 +60,54 @@ export class ControlInvoiceComponent implements OnInit {
 	vehicles = [];
 	panelsStriped: any;
 	customPinstriping = false;
-	customPinstripes = { description: '', value: 0 };
+	customPinstripes = { description: 'Custom pinstriping', value: 0, quantity: 0 };
 	newCarRate = 0;
 	numbers = [];
 	prices = [];
 	paymentMethods = ['Cash', 'PO', 'Check', 'Other', 'None'];
 	stockNumber = '';
 	manualAmountInput = false;
-	ppfAdded = [];
+	fieldsToValidate = [];
 	panelOptions: any = [
-		{ id: 1, model: 'First panel', value: 0 },
-		{ id: 2, model: 'Second panel', value: 0 },
-		{ id: 3, model: 'Third panel', value: 0 },
-		{ id: 4, model: 'Fourth panel', value: 0 },
-		{ id: 5, model: 'Fifth panel', value: 0 },
-		{ id: 6, model: 'Sixth panel', value: 0 },
-		{ id: 7, model: 'Seventh panel', value: 0 },
-		{ id: 8, model: 'Whole car', value: 0 }
-	];
-	ppfOptions: any = [
-		{ id: 1, model: 'Edge guard', value: 0, quantity: 0, selected: false },
-		{ id: 2, model: 'Door cup', value: 0, quantity: 0, selected: false },
-		{ id: 3, model: 'Whole fender', value: 0, quantity: 0, selected: false },
-		{ id: 4, model: 'Partial fender', value: 0, quantity: 0, selected: false },
-		{ id: 5, model: 'Full hood', value: 0, quantity: 0, selected: false },
-		{ id: 6, model: 'Partial hood', value: 0, quantity: 0, selected: false },
-		{ id: 7, model: 'Front bumper', value: 0, quantity: 0, selected: false },
-		{ id: 8, model: 'Rear bumper', value: 0, quantity: 0, selected: false },
-		{ id: 9, model: 'Mirror', value: 0, quantity: 0, selected: false },
-		{ id: 10, model: 'Stone guard', value: 0, quantity: 0, selected: false },
-		{ id: 11, model: 'Other', value: 0, quantity: 0, selected: false }
+		{ id: 1, model: 'First panel', value: 45, error: false },
+		{ id: 2, model: 'Second panel', value: 20, error: false },
+		{ id: 3, model: 'Third panel', value: 10, error: false },
+		{ id: 4, model: 'Fourth panel', value: 10, error: false },
+		{ id: 5, model: 'Fifth panel', value: 10, error: false },
+		{ id: 6, model: 'Sixth panel', value: 10, error: false },
+		{ id: 7, model: 'Seventh panel', value: 10, error: false },
+		{ id: 8, model: 'Whole car', value: 95, error: false }
 	];
 	windowOptions: any = [
-		{ id: 1, model: 'Roll up window', quantity: 0, value: 0, selected: false },
-		{ id: 2, model: 'Butterfly window', quantity: 0, value: 0, selected: false },
-		{ id: 3, model: 'Back windshield', quantity: 0, value: 0, selected: false },
-		{ id: 4, model: 'Tint removal', quantity: 0, value: 0, selected: false },
-		{ id: 5, model: 'Other', quantity: 0, value: 0, selected: false }
+		{ id: 1, model: 'Roll up window', quantity: 0, value: 0, selected: false, error: false },
+		{ id: 2, model: 'Butterfly window', quantity: 0, value: 0, selected: false, error: false },
+		{ id: 3, model: 'Back windshield', quantity: 0, value: 0, selected: false, error: false },
+		{ id: 4, model: 'Tint removal', quantity: 0, value: 0, selected: false, error: false },
+		{ id: 5, model: 'Other', quantity: 0, value: 0, selected: false, error: false }
+	];
+	ppfOptions: any = [
+		{ id: 1, model: 'Edge guard', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 2, model: 'Door cup', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 3, model: 'Whole fender', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 4, model: 'Partial fender', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 5, model: 'Full hood', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 6, model: 'Partial hood', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 7, model: 'Front bumper', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 8, model: 'Rear bumper', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 9, model: 'Mirror', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 10, model: 'Stone guard', value: 0, quantity: 0, selected: false, error: false },
+		{ id: 11, model: 'Other', value: 0, quantity: 0, selected: false, error: false }
 	];
 	serviceTypes: any = [
-		{ id: 0, model: 'Decals', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] },
-		{ id: 1, model: 'New car pinstriping', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] },
-		{ id: 2, model: 'Paint protection', checked: false, array: true, optionsArray: this.ppfOptions },
-		{ id: 3, model: 'Pinstripe repair', checked: false, array: true, optionsArray: this.panelOptions },
-		{ id: 4, model: 'Window tint', checked: false, array: true, optionsArray: this.windowOptions },
-		{ id: 5, model: 'Signs', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] },
-		{ id: 6, model: 'Vinyl wrap', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] },
-		{ id: 7, model: 'Other', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] }
+		{ id: 0, model: 'Decals', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+		{ id: 1, model: 'New car pinstriping', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+		{ id: 2, model: 'Paint protection', checked: false, array: true, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+		{ id: 3, model: 'Pinstripe repair', checked: false, array: true, optionsArray: this.panelOptions, error: false },
+		{ id: 4, model: 'Window tint', checked: false, array: true, optionsArray: this.windowOptions, error: false },
+		{ id: 5, model: 'Signs', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+		{ id: 6, model: 'Vinyl wrap', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+		{ id: 7, model: 'Other', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false }
 	];
-
 	// tslint:disable-next-line:max-line-length
 	constructor(private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
 		this.loadInvoices();
@@ -143,7 +145,10 @@ export class ControlInvoiceComponent implements OnInit {
 		}
 	}
 
-	addService() {
+	addService(service) {
+		if (service.id === 7 && this.serviceTypes[service.id].checked === true) {
+			this.serviceTypes[service.id].model = 'Other';
+		}
 		this.serviceSelected = false;
 		this.serviceTypes.forEach(type => {
 			if (type.checked === true) {
@@ -185,31 +190,25 @@ export class ControlInvoiceComponent implements OnInit {
 		this.serviceTypes.forEach(service => {
 			if (service.checked === true) { // all other services
 				if (service.id !== 2 && service.id !== 3 && service.id !== 4) {
-					console.log('this.serviceTypes:', this.serviceTypes);
-					this.Invoice.Total  += (service.optionsArray[0].value * service.optionsArray[0].quantity);
+					this.Invoice.Total += (service.optionsArray[0].value * service.optionsArray[0].quantity);
 				}
 				if (service.id === 2) { // ppf
 					this.ppfOptions.forEach(ppf => {
-						this.Invoice.Total  += (ppf.value * ppf.quantity);
+						this.Invoice.Total += (ppf.value * ppf.quantity);
 					});
 				}
 				if (service.id === 3) { // stripes by panel
 					this.panelOptions.forEach(panel => {
-						this.Invoice.Total  += panel.value;
+						this.Invoice.Total += panel.value;
 					});
 				}
 				if (service.id === 4) { // window tinting
 					this.windowOptions.forEach(win => {
-						this.Invoice.Total  += (win.value * win.quantity);
+						this.Invoice.Total += (win.value * win.quantity);
 					});
 				}
+				this.Invoice.Total += (this.customPinstripes.value * this.customPinstripes.quantity);
 			}
-		});
-	}
-
-	getPPFValues() {
-		this.ppfAdded.forEach(ppf => {
-			this.Invoice.Total += ppf.value;
 		});
 	}
 
@@ -251,6 +250,7 @@ export class ControlInvoiceComponent implements OnInit {
 		if (this.serviceTypes[4].checked === true) {
 			this.Invoice.Tint = JSON.stringify(this.windowOptions);
 		}
+		this.Invoice.CustomPinstripe = JSON.stringify(this.customPinstripes);
 		this.Invoice.OtherServices = JSON.stringify(this.serviceTypes);
 	}
 
@@ -277,33 +277,28 @@ export class ControlInvoiceComponent implements OnInit {
 		this.clearForm();
 	}
 
-	editInvoice(id) {
+	editInvoice(x) {
 		this.clearForm();
 		this.searchInvoices = false;
 		this.addInvoice = true;
 		this.editing = true;
-		this.invoiceService.getInvoice(id).subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				const data = JSON.parse(JSON.stringify(events.body));
-				console.log('data: ', data);
-				this.Invoice = data;
-				this.selectedId = data.id;
-				// tslint:disable-next-line:radix
-				this.Invoice.Total = parseInt(this.Invoice.Total);
-				this.setupEdit(data);
-			}
-		});
+		const data = JSON.parse(JSON.stringify(x));
+		this.Invoice = data;
+		this.selectedId = data.id;
+		// tslint:disable-next-line:radix
+		this.Invoice.Total = parseInt(this.Invoice.Total);
+		this.setupEdit(data);
 	}
 
 	setupEdit(data) {
 		if (data.Tint !== '') {
-			this.windowOptions =  JSON.parse(data.Tint);
+			this.windowOptions = JSON.parse(data.Tint);
 		}
 		if (data.Stripes !== '') {
-			this.panelOptions =  JSON.parse(data.Stripes);
+			this.panelOptions = JSON.parse(data.Stripes);
 		}
 		if (data.PPF !== '') {
-			this.ppfOptions =  JSON.parse(data.PPF);
+			this.ppfOptions = JSON.parse(data.PPF);
 		}
 		if (this.Invoice.VIN !== '') {
 			this.vins = JSON.parse('[' + data.VIN + ']');
@@ -311,9 +306,9 @@ export class ControlInvoiceComponent implements OnInit {
 		if (this.Invoice.Stock !== '') {
 			this.stocks = JSON.parse('[' + data.Stock + ']');
 		}
+		this.customPinstripes = JSON.parse(data.CustomPinstripe);
 		this.serviceTypes = JSON.parse(data.OtherServices);
-		console.log('invoice: ', this.Invoice);
-		console.log('serviceTypes: ', this.serviceTypes);
+		if (this.customPinstripes.quantity !== 0) { this.customPinstriping = true; }
 	}
 
 	clearForm() {
@@ -329,6 +324,7 @@ export class ControlInvoiceComponent implements OnInit {
 			PaymentMethod: '',
 			PO: '',
 			CheckNumber: '',
+			CustomPinstripes: '',
 			RO: '',
 			VIN: '',
 			Stock: '',
@@ -348,55 +344,55 @@ export class ControlInvoiceComponent implements OnInit {
 		this.selectFromClients = false;
 		this.panelsStriped = '';
 		this.newCarRate = 0;
-		this.ppfAdded = [];
 		this.addRO = false;
 		this.addStock = false;
 		this.addVIN = false;
 		this.addDescription = false;
 		this.customPinstriping = false;
+		this.customPinstripes = { description: 'Custom pinstriping', value: 0, quantity: 0 };
 		this.stocks = [];
 		this.vins = [];
 		this.panelsStriped = '';
 		this.newCarRate = 0;
 		this.panelOptions = [
-			{ id: 1, model: 'First panel', value: 0 },
-			{ id: 2, model: 'Second panel', value: 0 },
-			{ id: 3, model: 'Third panel', value: 0 },
-			{ id: 4, model: 'Fourth panel', value: 0 },
-			{ id: 5, model: 'Fifth panel', value: 0 },
-			{ id: 6, model: 'Sixth panel', value: 0 },
-			{ id: 7, model: 'Seventh panel', value: 0 },
-			{ id: 8, model: 'Whole car', value: 0 }
+			{ id: 1, model: 'First panel', value: 45, error: false },
+			{ id: 2, model: 'Second panel', value: 20, error: false },
+			{ id: 3, model: 'Third panel', value: 10, error: false },
+			{ id: 4, model: 'Fourth panel', value: 10, error: false },
+			{ id: 5, model: 'Fifth panel', value: 10, error: false },
+			{ id: 6, model: 'Sixth panel', value: 10, error: false },
+			{ id: 7, model: 'Seventh panel', value: 10, error: false },
+			{ id: 8, model: 'Whole car', value: 95, error: false }
 		];
 		this.windowOptions = [
-			{ id: 1, model: 'Roll up window', quantity: 0, value: 0, selected: false },
-			{ id: 2, model: 'Butterfly window', quantity: 0, value: 0, selected: false },
-			{ id: 3, model: 'Back windshield', quantity: 0, value: 0, selected: false },
-			{ id: 4, model: 'Tint removal', quantity: 0, value: 0, selected: false },
-			{ id: 5, model: 'Other', quantity: 0, value: 0, selected: false }
+			{ id: 1, model: 'Roll up window', quantity: 0, value: 0, selected: false, error: false },
+			{ id: 2, model: 'Butterfly window', quantity: 0, value: 0, selected: false, error: false },
+			{ id: 3, model: 'Back windshield', quantity: 0, value: 0, selected: false, error: false },
+			{ id: 4, model: 'Tint removal', quantity: 0, value: 0, selected: false, error: false },
+			{ id: 5, model: 'Other', quantity: 0, value: 0, selected: false, error: false }
 		];
 		this.ppfOptions = [
-			{ id: 1, model: 'Edge guard', value: 0, quantity: 0, selected: false },
-			{ id: 2, model: 'Door cup', value: 0, quantity: 0, selected: false },
-			{ id: 3, model: 'Whole fender', value: 0, quantity: 0, selected: false },
-			{ id: 4, model: 'Partial fender', value: 0, quantity: 0, selected: false },
-			{ id: 5, model: 'Full hood', value: 0, quantity: 0, selected: false },
-			{ id: 6, model: 'Partial hood', value: 0, quantity: 0, selected: false },
-			{ id: 7, model: 'Front bumper', value: 0, quantity: 0, selected: false },
-			{ id: 8, model: 'Rear bumper', value: 0, quantity: 0, selected: false },
-			{ id: 9, model: 'Mirror', value: 0, quantity: 0, selected: false },
-			{ id: 10, model: 'Stone guard', value: 0, quantity: 0, selected: false },
-			{ id: 11, model: 'Other', value: 0, quantity: 0, selected: false }
+			{ id: 1, model: 'Edge guard', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 2, model: 'Door cup', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 3, model: 'Whole fender', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 4, model: 'Partial fender', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 5, model: 'Full hood', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 6, model: 'Partial hood', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 7, model: 'Front bumper', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 8, model: 'Rear bumper', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 9, model: 'Mirror', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 10, model: 'Stone guard', value: 0, quantity: 0, selected: false, error: false },
+			{ id: 11, model: 'Other', value: 0, quantity: 0, selected: false, error: false }
 		];
 		this.serviceTypes = [
-			{ id: 0, model: 'Decals', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] },
-			{ id: 1, model: 'New car pinstriping', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] },
-			{ id: 2, model: 'Paint protection', checked: false, array: true, optionsArray: [{ value: 0, quantity: 0 }] },
-			{ id: 3, model: 'Pinstripe repair', checked: false, array: true, optionsArray: this.panelOptions },
-			{ id: 4, model: 'Window tint', checked: false, array: true, optionsArray: this.windowOptions },
-			{ id: 5, model: 'Signs', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] },
-			{ id: 6, model: 'Vinyl wrap', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] },
-			{ id: 7, model: 'Other', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }] }
+			{ id: 0, model: 'Decals', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+			{ id: 1, model: 'New car pinstriping', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+			{ id: 2, model: 'Paint protection', checked: false, array: true, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+			{ id: 3, model: 'Pinstripe repair', checked: false, array: true, optionsArray: this.panelOptions, error: false },
+			{ id: 4, model: 'Window tint', checked: false, array: true, optionsArray: this.windowOptions, error: false },
+			{ id: 5, model: 'Signs', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+			{ id: 6, model: 'Vinyl wrap', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
+			{ id: 7, model: 'Other', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false }
 		];
 	}
 
