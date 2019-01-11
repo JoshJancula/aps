@@ -38,7 +38,8 @@ import { InvoiceSearchComponent } from './master/control-invoice/invoice-search/
 	entryComponents: [
 		LoginComponent,
 		MasterComponent,
-		BottomPopupComponent
+		BottomPopupComponent,
+		InvoiceSearchComponent
 	],
 	declarations: [
 		AppComponent,

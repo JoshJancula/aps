@@ -1,5 +1,6 @@
 const db = require("../models");
 const JancstaPort = require('../config/jancsta');
+const moment = require('moment');
 
 // Routes
 // =============================================================
@@ -85,6 +86,31 @@ module.exports = function (app) {
         }
       }).then(function (x) {
         res.json(x);
+      });
+    }
+  });
+
+
+   // POST route for params to enter, search by franchise and dates. Dates default to today
+   app.post("/api/invoices/sub/", function (req, res) {
+     console.log('req.body: ', req.body);
+    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    if (jancsta) {
+      db.Invoice.findAll({
+        where: {
+          FranchiseId: req.body.franchise,
+        },
+      }).then(function (a) {
+        let start =  moment(req.body.dateFrom).format('MM/DD/YYYY');
+        let end =  moment(req.body.dateTo).format('MM/DD/YYYY');
+        let inv = [];
+          a.forEach(b => {
+            let createdAt = moment(b.createdAt).format('MM/DD/YYYY');
+            if (createdAt == start || createdAt == end) {
+              inv.push(b);
+            }
+          });
+       res.json(inv);
       });
     }
   });

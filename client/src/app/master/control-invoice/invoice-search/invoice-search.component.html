@@ -26,30 +26,39 @@
       <div class='row search' style='position: sticky;'>
         <div class='col-lg-3 col-md-3 col-sm-3'>
           <div class="card-heading">Search invoices</div>
+          <button (click)='loadInvoices();' mat-button>Search</button>
+          <button (click)='clearSearch();' mat-button>Clear</button>
         </div>
-        <div class='col-lg-3 col-md-3 col-sm-3'></div>
-        <div class='col-lg-6 col-md-6 col-sm-8'>
+        <div class='col-lg-3 col-md-3 col-sm-6'>
+            <mat-form-field >
+                <input matInput placeholder="Employee" [(ngModel)]="filter.employee" />
+              </mat-form-field>
+              <mat-form-field >
+                  <input matInput placeholder="Client" [(ngModel)]="filter.client" />
+                </mat-form-field>
+        </div>
+        <div class='col-lg-6 col-md-6 col-sm-6'>
           <div class='row'>
             <div class='col-lg-6 col-md-6 col-sm-6'>
                 <mat-form-field >
-                    <input matInput placeholder="Invoice number" [(ngModel)]="invoiceNumber" />
+                    <input matInput placeholder="Invoice number" [(ngModel)]="filter.invoiceNumber" />
                   </mat-form-field>
                   <mat-form-field>
-                      <mat-select placeholder="Franchise" [(ngModel)]="franchise">
+                      <mat-select placeholder="Franchise" [(ngModel)]="filter.franchise">
                         <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
                       </mat-select>
                     </mat-form-field>
             </div>
             <div class='col-lg-6 col-md-6 col-sm-6'>
               <mat-form-field style='cursor: pointer;'>
-                <input [(ngModel)]="dateFrom" (click)="openCalendar($event)" matInput (dateInput)="utilService.processInvoices();"
-                  (dateChange)="utilService.processInvoices();" [matDatepicker]="calendar" placeholder="Date from" readonly>
+                <input [(ngModel)]="filter.dateFrom" (click)="openCalendar($event)" matInput 
+                   [matDatepicker]="calendar" placeholder="Date from" readonly>
                 <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
                 <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
               </mat-form-field>
               <mat-form-field style='cursor: pointer;'>
-                <input [(ngModel)]="dateTo" (click)="openCalendar2($event)" matInput (dateInput)="utilService.processInvoices();"
-                  (dateChange)="utilService.processInvoices();" [matDatepicker]="calendar2" placeholder="Date to" readonly>
+                <input [(ngModel)]="filter.dateTo" (click)="openCalendar2($event)" matInput 
+                 [matDatepicker]="calendar2" placeholder="Date to" readonly>
                 <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
                 <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
               </mat-form-field>

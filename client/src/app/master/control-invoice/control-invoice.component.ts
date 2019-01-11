@@ -16,7 +16,7 @@ import * as moment from 'moment';
 })
 export class ControlInvoiceComponent implements OnInit {
 
-	@ViewChild('invoiceSearch') invoiceSearch: InvoiceSearchComponent;
+	@ViewChild('invoiceSearch') invoiceSearch: any = InvoiceSearchComponent;
 	Invoice: any = {
 		Employee: '',
 		EmployeeId: '',
@@ -110,7 +110,7 @@ export class ControlInvoiceComponent implements OnInit {
 	];
 	// tslint:disable-next-line:max-line-length
 	constructor(private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
-		this.loadInvoices();
+		// this.loadInvoices();
 		this.loadFranchises();
 		this.getClients();
 	}
@@ -166,7 +166,7 @@ export class ControlInvoiceComponent implements OnInit {
 	}
 
 	loadInvoices() {
-		this.utilService.processInvoices();
+		this.utilService.processInvoices(this.invoiceSearch.filter);
 		this.utilService.invoices.subscribe(response => {
 			this.invoices = response;
 			console.log('ivoices: ', response);
@@ -272,8 +272,9 @@ export class ControlInvoiceComponent implements OnInit {
 				console.log(res);
 			});
 		}
+		// console.log('searchFilter: ', this.invoiceSearch.filter);
 		setTimeout(() => this.notifySocket(), 500);
-		setTimeout(() => this.utilService.processInvoices(), 500);
+		setTimeout(() => this.invoiceSearch.loadInvoices(), 500);
 		this.clearForm();
 	}
 
@@ -401,7 +402,7 @@ export class ControlInvoiceComponent implements OnInit {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
 				this.clearForm();
-				this.utilService.processInvoices();
+				setTimeout(() => this.invoiceSearch.loadInvoices(), 500);
 				this.notifySocket();
 			} else {
 				console.log('error deleting');

@@ -21,10 +21,16 @@ export class InvoiceSearchComponent implements OnInit {
 	clients: any;
 	invoices: any;
 	franchises: any;
-	dateFrom = '';
-	dateTo = '';
 	invoiceNumber = '';
 	franchise: any;
+	filter: any = {
+		dateFrom: new Date(),
+		dateTo: new Date(),
+		employee: '',
+		invoiceNumber: '',
+		franchise: this.authService.currentUser.FranchiseId,
+		client: ''
+	};
 
 	constructor(private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, public utilService: UtilService) {
 		this.loadInvoices();
@@ -35,11 +41,6 @@ export class InvoiceSearchComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	// need to write new api to get invoices by franchise
-	// that api needs to only get results for selected dates
-	// dates to and from need to default to today
-	// need to write another api that searches by invoice number
-
 	getClients() { // need this so I can filter on clients
 		this.utilService.processClients();
 		this.utilService.clients.subscribe(response => {
@@ -47,15 +48,27 @@ export class InvoiceSearchComponent implements OnInit {
 		});
 	}
 
-	loadInvoices() {
-		this.utilService.processInvoices();
+	public loadInvoices() {
+		this.utilService.processInvoices(this.filter);
 		this.utilService.invoices.subscribe(response => {
-			this.invoices = response;
+			this.invoices = response.body;
 			console.log('ivoices from invoice search: ', response);
 		});
 	}
 
-	loadFranchises() { // for master mode
+	clearSearch() {
+		this.filter = {
+			dateFrom: new Date(),
+			dateTo: new Date(),
+			employee: '',
+			invoiceNumber: '',
+			franchise: this.authService.currentUser.FranchiseId,
+			client: ''
+		};
+		this.loadInvoices();
+	}
+
+	public loadFranchises() { // for master mode
 		if (this.authService.currentUser.Role.toLowerCase().search('super|honcho') >= 0) {
 			this.utilService.processFranchises();
 			this.utilService.franchises.subscribe(response => {

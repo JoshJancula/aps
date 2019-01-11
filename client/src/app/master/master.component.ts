@@ -88,7 +88,7 @@ export class MasterComponent implements OnInit {
 			case 'updateClients': this.utilService.processClients(); break;
 			case 'updateFranchises': this.utilService.processFranchises(); break;
 			case 'updateUsers': this.utilService.processUsers(); break;
-			case 'updateInvoices': this.utilService.processInvoices(); break;
+			case 'updateInvoices': this.utilService.processInvoices(this.controlInvoice.invoiceSearch.filter); break;
 			case 'updateAppointments': this.utilService.processAppointments(); break;
 		}
 	}

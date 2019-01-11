@@ -125,13 +125,13 @@ export class UtilService {
 	getAppointments() {
 		let url;
 		let localUrl;
-		if (this.authService.currentUser.Role === 'Super') {
-		 url = `https://aps-josh.herokuapp.com/api/appointments`;
-		 localUrl = `http://localhost:8080/api/appointments`;
-		} else {
-			url = `https://aps-josh.herokuapp.com/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
-			localUrl = `http://localhost:8080/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
-		}
+		// if (this.authService.currentUser.Role === 'Super') {
+		//  url = `https://aps-josh.herokuapp.com/api/appointments`;
+		//  localUrl = `http://localhost:8080/api/appointments`;
+		// } else {
+		url = `https://aps-josh.herokuapp.com/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
+		localUrl = `http://localhost:8080/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
+		// }
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -159,9 +159,9 @@ export class UtilService {
 		});
 	}
 
-	getInvoices() {
-		const url = `https://aps-josh.herokuapp.com/api/invoices`;
-		const localUrl = `http://localhost:8080/api/invoices`;
+	getInvoices(filter) {
+		const url = `https://aps-josh.herokuapp.com/api/invoices/sub/`;
+		const localUrl = `http://localhost:8080/api/invoices/sub/`;
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -171,21 +171,19 @@ export class UtilService {
 				observe: 'events' as 'events'
 			};
 			if (window.location.host === 'localhost:4200') {
-				return this.http.get(localUrl, httpOptions);
+				return this.http.post(localUrl, filter, httpOptions);
 			} else {
-				return this.http.get(url, httpOptions);
+				return this.http.post(url, filter, httpOptions);
 			}
 		} else {
 			console.log('no token found');
 		}
 	}
 
-	processInvoices() {
-		this.getInvoices().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				this.invoiceStore = JSON.parse(JSON.stringify(events.body));
-				this.invoiceSubject.next(this.invoiceStore);
-			}
+	processInvoices(filter) {
+		this.getInvoices(filter).subscribe((events) => {
+			this.invoiceStore = JSON.parse(JSON.stringify(events));
+			this.invoiceSubject.next(this.invoiceStore);
 		});
 	}
 
