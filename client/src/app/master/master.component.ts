@@ -34,16 +34,6 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlInvoice') controlInvoice: ControlInvoiceComponent;
 	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
 
-	// controllers = [
-	// 	{ click: this.controlUser.setView(), bool: this.userMode, bool2: this.controlUser.addUser },
-	// 	{ click: this.controlAppointment.setView(), bool: this.appointmentMode, bool2: this.controlAppointment.addAppointment },
-	// 	{ click: this.controlClient.setView(), bool: this.clientMode, bool2: this.controlClient.addClient },
-	// 	{ click: this.controlClient.setView(), bool: this.invoiceMode, bool2: this.controlInvoice.addInvoice },
-	// 	{ click: this.controlFranchise.setView(), bool: this.franchiseMode, bool2: this.controlFranchise.addFranchise },
-	// ];
-
-
-	// tslint:disable-next-line:max-line-length
 	constructor(private bottomSheetRef: MatBottomSheet, private authService: AuthService, private utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {

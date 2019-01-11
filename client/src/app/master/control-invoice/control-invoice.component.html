@@ -281,7 +281,7 @@
    <!-- end invoice form -->
 
    <!-- search view -->
-    <app-invoice-search  (editThis)='editInvoice($event)' class='invoiceSearch' [ngClass]="{'show': searchInvoices === true }"></app-invoice-search>
+    <app-invoice-search #invoiceSearch (editThis)='editInvoice($event)' class='invoiceSearch' [ngClass]="{'show': searchInvoices === true }"></app-invoice-search>
 
   </div>
 <!-- end middle column -->

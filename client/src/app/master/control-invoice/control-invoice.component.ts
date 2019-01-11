@@ -16,7 +16,7 @@ import * as moment from 'moment';
 })
 export class ControlInvoiceComponent implements OnInit {
 
-	@ViewChild('invoiceSearch') invoiceSearch: any = InvoiceSearchComponent;
+	@ViewChild('invoiceSearch') invoiceSearch: InvoiceSearchComponent;
 	Invoice: any = {
 		Employee: '',
 		EmployeeId: '',
@@ -108,7 +108,7 @@ export class ControlInvoiceComponent implements OnInit {
 		{ id: 6, model: 'Vinyl wrap', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
 		{ id: 7, model: 'Other', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false }
 	];
-	// tslint:disable-next-line:max-line-length
+
 	constructor(private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
 		// this.loadInvoices();
 		this.loadFranchises();
@@ -272,7 +272,6 @@ export class ControlInvoiceComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		// console.log('searchFilter: ', this.invoiceSearch.filter);
 		setTimeout(() => this.notifySocket(), 500);
 		setTimeout(() => this.invoiceSearch.loadInvoices(), 500);
 		this.clearForm();

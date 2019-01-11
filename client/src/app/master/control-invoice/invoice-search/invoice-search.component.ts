@@ -1,9 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import { InvoiceService } from '../../../services/invoice.service';
-import { NgModel } from '../../../../../node_modules/@angular/forms';
-import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
-import { MessageService } from '../../../services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
 import * as moment from 'moment';
 
@@ -32,7 +28,7 @@ export class InvoiceSearchComponent implements OnInit {
 		client: ''
 	};
 
-	constructor(private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, public utilService: UtilService) {
+	constructor(private authService: AuthService, public utilService: UtilService) {
 		this.loadInvoices();
 		this.loadFranchises();
 		this.getClients();
@@ -52,7 +48,6 @@ export class InvoiceSearchComponent implements OnInit {
 		this.utilService.processInvoices(this.filter);
 		this.utilService.invoices.subscribe(response => {
 			this.invoices = response.body;
-			console.log('ivoices from invoice search: ', response);
 		});
 	}
 
@@ -68,7 +63,7 @@ export class InvoiceSearchComponent implements OnInit {
 		this.loadInvoices();
 	}
 
-	public loadFranchises() { // for master mode
+	 loadFranchises() { // for master mode
 		if (this.authService.currentUser.Role.toLowerCase().search('super|honcho') >= 0) {
 			this.utilService.processFranchises();
 			this.utilService.franchises.subscribe(response => {
