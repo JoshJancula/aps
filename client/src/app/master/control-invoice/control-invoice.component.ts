@@ -39,7 +39,7 @@ export class ControlInvoiceComponent implements OnInit {
 		Comments: '',
 		Vehicle: '',
 		EditedBy: '',
-		FranchiseId: ''
+		FranchiseId: '',
 	};
 	serviceSelected = false;
 	searchInvoices = true;
@@ -334,7 +334,7 @@ export class ControlInvoiceComponent implements OnInit {
 			Comments: '',
 			Vehicle: '',
 			EditedBy: '',
-			FranchiseId: ''
+			FranchiseId: '',
 		};
 		this.stocks = [];
 		this.vins = [];

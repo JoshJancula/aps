@@ -15,7 +15,7 @@ export class InvoiceSearchComponent implements OnInit {
 	@ViewChild('calendar2') calendar2: any;
 	@Output() editThis = new EventEmitter();
 	clients: any;
-	invoices: any;
+	invoices = [];
 	franchises: any;
 	invoiceNumber = '';
 	franchise: any;
@@ -27,6 +27,7 @@ export class InvoiceSearchComponent implements OnInit {
 		franchise: this.authService.currentUser.FranchiseId,
 		client: ''
 	};
+	controlArray: any;
 
 	constructor(private authService: AuthService, public utilService: UtilService) {
 		this.loadInvoices();
@@ -45,10 +46,28 @@ export class InvoiceSearchComponent implements OnInit {
 	}
 
 	public loadInvoices() {
+		console.log('filter: ', this.filter);
 		this.utilService.processInvoices(this.filter);
 		this.utilService.invoices.subscribe(response => {
-			this.invoices = response.body;
+			if (response.status === 200 && response.type === 4) {
+				this.applyFilter(response.body);
+			}
+		}, error => {
+			console.log('error trying to get invoices: ', error);
 		});
+	}
+
+	applyFilter(data) {
+		console.log('data: ', data);
+		let returnThis = [];
+		data.forEach(invoice => {
+			if (this.filter.employee !== '') {
+				if (invoice.Employee.toLowerCase().indexOf(this.filter.employee.toLowerCase()) > -1) { returnThis.push(invoice); }
+			} else if (this.filter.client !== '') {
+				if (invoice.Client.toLowerCase().indexOf(this.filter.client.toLowerCase()) > -1) { returnThis.push(invoice); }
+			} else { returnThis.push(invoice); }
+		});
+		this.invoices = returnThis;
 	}
 
 	clearSearch() {
@@ -63,7 +82,7 @@ export class InvoiceSearchComponent implements OnInit {
 		this.loadInvoices();
 	}
 
-	 loadFranchises() { // for master mode
+	loadFranchises() { // for master mode
 		if (this.authService.currentUser.Role.toLowerCase().search('super|honcho') >= 0) {
 			this.utilService.processFranchises();
 			this.utilService.franchises.subscribe(response => {
@@ -89,6 +108,5 @@ export class InvoiceSearchComponent implements OnInit {
 		event.preventDefault();
 		this.calendar2.open();
 	}
-
 
 }

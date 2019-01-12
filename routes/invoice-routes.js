@@ -91,26 +91,31 @@ module.exports = function (app) {
   });
 
 
-   // POST route for params to enter, search by franchise and dates. Dates default to today
-   app.post("/api/invoices/sub/", function (req, res) {
-     console.log('req.body: ', req.body);
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+  // POST route for params to enter, search by franchise and dates. Dates default to today
+  app.post("/api/invoices/sub/", function (req, res) {
+    console.log('req.body: ', req.body);
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Invoice.findAll({
         where: {
           FranchiseId: req.body.franchise,
         },
       }).then(function (a) {
-        let start =  moment(req.body.dateFrom).format('MM/DD/YYYY');
-        let end =  moment(req.body.dateTo).format('MM/DD/YYYY');
+        let start = moment(req.body.dateFrom).format('MM/DD/YYYY');
+        let end = moment(req.body.dateTo).format('MM/DD/YYYY');
         let inv = [];
-          a.forEach(b => {
-            let createdAt = moment(b.createdAt).format('MM/DD/YYYY');
-            if (createdAt == start || createdAt == end) {
+
+        a.forEach(b => {
+          let createdAt = moment(b.createdAt).format('MM/DD/YYYY');
+          if (moment(createdAt).isBefore(end)) {
+            if (moment(createdAt).isAfter(start)) {
               inv.push(b);
             }
-          });
-       res.json(inv);
+          } else if (moment(createdAt).isSame(end)) {
+            inv.push(b);
+          }
+        });
+        res.json(inv);
       });
     }
   });
