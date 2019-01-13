@@ -1,7 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
+import { InvoiceService } from '../../../services/invoice.service';
 import { AuthService } from 'src/app/services/auth.service';
 import * as moment from 'moment';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -19,6 +21,7 @@ export class InvoiceSearchComponent implements OnInit {
 	franchises: any;
 	invoiceNumber = '';
 	franchise: any;
+	searchBy = '';
 	filter: any = {
 		dateFrom: new Date(),
 		dateTo: new Date(),
@@ -28,8 +31,9 @@ export class InvoiceSearchComponent implements OnInit {
 		client: ''
 	};
 	controlArray: any;
+	searchOptions = ['Invoice number', 'Employee', 'Client'];
 
-	constructor(private authService: AuthService, public utilService: UtilService) {
+	constructor(private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
 		this.loadInvoices();
 		this.loadFranchises();
 		this.getClients();
@@ -46,7 +50,6 @@ export class InvoiceSearchComponent implements OnInit {
 	}
 
 	public loadInvoices() {
-		console.log('filter: ', this.filter);
 		this.utilService.processInvoices(this.filter);
 		this.utilService.invoices.subscribe(response => {
 			if (response.status === 200 && response.type === 4) {
@@ -57,8 +60,27 @@ export class InvoiceSearchComponent implements OnInit {
 		});
 	}
 
+	processSearch() {
+		if (this.searchBy === 'Invoice number') {
+			// get invoice by ID
+			this.getInvoiceByNumber();
+		} else {
+			this.loadInvoices();
+		}
+	}
+
+	getInvoiceByNumber() {
+		this.invoiceService.getInvoice(this.filter.invoiceNumber).subscribe((events) => {
+			if (events.type === HttpEventType.Response) {
+				// const data = JSON.parse(JSON.stringify(events.body));
+				this.invoices = [];
+				this.invoices.push(events.body);
+				console.log('events.body: ', events.body);
+			}
+		});
+	}
+
 	applyFilter(data) {
-		console.log('data: ', data);
 		let returnThis = [];
 		data.forEach(invoice => {
 			if (this.filter.employee !== '') {
@@ -79,6 +101,7 @@ export class InvoiceSearchComponent implements OnInit {
 			franchise: this.authService.currentUser.FranchiseId,
 			client: ''
 		};
+		this.searchBy = '';
 		this.loadInvoices();
 	}
 

@@ -53,6 +53,7 @@ export class ControlInvoiceComponent implements OnInit {
 	addVIN = false;
 	addDescription = false;
 	additionalServices = false;
+	calculateTax = false;
 	clients: any;
 	franchises: any;
 	vins = [];
@@ -69,14 +70,14 @@ export class ControlInvoiceComponent implements OnInit {
 	manualAmountInput = false;
 	fieldsToValidate = [];
 	panelOptions: any = [
-		{ id: 1, model: 'First panel', value: 45, error: false },
-		{ id: 2, model: 'Second panel', value: 20, error: false },
-		{ id: 3, model: 'Third panel', value: 10, error: false },
-		{ id: 4, model: 'Fourth panel', value: 10, error: false },
-		{ id: 5, model: 'Fifth panel', value: 10, error: false },
-		{ id: 6, model: 'Sixth panel', value: 10, error: false },
-		{ id: 7, model: 'Seventh panel', value: 10, error: false },
-		{ id: 8, model: 'Whole car', value: 95, error: false }
+		{ id: 1, model: 'First panel', value: 45, checked: false },
+		{ id: 2, model: 'Second panel', value: 20, checked: false },
+		{ id: 3, model: 'Third panel', value: 10, checked: false },
+		{ id: 4, model: 'Fourth panel', value: 10, checked: false },
+		{ id: 5, model: 'Fifth panel', value: 10, checked: false },
+		{ id: 6, model: 'Sixth panel', value: 10, checked: false },
+		{ id: 7, model: 'Seventh panel', value: 10, checked: false },
+		{ id: 8, model: 'Whole car', value: 95, checked: false }
 	];
 	windowOptions: any = [
 		{ id: 1, model: 'Roll up window', quantity: 0, value: 0, selected: false, error: false },
@@ -198,9 +199,12 @@ export class ControlInvoiceComponent implements OnInit {
 					});
 				}
 				if (service.id === 3) { // stripes by panel
-					this.panelOptions.forEach(panel => {
-						this.Invoice.Total += panel.value;
-					});
+					// this.panelOptions.forEach(panel => {
+					// 	this.Invoice.Total += panel.value;
+					// });
+					for (let i = 0; i < this.panelsStriped; i++) {
+						this.Invoice.Total += this.panelOptions[i].value;
+					}
 				}
 				if (service.id === 4) { // window tinting
 					this.windowOptions.forEach(win => {
@@ -210,6 +214,12 @@ export class ControlInvoiceComponent implements OnInit {
 				this.Invoice.Total += (this.customPinstripes.value * this.customPinstripes.quantity);
 			}
 		});
+		if (this.calculateTax === true) { this.applyTax(); }
+	}
+
+	applyTax() {
+		const tax = this.Invoice.Total * 0.0725;
+		this.Invoice.Total += tax;
 	}
 
 	pushVehicle() {
@@ -245,6 +255,10 @@ export class ControlInvoiceComponent implements OnInit {
 			this.Invoice.PPF = JSON.stringify(this.ppfOptions);
 		}
 		if (this.serviceTypes[3].checked === true) {
+			for (let i = 0; i < this.panelsStriped; i++) {
+				this.panelOptions[i].checked = true;
+			}
+			console.log('panelOptions to save: ', this.panelOptions);
 			this.Invoice.Stripes = JSON.stringify(this.panelOptions);
 		}
 		if (this.serviceTypes[4].checked === true) {
@@ -278,8 +292,10 @@ export class ControlInvoiceComponent implements OnInit {
 	}
 
 	editInvoice(x) {
+		console.log('x: ', x);
 		this.clearForm();
 		this.searchInvoices = false;
+		this.serviceSelected = true;
 		this.addInvoice = true;
 		this.editing = true;
 		const data = JSON.parse(JSON.stringify(x));
@@ -296,6 +312,13 @@ export class ControlInvoiceComponent implements OnInit {
 		}
 		if (data.Stripes !== '') {
 			this.panelOptions = JSON.parse(data.Stripes);
+			let panels = 0;
+			for (let i = 0; i < this.panelOptions.length; i++) {
+				if (this.panelOptions[i].checked === true) {
+					panels++;
+					this.panelsStriped = panels;
+				}
+			}
 		}
 		if (data.PPF !== '') {
 			this.ppfOptions = JSON.parse(data.PPF);
@@ -354,6 +377,7 @@ export class ControlInvoiceComponent implements OnInit {
 		this.vins = [];
 		this.panelsStriped = '';
 		this.newCarRate = 0;
+		this.serviceSelected = false;
 		this.panelOptions = [
 			{ id: 1, model: 'First panel', value: 45, error: false },
 			{ id: 2, model: 'Second panel', value: 20, error: false },

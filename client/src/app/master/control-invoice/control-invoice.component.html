@@ -12,7 +12,6 @@
             <mat-option *ngFor="let client of clients" [value]="client.Name">{{ client.Name }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <!-- <mat-error class='error' *ngIf="needsClient === true;" >Add client</mat-error> -->
         <mat-form-field *ngIf='selectFromClients === false'>
           <input matInput placeholder="Client" [readonly]="editing === true" [(ngModel)]="Invoice.Client" />
           <mat-error class='error' *ngIf="Invoice.Client === ''" >Add client</mat-error>
@@ -29,7 +28,7 @@
         <div *ngIf="serviceTypes[3].checked === true">
           <mat-form-field>
             <mat-select placeholder="Panels striped" [(ngModel)]="panelsStriped">
-              <mat-option *ngFor="let panel of panelOptions" [value]="panel.id">{{ panel.id }}</mat-option>
+              <mat-option (click)='updateTotal();' *ngFor="let panel of panelOptions" [value]="panel.id">{{ panel.id }}</mat-option>
             </mat-select>
           </mat-form-field>
           <br>
@@ -247,6 +246,7 @@
 
 
         <!-- total cost and payment info -->
+        <mat-checkbox (change)='updateTotal();' color="primary" *ngIf="serviceSelected === true" [(ngModel)]="calculateTax">Calculate tax?</mat-checkbox>
         <mat-form-field *ngIf="serviceSelected === true">
           <input matInput placeholder="Total" [readonly]='editing === false' [(ngModel)]="Invoice.Total" />
         </mat-form-field>

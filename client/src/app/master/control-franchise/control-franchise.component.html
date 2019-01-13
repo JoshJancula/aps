@@ -26,7 +26,7 @@
           <input matInput placeholder="Email" [(ngModel)]="User.Email" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="User.Phone" (change)="formatPhone();" />
+          <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="User.Phone" (input)="formatPhone();" />
         </mat-form-field>
 
         <button class='submit' (click)="submitFranchise();" mat-button>Save Franchise</button>

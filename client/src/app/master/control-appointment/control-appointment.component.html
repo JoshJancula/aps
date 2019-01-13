@@ -41,7 +41,7 @@
             <input matInput placeholder="Contact Person" [(ngModel)]="Appointment.ContactPerson" />
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Contact Person phone" maxlength="14" (blur)="formatPhone();" [(ngModel)]="Appointment.ContactPersonPhone" />
+            <input matInput placeholder="Contact Person phone" maxlength="14" (input)="formatPhone();" [(ngModel)]="Appointment.ContactPersonPhone" />
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="Assigned employee" [(ngModel)]="Appointment.AssignedEmployee">

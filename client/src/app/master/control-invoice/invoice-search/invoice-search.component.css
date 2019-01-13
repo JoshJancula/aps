@@ -1,0 +1,22 @@
+.invoiceCard {
+    margin: 2%;
+    width: 100%;
+}
+
+.searchCard {
+    position: fixed;
+    max-width: 65%;
+    z-index: 5;
+    /* opacity: unset; */
+    top: 30px;
+    border-radius: unset;
+}
+
+.spacer {
+    height: 25vh;
+}
+
+/* .searchRow {
+    color: white;
+    background-color: blue;
+} */
