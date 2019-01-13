@@ -33,6 +33,7 @@ import { AppointmentService } from './services/appointment.service';
 import { MatBottomSheetModule } from '@angular/material';
 import { BottomPopupComponent } from './bottom-popup/bottom-popup.component';
 import { InvoiceSearchComponent } from './master/control-invoice/invoice-search/invoice-search.component';
+import { InvoiceFormComponent } from './master/control-invoice/invoice-form/invoice-form.component';
 
 @NgModule({
 	entryComponents: [
@@ -53,7 +54,8 @@ import { InvoiceSearchComponent } from './master/control-invoice/invoice-search/
 		BottomPopupComponent,
 		PhonePipe,
 		BottomPopupComponent,
-		InvoiceSearchComponent
+		InvoiceSearchComponent,
+		InvoiceFormComponent
 	],
 	imports: [
 		BrowserModule,

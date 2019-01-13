@@ -1,22 +1,35 @@
-.invoiceCard {
+.mat-card {
     margin: 2%;
-    width: 100%;
+    width: 94%;
 }
 
 .searchCard {
-    position: fixed;
-    max-width: 65%;
+    position: sticky;
     z-index: 5;
-    /* opacity: unset; */
-    top: 30px;
+    right: 30px;
     border-radius: unset;
 }
 
-.spacer {
-    height: 25vh;
+.searchRow {
+    width: 80vw;
 }
 
-/* .searchRow {
-    color: white;
-    background-color: blue;
-} */
+.ivoiceColumn {
+    overflow: auto;
+}
+
+.invoiceCard {
+    width: 100%;
+}
+
+.sideColumn {
+    position: fixed;
+    right: 0px;
+    top: 80px;
+}
+
+@media (max-width: 992px) {
+    .searchRow {
+        width: 92vw;
+    }
+}

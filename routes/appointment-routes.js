@@ -8,23 +8,23 @@ module.exports = function (app) {
 
   // GET route for getting all appointments
   app.get("/api/appointments", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Appointment.findAll({
       }).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // GET route for retrieving a single appointment
   app.get("/api/appointments/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     console.log('req.params: ', req.params.id);
       console.log('req.body: ', req.body.id);
     if (jancsta) {
-      // console.log('req.params: ', req.params.id);
-      // console.log('req.body: ', req.body.id);
       db.Appointment.findOne({
         where: {
           id: req.params.id
@@ -32,24 +32,26 @@ module.exports = function (app) {
       }).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // POST route for saving a new appointment
   app.post("/api/appointments", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Appointment.create(req.body).then(function (x) {
         res.json(x);
       });
     } else {
-      console.log('error authenticating');
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // PUT route for updating appointment
   app.put("/api/appointments/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Appointment.update({
         Date: req.body.Data,
@@ -71,12 +73,14 @@ module.exports = function (app) {
         .catch(function (err) {
           res.json(err);
         });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // DELETE route for deleting an appointment 
   app.delete("/api/appointments/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Appointment.destroy({
         where: {
@@ -85,6 +89,8 @@ module.exports = function (app) {
       }).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
@@ -93,27 +99,26 @@ module.exports = function (app) {
 
   // GET route for getting all appointments
   app.get("/api/appointments/sub/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Appointment.findAll({
         where: {
           FranchiseId: req.params.id
         },
       }).then(function (x) {
-        // you were last working right here where we you need to get all apps for a franchise
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // GET route for retrieving a single appointment
   app.get("/api/appointments/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     console.log('req.params: ', req.params.id);
       console.log('req.body: ', req.body.id);
     if (jancsta) {
-      // console.log('req.params: ', req.params.id);
-      // console.log('req.body: ', req.body.id);
       db.Appointment.findOne({
         where: {
           id: req.params.id
@@ -121,24 +126,26 @@ module.exports = function (app) {
       }).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // POST route for saving a new appointment
   app.post("/api/appointments", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Appointment.create(req.body).then(function (x) {
         res.json(x);
       });
     } else {
-      console.log('error authenticating');
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // PUT route for updating appointment
   app.put("/api/appointments/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Appointment.update({
         Date: req.body.Data,
@@ -160,12 +167,14 @@ module.exports = function (app) {
         .catch(function (err) {
           res.json(err);
         });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // DELETE route for deleting an appointment 
   app.delete("/api/appointments/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Appointment.destroy({
         where: {
@@ -174,6 +183,8 @@ module.exports = function (app) {
       }).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 

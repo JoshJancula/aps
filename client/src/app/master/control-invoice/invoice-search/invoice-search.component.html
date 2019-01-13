@@ -1,93 +1,62 @@
-<!-- <div class='row search'>
-    <div class='col-lg-3 col-md-3 col-sm-3'>
-      <div class="card-heading">Search invoices</div>
-    </div>
-    <div class='col-lg-3 col-md-3 col-sm-3'></div>
-    <div class='col-lg-6 col-md-6 col-sm-8'>
-      <div class='row'>
-        <div class='col-lg-6 col-md-6 col-sm-6'>
-         
-        </div>
-        <div class='col-lg-6 col-md-6 col-sm-6'>
-          <mat-form-field style='cursor: pointer;'>
-            <input [(ngModel)]="dateTo" (click)="openCalendar2($event)" matInput  (dateInput)="utilService.processInvoices();" (dateChange)="utilService.processInvoices();" [matDatepicker]="calendar2" placeholder="Date"  readonly>
-            <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
-            <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-  </div> -->
+<div class='row searchRow'>
+  <div class='ivoiceColumn col-lg-10 col-md-9 col-sm-9'>
 
-<!-- <div class='row search'> -->
-  <!-- <div class='col-sm-12'> -->
-    <!-- <div class='row searchRow'> -->
-    <mat-card class='searchCard'>
-
-      <div class='row search'>
-        <div class='col-lg-3 col-md-3 col-sm-3'>
-          <div class="card-heading">Search invoices</div>
-          <button (click)='processSearch();' mat-button>Search</button>
-          <button (click)='clearSearch();' mat-button>Clear</button>
-        </div>
-        <div class='col-lg-3 col-md-3 col-sm-3'>
-          <mat-form-field *ngIf="searchBy === 'Employee'">
-            <input matInput placeholder="Employee" [(ngModel)]="filter.employee" />
-          </mat-form-field>
-          <mat-form-field *ngIf="searchBy === 'Client'">
-            <input matInput placeholder="Client" [(ngModel)]="filter.client" />
-          </mat-form-field>
-        </div>
-        <div class='col-lg-3 col-md-3 col-sm-3' *ngIf="searchBy !== 'Invoice number'">
-          <mat-form-field style='cursor: pointer;'>
-            <input [(ngModel)]="filter.dateFrom" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
-              placeholder="Date from" readonly>
-            <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
-            <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field style='cursor: pointer;'>
-            <input [(ngModel)]="filter.dateTo" (click)="openCalendar2($event)" matInput [matDatepicker]="calendar2"
-              placeholder="Date to" readonly>
-            <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
-            <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
-          </mat-form-field>
-        </div>
-        <div class='col-lg-3 col-md-3 col-sm-3' *ngIf="searchBy === 'Invoice number'">
-          <mat-form-field>
-            <input matInput placeholder="Invoice number" [(ngModel)]="filter.invoiceNumber" />
-          </mat-form-field>
-        </div>
-        <div class='col-lg-63col-md-3 col-sm-3'>
-          <div class='row'>
-            <mat-form-field>
-              <mat-select placeholder="Franchise" [(ngModel)]="filter.franchise">
-                <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-select placeholder="Add filter" [(ngModel)]="searchBy">
-                <mat-option *ngFor="let option of searchOptions" [value]="option">{{ option }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-
-          </div>
-        </div>
-      </div>
+    <mat-card *ngFor="let invoice of invoices" class='invoiceCard'>
+      <p>
+        Invoice#: {{invoice.id}}<br>
+        Date: {{ formatDate(invoice.createdAt) }} <br>
+        Client: {{ invoice.Client }} <br>
+        Employee: {{ invoice.Employee }}<br>
+      </p>
+      <button (click)='editThis.emit(invoice);' mat-button>Edit</button>
     </mat-card>
-    <!-- </div> -->
-    <div class='spacer'></div>
-  
-      <!-- <div class='row'> -->
-        <mat-card *ngFor="let invoice of invoices" class='invoiceCard'> 
-                 <p>
-          Invoice#: {{invoice.id}}<br>
-          Date: {{ formatDate(invoice.createdAt) }} <br>
-          Client: {{ invoice.Client }} <br>
-          Employee: {{ invoice.Employee }}<br>
-        </p>
-        <button (click)='editInvoice(invoice);' mat-button>Edit</button>
-      </mat-card>
-      <!-- </div> -->
-   
-  <!-- </div> -->
-<!-- </div> -->
+
+  </div>
+
+  <div class="col-lg-2 col-md-3 col-sm-3 sideColumn">
+    <div class='row'>
+      <button class='add' mat-button (click)="newInvoice.emit();">
+        <mat-icon style="padding-top: 0px;">add</mat-icon>
+        New Invoice
+      </button>
+    </div>
+
+    <mat-card class='searchCard'>
+      <div class="card-heading">Search invoices</div>
+      <mat-form-field style='cursor: pointer;'>
+        <input [(ngModel)]="filter.dateFrom" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
+          placeholder="Date from" readonly>
+        <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
+        <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field style='cursor: pointer;'>
+        <input [(ngModel)]="filter.dateTo" (click)="openCalendar2($event)" matInput [matDatepicker]="calendar2"
+          placeholder="Date to" readonly>
+        <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
+        <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Invoice number" [(ngModel)]="filter.invoiceNumber" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Franchise" [(ngModel)]="filter.franchise">
+          <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Add filter" [(ngModel)]="searchBy">
+          <mat-option *ngFor="let option of searchOptions" [value]="option">{{ option }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="searchBy === 'Employee'">
+        <input matInput placeholder="Employee" [(ngModel)]="filter.employee" />
+      </mat-form-field>
+      <mat-form-field *ngIf="searchBy === 'Client'">
+        <input matInput placeholder="Client" [(ngModel)]="filter.client" />
+      </mat-form-field>
+      <button (click)='processSearch();' mat-button>Search</button>
+      <button (click)='clearSearch();' mat-button>Clear</button>
+    </mat-card>
+
+  </div>
+</div>

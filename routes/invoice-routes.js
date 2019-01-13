@@ -1,5 +1,6 @@
 const db = require("../models");
 const JancstaPort = require('../config/jancsta');
+// const jancsta = new JancstaPort();
 const moment = require('moment');
 
 // Routes
@@ -8,18 +9,20 @@ module.exports = function (app) {
 
   // GET route for getting all invoices
   app.get("/api/invoices", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Invoice.findAll({
       }).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // GET route for retrieving a single invoice
   app.get("/api/invoices/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Invoice.findOne({
         where: {
@@ -28,24 +31,26 @@ module.exports = function (app) {
       }).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // POST route for saving a new invoice
   app.post("/api/invoices", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Invoice.create(req.body).then(function (x) {
         res.json(x);
       });
     } else {
-      console.log('error authenticating');
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // PUT route for updating invoice
   app.put("/api/invoices/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Invoice.update({
         Total: req.body.Total,
@@ -73,12 +78,14 @@ module.exports = function (app) {
         .catch(function (err) {
           res.json(err);
         });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // DELETE route for deleting a invoice location
   app.delete("/api/invoices/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.Invoice.destroy({
         where: {
@@ -87,15 +94,17 @@ module.exports = function (app) {
       }).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
 
   // POST route for params to enter, search by franchise and dates. Dates default to today
   app.post("/api/invoices/sub/", function (req, res) {
-    console.log('req.body: ', req.body);
     let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
+      // console.log('jancsta.secret: ', jancsta.secret);
       db.Invoice.findAll({
         where: {
           FranchiseId: req.body.franchise,
@@ -117,6 +126,8 @@ module.exports = function (app) {
         });
         res.json(inv);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 

@@ -1,7 +1,7 @@
 const db = require("../models");
 const JancstaPort = require('../config/jancsta');
 const bcrypt = require('bcryptjs');
-
+const moment = require('moment');
 
 // Routes
 // =============================================================
@@ -9,7 +9,7 @@ module.exports = function (app) {
 
   // GET route for getting all users
   app.get("/api/users", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.User.findAll({
       }).then(function (x) {
@@ -29,12 +29,14 @@ module.exports = function (app) {
         });
         res.json(z);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // GET route for retrieving a single user
   app.get("/api/users/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.User.findOne({
         where: {
@@ -54,14 +56,15 @@ module.exports = function (app) {
           }
         res.json(user);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // PUT route for updating users
   app.put("/api/users/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
-      console.log('req.body: ', req.body);
       db.User.update({
         FirstName: req.body.FirstName,
         LastName: req.body.LastName,
@@ -78,22 +81,26 @@ module.exports = function (app) {
         .catch(function (err) {
           res.json(err);
         });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // POST route for saving a new user
   app.post("/api/users", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
       db.User.create(req.body).then(function (x) {
         res.json(x);
       });
+    } else {
+      res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
     }
   });
 
   // DELETE route for deleting a user 
   app.delete("/api/users/:id", function (req, res) {
-    let jancsta = new JancstaPort(req.headers.authorization.toString(), 'super');
+    let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
         db.User.destroy({
           where: {
@@ -102,6 +109,8 @@ module.exports = function (app) {
         }).then(function (x) {
           res.json(x);
         });
+      } else {
+        res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
       }
   });
 
@@ -129,15 +138,12 @@ module.exports = function (app) {
           // check if password matches
           bcrypt.compare(req.body.Password, pwd, function (err, isMatch) {
             if (isMatch && !err) {
-              let x;
               // if user is found and password is right create a token
-              if (user.Role === 'Super' || user.Role === 'Honcho') {
-                x = 'Master';
-              } else {
-                x = 'Subscriber';
-              }
+              let date = new Date();
+              let date2 = moment(date).format('MM/DD/YYYY');
+              let hashThis = `${date2}secret`
               bcrypt.genSalt(3, function (err, salt) {
-                bcrypt.hash(x, salt, function (err2, hash) {
+                bcrypt.hash(hashThis, salt, function (err2, hash) {
                   res.json({ success: true, token: hash, user: returnInfo });
                 });
               });

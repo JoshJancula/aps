@@ -1,6 +1,6 @@
  .mat-card {
     /* width: 100px; */
-    display: inline-block;
+    /* display: inline-block; */
     /* margin-left: 2%; */
     margin: 2%;
 }
@@ -16,13 +16,13 @@
 .mainRow {
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .contentRow {
     width: 100vw;
     min-height: 100vh;
-    padding-bottom: 5%;
+    /* padding-bottom: 5%; */
     overflow: auto;
 }
 
@@ -63,12 +63,12 @@
     color: teal;
 }
 
-.homeIcon {
-    display: none;
+.screenTitle {
+    margin-left: 18vw;
 }
 
-.mainRow {
-    padding: 3%;
+.homeIcon {
+    display: none;
 }
 
 @media (max-width: 1024px) {
@@ -84,8 +84,8 @@
         border-radius: 30px;
         background-color: red;
         position: sticky;       
-        bottom: 10px;
-        left: calc(70vw);
+        bottom: 70px;
+        left: calc(85vw);
         cursor: pointer;
     }
 
@@ -104,8 +104,8 @@
     border-radius: 30px;
     background-color: red;
     position: sticky;       
-    bottom: 10px;
-    left: calc(70vw);
+    bottom: 70px;
+    left: calc(73vw);
     cursor: pointer;
 }
 

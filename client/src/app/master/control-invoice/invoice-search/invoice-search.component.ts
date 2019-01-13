@@ -16,6 +16,7 @@ export class InvoiceSearchComponent implements OnInit {
 	@ViewChild('calendar') calendar: any;
 	@ViewChild('calendar2') calendar2: any;
 	@Output() editThis = new EventEmitter();
+	@Output() newInvoice = new EventEmitter();
 	clients: any;
 	invoices = [];
 	franchises: any;
@@ -72,10 +73,8 @@ export class InvoiceSearchComponent implements OnInit {
 	getInvoiceByNumber() {
 		this.invoiceService.getInvoice(this.filter.invoiceNumber).subscribe((events) => {
 			if (events.type === HttpEventType.Response) {
-				// const data = JSON.parse(JSON.stringify(events.body));
 				this.invoices = [];
 				this.invoices.push(events.body);
-				console.log('events.body: ', events.body);
 			}
 		});
 	}
@@ -114,9 +113,9 @@ export class InvoiceSearchComponent implements OnInit {
 		}
 	}
 
-	editInvoice(invoice) {
-		this.editThis.emit(invoice);
-	}
+	// editInvoice(invoice) {
+	// 	this.editThis.emit(invoice);
+	// }
 
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');

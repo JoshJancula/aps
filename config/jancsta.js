@@ -1,16 +1,13 @@
 const bcrypt = require('bcryptjs');
-module.exports = function (token, x) {
+const moment = require('moment');
 
-    let control = ''
-    console.log('x param passed to jancstaport: ', x);
-    switch (x) {
-        case 'super': control = 'Master' ; break;
-        case 'sub': control = 'Subscriber' ; break;
-    }
+module.exports = function (token) {
 
-    
+    let date = new Date();
+    let date2 = moment(date).format('MM/DD/YYYY');
+    let compareThis = `${date2}secret`
     if (token) {
-        bcrypt.compare(control, token).then((res) => {
+        bcrypt.compare(compareThis, token).then((res) => {
             if (res) {
                 console.log('sucess, tokens match');
                 return true;

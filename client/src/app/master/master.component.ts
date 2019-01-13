@@ -27,6 +27,7 @@ export class MasterComponent implements OnInit {
 	invoiceMode = true;
 	messageConnection: any;
 	updateConnection: any;
+	screen = 'Invoicing';
 	@ViewChild('controlUser') controlUser: ControlUserComponent;
 	@ViewChild('controlFranchise') controlFranchise: ControlFranchiseComponent;
 	@ViewChild('controlClient') controlClient: ControlClientComponent;
@@ -94,6 +95,7 @@ export class MasterComponent implements OnInit {
 		this.clientMode = false;
 		this.appointmentMode = false;
 		this.invoiceMode = false;
+		this.screen = 'Staff';
 	}
 
 	openFranchises() {
@@ -102,6 +104,7 @@ export class MasterComponent implements OnInit {
 		this.clientMode = false;
 		this.appointmentMode = false;
 		this.invoiceMode = false;
+		this.screen = 'Franchises';
 	}
 
 	openClients() {
@@ -110,6 +113,7 @@ export class MasterComponent implements OnInit {
 		this.franchiseMode = false;
 		this.appointmentMode = false;
 		this.invoiceMode = false;
+		this.screen = 'Clients';
 	}
 
 	openAppointments() {
@@ -118,6 +122,7 @@ export class MasterComponent implements OnInit {
 		this.userMode = false;
 		this.franchiseMode = false;
 		this.invoiceMode = false;
+		this.screen = 'Appointments';
 	}
 
 	openInvoices() {
@@ -126,6 +131,7 @@ export class MasterComponent implements OnInit {
 		this.clientMode = false;
 		this.userMode = false;
 		this.franchiseMode = false;
+		this.screen = 'Invoicing';
 	}
 
 }

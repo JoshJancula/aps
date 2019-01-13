@@ -2,6 +2,13 @@
     margin-left: 20%;
 }
 
+.mat-card {
+    margin: 2%;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    width: 90;
+}
+
 .submit {
     margin-top: 5%;
 }
@@ -33,14 +40,3 @@
 .mat-chip {
     background: #00FFFF;
 }
-
- .invoiceForm, .invoiceSearch {
-    display: none;
-}
-
-.invoiceForm.show, .invoiceSearch.show {
-    height: 95vh;
-    display: block;
-    overflow: auto;
-}
-

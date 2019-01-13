@@ -8,7 +8,7 @@
 @include mat-core();
 
 .mat-card {
-    width: 96%;
+    // width: 96%;
     // margin: 2%;
     background: #D7D6D6;
     opacity: .9;
@@ -17,6 +17,13 @@
 
 .mat-form-field {
     width: 95%;
+}
+
+.mat-toolbar {
+    width: 100vw;
+    background-color: blue;
+    color: white;
+    opacity: .9 !important;
 }
 
 html,
@@ -35,11 +42,18 @@ body {
     background-image: url('https://chambermaster.blob.core.windows.net/images/customers/391/members/6298/logos/MEMBER_LOGO/ATLPinATLWraps.jpg');
 }
 
+.toolbarLogo {
+    height: 64px;
+    width: 17vw;
+    position: absolute;
+    left: 0;
+}
+
 body, html {
     display: flex;
     flex-direction: column;
     height: 100vh;  
-    margin: auto;
+    margin: none;
     background-color: black;
     background-image: url('./assets/logo.jpeg');
     background-position: center;
@@ -49,16 +63,16 @@ body, html {
 }
 
 .searchButton {
-    position: sticky !important;
-    top: 50px;
-    right: 0px;
+    position: fixed !important;
+    top: 17px;
+    right: 3vw;
     color:white;
 }
 
 .add {
-    position: sticky !important;
-    top: 50px;
-    right: 0px;
+    position: fixed !important;
+    top: 17px;
+    right: 3vw;
     color:white;
 }
 
@@ -70,20 +84,21 @@ body, html {
 
     .add {
         position: fixed !important;
-        top: 50px;
+        top: 12px;
         right: 0px;
         color:white;
+        font-size: 10px;
     }
 
     .searchButton {
         position: fixed !important;
-        top: 50px;
+        top: 12px;
         right: 0px;
         color:white;
+        font-size: 10px;
     }
 
     body, html {
         overflow: auto !important;
     }
-
 }
