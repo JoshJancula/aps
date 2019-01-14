@@ -1,11 +1,4 @@
- .mat-card {
-    /* width: 100px; */
-    /* display: inline-block; */
-    /* margin-left: 2%; */
-    margin: 2%;
-}
-
-.content {
+ .content {
     display: inline-block;
 }
 
@@ -17,12 +10,12 @@
     width: 100vw;
     height: 100vh;
     overflow: auto;
+    margin-top: 5%;
 }
 
 .contentRow {
     width: 100vw;
     min-height: 100vh;
-    /* padding-bottom: 5%; */
     overflow: auto;
 }
 
@@ -40,7 +33,6 @@
 
 .submit {
     margin-top: 5%;
-    /* margin-left: 55%; */
 }
 
 .toggle {
@@ -89,6 +81,14 @@
         cursor: pointer;
     }
 
+    .screenTitle {
+        margin-left: unset;
+    }
+
+    .mainRow {
+        margin-top: 8%;
+    }
+
 }
 
 @media (max-width: 768px) {
@@ -111,6 +111,8 @@
 
 .mainRow {
     overflow: auto;
+    overflow-x: hidden !important;
+    margin-top: 12%;
 }
 
 }

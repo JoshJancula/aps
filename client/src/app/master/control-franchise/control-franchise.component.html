@@ -1,5 +1,5 @@
 <div class="row">
-  <div class='col-lg-10 col-sm-12'>
+  <!-- <div class='col-lg-10 col-sm-12'> -->
     <div class='row form' [ngClass]="{'show': addFranchise === true}">
       <mat-card>
         <div class="card-heading">Create Franchise</div>
@@ -65,10 +65,10 @@
         </div>
       </mat-card>
     </div>
-  </div>
+  <!-- </div> -->
 
   <!-- end data area and display options below -->
-  <div class="col-lg-2 ">
+  <!-- <div class="col-lg-2 "> -->
 
     <button class='add' *ngIf='searchFranchises === true' mat-button (click)="searchFranchises = false; addFranchise = true; editing = false;">
       <mat-icon style='color:white'>add</mat-icon>
@@ -80,5 +80,5 @@
       Search Franchises
     </button>
 
-  </div>
+  <!-- </div> -->
 </div>

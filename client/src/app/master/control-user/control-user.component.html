@@ -1,5 +1,5 @@
 <div class="row">
-  <div class='col-lg-10 col-md-12 col-sm-12'>
+  <!-- <div class='col-lg-10 col-md-12 col-sm-12'> -->
     <div class='row' class='userForm' [ngClass]="{'show': addUser === true}">
       <mat-card>
         <div class="card-heading">Create User</div>
@@ -54,9 +54,9 @@
       </mat-card>
     </div>
 
-  </div>
+  <!-- </div> -->
   <!-- end data area and display options below -->
-  <div class="col-lg-2 desktopIcons">
+  <!-- <div class="col-lg-2 desktopIcons"> -->
     <button class='add' mat-button *ngIf='searchUsers === true' (click)="searchUsers = false; addUser = true;">
       <mat-icon style='color:white'>add</mat-icon>
       Add User
@@ -65,7 +65,7 @@
       <mat-icon>search</mat-icon>
       Search Users
     </button>
-  </div>
+  <!-- </div> -->
   
 </div>
   

@@ -1,12 +1,9 @@
 <mat-toolbar>  
-  <!-- <span class='toolbarLogo'></span> -->
   <img class='toolbarLogo' src='assets/logo2.png' />
     <span class='screenTitle'>{{ screen }}</span>
   </mat-toolbar>
 <div class='row mainRow'>
   <div class='col-lg-2 desktopView'>
-  <!-- <div class='row'> <h3> Master Control Panel</h3></div> -->
-  <!-- <div class='row headerRow'></div> -->
   <div class='options' [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Users</div>
   <div class='options' [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
   <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();" >Clients</div>
@@ -14,6 +11,7 @@
   <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();" >Invoices</div>
   <div class='options' (click)="openPopup();" >Open popup</div>
 </div>
+
 <div class='col-lg-10 col-sm-12 contentRow'>
     <app-control-user #controlUser class='controlUser' [ngClass]="{'show': userMode === true}"></app-control-user>
     <app-control-franchise #controlFranchise class='controlFranchise'  [ngClass]="{'show': franchiseMode === true}"></app-control-franchise>    
@@ -22,16 +20,6 @@
     <app-control-invoice #controlInvoice class='controlInvoice' [ngClass]="{'show': invoiceMode === true}"></app-control-invoice>
 </div>
 
-<!-- <div class="mobileIcons" *ngFor="let control of controllers">
-  <div *ngIf="control.bool === true">
-    <button *ngIf="control.bool2 === true" class='addMobile' mat-button (click)=control.click>
-      <mat-icon style='color:white'>add</mat-icon>
-    </button>
-    <button *ngIf="control.bool2 === false" class='searchMobile' (click)=control.click mat-button>
-      <mat-icon>search</mat-icon>
-    </button> 
-  </div>
-  </div> -->
 <button class='homeIcon' mat-button  (click)='openPopup();'><mat-icon style='color:white;'>home</mat-icon></button>
 </div>
 

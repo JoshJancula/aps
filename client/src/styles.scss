@@ -12,7 +12,7 @@
     // margin: 2%;
     background: #D7D6D6;
     opacity: .9;
-    border-radius: 10px !important;
+    // border-radius: 10px !important;
 }
 
 .mat-form-field {
@@ -24,6 +24,8 @@
     background-color: blue;
     color: white;
     opacity: .9 !important;
+    position: absolute;
+    z-index: 4;
 }
 
 html,
@@ -65,20 +67,44 @@ body, html {
 .searchButton {
     position: fixed !important;
     top: 17px;
-    right: 3vw;
+    right: 4vw;
     color:white;
+    z-index: 30;
 }
 
 .add {
     position: fixed !important;
     top: 17px;
-    right: 3vw;
+    right: 5vw;
     color:white;
+    z-index: 30;
 }
 
 .appointment-content .mat-card {
     opacity: 1 !important;
 }
+
+.headerCard .mat-datepicker-toggle {
+    color: white;
+}
+
+.headerCard .mat-form-field-appearance-legacy .mat-form-field-label {
+    color: white !important;
+}
+
+.headerCard .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: white !important;
+}
+
+.headerCard .mat-form-field-underline {
+    color: white !important;
+}
+
+@media (max-width: 1024px) {
+    .toolbarLogo {
+       display: none;
+    }
+} 
 
 @media (max-width: 768px) { 
 

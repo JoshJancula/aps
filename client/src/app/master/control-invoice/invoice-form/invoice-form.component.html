@@ -1,7 +1,7 @@
-<div class="row">
-    <div class='col-lg-10 col-sm-12'>
+<div class="row mainRow">
+    <div class='col-lg-12 col-sm-12'>
       <!-- begin invoice form -->
-        <mat-card>
+        <mat-card class='invoiceCard'>
           <div class="card-heading" *ngIf='editing === false'>Add Invoice</div>
           <div class="card-heading" *ngIf='editing === true'>Edit Invoice</div>
           <mat-checkbox *ngIf="editing === false" color="primary" [(ngModel)]="selectFromClients">Select from clients</mat-checkbox>
@@ -279,11 +279,11 @@
      <!-- end invoice form -->
   
    
-    </div>
+    <!-- </div> -->
   <!-- end middle column -->
   
   
-    <div class="col-lg-2 ">
+    <!-- <div class="col-lg-2 "> -->
       <button class='searchButton'  (click)='switchToSearch.emit();'  mat-button>
         <mat-icon style="padding-top: 0px;">search</mat-icon> Search Invoices </button>
     </div>

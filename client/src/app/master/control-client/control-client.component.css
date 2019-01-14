@@ -8,17 +8,29 @@
 
 .submit {
     margin-top: 5%;
-    /* margin-left: 55%; */
 }
 
 .toggle {
     display: inline-block;
 }
 
-/* .form, .results {
-    display: none;
+.mat-card {
+    background: #D7D6D6;
+    opacity: .9;
+    border-radius: 10px !important;
+    width: 96%;
+    margin-left: 3.5%;
+    margin-top: 2%;
+    margin-bottom: 10%;
 }
 
-.form.show, .results.show {
-    display: block;
-} */
+.form, .search {
+    width: 100%;
+}
+
+@media (max-width: 768px) { 
+    .mat-card {
+    width: 92%;
+    margin-left: 8%;
+    }
+}

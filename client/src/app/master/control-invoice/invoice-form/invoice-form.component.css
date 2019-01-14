@@ -2,13 +2,6 @@
     margin-left: 20%;
 }
 
-.mat-card {
-    margin: 2%;
-    margin-left: 10%;
-    margin-bottom: 5%;
-    width: 90;
-}
-
 .submit {
     margin-top: 5%;
 }
@@ -39,4 +32,22 @@
 
 .mat-chip {
     background: #00FFFF;
+}
+
+.invoiceCard {
+    margin-top: 2%;
+    margin-left: 3.5%;
+    width: 96%;
+}
+
+.mainRow {
+    overflow-x: hidden !important;
+}
+
+@media (max-width: 768px) { 
+    .mat-card, .invoiceCard {
+    width: 92%;
+    margin-left: 8%;
+    margin-right: 0px !important;
+    }
 }

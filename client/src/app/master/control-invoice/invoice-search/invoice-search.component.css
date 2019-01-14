@@ -1,6 +1,9 @@
 .mat-card {
-    margin: 2%;
+    /* margin: 2%; */
     width: 94%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 2%;
 }
 
 .searchCard {
@@ -15,11 +18,18 @@
 }
 
 .ivoiceColumn {
-    overflow: auto;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden !important;
+    position: absolute;
 }
 
 .invoiceCard {
     width: 100%;
+}
+
+.invoiceCard:last-child {
+    margin-bottom: 10%;
 }
 
 .sideColumn {
@@ -31,5 +41,12 @@
 @media (max-width: 992px) {
     .searchRow {
         width: 92vw;
+    }
+}
+
+@media (max-width: 768px) { 
+    .mat-card {
+    width: 92%;
+    margin-left: 8%;
     }
 }

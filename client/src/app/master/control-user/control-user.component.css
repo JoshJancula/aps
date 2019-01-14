@@ -1,4 +1,13 @@
 
+.mat-card {
+    background: #D7D6D6;
+    opacity: .9;
+    border-radius: 10px !important;
+    width: 96%;
+    margin-left: 2%;
+    margin-top: 2%;
+    margin-bottom: 10%;
+}
 
 .mat-slide-toggle {
     margin-left: 20%;
@@ -6,7 +15,6 @@
 
 .submit {
     margin-top: 5%;
-    /* margin-left: 55%; */
 }
 
 .toggle {
@@ -18,5 +26,12 @@
 
 .userForm.show, .userRow.show {
     display: flex;
+    width: 100%;
 }
 
+@media (max-width: 768px) { 
+    .mat-card {
+    width: 92%;
+    margin-left: 8%;
+    }
+}
