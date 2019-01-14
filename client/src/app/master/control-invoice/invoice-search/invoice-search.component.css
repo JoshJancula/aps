@@ -1,9 +1,8 @@
 .mat-card {
-    /* margin: 2%; */
     width: 94%;
     margin-top: 2%;
     margin-bottom: 2%;
-    margin-left: 2%;
+    margin-left: 2.5%;
 }
 
 .searchCard {
@@ -25,7 +24,7 @@
 }
 
 .invoiceCard {
-    width: 100%;
+    width: 96%;
 }
 
 .invoiceCard:last-child {
@@ -35,7 +34,12 @@
 .sideColumn {
     position: fixed;
     right: 0px;
-    top: 80px;
+    top: 64px;
+    background: #D7D6D6;
+    opacity: .9;
+    margin-left: 1%;
+    margin-top: 0px;
+    height: 100vh;
 }
 
 @media (max-width: 992px) {
@@ -46,7 +50,15 @@
 
 @media (max-width: 768px) { 
     .mat-card {
-    width: 92%;
-    margin-left: 8%;
+    width: 96%;
+    margin-left: 10%;
+    }
+
+    .sideColumn {
+        display: none;
+    }
+
+    .searchRow {
+        width: 100vw;
     }
 }

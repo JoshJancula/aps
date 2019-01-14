@@ -196,10 +196,10 @@ export class ControlAppointmentComponent implements OnInit {
 		this.calendar.open();
 	}
 
-	openCalendar2(event) {
-		event.preventDefault();
-		this.calendar2.open();
-	}
+	// openCalendar2(event) {
+	// 	event.preventDefault();
+	// 	this.calendar2.open();
+	// }
 
 	renderAppointments() {
 	}

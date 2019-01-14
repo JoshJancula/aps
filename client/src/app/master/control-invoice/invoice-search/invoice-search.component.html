@@ -23,7 +23,7 @@
      
     <!-- </div> -->
 
-    <mat-card class='searchCard'>
+    <!-- <mat-card class='searchCard'> -->
       <div class="card-heading">Search invoices</div>
       <mat-form-field style='cursor: pointer;'>
         <input [(ngModel)]="filter.dateFrom" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
@@ -58,7 +58,7 @@
       </mat-form-field>
       <button (click)='processSearch();' mat-button>Search</button>
       <button (click)='clearSearch();' mat-button>Clear</button>
-    </mat-card>
+    <!-- </mat-card> -->
 
   </div>
 </div>

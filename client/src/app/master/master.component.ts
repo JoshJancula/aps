@@ -28,6 +28,7 @@ export class MasterComponent implements OnInit {
 	messageConnection: any;
 	updateConnection: any;
 	screen = 'Invoicing';
+	@ViewChild('appointmentCalendar') appointmentCalendar: any;
 	@ViewChild('controlUser') controlUser: ControlUserComponent;
 	@ViewChild('controlFranchise') controlFranchise: ControlFranchiseComponent;
 	@ViewChild('controlClient') controlClient: ControlClientComponent;
@@ -35,7 +36,7 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlInvoice') controlInvoice: ControlInvoiceComponent;
 	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
 
-	constructor(private bottomSheetRef: MatBottomSheet, private authService: AuthService, private utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
+	constructor(private bottomSheetRef: MatBottomSheet, private authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
 		this.messagingService.initSocket();
@@ -84,6 +85,10 @@ export class MasterComponent implements OnInit {
 		}
 	}
 
+	openCalendar(event) {
+		event.preventDefault();
+		this.appointmentCalendar.open();
+	}
 
 	clearStorage() {
 		localStorage.removeItem('jwtToken');
