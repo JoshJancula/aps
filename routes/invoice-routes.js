@@ -124,6 +124,7 @@ module.exports = function (app) {
             if (moment(createdAt).isSame(start)) { inv.push(b); } 
           } else {
             if (moment(createdAt).isSame(end)) { inv.push(b); }
+            if (moment(createdAt).isSame(start)) { inv.push(b); }
           }
         });
         res.json(inv);
