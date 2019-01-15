@@ -1,34 +1,35 @@
-<mat-toolbar>  
+<mat-toolbar>
   <img class='toolbarLogo' src='assets/logo2.png' />
-    <span class='screenTitle'>{{ screen }}</span>
-    <span class='calendar' [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
-        <mat-form-field class='datePicker' style='cursor: pointer;'>
-            <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput
-              (dateInput)="utilService.processAppointments();" (dateChange)="utilService.processAppointments();"
-              [matDatepicker]="appointmentCalendar" placeholder="Date" [min]="controlAppointment.getMinDate()" readonly>
-            <mat-datepicker-toggle matSuffix [for]="appointmentCalendar"></mat-datepicker-toggle>
-            <mat-datepicker tabindex="-1" #appointmentCalendar></mat-datepicker>
-          </mat-form-field>
-    </span>
-  </mat-toolbar>
+  <span class='screenTitle'>{{ screen }}</span>
+  <span class='calendar' [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
+    <mat-form-field class='datePicker' style='cursor: pointer;'>
+      <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput (dateInput)="utilService.processAppointments();"
+        (dateChange)="utilService.processAppointments();" [matDatepicker]="appointmentCalendar" placeholder="Date"
+        [min]="controlAppointment.getMinDate()" readonly>
+      <mat-datepicker-toggle matSuffix [for]="appointmentCalendar"></mat-datepicker-toggle>
+      <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
+    </mat-form-field>
+  </span>
+</mat-toolbar>
 <div class='row mainRow'>
-  <div class='col-lg-2 desktopView'>
-  <div class='options' [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Users</div>
-  <div class='options' [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
-  <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();" >Clients</div>
-  <div class='options' [ngClass]="{'selected': appointmentMode === true}" (click)="openAppointments();">Appointments</div>
-  <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();" >Invoices</div>
-  <div class='options' (click)="openPopup();" >Open popup</div>
-</div>
+  <div class='col-lg-2 col-md-2 desktopView'>
+    <div class='options' [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Users</div>
+    <div class='options' [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
+    <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>
+    <div class='options' [ngClass]="{'selected': appointmentMode === true}" (click)="openAppointments();">Appointments</div>
+    <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();">Invoices</div>
+    <div class='options' (click)="openPopup();">Open popup</div>
+  </div>
 
-<div class='col-lg-10 col-sm-12 contentRow'>
+  <div class='col-lg-10 col-md-10 col-sm-12 contentRow'>
     <app-control-user #controlUser class='controlUser' [ngClass]="{'show': userMode === true}"></app-control-user>
-    <app-control-franchise #controlFranchise class='controlFranchise'  [ngClass]="{'show': franchiseMode === true}"></app-control-franchise>    
+    <app-control-franchise #controlFranchise class='controlFranchise' [ngClass]="{'show': franchiseMode === true}"></app-control-franchise>
     <app-control-client #controlClient class='controlClient' [ngClass]="{'show': clientMode === true}"></app-control-client>
     <app-control-appointment #controlAppointment class='controlAppointment' [ngClass]="{'show': appointmentMode === true}"></app-control-appointment>
     <app-control-invoice #controlInvoice class='controlInvoice' [ngClass]="{'show': invoiceMode === true}"></app-control-invoice>
-</div>
+  </div>
 
-<button class='homeIcon' mat-button  (click)='openPopup();'><mat-icon style='color:white;'>home</mat-icon></button>
+  <button class='homeIcon' mat-button (click)='openPopup();'>
+    <mat-icon style='color:white;'>home</mat-icon>
+  </button>
 </div>
-

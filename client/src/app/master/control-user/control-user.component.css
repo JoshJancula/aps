@@ -6,6 +6,10 @@
     width: 96%;
     margin-left: 2%;
     margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.mat-card:last-child {
     margin-bottom: 10%;
 }
 
@@ -25,13 +29,20 @@
 }
 
 .userForm.show, .userRow.show {
-    display: flex;
-    width: 100%;
+    display: block;
+    width: 80vw;
 }
 
 @media (max-width: 768px) { 
     .mat-card {
-    width: 92%;
-    margin-left: 8%;
+    width: 100%;
+    margin-left: unset;
+    margin-bottom: 2%;
     }
+
+    .userForm.show, .userRow.show {
+        display: block;
+        width: 92vw;
+    }
+    
 }

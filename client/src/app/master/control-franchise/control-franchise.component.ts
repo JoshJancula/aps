@@ -30,7 +30,7 @@ export class ControlFranchiseComponent implements OnInit {
 		Username: '',
 		FirstName: '',
 		LastName: '',
-		Role: '',
+		Role: 'Owner',
 		Password: '',
 		Email: '',
 		Phone: '',
@@ -85,8 +85,8 @@ export class ControlFranchiseComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		// setTimeout(() => this.utilService.processFranchises(), 500);
-		// setTimeout(() => this.notifySocket(), 500);
+		setTimeout(() => this.utilService.processFranchises(), 500);
+		setTimeout(() => this.notifySocket(), 500);
 	}
 
 	editFranchise(id) {
@@ -129,7 +129,7 @@ export class ControlFranchiseComponent implements OnInit {
 			Username: '',
 			FirstName: '',
 			LastName: '',
-			Role: '',
+			Role: 'Owner',
 			Password: '',
 			Email: '',
 			Phone: '',

@@ -24,9 +24,9 @@
     background-color: blue;
     color: white;
     opacity: .9 !important;
-    position: absolute;
+    position: sticky;
     z-index: 4;
-    top: 0px;
+    top: 0px !important;
 }
 
 html,
@@ -99,12 +99,16 @@ body, html {
 }
 
 @media (max-width: 1024px) {
-    .toolbarLogo {
-       display: none;
-    }
+    // .toolbarLogo {
+    //    display: none;
+    // }
 } 
 
 @media (max-width: 768px) { 
+
+    .toolbarLogo {
+        display: none;
+     }
 
     .add {
         position: fixed !important;
@@ -129,6 +133,17 @@ body, html {
     .calendar .mat-form-field {
         font-size: 12px;
         width: 60%;
+        position: relative;
+        top: 7px;
+        left: 2vw;
+        z-index: 10;
+    }
+}
+
+@media (max-width: 440px) {
+    .calendar .mat-form-field {
+        font-size: 12px;
+        width: 40%;
         position: relative;
         top: 7px;
         left: 2vw;

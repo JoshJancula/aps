@@ -36,18 +36,25 @@
 
 .invoiceCard {
     margin-top: 2%;
-    margin-left: 3.5%;
+    margin-left: 4%;
     width: 96%;
+    margin-bottom: 8%;
+    border-radius: 15px;
 }
 
-.mainRow {
+.form {
+    width: 80vw;
     overflow-x: hidden !important;
 }
 
 @media (max-width: 768px) { 
     .mat-card, .invoiceCard {
-    width: 92%;
-    margin-left: 8%;
-    margin-right: 0px !important;
+    width: 100%;
+    margin-left: 4%;
+    }
+
+    .form {
+        width: 100vw;
+        overflow-x: hidden !important;
     }
 }

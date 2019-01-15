@@ -1,73 +1,70 @@
-<div class="row">
-  <!-- <div class='col-lg-10 col-sm-12'> -->
-    <div class='row form' *ngIf="addClient === true">
-      <mat-card>
-        <div class="card-heading" *ngIf='editing === false'>Add Client</div>
-        <div class="card-heading" *ngIf='editing === true'>Edit Client</div>
-        <mat-form-field>
-          <input matInput placeholder="Name" [(ngModel)]="Client.Name" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Street address" [(ngModel)]="Client.StreetAddress" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="City" [(ngModel)]="Client.City" />
-        </mat-form-field>
-      	<mat-form-field>
-            <mat-select placeholder="State"
-             [(ngModel)]="Client.State">
-              <mat-option *ngFor="let state of states()" [value]="state">{{ state }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="ZipCode" maxlength="5"  [(ngModel)]="Client.Zip" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Description" [(ngModel)]="Client.Description" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Contact Person" [(ngModel)]="Client.ContactPerson" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Email" [(ngModel)]="Client.Email" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="Client.Phone" (input)="formatPhone();" />
-        </mat-form-field>
-        <mat-form-field>
-            <mat-select placeholder="Franchise" 
-             [(ngModel)]="Client.FranchiseId">
-              <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br>
-        <button class='submit' (click)="submitClient();" mat-button>Save client</button>
-        <button  (click)="clearForm();" mat-button>Clear form</button>
-        <button *ngIf='editing === true' (click)="deleteClient(Client.id);" mat-button>Delete</button>
-      </mat-card>
-    </div>
-  <!-- </div> -->
-  <!-- <div class='col-lg-4 col-sm-12'> -->
-    <div class='row search' *ngIf="searchClients === true">
-      <mat-card>
-        <div class="card-heading">Clients</div>
-        <div *ngFor="let client of clients">
-          <p>Name: {{client.Name}}</p>
-          <button (click)="editClient(client.id);" mat-button>Edit</button>
-        </div>
-      </mat-card>
-    </div>
-  <!-- </div> -->
+<div class='col-lg-12 col-sm-12'>
+  <div class='row form' *ngIf="addClient === true">
+    <mat-card>
+      <div class="card-heading" *ngIf='editing === false'>Add Client</div>
+      <div class="card-heading" *ngIf='editing === true'>Edit Client</div>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="Client.Name" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Street address" [(ngModel)]="Client.StreetAddress" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="City" [(ngModel)]="Client.City" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="State" [(ngModel)]="Client.State">
+          <mat-option *ngFor="let state of states()" [value]="state">{{ state }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="ZipCode" maxlength="5" [(ngModel)]="Client.Zip" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Description" [(ngModel)]="Client.Description" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Contact Person" [(ngModel)]="Client.ContactPerson" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="Client.Email" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="Client.Phone" (input)="formatPhone();" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Franchise" [(ngModel)]="Client.FranchiseId">
+          <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <button class='submit' (click)="submitClient();" mat-button>Save client</button>
+      <button (click)="clearForm();" mat-button>Clear form</button>
+      <button *ngIf='editing === true' (click)="deleteClient(Client.id);" mat-button>Delete</button>
+    </mat-card>
+  </div>
 
-  <!-- <div class="col-lg-2 "> -->
-    <button class='add' *ngIf='searchClients === true' mat-button (click)="searchClients = false; addClient = true;">
-      <mat-icon style='color:white'>add</mat-icon>
-      Add Client
-    </button>
-    <button class='searchButton' *ngIf='searchClients === false' (click)="addClient = false; searchClients = true;" mat-button>
-      <mat-icon>search</mat-icon>
-      Search Clients
-    </button>
+  <div class='row search' *ngIf="searchClients === true">
+    <mat-card *ngFor="let client of clients">
+      <div class="card-heading">Name: {{client.Name}}</div>
+      <div >
+        <br>
+        <button (click)="editClient(client.id);" mat-button>Edit</button>
+      </div>
+    </mat-card>
+    <mat-card *ngIf='clients.length < 1'>
+      There are no clients associated to your franchise.
+    </mat-card>
+  </div>
 
-  <!-- </div> -->
+  <button class='add' *ngIf='searchClients === true' mat-button (click)="searchClients = false; addClient = true;">
+    <mat-icon style='color:white'>add</mat-icon>
+    Add Client
+  </button>
+  <button class='searchButton' *ngIf='searchClients === false' (click)="addClient = false; searchClients = true;"
+    mat-button>
+    <mat-icon>search</mat-icon>
+    Search Clients
+  </button>
+
 </div>

@@ -1,6 +1,5 @@
-<div class="row mainRow">
-  <!-- <div class='col-lg-10 col-sm-12'> -->
-  <div class='row form' *ngIf="addAppointment === true">
+<div class='col-lg-12 col-md-12 col-sm-12 form'>
+  <div class='row' *ngIf="addAppointment === true">
     <mat-card class='formCard'>
       <div class='appointment-content'>
         <div class="card-heading" *ngIf='editing === false'>Add Appointment</div>
@@ -64,43 +63,31 @@
       </div>
     </mat-card>
   </div>
-  <!-- </div>
-  <div class='col-lg-4 col-sm-12'> -->
-  <!-- <div class='row search' *ngIf="searchAppointments === true">
-      <div class='row headerCard' >
-              <mat-form-field class='datePicker' style='cursor: pointer;'>
-                <input [(ngModel)]="searchDate" (input)="something();" (click)="openCalendar2($event)" matInput
-                  (dateInput)="utilService.processAppointments();" (dateChange)="utilService.processAppointments();"
-                  [matDatepicker]="calendar2" placeholder="Date" [min]="getMinDate()" readonly>
-                <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
-                <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
-              </mat-form-field>
-      </div> -->
-    <!-- <div *ngFor="let appointment of appointments"> -->
-      <!-- <div class='row spacerRow'></div> -->
-      <br>
-      <br>
-      <br>
-      <div class='col-sm-12'>
-    <mat-card class='appointmentCard' *ngFor="let appointment of appointments">
-      <div class='row'>   
+
+  <div class='col-lg-12 col-md-12 col-sm-12 form'>
+    <div class='row' *ngIf="searchAppointments === true">
+      <mat-card class='appointmentCard' *ngFor="let appointment of appointments">
+        <div class='row'>
 
           <p>
-        Client: {{ appointment.Client }}<br>
-        Date: {{ formatDate(appointment.Date) }}<br>
-        Time: {{ appointment.Time }}<br>
-        Assigned employee: {{ appointment.AssignedEmployee }}<br>
-        <span *ngIf="appointment.Location !== '' ">Location: {{ appointment.Location }}</span><br>
-        Contact person: {{ appointment.ContactPerson }} {{ appointment.ContactPersonPhone }}
-      </p>
-      <button class='editButton' (click)="editAppointment(appointment.id);" mat-button>Edit</button>
-      </div>
-    </mat-card>
+            Client: {{ appointment.Client }}<br>
+            Date: {{ formatDate(appointment.Date) }}<br>
+            Time: {{ appointment.Time }}<br>
+            Assigned employee: {{ appointment.AssignedEmployee }}<br>
+            <span *ngIf="appointment.Location !== '' ">Location: {{ appointment.Location }}</span><br>
+            Contact person: {{ appointment.ContactPerson }} {{ appointment.ContactPersonPhone }}
+          </p>
+          <button class='editButton' (click)="editAppointment(appointment.id);" mat-button>Edit</button>
+        </div>
+      </mat-card>
+
+      <mat-card class='appointmentCard' *ngIf='appointments.length < 1'>
+        No appointments scheduled for {{ formatDate(searchDate) }}.
+      </mat-card>
+    </div>
   </div>
-  <!-- </div> -->
-  <!-- </div> -->
-<br>
-  <!-- <div class="col-lg-2 "> -->
+
+  <br>
   <button class='add' *ngIf='searchAppointments === true' mat-button (click)="searchAppointments = false; addAppointment = true;">
     <mat-icon style='color:white'>add</mat-icon>
     Add Appointment
@@ -111,5 +98,4 @@
     Search Appointments
   </button>
 
-  <!-- </div> -->
 </div>

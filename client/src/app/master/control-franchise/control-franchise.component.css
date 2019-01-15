@@ -5,6 +5,10 @@
     width: 96%;
     margin-left: 4%;
     margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.mat-card:last-child {
     margin-bottom: 10%;
 }
 
@@ -31,7 +35,7 @@
 
 .form.show, .results.show {
     display: block;
-    width: 100%;
+    width: 80vw;
 }
 
 .franchiseRow {
@@ -41,7 +45,12 @@
 
 @media (max-width: 768px) { 
     .mat-card {
-    width: 92%;
-    margin-left: 8%;
+    width: 100%;
+    margin-left: 4%;
+    }
+
+    .form.show, .results.show {
+        display: block;
+        width: 92vw;
     }
 }

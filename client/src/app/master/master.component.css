@@ -10,11 +10,9 @@
     width: 100vw;
     height: 100vh;
     overflow: auto;
-    margin-top: 5%;
 }
 
 .contentRow {
-    width: 100vw;
     min-height: 100vh;
     overflow: auto;
 }
@@ -63,34 +61,6 @@
     display: none;
 }
 
-@media (max-width: 1024px) {
-    .desktopView {
-        display: none;
-    } 
-
-    .homeIcon{
-        display: block;
-        z-index: 20;
-        height: 60px;
-        width: 60px;
-        border-radius: 30px;
-        background-color: red;
-        position: sticky;       
-        bottom: 70px;
-        left: calc(85vw);
-        cursor: pointer;
-    }
-
-    .screenTitle {
-        margin-left: unset;
-    }
-
-    .mainRow {
-        margin-top: 8%;
-    }
-
-}
-
 @media (max-width: 768px) {
 .desktopView {
     display: none;
@@ -103,8 +73,8 @@
     width: 60px;
     border-radius: 30px;
     background-color: red;
-    position: sticky;       
-    bottom: 70px;
+    position: absolute;       
+    bottom: 10px;
     left: calc(73vw);
     cursor: pointer;
 }
@@ -112,7 +82,11 @@
 .mainRow {
     overflow: auto;
     overflow-x: hidden !important;
-    margin-top: 12%;
+}
+
+.screenTitle {
+    margin-left: unset;
+    font-size: 18px;
 }
 
 }

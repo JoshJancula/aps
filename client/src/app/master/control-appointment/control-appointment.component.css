@@ -20,8 +20,8 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 96%;
-    margin-left: 3.5%;
+    width: 100%;
+    margin-left: 2%;
     margin-top: 2%;
     margin-bottom: 10%;
 }
@@ -30,105 +30,24 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 96%;
-    margin-left: 3.5%;
-    margin-top: 1%;
+    width: 100%;
+    margin-left: 2%;
+    margin-top: 2%;
     margin-bottom: 2%;
 }
 
-.appointmentCard:first-child {
-    margin-top: 2% !important;
-}
-
-.appointmentCard:last-child {
-    margin-bottom: 10%;
-}
-
-.headerCard {
-    position: fixed;
-    margin: 0px;
-    margin-left: 2.8vw;
-    border-radius: 0px;
-    height: 50px;
-    margin-bottom: 10%;
-    width: 100%;
-    z-index: 80;
-    color: white;
-    /* background-color: blue; */
-    opacity: .9;
-}
-
-.headerCard .mat-form-field {
-    font-size: 12px;
-    width: 25%;
-    position: relative;
-    top: -40px;
-    left: 22vw;
-    z-index: 10;
-}
-
- /* .datePicker {
-    height: 32px;
-    font-size: 11px;
-    position: absolute;
-    top: -47px;
-    right: 35vw;
-    width: 80%;
-    color: white;
-} */
-
-.mainRow, .form, .search {
-    width: 100%;
-}
-
-/* .appointmentCard:first-child {
-    margin-top: 6% !important;
-} */
-
-/* .spacerRow {
-    height: 60px !important;
-} */
-
-@media (max-width: 1024px) {
-    .headerCard .mat-form-field {
-        top: -50px;
-        width: 22%;
-        left: 25vw;
-    }
-
-}
-
 @media (max-width: 768px) { 
-    .otherCards {
-    width: 92%;
-    margin-left: 8%;
-    }
-
-     .headerCard .mat-form-field {
-        top: -32px;
-        width: 22%;
-        left: 42vw;
-    }
-
-    .headerCard {
-        position: fixed;
-        margin: 0px;
-        margin-left: 4vw;
-        border-radius: 0px;
-        height: 50px;
-        margin-bottom: 10%;
-        width: 100%;
-        z-index: 8;
-        right: 0px;
-    }
 
     .appointmentCard {
-        margin-left: 14%;
-        z-index: 0;
-        width: 100%;
+        width: 96%;
+        margin-left: unset;
+    }
+    .formCard {
+        margin-left: 4%;
     }
 
-    .formCard {
-        margin-left: 16%;
+    .form {
+        width: 96vw;
+        overflow-x: hidden;
     }
 }

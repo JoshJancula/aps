@@ -18,19 +18,29 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 96%;
+    width: 100%;
     margin-left: 3.5%;
     margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.mat-card:last-child {
     margin-bottom: 10%;
 }
 
 .form, .search {
-    width: 100%;
+    width: 80vw;
+    overflow-x: hidden;
 }
 
 @media (max-width: 768px) { 
     .mat-card {
-    width: 92%;
-    margin-left: 8%;
+    width: 100%;
+    margin-left: 4%;
+    }
+
+    .form, .search {
+        width: 96vw;
+        overflow-x: hidden;
     }
 }
