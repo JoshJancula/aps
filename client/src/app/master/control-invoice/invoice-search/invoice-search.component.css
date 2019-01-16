@@ -43,6 +43,18 @@
     height: 100vh;
 }
 
+/* .card-heading {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+} */
+
+.sideColumnSpacer {
+    height: 2vh;
+}
+
+
 @media (max-width: 992px) {
     .searchRow {
         width: 92vw;
@@ -51,14 +63,33 @@
 
 @media (max-width: 768px) { 
     .mat-card {
-    width: 100%;
-    margin-left: 2%;
+    width: 96%;
+    margin-left: 8%;
     }
 
-    .sideColumn {
-        display: none;
-        margin-left: unset;
+    .sideColumnSpacer {
+        height: 4vh;
     }
+
+    .ivoiceColumn, .searchRow {
+        width: 104vw !important;
+    }
+
+     .sideColumn {
+        margin-left: unset;
+        position: fixed;
+        top: 7vh;
+        transform: translateX(165px);
+        transition: transform 0.25s;
+        width: 165px;
+        opacity: 1;
+        z-index: 3;
+    }
+
+
+    .sideColumn.open {
+        transform: translateX(0px);
+    } 
 
     .searchRow, .ivoiceColumn {
         width: 96vw;

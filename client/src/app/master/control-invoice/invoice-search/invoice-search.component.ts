@@ -23,6 +23,7 @@ export class InvoiceSearchComponent implements OnInit {
 	invoiceNumber = '';
 	franchise: any;
 	searchBy = '';
+	slideDrawer = false;
 	filter: any = {
 		dateFrom: new Date(),
 		dateTo: new Date(),
@@ -41,6 +42,15 @@ export class InvoiceSearchComponent implements OnInit {
 	}
 
 	ngOnInit() {
+	}
+
+	openDrawer() {
+		console.log('slide drawer');
+		if (this.slideDrawer === false) {
+			this.slideDrawer = true;
+		} else {
+			this.slideDrawer = false;
+		}
 	}
 
 	getClients() { // need this so I can filter on clients

@@ -61,6 +61,12 @@
     display: none;
 }
 
+.filterIcon {
+    display: none;
+}
+
+button:focus { outline: none; }
+
 @media (max-width: 768px) {
 .desktopView {
     display: none;
@@ -75,7 +81,7 @@
     background-color: red;
     position: absolute;       
     bottom: 10px;
-    left: calc(73vw);
+    left: calc(82vw);
     cursor: pointer;
 }
 
@@ -87,6 +93,19 @@
 .screenTitle {
     margin-left: unset;
     font-size: 18px;
+}
+
+.filterIcon.show {
+    display: block;
+    z-index: 20;
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+    background-color: blue;
+    position: absolute;       
+    bottom: 80px;
+    left: calc(82vw);
+    cursor: pointer;
 }
 
 }
