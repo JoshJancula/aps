@@ -12,6 +12,10 @@
     margin-bottom: 10%;
 }
 
+.mat-card:first-child {
+    margin-top: 8%;
+}
+
 .mat-slide-toggle {
     margin-left: 20%;
 }
@@ -43,7 +47,7 @@
     margin-top: 2%;
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 767px) { 
     .mat-card {
     width: 100%;
     margin-left: 4%;
@@ -52,5 +56,9 @@
     .form.show, .results.show {
         display: block;
         width: 92vw;
+    }
+
+    .mat-card:first-child {
+        margin-top: 18%;
     }
 }

@@ -36,12 +36,17 @@
     margin-bottom: 2%;
 }
 
-@media (max-width: 768px) { 
+.mat-card:first-child {
+    margin-top: 8%;
+}
+
+@media (max-width: 767px) { 
 
     .appointmentCard {
         width: 96%;
         margin-left: unset;
     }
+
     .formCard {
         margin-left: 4%;
     }
@@ -49,5 +54,9 @@
     .form {
         width: 96vw;
         overflow-x: hidden;
+    }
+
+    .mat-card:first-child {
+        margin-top: 17%;
     }
 }

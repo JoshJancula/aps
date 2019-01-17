@@ -43,12 +43,9 @@
     height: 100vh;
 }
 
-/* .card-heading {
-    padding-top: 1%;
-    padding-bottom: 1%;
-    margin-top: 1%;
-    margin-bottom: 1%;
-} */
+.mat-card:first-child {
+    margin-top: 10%;
+}
 
 .sideColumnSpacer {
     height: 2vh;
@@ -61,7 +58,7 @@
     }
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 767px) { 
     .mat-card {
     width: 96%;
     margin-left: 8%;
@@ -79,11 +76,11 @@
         margin-left: unset;
         position: fixed;
         top: 7vh;
-        transform: translateX(165px);
+        transform: translateX(200px);
         transition: transform 0.25s;
-        width: 165px;
+        width: 200px;
         opacity: 1;
-        z-index: 3;
+        z-index: 21;
     }
 
 
@@ -93,6 +90,10 @@
 
     .searchRow, .ivoiceColumn {
         width: 96vw;
+    }
+
+    .mat-card:first-child {
+        margin-top: 17%;
     }
 
 }

@@ -18,10 +18,10 @@
     <!-- add services to invoice -->
     <mat-checkbox *ngFor="let service of serviceTypes" (change)="addService(service); service.optionsArray[0].quantity = 1;"
       color="primary" [(ngModel)]="service.checked">{{ service.model }}</mat-checkbox>
-    <br>
+    <div style='height: 30px;'></div>
     <!-- manually input price option -->
     <mat-checkbox (change)='clearZeros();' color="primary" *ngIf="serviceSelected === true" [(ngModel)]="manualAmountInput">Manually
-      input price(s)</mat-checkbox>
+      input price and quantity</mat-checkbox>
 
     <!-- pinstriping repairs -->
     <div *ngIf="serviceTypes[3].checked === true">
@@ -81,10 +81,13 @@
             </mat-form-field>
           </div>
           <div class='col-lg-3 col-sm-3'>
-            <mat-form-field>
+            <mat-form-field *ngIf='manualAmountInput === false'>
               <mat-select placeholder="Quantity" [(ngModel)]="type.optionsArray[0].quantity">
                 <mat-option (click)="updateTotal();" *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
               </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf='manualAmountInput === true'>
+              <input matInput placeholder="Quantity" [(ngModel)]="type.optionsArray[0].quantity" />
             </mat-form-field>
           </div>
         </div>
@@ -112,10 +115,13 @@
         </mat-form-field>
       </div>
       <div class='col-lg-3 col-sm-3'>
-        <mat-form-field>
+        <mat-form-field *ngIf='manualAmountInput === false'>
           <mat-select placeholder="Quantity" [(ngModel)]="customPinstripes.quantity">
             <mat-option (click)="updateTotal();" *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
           </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf='manualAmountInput === true'>
+          <input matInput placeholder="Quantity" [(ngModel)]="customPinstripes.quantity" />
         </mat-form-field>
       </div>
     </div>
@@ -126,8 +132,8 @@
         <p>{{ serviceTypes[2].model }}</p>
         <br>
       </div>
-      <span class='optionBoxes'>
-        <mat-checkbox *ngFor="let option of ppfOptions" (change)="option.value = 0; option.quantity = 1;" color='primary'
+      <span class='optionBoxes' *ngFor="let option of ppfOptions">
+        <mat-checkbox  (change)="option.value = 0; option.quantity = 1;" color='primary'
           [(ngModel)]="option.selected">{{ option.model }}</mat-checkbox>
       </span>
       <div *ngFor="let option of ppfOptions">
@@ -135,7 +141,7 @@
         <div class='row' *ngIf='option.selected === true'>
           <div class='col-lg-6 col-sm-6'>
             <mat-form-field>
-              <input matInput readonly [(ngModel)]="option.model" />
+              <input matInput [readonly]="option.id !== 11" [(ngModel)]="option.model" />
             </mat-form-field>
           </div>
           <div class='col-lg-3 col-sm-3'>
@@ -149,10 +155,13 @@
             </mat-form-field>
           </div>
           <div class='col-lg-3 col-sm-3'>
-            <mat-form-field>
+            <mat-form-field *ngIf='manualAmountInput === false'>
               <mat-select placeholder="Quantity" [(ngModel)]="option.quantity">
                 <mat-option (click)="updateTotal();" *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
               </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngIf='manualAmountInput === true'>
+              <input matInput placeholder="Quantity" [(ngModel)]="option.quantity" />
             </mat-form-field>
           </div>
         </div>
@@ -165,8 +174,8 @@
         <p>{{ serviceTypes[4].model }}</p>
         <br>
       </div>
-      <span class='optionBoxes'>
-        <mat-checkbox *ngFor="let option of windowOptions" color='primary' (change)="option.value = 0; option.quantity = 1;"
+      <span class='optionBoxes' *ngFor="let option of windowOptions">
+        <mat-checkbox  color='primary' (change)="option.value = 0; option.quantity = 1;"
           [(ngModel)]="option.selected">{{
           option.model }}</mat-checkbox>
       </span>
@@ -175,7 +184,7 @@
         <div class='row' *ngIf='option.selected === true'>
           <div class='col-lg-6 col-sm-6'>
             <mat-form-field>
-              <input matInput readonly [(ngModel)]="option.model" />
+              <input matInput [readonly]='option.id !== windowOptions[6].id'  [(ngModel)]="option.model" />
             </mat-form-field>
           </div>
           <div class='col-lg-3 col-sm-3'>
@@ -189,10 +198,13 @@
             </mat-form-field>
           </div>
           <div class='col-lg-3 col-sm-3'>
-            <mat-form-field>
+            <mat-form-field *ngIf='manualAmountInput === false'>
               <mat-select placeholder="Quantity" [(ngModel)]="option.quantity">
                 <mat-option (click)="updateTotal();" *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
               </mat-select>
+              <mat-form-field *ngIf='manualAmountInput === true'>
+                <input matInput placeholder="Quantity" [(ngModel)]="option.quantity" />
+              </mat-form-field>
             </mat-form-field>
           </div>
         </div>
@@ -203,8 +215,8 @@
     <!-- buttons for input vehicle id options -->
     <div *ngIf="serviceSelected === true">
       <button class='submit' (click)="addRO = true; addStock = false; addVIN = false;" mat-button>Add RO#</button>
-      <button class='submit' (click)="addStock = true; addRO = false; addVIN = false;" mat-button>Add Stock#(s)</button>
-      <button class='submit' (click)="addStock = false; addRO = false; addVIN = true;" maxlength="8" mat-button>Add
+      <button class='submit' (click)="addStock = true; addVIN = false;" mat-button>Add Stock#(s)</button>
+      <button class='submit' (click)="addStock = false; addVIN = true;" maxlength="8" mat-button>Add
         VIN#(s)</button>
     </div>
     <br>
@@ -243,7 +255,7 @@
     <mat-form-field *ngIf='addDescription === true'>
       <input matInput placeholder="Vehicle make & model, services rendered, product details..." [(ngModel)]="Invoice.VehicleDescription" />
     </mat-form-field>
-
+    <br>
 
     <!-- total cost and payment info -->
     <mat-checkbox (change)='updateTotal();' color="primary" *ngIf="serviceSelected === true" [(ngModel)]="calculateTax">Calculate

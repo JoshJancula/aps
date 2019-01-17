@@ -25,13 +25,14 @@
     margin: 2%;
 }
 
-.optionBoxes {
-    margin: 2%;
-    padding: 2%;
+.optionBoxes  {
+    margin: 3%;
+    padding: 3%;
 }
 
 .mat-chip {
-    background: #00FFFF;
+    background: blue;
+    color: white;
 }
 
 .invoiceCard {
@@ -40,6 +41,10 @@
     width: 96%;
     margin-bottom: 8%;
     border-radius: 15px;
+}
+
+.mat-card:first-child {
+    margin-top: 10%;
 }
 
 .form {
@@ -56,5 +61,9 @@
     .form {
         width: 100vw;
         overflow-x: hidden !important;
+    }
+
+    .mat-card:first-child {
+        margin-top: 17%;
     }
 }

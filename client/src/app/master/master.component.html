@@ -14,12 +14,12 @@
 </mat-toolbar>
 <div class='row mainRow'>
   <div class='col-lg-2 col-md-2 desktopView'>
-    <div class='options' [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Users</div>
+    <div class='options' [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
     <div class='options' [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
     <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>
     <div class='options' [ngClass]="{'selected': appointmentMode === true}" (click)="openAppointments();">Appointments</div>
     <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();">Invoices</div>
-    <div class='options' (click)="openPopup();">Open popup</div>
+    <!-- <div class='options' (click)="openPopup();">Open popup</div> -->
   </div>
 
   <div class='col-lg-10 col-md-10 col-sm-12 contentRow'>

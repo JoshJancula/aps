@@ -9,6 +9,10 @@
     margin-bottom: 2%;
 }
 
+.mat-card:first-child {
+    margin-top: 8%;
+}
+
 .mat-card:last-child {
     margin-bottom: 10%;
 }
@@ -33,7 +37,7 @@
     width: 80vw;
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 767px) { 
     .mat-card {
     width: 100%;
     margin-left: unset;
@@ -44,5 +48,10 @@
         display: block;
         width: 92vw;
     }
+
+    .mat-card:first-child {
+        margin-top: 18%;
+    }
+    
     
 }

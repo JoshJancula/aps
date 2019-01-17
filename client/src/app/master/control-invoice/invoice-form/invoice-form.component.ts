@@ -81,7 +81,8 @@ export class InvoiceFormComponent implements OnInit {
 		{ id: 2, model: 'Butterfly window', quantity: 0, value: 0, selected: false, error: false },
 		{ id: 3, model: 'Back windshield', quantity: 0, value: 0, selected: false, error: false },
 		{ id: 4, model: 'Tint removal', quantity: 0, value: 0, selected: false, error: false },
-		{ id: 5, model: 'Other', quantity: 0, value: 0, selected: false, error: false }
+		{ id: 5, model: 'Whole car', quantity: 0, value: 0, selected: false, error: false },
+		{ id: 6, model: 'Other', quantity: 0, value: 0, selected: false, error: false }
 	];
 	ppfOptions: any = [
 		{ id: 1, model: 'Edge guard', value: 0, quantity: 0, selected: false, error: false },
@@ -126,7 +127,7 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	generateNumbers() {
-		for (let i = 1; i < 201; i++) {
+		for (let i = 0; i < 201; i++) {
 			this.numbers.push(i);
 			const five = i * 5;
 			this.prices.push(five);
@@ -194,7 +195,8 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	applyTax() {
-		const tax = this.Invoice.Total * 0.0725;
+		const calc = this.Invoice.Total * 0.0725;
+		const tax = Math.ceil(calc * 100) / 100;
 		this.Invoice.Total += tax;
 	}
 
@@ -202,9 +204,14 @@ export class InvoiceFormComponent implements OnInit {
 		if (this.addStock === true) {
 			this.stocks.push(this.stockNumber);
 			this.stockNumber = '';
+			this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
+			console.log('serviceTypes[1]', this.serviceTypes[1]);
+			this.updateTotal();
 		} else {
 			this.vins.push(this.stockNumber);
 			this.stockNumber = '';
+			this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
+			this.updateTotal();
 		}
 		this.updateTotal();
 	}
@@ -212,10 +219,13 @@ export class InvoiceFormComponent implements OnInit {
 	removeVehicle(vehicle) {
 		if (this.stocks.indexOf(vehicle), 1) {
 			this.stocks.splice(this.stocks.indexOf(vehicle), 1);
+			this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
 		}
 		if (this.vins.indexOf(vehicle), 1) {
 			this.vins.splice(this.vins.indexOf(vehicle), 1);
+			this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
 		}
+		this.updateTotal();
 	}
 
 	updateInvoiceData() {
@@ -300,6 +310,12 @@ export class InvoiceFormComponent implements OnInit {
 		}
 		if (this.Invoice.Stock !== '') {
 			this.stocks = JSON.parse('[' + data.Stock + ']');
+		}
+		if (this.Invoice.RO !== '') {
+			this.addRO = true;
+		}
+		if (this.Invoice.RO !== '') {
+			this.addRO = true;
 		}
 		this.customPinstripes = JSON.parse(data.CustomPinstripe);
 		this.serviceTypes = JSON.parse(data.OtherServices);

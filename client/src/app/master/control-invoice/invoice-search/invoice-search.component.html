@@ -1,9 +1,7 @@
 <div class='row searchRow'>
-
-    <div class="overlay" *ngIf="slideDrawer === true" (click)="openDrawer();"></div>
+  <div class="overlay" *ngIf="slideDrawer === true" (click)="openDrawer();"></div>
 
   <div class='ivoiceColumn col-lg-10 col-md-10 col-sm-12'>
-
     <mat-card *ngFor="let invoice of invoices" class='invoiceCard'>
       <p>
         Invoice#: {{invoice.id}}<br>
@@ -14,7 +12,7 @@
       <button (click)='editThis.emit(invoice);' mat-button>Edit</button>
     </mat-card>
     <mat-card class='invoiceCard notFound' *ngIf='invoices.length < 1'>
-        <div class='notFoundSpacer'></div>
+      <div class='notFoundSpacer'></div>
       No invoices found for {{ formatDate(filter.dateTo) }}.
     </mat-card>
 
@@ -24,10 +22,10 @@
     <mat-icon style="padding-top: 0px; z-index:100 !important;">add</mat-icon>
     New Invoice
   </button>
-  <!-- <div class='sideColumn' [ngClass]="{'open': slideDrawer === true}" > -->
   <div class="col-lg-2 col-md-2 hidden-sm hidden-xs sideColumn" [ngClass]="{'open': slideDrawer === true}">
-      <div class='sideColumnSpacer'></div>
+    <div class='sideColumnSpacer'></div>
     <div class="card-heading">Search invoices</div>
+    <div *ngIf="searchBy !== 'Invoice number' ">
     <mat-form-field style='cursor: pointer;'>
       <input [(ngModel)]="filter.dateFrom" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
         placeholder="Date from" readonly>
@@ -40,9 +38,7 @@
       <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
       <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Invoice number" [(ngModel)]="filter.invoiceNumber" />
-    </mat-form-field>
+  </div>
     <mat-form-field>
       <mat-select placeholder="Franchise" [(ngModel)]="filter.franchise">
         <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
@@ -53,13 +49,16 @@
         <mat-option *ngFor="let option of searchOptions" [value]="option">{{ option }}</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field *ngIf="searchBy === 'Invoice number'">
+      <input matInput placeholder="Invoice number" [(ngModel)]="filter.invoiceNumber" />
+    </mat-form-field>
     <mat-form-field *ngIf="searchBy === 'Employee'">
       <input matInput placeholder="Employee" [(ngModel)]="filter.employee" />
     </mat-form-field>
     <mat-form-field *ngIf="searchBy === 'Client'">
       <input matInput placeholder="Client" [(ngModel)]="filter.client" />
     </mat-form-field>
-    <button (click)='processSearch();' mat-button>Search</button>
+    <button (click)='processSearch(); openDrawer();' mat-button>Search</button>
     <button (click)='clearSearch();' mat-button>Clear</button>
   </div>
   <!-- </div> -->

@@ -65,9 +65,13 @@
     display: none;
 }
 
-button:focus { outline: none; }
+.desktopView {
+    margin-top: 6%;
+}
 
-@media (max-width: 768px) {
+button, button:focus { outline: none; }
+
+@media (max-width: 767px) {
 .desktopView {
     display: none;
 } 

@@ -104,7 +104,6 @@ module.exports = function (app) {
   app.post("/api/invoices/sub/", function (req, res) {
     let jancsta = new JancstaPort(req.headers.authorization.toString());
     if (jancsta) {
-      // console.log('jancsta.secret: ', jancsta.secret);
       db.Invoice.findAll({
         where: {
           FranchiseId: req.body.franchise,

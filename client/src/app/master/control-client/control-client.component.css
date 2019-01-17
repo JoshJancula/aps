@@ -20,8 +20,12 @@
     border-radius: 10px !important;
     width: 100%;
     margin-left: 3.5%;
-    margin-top: 2%;
+    /* margin-top: 1%; */
     margin-bottom: 2%;
+}
+
+.mat-card:first-child {
+    margin-top: 8%;
 }
 
 .mat-card:last-child {
@@ -33,7 +37,7 @@
     overflow-x: hidden;
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 767px) { 
     .mat-card {
     width: 100%;
     margin-left: 4%;
@@ -42,5 +46,9 @@
     .form, .search {
         width: 96vw;
         overflow-x: hidden;
+    }
+
+    .mat-card:first-child {
+        margin-top: 17%;
     }
 }
