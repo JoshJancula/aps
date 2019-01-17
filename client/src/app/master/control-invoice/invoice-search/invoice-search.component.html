@@ -2,6 +2,7 @@
   <div class="overlay" *ngIf="slideDrawer === true" (click)="openDrawer();"></div>
 
   <div class='ivoiceColumn col-lg-10 col-md-10 col-sm-12'>
+    <!-- <div *ngIf="invoices.length < 2" style="height: 30vh;"></div> -->
     <mat-card *ngFor="let invoice of invoices" class='invoiceCard'>
       <p>
         Invoice#: {{invoice.id}}<br>
@@ -26,19 +27,19 @@
     <div class='sideColumnSpacer'></div>
     <div class="card-heading">Search invoices</div>
     <div *ngIf="searchBy !== 'Invoice number' ">
-    <mat-form-field style='cursor: pointer;'>
-      <input [(ngModel)]="filter.dateFrom" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
-        placeholder="Date from" readonly>
-      <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
-      <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field style='cursor: pointer;'>
-      <input [(ngModel)]="filter.dateTo" (click)="openCalendar2($event)" matInput [matDatepicker]="calendar2"
-        placeholder="Date to" readonly>
-      <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
-      <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
-    </mat-form-field>
-  </div>
+      <mat-form-field style='cursor: pointer;'>
+        <input [(ngModel)]="filter.dateFrom" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
+          placeholder="Date from" readonly>
+        <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
+        <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field style='cursor: pointer;'>
+        <input [(ngModel)]="filter.dateTo" (click)="openCalendar2($event)" matInput [matDatepicker]="calendar2"
+          placeholder="Date to" readonly>
+        <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
+        <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
+      </mat-form-field>
+    </div>
     <mat-form-field>
       <mat-select placeholder="Franchise" [(ngModel)]="filter.franchise">
         <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>

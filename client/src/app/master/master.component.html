@@ -1,6 +1,7 @@
 <mat-toolbar>
   <img class='toolbarLogo' src='assets/logo2.png' />
   <span class='screenTitle'>{{ screen }}</span>
+  <span class='invoiceDisplay' *ngIf="controlInvoice.searchInvoices === true && invoiceMode === true">{{ controlInvoice.invoiceSearch.display }}</span>
   <!-- <span class='filterIcon' [ngClass]="{'show': controlInvoice.searchInvoices === true && invoiceMode === true }"><mat-icon (click)='controlInvoice.invoiceSearch.openDrawer();' style='color:white;'>filter</mat-icon></span> -->
   <span class='calendar' [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
     <mat-form-field class='datePicker' style='cursor: pointer;'>
@@ -8,7 +9,7 @@
         (dateChange)="utilService.processAppointments();" [matDatepicker]="appointmentCalendar" placeholder="Date"
         [min]="controlAppointment.getMinDate()" readonly>
       <mat-datepicker-toggle matSuffix [for]="appointmentCalendar"></mat-datepicker-toggle>
-      <mat-datepicker tabindex="-1" #appointmentCalendar></mat-datepicker>
+      <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
     </mat-form-field>
   </span>
 </mat-toolbar>
@@ -30,7 +31,7 @@
     <app-control-invoice #controlInvoice class='controlInvoice' [ngClass]="{'show': invoiceMode === true}"></app-control-invoice>
   </div>
 
-  <button class='filterIcon' [ngClass]="{'show': controlInvoice.searchInvoices === true && invoiceMode === true && controlInvoice.invoiceSearch.slideDrawer !== true }"><mat-icon (click)='controlInvoice.invoiceSearch.openDrawer();' style='color:white;'>filter</mat-icon></button>
+  <button class='filterIcon' [ngClass]="{'show': controlInvoice.searchInvoices === true && invoiceMode === true && controlInvoice.invoiceSearch.slideDrawer !== true }"><mat-icon (click)='controlInvoice.invoiceSearch.openDrawer();' style='color:white;'>search</mat-icon></button>
   <button class='homeIcon' (click)='openPopup();'> 
     <mat-icon style='color:white;'>home</mat-icon>
   </button>

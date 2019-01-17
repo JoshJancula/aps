@@ -25,7 +25,7 @@
     color: white;
     opacity: .9 !important;
     position: fixed !important;
-    z-index: 4;
+    z-index: 30;
     top: 0px !important;
 }
 
@@ -37,6 +37,11 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
 }
 
 .headerRow {
@@ -47,7 +52,7 @@ body {
 
 .toolbarLogo {
     height: 64px;
-    width: 17vw;
+    width: 14vw;
     position: absolute;
     left: 0;
 }

@@ -65,6 +65,12 @@
     display: none;
 }
 
+.invoiceDisplay {
+    margin-left: 5%;
+    margin-top: .3%;
+    font-size: 14px;
+}
+
 .desktopView {
     margin-top: 6%;
 }
@@ -110,6 +116,12 @@ button, button:focus { outline: none; }
     bottom: 80px;
     left: calc(82vw);
     cursor: pointer;
+}
+
+.invoiceDisplay {
+    margin-left: 5%;
+    font-size: 14px;
+    margin-top: 1%;
 }
 
 }

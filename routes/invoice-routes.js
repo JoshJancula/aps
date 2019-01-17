@@ -115,16 +115,16 @@ module.exports = function (app) {
 
         a.forEach(b => {
           let createdAt = moment(b.createdAt).format('MM/DD/YYYY');
-          if (start !== end) {
+          if (moment(start).isSame(end)) {
+            if (moment(createdAt).isSame(end)) { inv.push(b); }
+          } else {
             if (moment(createdAt).isBefore(end)) {
               if (moment(createdAt).isAfter(start)) { inv.push(b); }
             }
             if (moment(createdAt).isSame(end)) { inv.push(b); }
             if (moment(createdAt).isSame(start)) { inv.push(b); }
           }
-          if (start == end) {
-            if (moment(createdAt).isSame(end)) { inv.push(b); }
-          }
+          
         });
         res.json(inv);
       });

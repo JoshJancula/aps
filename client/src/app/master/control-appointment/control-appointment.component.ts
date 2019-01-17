@@ -219,7 +219,8 @@ export class ControlAppointmentComponent implements OnInit {
 
 	formatDate(date) {
 		let temp = new Date();
-		if (moment(temp).isSame(date)) {
+		let newTemp = moment(temp).format('MM/DD/YYYY');
+		if (moment(newTemp).isSame(moment(date).format('MM/DD/YYYY'))) {
 			return 'Today';
 		} else {
 			return moment(date).format('dddd, MMMM Do YYYY');

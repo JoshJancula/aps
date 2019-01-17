@@ -39,7 +39,7 @@
 }
 
 .invoiceForm.show, .invoiceSearch.show {
-    height: 95vh;
+    height: 100vh;
     display: block;
     overflow: auto;
 }

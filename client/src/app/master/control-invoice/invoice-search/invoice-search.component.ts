@@ -34,6 +34,7 @@ export class InvoiceSearchComponent implements OnInit {
 	};
 	controlArray: any;
 	searchOptions = ['Invoice number', 'Employee', 'Client'];
+	display = '';
 
 	constructor(private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
 		this.loadInvoices();
@@ -60,11 +61,22 @@ export class InvoiceSearchComponent implements OnInit {
 		});
 	}
 
+	setDisplay() {
+		let temp = new Date();
+		let newTemp = moment(temp).format('MM/DD/YYYY');
+		if (moment(newTemp).isSame(moment(this.filter.dateFrom).format('MM/DD/YYYY'))) {
+			this.display = `Today's invoices`;
+		} else {
+		this.display = `${this.formatDateDisplay(this.filter.dateFrom)} - ${this.formatDateDisplay(this.filter.dateTo)}`;
+		}
+	}
+
 	public loadInvoices() {
 		this.utilService.processInvoices(this.filter);
 		this.utilService.invoices.subscribe(response => {
 			if (response.status === 200 && response.type === 4) {
 				this.applyFilter(response.body);
+				this.setDisplay();
 			}
 		}, error => {
 			console.log('error trying to get invoices: ', error);
@@ -129,6 +141,10 @@ export class InvoiceSearchComponent implements OnInit {
 
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');
+	}
+
+	formatDateDisplay(date) {
+		return moment(date).format('MM/DD/YYYY');
 	}
 
 	openCalendar(event) {
