@@ -1,0 +1,53 @@
+.invoiceLogo {
+    height: 55%;
+    width: 100%;
+}
+
+.headerData {
+    padding-top: 1%;
+    text-align: right;
+    padding-right: 3%;
+}
+
+.services {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.vehicles {
+    padding: 5%;
+}
+
+.vehicle {
+    margin-left: 1%;
+}
+
+.client {
+    padding-left: 5%;
+    margin-top: -3%
+}
+
+.mat-column-name, .mat-column-quantity, .mat-column-pricePer, .mat-column.total {
+	padding-left: 24px;
+	padding-right: 24px;
+	text-align: center;
+}
+
+@media (max-width: 767px) {
+    .headerData {
+        padding-right: unset;
+        padding-top: unset;
+        text-align: center;
+        margin-top: -15%;
+    }
+
+    .client {
+        padding-left: 12%;
+        margin-top: 2%
+    }
+
+    .vehicles {
+        padding: 5%;
+        padding-left: 12%;
+    }
+}

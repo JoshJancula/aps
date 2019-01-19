@@ -28,17 +28,10 @@
     <string>1.0.0</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-    </dict>
     <key>NSMainNibFile</key>
     <string/>
     <key>NSMainNibFile~ipad</key>
     <string/>
-    <key>UIRequiresFullScreen</key>
-    <true/>
     <key>UISupportedInterfaceOrientations</key>
     <array>
       <string>UIInterfaceOrientationPortrait</string>
@@ -52,6 +45,35 @@
       <string>UIInterfaceOrientationPortraitUpsideDown</string>
       <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
+    <key>UIRequiresFullScreen</key>
+    <true/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>citymapper</string>
+      <string>comgooglemaps</string>
+      <string>navigon</string>
+      <string>transit</string>
+      <string>waze</string>
+      <string>yandexnavi</string>
+      <string>uber</string>
+      <string>tomtomhome</string>
+      <string>com.sygic.aura</string>
+      <string>here-route</string>
+      <string>moovit</string>
+      <string>lyft</string>
+      <string>mapsme</string>
+      <string>cabify</string>
+      <string>baidumap</string>
+      <string>taxis99</string>
+      <string>iosamap</string>
+    </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app requires access to your location for navigation purposes</string>
     <key>NSCameraUsageDescription</key>
     <string>To scan barcodes</string>
   </dict>

@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
-
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class UtilService {
 
-	constructor(private authService: AuthService, private http: HttpClient) { }
+	constructor(private router: Router, private authService: AuthService, private http: HttpClient) { }
 
 	states = ['AL', 'AK', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NC', 'ND', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 	private userStore = [];
@@ -125,13 +125,8 @@ export class UtilService {
 	getAppointments() {
 		let url;
 		let localUrl;
-		// if (this.authService.currentUser.Role === 'Super') {
-		//  url = `https://aps-josh.herokuapp.com/api/appointments`;
-		//  localUrl = `http://localhost:8080/api/appointments`;
-		// } else {
 		url = `https://aps-josh.herokuapp.com/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
 		localUrl = `http://localhost:8080/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
-		// }
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -156,6 +151,8 @@ export class UtilService {
 				this.appointmentStore = JSON.parse(JSON.stringify(events.body));
 				this.appointmentSubject.next(this.appointmentStore);
 			}
+		}, error => {
+			if (error.status === 401) { this.router.navigate([`/`], {}); }
 		});
 	}
 

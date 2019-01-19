@@ -184,7 +184,7 @@
         <div class='row' *ngIf='option.selected === true'>
           <div class='col-lg-6 col-sm-6'>
             <mat-form-field>
-              <input matInput [readonly]='option.id !== windowOptions[6].id'  [(ngModel)]="option.model" />
+              <input matInput [readonly]='option.id !== 6'  [(ngModel)]="option.model" />
             </mat-form-field>
           </div>
           <div class='col-lg-3 col-sm-3'>
@@ -253,12 +253,12 @@
     <!-- add description if they want -->
     <mat-checkbox color="primary" [(ngModel)]="addDescription">Add description?</mat-checkbox>
     <mat-form-field *ngIf='addDescription === true'>
-      <input matInput placeholder="Vehicle make & model, services rendered, product details..." [(ngModel)]="Invoice.VehicleDescription" />
+      <input matInput placeholder="Vehicle make & model, services rendered, product details..." [(ngModel)]="Invoice.Description" />
     </mat-form-field>
     <br>
 
     <!-- total cost and payment info -->
-    <mat-checkbox (change)='updateTotal();' color="primary" *ngIf="serviceSelected === true" [(ngModel)]="calculateTax">Calculate
+    <mat-checkbox (change)='updateTotal();' color="primary" *ngIf="serviceSelected === true" [(ngModel)]="Invoice.CalcTax">Calculate
       tax?</mat-checkbox>
     <mat-form-field *ngIf="serviceSelected === true">
       <input matInput placeholder="Total" [readonly]='editing === false' [(ngModel)]="Invoice.Total" />

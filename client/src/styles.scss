@@ -130,6 +130,17 @@ body, html {
     cursor: pointer;
 }
 
+.invoicePreview {
+    height: 70vh;
+    width: 70vw;
+    overflow-x: hidden !important;
+}
+
+.mat-dialog-container {
+    padding: 0px !important;
+    overflow-x: hidden !important;
+}
+
 @media (max-width: 1024px) {
     // .toolbarLogo {
     //    display: none;
@@ -184,6 +195,11 @@ body, html {
         top: 7px;
         left: 2vw;
         z-index: 10;
+    }
+
+    .invoicePreview {
+        height: 90vh;
+        width: 80vw;
     }
     
 }

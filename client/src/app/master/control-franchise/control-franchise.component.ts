@@ -61,7 +61,6 @@ export class ControlFranchiseComponent implements OnInit {
 		this.utilService.processFranchises();
 		this.utilService.franchises.subscribe(response => {
 			this.franchises = response;
-			console.log('franchises: ', this.franchises);
 		});
 	}
 

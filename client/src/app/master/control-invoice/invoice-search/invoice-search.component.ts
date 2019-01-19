@@ -4,6 +4,9 @@ import { InvoiceService } from '../../../services/invoice.service';
 import { AuthService } from 'src/app/services/auth.service';
 import * as moment from 'moment';
 import { HttpEventType } from '@angular/common/http';
+import { MatDialog } from '@angular/material';
+import { InvoicePreviewComponent } from '../../../invoice-preview/invoice-preview.component';
+import { Router } from '@angular/router';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -36,7 +39,7 @@ export class InvoiceSearchComponent implements OnInit {
 	searchOptions = ['Invoice number', 'Employee', 'Client'];
 	display = '';
 
-	constructor(private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
+	constructor(private router: Router, private dialog: MatDialog, private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
 		this.loadInvoices();
 		this.loadFranchises();
 		this.getClients();
@@ -67,13 +70,17 @@ export class InvoiceSearchComponent implements OnInit {
 		if (moment(newTemp).isSame(moment(this.filter.dateFrom).format('MM/DD/YYYY'))) {
 			this.display = `Today's invoices`;
 		} else {
-		this.display = `${this.formatDateDisplay(this.filter.dateFrom)} - ${this.formatDateDisplay(this.filter.dateTo)}`;
+			this.display = `${this.formatDateDisplay(this.filter.dateFrom)} - ${this.formatDateDisplay(this.filter.dateTo)}`;
 		}
 	}
 
 	public loadInvoices() {
 		this.utilService.processInvoices(this.filter);
 		this.utilService.invoices.subscribe(response => {
+			console.log('res status: ', response.status);
+			if (response.status === 401) {
+				this.router.navigate([`/`], {});
+			}
 			if (response.status === 200 && response.type === 4) {
 				this.applyFilter(response.body);
 				this.setDisplay();
@@ -103,11 +110,15 @@ export class InvoiceSearchComponent implements OnInit {
 
 	applyFilter(data) {
 		let returnThis = [];
+		let temp = new Date();
+		let newTemp = moment(temp).format('MM/DD/YYYY');
 		data.forEach(invoice => {
 			if (this.filter.employee !== '') {
 				if (invoice.Employee.toLowerCase().indexOf(this.filter.employee.toLowerCase()) > -1) { returnThis.push(invoice); }
 			} else if (this.filter.client !== '') {
 				if (invoice.Client.toLowerCase().indexOf(this.filter.client.toLowerCase()) > -1) { returnThis.push(invoice); }
+			} else if (moment(newTemp).isSame(moment(this.filter.dateFrom).format('MM/DD/YYYY'))) {
+				if (moment(invoice.Date).format('MM/DD/YYYY') === newTemp) { returnThis.push(invoice); }
 			} else { returnThis.push(invoice); }
 		});
 		this.invoices = returnThis;
@@ -155,6 +166,15 @@ export class InvoiceSearchComponent implements OnInit {
 	openCalendar2(event) {
 		event.preventDefault();
 		this.calendar2.open();
+	}
+
+	openPreview(invoice) {
+		const newDialog = this.dialog.open(InvoicePreviewComponent, {
+			data: invoice,
+			panelClass: 'invoicePreview'
+			// height: '300px',
+			// width: '360px;',
+		});
 	}
 
 }

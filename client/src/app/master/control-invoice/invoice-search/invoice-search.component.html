@@ -11,6 +11,7 @@
         Employee: {{ invoice.Employee }}<br>
       </p>
       <button (click)='editThis.emit(invoice);' mat-button>Edit</button>
+      <button (click)='openPreview(invoice);' mat-button>Invoice overview</button>
     </mat-card>
     <mat-card class='invoiceCard notFound' *ngIf='invoices.length < 1'>
       <div class='notFoundSpacer'></div>

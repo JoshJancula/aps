@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PhonePipe } from 'src/app/phone.pipe';
 import * as moment from 'moment';
 
-
 @Component({
 	// tslint:disable-next-line:component-selector
 	selector: 'app-control-appointment',

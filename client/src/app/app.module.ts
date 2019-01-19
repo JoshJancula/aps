@@ -23,24 +23,21 @@ import { ControlAppointmentComponent } from './master/control-appointment/contro
 import { ControlInvoiceComponent } from './master/control-invoice/control-invoice.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AuthService } from './services/auth.service';
-import { FranchiseService } from './services/franchise.service';
-import { UserService } from './services/user.service';
-import { UtilService } from './services/util.service';
-import { ClientService } from './services/client.service';
-import { InvoiceService } from './services/invoice.service';
-import { MessageService } from './services/message.service';
-import { AppointmentService } from './services/appointment.service';
 import { MatBottomSheetModule } from '@angular/material';
 import { BottomPopupComponent } from './bottom-popup/bottom-popup.component';
 import { InvoiceSearchComponent } from './master/control-invoice/invoice-search/invoice-search.component';
 import { InvoiceFormComponent } from './master/control-invoice/invoice-form/invoice-form.component';
+import { InvoicePreviewComponent } from './invoice-preview/invoice-preview.component';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @NgModule({
 	entryComponents: [
 		LoginComponent,
 		MasterComponent,
 		BottomPopupComponent,
-		InvoiceSearchComponent
+		InvoiceSearchComponent,
+		InvoicePreviewComponent
 	],
 	declarations: [
 		AppComponent,
@@ -55,7 +52,8 @@ import { InvoiceFormComponent } from './master/control-invoice/invoice-form/invo
 		PhonePipe,
 		BottomPopupComponent,
 		InvoiceSearchComponent,
-		InvoiceFormComponent
+		InvoiceFormComponent,
+		InvoicePreviewComponent
 	],
 	imports: [
 		BrowserModule,
@@ -129,15 +127,10 @@ import { InvoiceFormComponent } from './master/control-invoice/invoice-form/invo
 	],
 	providers: [
 		BluetoothSerial,
+		LaunchNavigator,
+		BarcodeScanner,
 		PhonePipe,
 		AuthService,
-		FranchiseService,
-		UserService,
-		UtilService,
-		ClientService,
-		InvoiceService,
-		MessageService,
-		AppointmentService,
 	],
 	bootstrap: [AppComponent]
 })

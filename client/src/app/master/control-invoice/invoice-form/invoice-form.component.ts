@@ -7,6 +7,7 @@ import { MessageService } from '../../../services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { InvoiceSearchComponent } from '../invoice-search/invoice-search.component';
 import * as moment from 'moment';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -24,7 +25,7 @@ export class InvoiceFormComponent implements OnInit {
 		Tint: '',
 		PPF: '',
 		OtherServices: '',
-		CustomPinstripes: '',
+		CustomPinstripe: '',
 		Client: '',
 		Total: 0,
 		Paid: '',
@@ -36,6 +37,7 @@ export class InvoiceFormComponent implements OnInit {
 		Stock: '',
 		Description: '',
 		VehicleDescription: '',
+		CalcTax: false,
 		Comments: '',
 		Vehicle: '',
 		EditedBy: '',
@@ -108,7 +110,7 @@ export class InvoiceFormComponent implements OnInit {
 		{ id: 7, model: 'Other', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false }
 	];
 
-	constructor(private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
+	constructor(private barcodeScanner: BarcodeScanner, private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
 		// this.loadInvoices();
 		this.loadFranchises();
 		this.getClients();
@@ -191,7 +193,7 @@ export class InvoiceFormComponent implements OnInit {
 				this.Invoice.Total += (this.customPinstripes.value * this.customPinstripes.quantity);
 			}
 		});
-		if (this.calculateTax === true) { this.applyTax(); }
+		if (this.Invoice.CalcTax === true) { this.applyTax(); }
 	}
 
 	applyTax() {
@@ -216,6 +218,14 @@ export class InvoiceFormComponent implements OnInit {
 		this.updateTotal();
 	}
 
+	scanVIN() {
+		this.barcodeScanner.scan().then(data => {
+			this.vins.push(data.text);
+		   }).catch(err => {
+			   console.log('Error', err);
+		   });
+	}
+
 	removeVehicle(vehicle) {
 		if (this.stocks.indexOf(vehicle), 1) {
 			this.stocks.splice(this.stocks.indexOf(vehicle), 1);
@@ -229,6 +239,9 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	updateInvoiceData() {
+		if (this.Invoice.PaymentMethod === '') {
+			this.Invoice.PaymentMethod = 'None';
+		}
 		if (this.Invoice.PaymentMethod === 'None') {
 			this.Invoice.Paid = false;
 		}
@@ -251,11 +264,13 @@ export class InvoiceFormComponent implements OnInit {
 		}
 		this.Invoice.CustomPinstripe = JSON.stringify(this.customPinstripes);
 		this.Invoice.OtherServices = JSON.stringify(this.serviceTypes);
+		// this.Invoice.CalcTax = this.calculateTax;
 	}
 
 	submitInvoice() {
 		this.updateTotal();
 		this.updateInvoiceData();
+		console.log('invoice to save: ', this.Invoice);
 		if (this.editing === false) {
 			this.Invoice.Employee = this.authService.currentUser.Name;
 			this.Invoice.EmployeeId = this.authService.currentUser.id;
@@ -276,13 +291,13 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	editInvoice(x) {
-		console.log('x: ', x);
 		this.clearForm();
 		this.serviceSelected = true;
 		this.editing = true;
 		const data = JSON.parse(JSON.stringify(x));
 		this.Invoice = data;
 		this.selectedId = data.id;
+		this.Invoice.CalcTax = data.CalcTax;
 		// tslint:disable-next-line:radix
 		this.Invoice.Total = parseInt(this.Invoice.Total);
 		this.setupEdit(data);
@@ -317,9 +332,14 @@ export class InvoiceFormComponent implements OnInit {
 		if (this.Invoice.RO !== '') {
 			this.addRO = true;
 		}
+		if (this.Invoice.Description !== '') {
+			this.addDescription = true;
+		}
 		this.customPinstripes = JSON.parse(data.CustomPinstripe);
 		this.serviceTypes = JSON.parse(data.OtherServices);
 		if (this.customPinstripes.quantity !== 0) { this.customPinstriping = true; }
+		// this.calculateTax = this.Invoice.CalcTax;
+		this.updateTotal();
 	}
 
 	clearForm() {
@@ -340,6 +360,7 @@ export class InvoiceFormComponent implements OnInit {
 			VIN: '',
 			Stock: '',
 			Description: '',
+			CalcTax: false,
 			OtherServices: '',
 			VehicleDescription: '',
 			Comments: '',
@@ -366,6 +387,8 @@ export class InvoiceFormComponent implements OnInit {
 		this.panelsStriped = '';
 		this.newCarRate = 0;
 		this.serviceSelected = false;
+		this.manualAmountInput = false;
+		this.calculateTax = false;
 		this.panelOptions = [
 			{ id: 1, model: 'First panel', value: 45, error: false },
 			{ id: 2, model: 'Second panel', value: 20, error: false },
@@ -381,7 +404,8 @@ export class InvoiceFormComponent implements OnInit {
 			{ id: 2, model: 'Butterfly window', quantity: 0, value: 0, selected: false, error: false },
 			{ id: 3, model: 'Back windshield', quantity: 0, value: 0, selected: false, error: false },
 			{ id: 4, model: 'Tint removal', quantity: 0, value: 0, selected: false, error: false },
-			{ id: 5, model: 'Other', quantity: 0, value: 0, selected: false, error: false }
+			{ id: 5, model: 'Whole car', quantity: 0, value: 0, selected: false, error: false },
+			{ id: 6, model: 'Other', quantity: 0, value: 0, selected: false, error: false }
 		];
 		this.ppfOptions = [
 			{ id: 1, model: 'Edge guard', value: 0, quantity: 0, selected: false, error: false },

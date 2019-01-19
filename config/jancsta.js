@@ -5,15 +5,13 @@ module.exports = function (token) {
 
     let date = new Date();
     let date2 = moment(date).format('MM/DD/YYYY');
-    let compareThis = `${date2}secret`
+    let compareThis = `${date2}secret`;
     if (token) {
         bcrypt.compare(compareThis, token).then((res) => {
             if (res) {
-                console.log('sucess, tokens match');
-                return true;
+                this.bool = true;
             } else {
-                console.log('no match');
-               return false;
+                this.bool = false;
             }
         })
             .catch((err) => {

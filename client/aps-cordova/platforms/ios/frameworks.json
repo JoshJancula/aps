@@ -1,4 +1,8 @@
 {
+    "CoreBluetooth.framework": 1,
+    "AudioToolbox.framework": 2,
     "AVFoundation.framework": 1,
-    "AudioToolbox.framework": 1
+    "MapKit.framework": 1,
+    "CoreLocation.framework": 1,
+    "SystemConfiguration.framework": 1
 }
