@@ -36,3 +36,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/aps-cordova/www
+
+/aps-cordova/node_modules

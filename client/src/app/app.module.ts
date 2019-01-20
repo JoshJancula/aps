@@ -27,7 +27,7 @@ import { MatBottomSheetModule } from '@angular/material';
 import { BottomPopupComponent } from './bottom-popup/bottom-popup.component';
 import { InvoiceSearchComponent } from './master/control-invoice/invoice-search/invoice-search.component';
 import { InvoiceFormComponent } from './master/control-invoice/invoice-form/invoice-form.component';
-import { InvoicePreviewComponent } from './invoice-preview/invoice-preview.component';
+import { InvoicePreviewComponent } from './master/control-invoice/invoice-preview/invoice-preview.component';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
@@ -53,7 +53,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 		BottomPopupComponent,
 		InvoiceSearchComponent,
 		InvoiceFormComponent,
-		InvoicePreviewComponent
+		InvoicePreviewComponent,
 	],
 	imports: [
 		BrowserModule,

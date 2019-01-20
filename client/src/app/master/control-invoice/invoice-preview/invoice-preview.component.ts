@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import * as moment from 'moment';
-import { EmailService } from '../services/email.service';
+import { EmailService } from '../../../services/email.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -26,37 +26,38 @@ export class InvoicePreviewComponent implements OnInit {
 	total = 0;
 	grandTotal = 0;
 	calcTax = false;
+	printing = false;
 
 	constructor(private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 	ngOnInit() {
 		console.log('invoice passed to preview: ', this.data);
-		this.setServices(this.data);
+		this.setServices(this.data.content);
+		setTimeout(() => this.performAction(), 500);
 
 	}
 
-	print() {
-		// const printContents = document.querySelector('#previewContent').innerHTML;
-		// let w = window.open();
-		// w.document.write(printContents);
-		// w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
-		// w.document.close(); // necessary for IE >= 10
-		// w.focus(); // necessary for IE >= 10
-		// return true;
-		window.focus();
-		window.print();
+	performAction() {
+		switch (this.data.action) {
+			case 'print': this.print(); break;
+			case 'email': this.emailInvoice(); break;
+			case 'open': break;
 		}
+	}
+
+	print() {
+		this.printing = true;
+		setTimeout(() => { window.print(); this.dialogRef.close(); this.printing = false; }, 100);
+	}
 
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');
 	}
 
 	emailInvoice() {
-		// const div: HTMLDivElement = document.querySelector('#previewContent');
-		this.emailService.sendInvoice('hello world').subscribe(response => {
-			console.log('response from sendInvoice: ', response);
-		});
-		console.log('sending email from emailInvoice()');
+		const div: HTMLDivElement = document.querySelector('#hiddenContent');
+		this.emailService.sendInvoice(div.innerHTML).subscribe(response => { });
+		this.dialogRef.close();
 	}
 
 	setServices(data) {
@@ -158,7 +159,7 @@ export class InvoicePreviewComponent implements OnInit {
 	}
 
 	processCustom(data) {
-		const parsed =  JSON.parse(data.CustomPinstripe);
+		const parsed = JSON.parse(data.CustomPinstripe);
 		if (parsed.quantity > 0) {
 			let service = { name: parsed.description, quantity: parsed.quantity, pricePer: parsed.value, totalPrice: (parsed.value * parsed.quantity) };
 			this.serviceDisplay.push(service);

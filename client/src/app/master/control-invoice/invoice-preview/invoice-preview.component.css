@@ -31,7 +31,7 @@
  .mat-column-quantity, .mat-column-pricePer, .mat-column.total {
 	padding-left: 24px;
 	padding-right: 24px;
-	text-align: center;
+	text-align: left;
 }
 
 .mat-column-name, th.mat-header-cell:first-of-type, td .mat-cell .cdk-column-name .mat-column-name {

@@ -136,6 +136,13 @@ body, html {
     overflow-x: hidden !important;
 }
 
+.hiddenPreview {
+    height: 90vh;
+    width: 90vw;
+    overflow-x: hidden !important;
+    // display: none;
+}
+
 .mat-dialog-container {
     padding: 0px !important;
     overflow-x: hidden !important;

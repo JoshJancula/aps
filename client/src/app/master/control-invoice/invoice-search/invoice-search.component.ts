@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import * as moment from 'moment';
 import { HttpEventType } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
-import { InvoicePreviewComponent } from '../../../invoice-preview/invoice-preview.component';
+import { InvoicePreviewComponent } from '../invoice-preview/invoice-preview.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,6 @@ export class InvoiceSearchComponent implements OnInit {
 
 	@ViewChild('calendar') calendar: any;
 	@ViewChild('calendar2') calendar2: any;
-	// @ViewChild('invoicePreview') invoicePreview: InvoicePreviewComponent;
 	@Output() editThis = new EventEmitter();
 	@Output() newInvoice = new EventEmitter();
 	clients: any;
@@ -183,10 +182,22 @@ export class InvoiceSearchComponent implements OnInit {
 
 	openPreview(invoice) {
 		const newDialog = this.dialog.open(InvoicePreviewComponent, {
-			data: invoice,
+			data: { content: invoice, action: 'open' },
 			panelClass: 'invoicePreview'
-			// height: '300px',
-			// width: '360px;',
+		});
+	}
+
+	printInvoice(invoice) {
+		const newDialog = this.dialog.open(InvoicePreviewComponent, {
+			data: { content: invoice, action: 'print' },
+			panelClass: 'invoicePreview'
+		});
+	}
+
+	emailInvoice(invoice) {
+		const newDialog = this.dialog.open(InvoicePreviewComponent, {
+			data: { content: invoice, action: 'email' },
+			panelClass: 'invoicePreview'
 		});
 	}
 
