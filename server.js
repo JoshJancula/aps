@@ -35,6 +35,7 @@ require("./routes/user-routes.js")(app);
 require("./routes/appointment-routes.js")(app);
 require("./routes/client-routes.js")(app);
 require("./routes/invoice-routes.js")(app);
+require("./routes/email.js")(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -18,6 +18,7 @@ export class InvoiceSearchComponent implements OnInit {
 
 	@ViewChild('calendar') calendar: any;
 	@ViewChild('calendar2') calendar2: any;
+	// @ViewChild('invoicePreview') invoicePreview: InvoicePreviewComponent;
 	@Output() editThis = new EventEmitter();
 	@Output() newInvoice = new EventEmitter();
 	clients: any;
@@ -38,6 +39,7 @@ export class InvoiceSearchComponent implements OnInit {
 	controlArray: any;
 	searchOptions = ['Invoice number', 'Employee', 'Client'];
 	display = '';
+	_printIframe;
 
 	constructor(private router: Router, private dialog: MatDialog, private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
 		this.loadInvoices();
@@ -56,6 +58,17 @@ export class InvoiceSearchComponent implements OnInit {
 			this.slideDrawer = false;
 		}
 	}
+
+	// print(invoice) {
+	// 	this.invoicePreview.data = invoice;
+	// 	const printContents = document.querySelector('#invoicePreview').innerHTML;
+	// 	let w = window.open();
+	// 	w.document.write(printContents);
+	// 	w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
+	// 	w.document.close(); // necessary for IE >= 10
+	// 	w.focus(); // necessary for IE >= 10
+	// 	return true;
+	// }
 
 	getClients() { // need this so I can filter on clients
 		this.utilService.processClients();

@@ -215,9 +215,13 @@
     <!-- buttons for input vehicle id options -->
     <div *ngIf="serviceSelected === true">
       <button class='submit' (click)="addRO = true; addStock = false; addVIN = false;" mat-button>Add RO#</button>
-      <button class='submit' (click)="addStock = true; addVIN = false;" mat-button>Add Stock#(s)</button>
-      <button class='submit' (click)="addStock = false; addVIN = true;" maxlength="8" mat-button>Add
-        VIN#(s)</button>
+      <button class='submit' (click)="addStock = true; addVIN = false;" mat-button>Add Stock#</button>
+      <button class='submit'  *ngIf='cordova == false;'  (click)="addStock = false; addVIN = true;"  mat-button>Add
+        VIN#</button>
+        <button class='submit'  *ngIf='cordova == true;' (click)="addStock = false; addVIN = true;"  mat-button>Manually add
+            VIN#</button>
+        <button class='submit' *ngIf='cordova == true;' (click)="scanVIN();" mat-button>Scan
+            VIN#</button>
     </div>
     <br>
 

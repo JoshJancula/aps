@@ -67,6 +67,7 @@ export class InvoiceFormComponent implements OnInit {
 	paymentMethods = ['Cash', 'PO', 'Check', 'Other', 'None'];
 	stockNumber = '';
 	manualAmountInput = false;
+	cordova = false;
 	fieldsToValidate = [];
 	panelOptions: any = [
 		{ id: 1, model: 'First panel', value: 45, checked: false },
@@ -118,6 +119,7 @@ export class InvoiceFormComponent implements OnInit {
 
 	ngOnInit() {
 		this.generateNumbers();
+		if ((<any>window).deviceReady === true) { this.cordova = true; }
 	}
 
 	clearZeros() {

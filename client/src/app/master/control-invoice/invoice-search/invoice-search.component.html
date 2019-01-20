@@ -12,6 +12,7 @@
       </p>
       <button (click)='editThis.emit(invoice);' mat-button>Edit</button>
       <button (click)='openPreview(invoice);' mat-button>Invoice overview</button>
+      <!-- <button (click)='print(invoice);' mat-button>Print</button> -->
     </mat-card>
     <mat-card class='invoiceCard notFound' *ngIf='invoices.length < 1'>
       <div class='notFoundSpacer'></div>
@@ -65,3 +66,4 @@
   </div>
   <!-- </div> -->
 </div>
+<!-- <app-invoice-preview id='previewInvoice' #invoicePreview style='display:none'></app-invoice-preview> -->

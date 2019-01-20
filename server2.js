@@ -16,8 +16,6 @@ app.use(passport.initialize());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 'extended': 'false' }));
-// app.use('/', express.static(path.join(__dirname, '/client/dist/client')));
-// app.set('view engine', 'jade');
 
 
 app.all('*', function (req, res, next) {
@@ -35,6 +33,7 @@ require("./routes/user-routes.js")(app);
 require("./routes/appointment-routes.js")(app);
 require("./routes/client-routes.js")(app);
 require("./routes/invoice-routes.js")(app);
+require("./routes/email.js")(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

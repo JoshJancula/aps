@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import * as moment from 'moment';
+import { EmailService } from '../services/email.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -26,7 +27,7 @@ export class InvoicePreviewComponent implements OnInit {
 	grandTotal = 0;
 	calcTax = false;
 
-	constructor(public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+	constructor(private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 	ngOnInit() {
 		console.log('invoice passed to preview: ', this.data);
@@ -34,8 +35,26 @@ export class InvoicePreviewComponent implements OnInit {
 
 	}
 
+	print() {
+		// const printContents = document.querySelector('#previewContent').innerHTML;
+		// let w = window.open();
+		// w.document.write(printContents);
+		// w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
+		// w.document.close(); // necessary for IE >= 10
+		// w.focus(); // necessary for IE >= 10
+		// return true;
+		window.focus();
+		window.print();
+		}
+
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');
+	}
+
+	emailInvoice() {
+		// const div: HTMLDivElement = document.querySelector('#previewContent');
+		this.emailService.sendInvoice('hello world');
+		console.log('sending email from emailInvoice()');
 	}
 
 	setServices(data) {

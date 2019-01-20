@@ -125,14 +125,14 @@ body, html {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.0);
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: 2;
     cursor: pointer;
 }
 
 .invoicePreview {
-    height: 70vh;
-    width: 70vw;
+    height: 90vh;
+    width: 90vw;
     overflow-x: hidden !important;
 }
 
@@ -197,9 +197,9 @@ body, html {
         z-index: 10;
     }
 
-    .invoicePreview {
+    .invoicePreview, app-invoice-preview  {
         height: 90vh;
-        width: 80vw;
+        width: 96vw;
     }
     
 }

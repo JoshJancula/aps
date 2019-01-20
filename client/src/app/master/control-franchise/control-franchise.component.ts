@@ -72,7 +72,6 @@ export class ControlFranchiseComponent implements OnInit {
 	submitFranchise() {
 		if (this.editing === false) {
 			this.franchiseService.createFranchise(this.Franchise).subscribe(res => {
-				console.log('response: ', res);
 				const data = JSON.parse(JSON.stringify(res));
 				this.User.FranchiseId = data.id;
 				this.submitUser();

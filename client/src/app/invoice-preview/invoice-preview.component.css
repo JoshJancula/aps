@@ -14,8 +14,9 @@
     margin-right: 5%;
 }
 
-.vehicles {
+.vehicles, .totals {
     padding: 5%;
+    font-size: 14px;
 }
 
 .vehicle {
@@ -27,27 +28,109 @@
     margin-top: -3%
 }
 
-.mat-column-name, .mat-column-quantity, .mat-column-pricePer, .mat-column.total {
+ .mat-column-quantity, .mat-column-pricePer, .mat-column.total {
 	padding-left: 24px;
 	padding-right: 24px;
 	text-align: center;
 }
 
+.mat-column-name, th.mat-header-cell:first-of-type, td .mat-cell .cdk-column-name .mat-column-name {
+    padding-left: 4px;
+	padding-right: 24px;
+	text-align: left;
+}
+
+.printButton {
+    position: relative;
+    left: 5vw;
+    top: 4vh;
+    margin-bottom: 5vh;
+}
+
 @media (max-width: 767px) {
     .headerData {
-        padding-right: unset;
+        padding-right: 3%;
         padding-top: unset;
+    }
+
+    .mat-column-quantity, .mat-column-pricePer, .mat-column.total {
+        padding-left: 14px;
+        padding-right: 14px;
         text-align: center;
-        margin-top: -15%;
+    }
+    
+    .mat-column-name, th.mat-header-cell:first-of-type, td .mat-cell .cdk-column-name .mat-column-name {
+        padding-left: 3px;
+        padding-right: 14px;
+        text-align: left;
+    }
+
+    .client {
+        padding-left: 5%;
+        margin-top: -6%
+    }
+
+    .vehicles {
+        padding: 2%;
+        padding-left: 7%;
+        padding-right: 2%;
+        font-size: 12px;
+    }
+
+    .totals {
+        padding: 2%;
+        padding-left: 8%;
+        padding-right: 2%;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .headerData {
+        padding-right: 7%;
+        margin-top: -18%;
+        font-size: 12px;
+    }
+
+    .invoiceLogo {
+        height: 55%;
+        width: 40%;
+    }
+    
+
+}
+
+@media (max-width: 460px) {
+
+    .headerData {
+        padding-right: 7%;
+        margin-top: -18%;
+        font-size: 12px;
+         text-align: center;
+    }
+
+    .invoiceLogo {
+        height: 55%;
+        width: 100%;
     }
 
     .client {
         padding-left: 12%;
         margin-top: 2%
-    }
+    } 
 
-    .vehicles {
+     .vehicles {
         padding: 5%;
         padding-left: 12%;
+        padding-right: 7%;
+    } 
+
+    .totals {
+        padding: 2%;
+        padding-left: 12%;
+        padding-right: 2%;
     }
+    
+
 }

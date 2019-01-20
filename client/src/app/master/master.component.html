@@ -2,7 +2,6 @@
   <img class='toolbarLogo' src='assets/logo2.png' />
   <span class='screenTitle'>{{ screen }}</span>
   <span class='invoiceDisplay' *ngIf="controlInvoice.searchInvoices === true && invoiceMode === true">{{ controlInvoice.invoiceSearch.display }}</span>
-  <!-- <span class='filterIcon' [ngClass]="{'show': controlInvoice.searchInvoices === true && invoiceMode === true }"><mat-icon (click)='controlInvoice.invoiceSearch.openDrawer();' style='color:white;'>filter</mat-icon></span> -->
   <span class='calendar' [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
     <mat-form-field class='datePicker' style='cursor: pointer;'>
       <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput (dateInput)="utilService.processAppointments();"
