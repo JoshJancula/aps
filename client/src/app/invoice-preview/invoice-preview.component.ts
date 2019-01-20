@@ -53,7 +53,9 @@ export class InvoicePreviewComponent implements OnInit {
 
 	emailInvoice() {
 		// const div: HTMLDivElement = document.querySelector('#previewContent');
-		this.emailService.sendInvoice('hello world');
+		this.emailService.sendInvoice('hello world').subscribe(response => {
+			console.log('response from sendInvoice: ', response);
+		});
 		console.log('sending email from emailInvoice()');
 	}
 
