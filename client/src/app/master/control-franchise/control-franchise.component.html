@@ -6,8 +6,17 @@
         <input matInput placeholder="Name" [readonly]="editing === true" [(ngModel)]="Franchise.Name" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Location" />
+        <input matInput placeholder="Business address" [(ngModel)]="Franchise.Address" />
       </mat-form-field>
+      <mat-form-field>
+          <input matInput placeholder="Business phone" [(ngModel)]="Franchise.Phone" />
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Business email" [(ngModel)]="Franchise.Email" />
+          </mat-form-field>
+          <mat-form-field>
+              <input matInput placeholder="State sales tax rate" [(ngModel)]="Franchise.TaxRate" />
+            </mat-form-field>
       <div *ngIf='editing === false;'>
       <p>Add owner information</p>
       <mat-form-field>

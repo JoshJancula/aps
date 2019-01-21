@@ -13,6 +13,7 @@
       <button (click)='editThis.emit(invoice);' mat-button>Edit</button>
       <button (click)='openPreview(invoice);' mat-button>Invoice overview</button>
       <button (click)='printInvoice(invoice);' mat-button>Print</button>
+      <button (click)='emailInvoice(invoice);' mat-button>Email</button>
     </mat-card>
     <mat-card class='invoiceCard notFound' *ngIf='invoices.length < 1'>
       <div class='notFoundSpacer'></div>
@@ -58,6 +59,11 @@
     <mat-form-field *ngIf="searchBy === 'Employee'">
       <input matInput placeholder="Employee" [(ngModel)]="filter.employee" />
     </mat-form-field>
+    <mat-form-field *ngIf="searchBy === 'Payment'">
+        <mat-select placeholder="Payment" [(ngModel)]="filter.payment">
+          <mat-option *ngFor="let payment of payments" [value]="payment">{{ payment }}</mat-option>
+        </mat-select>
+      </mat-form-field>
     <mat-form-field *ngIf="searchBy === 'Client'">
       <input matInput placeholder="Client" [(ngModel)]="filter.client" />
     </mat-form-field>

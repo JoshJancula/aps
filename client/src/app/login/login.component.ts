@@ -30,17 +30,20 @@ export class LoginComponent implements OnInit {
 	}
 
 	login() {
+		(<any>window).Keyboard.hide();
 		this.authService.loginUser(this.username, this.password).subscribe(res => {
 			console.log('login response: ', res);
-			localStorage.setItem('jwtToken', res.json().token);
-			this.authService.currentUser.Name = res.json().user.FirstName + ' ' + res.json().user.LastName;
-			this.authService.currentUser.Role = res.json().user.Role;
-			this.authService.currentUser.Username = res.json().user.Username;
-			this.authService.currentUser.Phone = res.json().user.Phone;
-			this.authService.currentUser.id = res.json().user.id;
-			this.authService.currentUser.FranchiseId = res.json().user.FranchiseId;
-			localStorage.setItem('currentUser', JSON.stringify(this.authService.currentUser));
-			this.navigate(res.json().user.Role);
+			if (res.status === 200) {
+				localStorage.setItem('jwtToken', res.json().token);
+				this.authService.currentUser.Name = res.json().user.FirstName + ' ' + res.json().user.LastName;
+				this.authService.currentUser.Role = res.json().user.Role;
+				this.authService.currentUser.Username = res.json().user.Username;
+				this.authService.currentUser.Phone = res.json().user.Phone;
+				this.authService.currentUser.id = res.json().user.id;
+				this.authService.currentUser.FranchiseId = res.json().user.FranchiseId;
+				localStorage.setItem('currentUser', JSON.stringify(this.authService.currentUser));
+				this.navigate(res.json().user.Role);
+			}
 		}, error => {
 			console.log('error: ', error);
 		});

@@ -43,6 +43,11 @@ module.exports = function (sequelize, DataTypes) {
             unique: false,
             allowNull: true,
         },
+        Avatar: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
         Active: {
             type: DataTypes.BOOLEAN,
             unique: false,

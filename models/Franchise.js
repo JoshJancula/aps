@@ -10,6 +10,26 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             unique: true,
         },
+        Phone: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        Email: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        Address: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
+        TaxRate: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: false,
+        },
         Active: {
             type: DataTypes.BOOLEAN,
             unique: false,

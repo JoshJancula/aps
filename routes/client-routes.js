@@ -58,10 +58,7 @@ module.exports = function (app) {
 		setTimeout(() => {
 			if (jancsta.bool == true) {
 				db.Client.update({
-					StreetAddress: req.body.StreetAddress,
-					City: req.body.City,
-					State: req.body.State,
-					Zip: req.body.Zip,
+					Address: req.body.StreetAddress,
 					Description: req.body.Description,
 					Email: req.body.Email,
 					Phone: req.body.Phone,

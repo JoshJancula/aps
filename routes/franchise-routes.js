@@ -11,7 +11,7 @@ module.exports = function (app) {
 		setTimeout(() => {
 			if (jancsta.bool == true) {
 				db.Franchise.findAll({
-					include: [db.User, db.Appointment, db.Invoice],
+					include: [db.User],
 				}).then(function (x) {
 					res.json(x);
 				});
@@ -30,7 +30,7 @@ module.exports = function (app) {
 					where: {
 						id: req.params.id
 					},
-					include: [db.User, db.Appointment, db.Invoice],
+					include: [db.User],
 				}).then(function (x) {
 					res.json(x);
 				});
@@ -60,7 +60,11 @@ module.exports = function (app) {
 		setTimeout(() => {
 			if (jancsta.bool == true) {
 				db.Franchise.update({
-					Active: req.body.Active
+					Active: req.body.Active,
+					Phone: req.body.Phone,
+					Address: req.body.Address,
+					Email: req.body.Email,
+					TaxRate: req.body.TaxRate
 				}, {
 						where: {
 							id: req.body.id

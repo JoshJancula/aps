@@ -11,22 +11,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false,
             unique: true,
         },
-        StreetAddress: {
-            type: DataTypes.STRING,
-            unique: false,
-            allowNull: true,
-        },
-        City: {
-            type: DataTypes.STRING,
-            unique: false,
-            allowNull: true,
-        },
-        State: {
-            type: DataTypes.STRING,
-            unique: false,
-            allowNull: true,
-        },
-        Zip: {
+        Address: {
             type: DataTypes.STRING,
             unique: false,
             allowNull: true,

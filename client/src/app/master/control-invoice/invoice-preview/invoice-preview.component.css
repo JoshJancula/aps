@@ -7,6 +7,7 @@
     padding-top: 1%;
     text-align: right;
     padding-right: 3%;
+    font-size: 12px;
 }
 
 .services {
@@ -45,6 +46,16 @@
     left: 5vw;
     top: 4vh;
     margin-bottom: 5vh;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+}
+
+.content {
+    overflow: auto;
 }
 
 @media (max-width: 767px) {

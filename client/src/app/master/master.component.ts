@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 import {MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 import { BottomPopupComponent } from '../bottom-popup/bottom-popup.component';
 import { ControlInvoiceComponent } from './control-invoice/control-invoice.component';
+import { FranchiseService } from '../services/franchise.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -36,7 +37,7 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlInvoice') controlInvoice: ControlInvoiceComponent;
 	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
 
-	constructor(private bottomSheetRef: MatBottomSheet, private authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
+	constructor(private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, private authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
 		this.messagingService.initSocket();
@@ -45,6 +46,7 @@ export class MasterComponent implements OnInit {
 			});
 			this.subscribeToUpdates();
 		setTimeout(() => this.sendConnectionMessage(), 500);
+		this.loadFranchiseInfo();
 	}
 
 	openPopup() {
@@ -56,6 +58,14 @@ export class MasterComponent implements OnInit {
 				case 'users': this.openUsers(); break;
 				case 'invoices': this.openInvoices(); break;
 				case 'appointments': this.openAppointments(); break;
+			}
+		});
+	}
+
+	loadFranchiseInfo() {
+		this.franchiseService.getFranchise(this.authService.currentUser.FranchiseId).subscribe((events) => {
+			if (events.type === HttpEventType.Response) {
+			this.authService._franchiseInfo = events.body;
 			}
 		});
 	}

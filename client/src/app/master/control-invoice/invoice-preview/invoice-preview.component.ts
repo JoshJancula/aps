@@ -1,7 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import * as moment from 'moment';
 import { EmailService } from '../../../services/email.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { InputEmailDialogComponent } from 'src/app/input-email-dialog/input-email-dialog.component';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -27,11 +31,11 @@ export class InvoicePreviewComponent implements OnInit {
 	grandTotal = 0;
 	calcTax = false;
 	printing = false;
+	clients: any;
 
-	constructor(private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+	constructor(private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { this.getClients(); }
 
 	ngOnInit() {
-		console.log('invoice passed to preview: ', this.data);
 		this.setServices(this.data.content);
 		setTimeout(() => this.performAction(), 500);
 
@@ -54,10 +58,37 @@ export class InvoicePreviewComponent implements OnInit {
 		return moment(date).format('MMMM Do YYYY');
 	}
 
+	getClients() {
+		this.utilService.processClients();
+		this.utilService.clients.subscribe(response => {
+			this.clients = response;
+		});
+	}
+
 	emailInvoice() {
-		const div: HTMLDivElement = document.querySelector('#hiddenContent');
-		this.emailService.sendInvoice(div.innerHTML).subscribe(response => { });
-		this.dialogRef.close();
+		let email = '';
+		this.clients.forEach(client => {
+			if (client.Name === this.data.content.Client) {
+				email = client.Email;
+			}
+		});
+		const dialogRef = this.dialog.open(InputEmailDialogComponent, {
+			width: '300px',
+			data: { clientEmail: email }
+		});
+		dialogRef.beforeClose().subscribe(result => {
+			const sendTo = dialogRef.componentInstance.sendTo;
+			// check for email
+			if (sendTo !== '' && sendTo !== undefined && sendTo !== null) {
+				console.log('should be sending email to: ', sendTo);
+				// const div: HTMLDivElement = document.querySelector('#hiddenContent');
+				// this.emailService.sendInvoice(div.innerHTML).subscribe(response => { });
+				this.dialogRef.close();
+			} else {
+				this.dialogRef.close();
+				return;
+			}
+		});
 	}
 
 	setServices(data) {
@@ -99,7 +130,7 @@ export class InvoicePreviewComponent implements OnInit {
 		});
 		this.total = newTotal;
 		if (this.calcTax === true) {
-			const calc = newTotal * 0.0725;
+			const calc = newTotal * this.authService._franchiseInfo.TaxRate;
 			const tax = Math.ceil(calc * 100) / 100;
 			this.tax = tax;
 			this.grandTotal = tax + newTotal;

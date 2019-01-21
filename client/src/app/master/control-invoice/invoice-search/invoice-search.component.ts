@@ -33,10 +33,12 @@ export class InvoiceSearchComponent implements OnInit {
 		employee: '',
 		invoiceNumber: '',
 		franchise: this.authService.currentUser.FranchiseId,
-		client: ''
+		client: '',
+		payment: '',
 	};
 	controlArray: any;
-	searchOptions = ['Invoice number', 'Employee', 'Client'];
+	payments = ['Paid', 'Unpaid'];
+	searchOptions = ['Invoice number', 'Employee', 'Client', 'Payment'];
 	display = '';
 	_printIframe;
 
@@ -50,24 +52,14 @@ export class InvoiceSearchComponent implements OnInit {
 	}
 
 	openDrawer() {
-		console.log('slide drawer');
+		if (window.outerWidth < 767) {
 		if (this.slideDrawer === false) {
 			this.slideDrawer = true;
 		} else {
 			this.slideDrawer = false;
 		}
 	}
-
-	// print(invoice) {
-	// 	this.invoicePreview.data = invoice;
-	// 	const printContents = document.querySelector('#invoicePreview').innerHTML;
-	// 	let w = window.open();
-	// 	w.document.write(printContents);
-	// 	w.document.write('<scr' + 'ipt type="text/javascript">' + 'window.onload = function() { window.print(); window.close(); };' + '</sc' + 'ript>');
-	// 	w.document.close(); // necessary for IE >= 10
-	// 	w.focus(); // necessary for IE >= 10
-	// 	return true;
-	// }
+	}
 
 	getClients() { // need this so I can filter on clients
 		this.utilService.processClients();
@@ -129,6 +121,12 @@ export class InvoiceSearchComponent implements OnInit {
 				if (invoice.Employee.toLowerCase().indexOf(this.filter.employee.toLowerCase()) > -1) { returnThis.push(invoice); }
 			} else if (this.filter.client !== '') {
 				if (invoice.Client.toLowerCase().indexOf(this.filter.client.toLowerCase()) > -1) { returnThis.push(invoice); }
+			} else if (this.filter.payment !== '') {
+				if (this.filter.payment === 'Paid') {
+					if (invoice.Paid === true) { returnThis.push(invoice); }
+				} else {
+					if (invoice.Paid === false) { returnThis.push(invoice); }
+				}
 			} else if (moment(newTemp).isSame(moment(this.filter.dateFrom).format('MM/DD/YYYY'))) {
 				if (moment(invoice.Date).format('MM/DD/YYYY') === newTemp) { returnThis.push(invoice); }
 			} else { returnThis.push(invoice); }
@@ -143,7 +141,8 @@ export class InvoiceSearchComponent implements OnInit {
 			employee: '',
 			invoiceNumber: '',
 			franchise: this.authService.currentUser.FranchiseId,
-			client: ''
+			client: '',
+			payment: ''
 		};
 		this.searchBy = '';
 		this.loadInvoices();

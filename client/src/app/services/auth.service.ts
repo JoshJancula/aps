@@ -9,7 +9,7 @@ export class AuthService {
 
 	// tslint:disable-next-line:max-line-length
 	private _currentUser = { Username: null, Name: null, Role: null, FranchiseId: null, id: null, Phone: null, Email: null };
-
+	public _franchiseInfo: any;
 
 	constructor(private http: Http) { }
 

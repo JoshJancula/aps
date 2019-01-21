@@ -7,18 +7,7 @@
         <input matInput placeholder="Name" [(ngModel)]="Client.Name" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Street address" [(ngModel)]="Client.StreetAddress" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="City" [(ngModel)]="Client.City" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select placeholder="State" [(ngModel)]="Client.State">
-          <mat-option *ngFor="let state of states()" [value]="state">{{ state }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="ZipCode" maxlength="5" [(ngModel)]="Client.Zip" />
+        <input matInput placeholder="Address" [(ngModel)]="Client.Address" />
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Description" [(ngModel)]="Client.Description" />

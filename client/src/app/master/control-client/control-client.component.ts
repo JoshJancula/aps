@@ -17,10 +17,7 @@ export class ControlClientComponent implements OnInit {
 
 	Client: any = {
 		Name: '',
-		StreetAddress: '',
-		City: '',
-		State: '',
-		Zip: '',
+		Address: '',
 		Phone: '',
 		Email: '',
 		ContactPerson: '',
@@ -109,10 +106,7 @@ export class ControlClientComponent implements OnInit {
 	clearForm() {
 		this.Client = {
 			Name: '',
-			StreetAddress: '',
-			City: '',
-			State: '',
-			Zip: '',
+			Address: '',
 			Phone: '',
 			Email: '',
 			ContactPerson: '',

@@ -199,7 +199,7 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	applyTax() {
-		const calc = this.Invoice.Total * 0.0725;
+		const calc = this.Invoice.Total * this.authService._franchiseInfo.TaxRate;
 		const tax = Math.ceil(calc * 100) / 100;
 		this.Invoice.Total += tax;
 	}

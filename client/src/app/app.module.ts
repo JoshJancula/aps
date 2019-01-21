@@ -30,6 +30,8 @@ import { InvoiceFormComponent } from './master/control-invoice/invoice-form/invo
 import { InvoicePreviewComponent } from './master/control-invoice/invoice-preview/invoice-preview.component';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { InputEmailDialogComponent } from './input-email-dialog/input-email-dialog.component';
 
 @NgModule({
 	entryComponents: [
@@ -37,7 +39,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 		MasterComponent,
 		BottomPopupComponent,
 		InvoiceSearchComponent,
-		InvoicePreviewComponent
+		InvoicePreviewComponent,
+		ErrorDialogComponent,
+		InputEmailDialogComponent
 	],
 	declarations: [
 		AppComponent,
@@ -54,6 +58,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 		InvoiceSearchComponent,
 		InvoiceFormComponent,
 		InvoicePreviewComponent,
+		ErrorDialogComponent,
+		InputEmailDialogComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -123,7 +129,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 		RouterModule.forRoot([
 			{ path: '', component: LoginComponent },
 			{ path: 'master', component: MasterComponent },
-		], {useHash: true})
+		], { useHash: true })
 	],
 	providers: [
 		BluetoothSerial,

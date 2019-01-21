@@ -18,6 +18,10 @@ export class ControlFranchiseComponent implements OnInit {
 
 	Franchise: any = {
 		Name: '',
+		Phone: '',
+		Email: '',
+		Address: '',
+		TaxRate: '',
 		Active: true
 	};
 	franchises: any;
@@ -114,6 +118,10 @@ export class ControlFranchiseComponent implements OnInit {
 	clearForm() {
 		this.Franchise = {
 			Name: '',
+			Phone: '',
+			Email: '',
+			Address: '',
+			TaxRate: '',
 			Active: true
 		};
 		this.editing = false;
