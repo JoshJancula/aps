@@ -15,6 +15,7 @@
         "cordova-plugin-actionsheet": "^2.3.3",
         "cordova-plugin-bluetooth-serial": "^0.4.7",
         "cordova-plugin-dialogs": "^2.0.1",
+        "cordova-plugin-ionic-keyboard": "^2.1.3",
         "cordova-plugin-whitelist": "^1.3.3",
         "phonegap-plugin-barcodescanner": "^8.0.1",
         "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2"
@@ -29,7 +30,8 @@
             "uk.co.workingedge.phonegap.plugin.launchnavigator": {
                 "OKHTTP_VERSION": "3.+",
                 "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
-            }
+            },
+            "cordova-plugin-ionic-keyboard": {}
         },
         "platforms": [
             "android",

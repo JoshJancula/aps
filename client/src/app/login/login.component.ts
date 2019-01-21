@@ -29,8 +29,16 @@ export class LoginComponent implements OnInit {
 		}
 	}
 
+	checkCordova() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+			setTimeout(() => this.login(), 500);
+		} else {
+			this.login();
+		}
+	}
+
 	login() {
-		(<any>window).Keyboard.hide();
 		this.authService.loginUser(this.username, this.password).subscribe(res => {
 			console.log('login response: ', res);
 			if (res.status === 200) {

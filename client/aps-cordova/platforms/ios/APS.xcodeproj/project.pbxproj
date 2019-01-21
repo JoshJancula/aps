@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		0AFF6E1491C744C5B3451E3A /* CDVBarcodeScanner.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6119ADDFBA5F44A1BA43A3F9 /* CDVBarcodeScanner.bundle */; };
@@ -31,6 +30,7 @@
 		E4AE0AB86B4F4537A9423EB0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B7672053E54306A6F2817C /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E86DDA1668E44626B8F849DA /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = B525123E348840EBA10E8E5E /* BLE.m */; };
 		FB6133B42BBF4538BA98756B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC7401A110C0443096F3E308 /* AVFoundation.framework */; };
+		4CAA879D4930436187A49101 /* CDVIonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8070ED9B3D4906BADB29FB /* CDVIonicKeyboard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +103,8 @@
 		FBA92C35BC22405DB2AC987C /* MEGBluetoothSerial.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = MEGBluetoothSerial.m; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/MEGBluetoothSerial.m"; sourceTree = "<group>"; };
 		FBAFC2187D9D4EA1B6985E29 /* BLEDefines.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = BLEDefines.h; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/BLEDefines.h"; sourceTree = "<group>"; };
 		FCB853B917BB40A2BF7AE923 /* BLE.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = BLE.h; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/BLE.h"; sourceTree = "<group>"; };
+		BB8070ED9B3D4906BADB29FB /* CDVIonicKeyboard.m */ = {isa = PBXFileReference; name = "CDVIonicKeyboard.m"; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		432CDB5C9B324A88BD913FF0 /* CDVIonicKeyboard.h */ = {isa = PBXFileReference; name = "CDVIonicKeyboard.h"; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +240,8 @@
 				EA6511DBD74D41B7A42D5A66 /* LN_Reachability.m */,
 				128E022C567440DAB054C99C /* LaunchNavigator.h */,
 				49E1AA87B43E436A81478A03 /* LN_Reachability.h */,
+				BB8070ED9B3D4906BADB29FB /* CDVIonicKeyboard.m */,
+				432CDB5C9B324A88BD913FF0 /* CDVIonicKeyboard.h */,
 			);
 			name = Plugins;
 			path = APS/Plugins;
@@ -377,6 +381,7 @@
 				8CBAF14BC7A54E438FE26969 /* CDVBarcodeScanner.mm in Sources */,
 				3B0F38F8B79F4AE6840623F6 /* LaunchNavigator.m in Sources */,
 				65DB79816D91437EB5BF465F /* LN_Reachability.m in Sources */,
+				4CAA879D4930436187A49101 /* CDVIonicKeyboard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

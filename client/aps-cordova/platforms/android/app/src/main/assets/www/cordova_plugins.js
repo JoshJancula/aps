@@ -63,6 +63,14 @@ module.exports = [
     "merges": [
       "launchnavigator"
     ]
+  },
+  {
+    "id": "cordova-plugin-ionic-keyboard.keyboard",
+    "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
+    "pluginId": "cordova-plugin-ionic-keyboard",
+    "clobbers": [
+      "window.Keyboard"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -73,7 +81,8 @@ module.exports.metadata =
   "cordova-plugin-bluetooth-serial": "0.4.7",
   "cordova-plugin-actionsheet": "2.3.3",
   "cordova-plugin-dialogs": "2.0.1",
-  "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2"
+  "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2",
+  "cordova-plugin-ionic-keyboard": "2.1.3"
 };
 // BOTTOM OF METADATA
 });
