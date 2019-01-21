@@ -5,6 +5,7 @@ import { HttpEventType } from '@angular/common/http';
 import { UtilService } from '../../services/util.service';
 import { PhonePipe } from 'src/app/phone.pipe';
 import { MessageService } from '../../services/message.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ControlClientComponent implements OnInit {
 		Email: '',
 		ContactPerson: '',
 		Description: '',
-		FranchiseId: ''
+		FranchiseId: this.authService.currentUser.FranchiseId
 	};
 	clients: any;
 	franchises: any;
@@ -32,8 +33,7 @@ export class ControlClientComponent implements OnInit {
 	searchClients = true;
 
 	// tslint:disable-next-line:max-line-length
-	constructor(private messagingService: MessageService, private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
-		this.loadFranchises();
+	constructor(private authService: AuthService, private messagingService: MessageService, private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
 		this.getClients();
 	 }
 
@@ -61,14 +61,6 @@ export class ControlClientComponent implements OnInit {
 			this.clients = response;
 		});
 	}
-
-	loadFranchises() {
-		this.utilService.processFranchises();
-		this.utilService.franchises.subscribe(response => {
-			this.franchises = response;
-		});
-	}
-
 
 	submitClient() {
 		if (this.editing === false) {
@@ -111,7 +103,7 @@ export class ControlClientComponent implements OnInit {
 			Email: '',
 			ContactPerson: '',
 			Description: '',
-			FranchiseId: ''
+			FranchiseId: this.authService.currentUser.FranchiseId
 		};
 		this.editing = false;
 		this.selectedId = '';

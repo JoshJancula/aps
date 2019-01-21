@@ -13,7 +13,7 @@
   </span>
 </mat-toolbar>
 <div class='row mainRow'>
-  <div class='col-lg-2 col-md-2 desktopView'>
+  <div class='col-xl-2 col-lg-2 col-md-2 desktopView'>
     <div class='options' [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
     <div class='options' [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
     <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>
@@ -22,7 +22,7 @@
     <!-- <div class='options' (click)="openPopup();">Open popup</div> -->
   </div>
 
-  <div class='col-lg-10 col-md-10 col-sm-12 contentRow'>
+  <div class='col-xl-10 col-lg-10 col-md-10 col-sm-12 contentRow'>
     <app-control-user #controlUser class='controlUser' [ngClass]="{'show': userMode === true}"></app-control-user>
     <app-control-franchise #controlFranchise class='controlFranchise' [ngClass]="{'show': franchiseMode === true}"></app-control-franchise>
     <app-control-client #controlClient class='controlClient' [ngClass]="{'show': clientMode === true}"></app-control-client>

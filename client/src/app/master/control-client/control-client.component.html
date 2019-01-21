@@ -21,11 +21,6 @@
       <mat-form-field>
         <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="Client.Phone" (input)="formatPhone();" />
       </mat-form-field>
-      <mat-form-field>
-        <mat-select placeholder="Franchise" [(ngModel)]="Client.FranchiseId">
-          <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
-        </mat-select>
-      </mat-form-field>
       <br>
       <button class='submit' (click)="submitClient();" mat-button>Save client</button>
       <button (click)="clearForm();" mat-button>Clear form</button>
@@ -48,12 +43,12 @@
 
   <button class='add' *ngIf='searchClients === true' mat-button (click)="searchClients = false; addClient = true;">
     <mat-icon style='color:white'>add</mat-icon>
-    Add Client
+    New Client
   </button>
   <button class='searchButton' *ngIf='searchClients === false' (click)="addClient = false; searchClients = true;"
     mat-button>
     <mat-icon>search</mat-icon>
-    Search Clients
+    View Clients
   </button>
 
 </div>

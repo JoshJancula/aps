@@ -162,6 +162,10 @@ export class ControlFranchiseComponent implements OnInit {
 	}
 
 	formatPhone() {
+		this.Franchise.Phone = this.phonePipe.transform(this.Franchise.Phone);
+	}
+
+	formatUserPhone() {
 		this.User.Phone = this.phonePipe.transform(this.User.Phone);
 	}
 

@@ -20,7 +20,7 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 98%;
+    width: 90%;
     margin-left: 2%;
     margin-top: 2%;
     margin-bottom: 10%;
@@ -30,7 +30,7 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 98%;
+    width: 90%;
     margin-left: 2%;
     margin-top: 1%;
     padding-left: 5%;
@@ -40,21 +40,20 @@
     margin-top: 10%;
 }
 
-.form {
+.form, .search {
     width: 87vw;
     overflow-x: hidden;
 }
 
-@media (min-width: 1023px) and (max-width: 1024px) {
-    .form {
-        width: 86vw;
-        overflow-x: hidden;
-    }
-
+@media (max-width: 1200px) { 
     .appointmentCard, .formCard {
-        width: 97%;
+        background: #D7D6D6;
+        opacity: .9;
+        border-radius: 10px !important;
+        width: 92%;
+        margin-left: 2%;
     }
-}
+    }
 
 @media (max-width: 767px) { 
 
@@ -62,7 +61,7 @@
         width: 96%;
     }
 
-    .form {
+    .form, .search {
         width: 100vw;
         overflow-x: hidden;
     }

@@ -18,9 +18,8 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 92%;
+    width: 90%;
     margin-left: 2%;
-    /* margin-top: 1%; */
     margin-bottom: 1%;
 }
 
@@ -36,6 +35,17 @@
     width: 87vw;
     overflow-x: hidden;
 }
+
+@media (max-width: 1200px) { 
+    .mat-card {
+        background: #D7D6D6;
+        opacity: .9;
+        border-radius: 10px !important;
+        width: 92%;
+        margin-left: 2%;
+        margin-bottom: 1%;
+    }
+    }
 
 @media (max-width: 767px) { 
     .mat-card {

@@ -67,8 +67,8 @@ export class UtilService {
 	}
 
 	getUsers() {
-		const url = `https://aps-josh.herokuapp.com/api/users`;
-		const localUrl = `http://localhost:8080/api/users`;
+		const url = `https://aps-josh.herokuapp.com/api/users/${this.authService.currentUser.FranchiseId}`;
+		const localUrl = `http://localhost:8080/api/users/${this.authService.currentUser.FranchiseId}`;
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -95,8 +95,8 @@ export class UtilService {
 	}
 
 	getClients() {
-		const url = `https://aps-josh.herokuapp.com/api/clients`;
-		const localUrl = `http://localhost:8080/api/clients`;
+		const url = `https://aps-josh.herokuapp.com/api/clients/${this.authService.currentUser.FranchiseId}`;
+		const localUrl = `http://localhost:8080/api/clients/${this.authService.currentUser.FranchiseId}`;
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({

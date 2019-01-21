@@ -1,7 +1,7 @@
 <!-- <div class='col-lg-12 col-md-12 col-sm-12'> -->
   <div class='row' class='userForm' [ngClass]="{'show': addUser === true}">
     <mat-card>
-      <div class="card-heading">Create User</div>
+      <div class="card-heading">Add new team member</div>
       <mat-form-field>
         <input matInput placeholder="Username" [readonly]="editing === true" [(ngModel)]="User.Username" />
       </mat-form-field>
@@ -26,7 +26,7 @@
       <mat-form-field>
         <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="User.Phone" (input)="formatPhone();" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="authService.currentUser.Role === 'Super'">
         <mat-select placeholder="Franchise" [(ngModel)]="User.FranchiseId">
           <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
         </mat-select>
@@ -54,11 +54,11 @@
   <!-- end data area and display options below -->
   <button class='add' mat-button *ngIf='searchUsers === true' (click)="searchUsers = false; addUser = true; clearForm();">
     <mat-icon style='color:white'>add</mat-icon>
-    Add User
+    Add new team member
   </button>
   <button class='searchButton' *ngIf='searchUsers === false' (click)="addUser = false; searchUsers = true;" mat-button>
-    <mat-icon>search</mat-icon>
-    Search Users
+    <mat-icon>group</mat-icon>
+    View staff
   </button>
 
 <!-- </div> -->

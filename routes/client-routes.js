@@ -25,9 +25,9 @@ module.exports = function (app) {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool) {
-				db.Client.findOne({
+				db.Client.findAll({
 					where: {
-						id: req.params.id
+						FranchiseId: req.params.id
 					},
 				}).then(function (x) {
 					res.json(x);

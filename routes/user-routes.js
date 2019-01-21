@@ -36,28 +36,33 @@ module.exports = function (app) {
 		}, 500);
 	});
 
-	// GET route for retrieving a single user
+	// GET route for retrieving users by franchise
 	app.get("/api/users/:id", function (req, res) {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
-				db.User.findOne({
+				db.User.findAll({
 					where: {
-						id: req.params.id
+						FranchiseId: req.params.id
 					},
-				}).then(function (y) {
-					const user = {
-						Active: y.Active,
-						Username: y.Username,
-						FirstName: y.FirstName,
-						LastName: y.LastName,
-						FranchiseId: y.FranchiseId,
-						Phone: y.Phone,
-						Email: y.Email,
-						Role: y.Role,
-						id: y.id
-					}
-					res.json(user);
+				}).then(function (x) {
+					let z = [];
+					x.forEach(y => {
+						if (y.Active == true) {
+							const user = {
+								Username: y.Username,
+								FirstName: y.FirstName,
+								LastName: y.LastName,
+								FranchiseId: y.FranchiseId,
+								Phone: y.Phone,
+								Email: y.Email,
+								Role: y.Role,
+								id: y.id
+							}
+							z.push(user);
+						}
+					});
+					res.json(z);
 				});
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });

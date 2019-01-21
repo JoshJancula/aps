@@ -50,8 +50,9 @@
 
 .buttons {
     position: absolute;
-    bottom: 50px;
-    width: 100%;
+    bottom: 46px;
+    width: 79%;
+    background: white;
 }
 
 .content {

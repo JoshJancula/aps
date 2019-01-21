@@ -38,12 +38,14 @@ export class ControlUserComponent implements OnInit {
 	roles = ['Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
 
 	// tslint:disable-next-line:max-line-length
-	constructor(private authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
+	constructor(public authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
 		this.getUsers();
-		this.loadFranchises();
 	}
 
 	ngOnInit() {
+		if (this.authService.currentUser.Role === 'Super') {
+			this.loadFranchises();
+		}
 	}
 
 	getUsers() {

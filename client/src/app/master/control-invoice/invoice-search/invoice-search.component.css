@@ -24,8 +24,8 @@
 }
 
 .invoiceCard {
-    width: 93%;
-    margin-left: 4%;
+    width: 91%;
+    margin-left: 3%;
 }
 
 .invoiceCard:last-child {
@@ -98,15 +98,15 @@
 
     .invoiceCard {
         width: 98%;
-        margin-left: 3%;
+        margin-left: 1%;
     }
 
 }
 
 @media (max-width: 500px) { 
     .invoiceCard {
-        width: 96%;
-         margin-left: 5.3%;
+        width: 97%;
+         margin-left: 1%;
     }
 
     .mat-card:first-child {

@@ -37,7 +37,7 @@
 
 .invoiceCard {
     margin-left: 2%;
-    width: 98%;
+    width: 94%;
     margin-bottom: 0%;
     border-radius: 15px;
 }
@@ -51,10 +51,21 @@
     overflow-x: hidden !important;
 }
 
+@media (max-width: 1200px) { 
+    .invoiceCard {
+        background: #D7D6D6;
+        opacity: .9;
+        border-radius: 10px !important;
+        width: 98%;
+        margin-left: 1%;
+        margin-bottom: 1%;
+    }
+ }
+
 @media (max-width: 767px) { 
     .mat-card, .invoiceCard {
     width: 100%;
-    margin-left: 1%;
+    margin-left: -1%;
     }
 
     .form {
@@ -74,7 +85,7 @@
     }
 
     .mat-card, .invoiceCard {
-    width: 102%;
-    margin-left: 2%;
+        width: 102%;
+        margin-left: -2%;
     }
 }

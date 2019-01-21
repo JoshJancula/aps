@@ -40,6 +40,7 @@
     cursor: pointer;
     padding: 2%;
     color: red;
+    font-size: 20px;
 }
 
 .options:hover {
@@ -71,7 +72,7 @@
 }
 
 .desktopView {
-    margin-top: 6%;
+    margin-top: 7%;
 }
 
 button, button:focus { outline: none; }

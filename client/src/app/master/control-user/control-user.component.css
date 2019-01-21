@@ -3,7 +3,7 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 92%;
+    width: 90%;
     margin-left: 2%;
     margin-bottom: 1%;
 }
@@ -34,6 +34,17 @@
 .userForm.show, .userRow.show {
     display: block;
     width: 87vw;
+}
+
+@media (max-width: 1200px) { 
+.mat-card {
+    background: #D7D6D6;
+    opacity: .9;
+    border-radius: 10px !important;
+    width: 92%;
+    margin-left: 2%;
+    margin-bottom: 1%;
+}
 }
 
 @media (max-width: 767px) { 
