@@ -35,7 +35,7 @@ export class ControlUserComponent implements OnInit {
 	franchises: any;
 	editing = false;
 	selectedId = '';
-	roles = ['Super', 'Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
+	roles = ['Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
 
 	// tslint:disable-next-line:max-line-length
 	constructor(private authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {

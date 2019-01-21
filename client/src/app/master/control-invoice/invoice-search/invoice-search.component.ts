@@ -7,6 +7,7 @@ import { HttpEventType } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { InvoicePreviewComponent } from '../invoice-preview/invoice-preview.component';
 import { Router } from '@angular/router';
+import * as jsPDF from 'jspdf';
 
 @Component({
 	// tslint:disable-next-line:component-selector

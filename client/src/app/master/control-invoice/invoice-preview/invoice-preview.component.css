@@ -55,7 +55,8 @@
 }
 
 .content {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 @media (max-width: 767px) {
@@ -78,7 +79,8 @@
 
     .client {
         padding-left: 5%;
-        margin-top: -6%
+        margin-top: -6%;
+        width: 100%;
     }
 
     .vehicles {

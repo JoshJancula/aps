@@ -2,10 +2,9 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 96%;
-    margin-left: 4%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    width: 92%;
+    margin-left: 2%;
+    margin-bottom: 1%;
 }
 
 .mat-card:last-child {
@@ -13,7 +12,7 @@
 }
 
 .mat-card:first-child {
-    margin-top: 8%;
+    margin-top: 10%;
 }
 
 .mat-slide-toggle {
@@ -26,7 +25,6 @@
 
 .submit {
     margin-top: 5%;
-    /* margin-left: 55%; */
 }
 
 .toggle {
@@ -39,7 +37,8 @@
 
 .form.show, .results.show {
     display: block;
-    width: 80vw;
+    width: 87vw;
+    overflow-x: hidden !important;
 }
 
 .franchiseRow {
@@ -47,18 +46,40 @@
     margin-top: 2%;
 }
 
+/* @media (min-width: 1023) and (max-width: 1024) {
+    .form.show, .results.show {
+        display: block;
+        width: 86vw;
+        overflow-x: hidden !important;
+    }
+
+    .mat-card {
+        background: #D7D6D6;
+        opacity: .9;
+        border-radius: 10px !important;
+        width: 94%;
+        margin-left: 2%;
+        margin-bottom: 1%;
+    }
+} */
+
 @media (max-width: 767px) { 
     .mat-card {
-    width: 100%;
-    margin-left: 4%;
+    width: 96%;
     }
 
     .form.show, .results.show {
         display: block;
-        width: 92vw;
+        width: 100vw;
     }
 
     .mat-card:first-child {
-        margin-top: 18%;
+        margin-top: 10%;
     }
 }
+
+@media (max-width: 500px) { 
+    .mat-card:first-child {
+        margin-top: 17%;
+    }
+    }

@@ -1,20 +1,18 @@
- .content {
-    display: inline-block;
-}
-
 .mat-slide-toggle {
     margin-left: 20%;
 }
 
 .mainRow {
-    width: 100vw;
     height: 100vh;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden !important;
 }
 
 .contentRow {
     min-height: 100vh;
-    overflow: auto;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden !important;
 }
 
 .mat-form-field {
@@ -27,6 +25,7 @@
 
 .controlInvoice.show, .calendar.show, .controlAppointment.show, .controlUser.show, .controlFranchise.show, .controlClient.show {
     display: block;
+    overflow-x: hidden !important;
 }
 
 .submit {
@@ -54,7 +53,7 @@
 }
 
 .screenTitle {
-    margin-left: 15vw;
+    margin-left: 17vw;
 }
 
 .homeIcon {

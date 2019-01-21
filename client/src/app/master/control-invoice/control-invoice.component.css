@@ -1,47 +1,21 @@
-.mat-slide-toggle {
-    margin-left: 20%;
-}
-
-.submit {
-    margin-top: 5%;
-}
-
-.toggle {
-    display: inline-block;
-}
-
-.addVehicle {
-    float: right;
-}
-
-.form .mat-icon {
-    margin-left: 2%;
-    height: 20px;
-    width: 20px;
-    cursor: pointer;
-}
-
-.vehicles {
-    margin: 2%;
-}
-
-.optionBoxes {
-    margin: 2%;
-    padding: 2%;
-}
-
-.mat-chip {
-    background: #00FFFF;
-}
-
  .invoiceForm, .invoiceSearch {
     display: none;
 }
 
-.invoiceForm.show, .invoiceSearch.show {
+.invoiceForm.show {
     height: 100vh;
     display: block;
-    overflow: auto;
+    width: 102vw;
+}
+
+ .invoiceSearch.show {
+    height: 100vh;
+    display: block;
+    width: 100vw;
+}
+
+.invoiceArea {
+    width: 100vw;
 }
 
 

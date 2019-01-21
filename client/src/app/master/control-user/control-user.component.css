@@ -3,14 +3,13 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 96%;
+    width: 92%;
     margin-left: 2%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-bottom: 1%;
 }
 
 .mat-card:first-child {
-    margin-top: 8%;
+    margin-top: 10%;
 }
 
 .mat-card:last-child {
@@ -34,24 +33,28 @@
 
 .userForm.show, .userRow.show {
     display: block;
-    width: 80vw;
+    width: 87vw;
 }
 
 @media (max-width: 767px) { 
+
     .mat-card {
-    width: 100%;
-    margin-left: unset;
-    margin-bottom: 2%;
+    width: 96%;
+    }
+
+    .mat-card:first-child {
+        margin-top: 10%;
     }
 
     .userForm.show, .userRow.show {
         display: block;
-        width: 92vw;
+        width: 100vw;
     }
+    
+}
 
-    .mat-card:first-child {
-        margin-top: 18%;
-    }
-    
-    
+@media (max-width: 500px) { 
+.mat-card:first-child {
+    margin-top: 17%;
+}
 }

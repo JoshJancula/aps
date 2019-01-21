@@ -6,6 +6,7 @@ import { EmailService } from '../../../services/email.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { InputEmailDialogComponent } from 'src/app/input-email-dialog/input-email-dialog.component';
 import { UtilService } from '../../../services/util.service';
+import * as jsPDF from 'jspdf';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -50,6 +51,10 @@ export class InvoicePreviewComponent implements OnInit {
 	}
 
 	print() {
+		// const pdf = new jsPDF();
+		// const div: HTMLDivElement = document.querySelector('#previewContent');
+		// setTimeout(() => pdf.fromHTML(div.innerHTML), 2000);
+  		// setTimeout(() => pdf.save('test.pdf'), 3000);
 		this.printing = true;
 		setTimeout(() => { window.print(); this.dialogRef.close(); this.printing = false; }, 100);
 	}

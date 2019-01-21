@@ -20,7 +20,7 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 100%;
+    width: 98%;
     margin-left: 2%;
     margin-top: 2%;
     margin-bottom: 10%;
@@ -30,33 +30,50 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 100%;
+    width: 98%;
     margin-left: 2%;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 1%;
+    padding-left: 5%;
 }
 
 .mat-card:first-child {
-    margin-top: 8%;
+    margin-top: 10%;
+}
+
+.form {
+    width: 87vw;
+    overflow-x: hidden;
+}
+
+@media (min-width: 1023px) and (max-width: 1024px) {
+    .form {
+        width: 86vw;
+        overflow-x: hidden;
+    }
+
+    .appointmentCard, .formCard {
+        width: 97%;
+    }
 }
 
 @media (max-width: 767px) { 
 
-    .appointmentCard {
+    .appointmentCard, .formCard {
         width: 96%;
-        margin-left: unset;
-    }
-
-    .formCard {
-        margin-left: 4%;
     }
 
     .form {
-        width: 96vw;
+        width: 100vw;
         overflow-x: hidden;
     }
 
     .mat-card:first-child {
-        margin-top: 17%;
+        margin-top: 10%;
     }
 }
+
+@media (max-width: 500px) { 
+    .mat-card:first-child {
+        margin-top: 17%;
+    }
+    }

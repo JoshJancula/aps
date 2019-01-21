@@ -17,6 +17,7 @@
         "cordova-plugin-dialogs": "^2.0.1",
         "cordova-plugin-ionic-keyboard": "^2.1.3",
         "cordova-plugin-whitelist": "^1.3.3",
+        "jspdf": "^1.5.3",
         "phonegap-plugin-barcodescanner": "^8.0.1",
         "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2"
     },

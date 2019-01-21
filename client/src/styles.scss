@@ -37,7 +37,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    position: fixed;
+    position: absolute;
     top: 0px;
     bottom: 0px;
     left: 0px;
@@ -52,14 +52,14 @@ body {
 
 .toolbarLogo {
     height: 64px;
-    width: 14vw;
+    width: 17vw;
     position: absolute;
     left: 0;
 }
 
 body, html {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     height: 100vh;  
     margin: none;
     background-color: black;
@@ -67,6 +67,7 @@ body, html {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    padding: none;
     overflow: hidden;
 }
 
@@ -174,7 +175,7 @@ body, html {
     }
 
     body, html {
-        overflow: auto !important;
+        overflow-y: auto !important;
     }
 
     .calendar .mat-form-field {

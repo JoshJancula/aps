@@ -18,14 +18,14 @@
     background: #D7D6D6;
     opacity: .9;
     border-radius: 10px !important;
-    width: 100%;
-    margin-left: 3.5%;
+    width: 92%;
+    margin-left: 2%;
     /* margin-top: 1%; */
-    margin-bottom: 2%;
+    margin-bottom: 1%;
 }
 
 .mat-card:first-child {
-    margin-top: 8%;
+    margin-top: 10%;
 }
 
 .mat-card:last-child {
@@ -33,22 +33,28 @@
 }
 
 .form, .search {
-    width: 80vw;
+    width: 87vw;
     overflow-x: hidden;
 }
 
 @media (max-width: 767px) { 
     .mat-card {
-    width: 100%;
-    margin-left: 4%;
+    width: 96%;
+    margin-left: 2%;
     }
 
     .form, .search {
-        width: 96vw;
+        width: 100vw;
         overflow-x: hidden;
     }
 
     .mat-card:first-child {
-        margin-top: 17%;
+        margin-top: 10%;
     }
 }
+
+@media (max-width: 500px) { 
+    .mat-card:first-child {
+        margin-top: 17%;
+    }
+    }

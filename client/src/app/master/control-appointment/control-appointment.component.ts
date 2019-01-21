@@ -101,7 +101,7 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	updateLocation(client) {
-		this.Appointment.Location = client.StreetAddress + ', ' + client.City + ', ' + client.State + ' ' + client.Zip;
+		this.Appointment.Location = client.Address;
 	}
 
 	getClients() {

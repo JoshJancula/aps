@@ -1,8 +1,8 @@
 .mat-card {
-    width: 94%;
+    width: 96%;
     margin-top: 2%;
     margin-bottom: 2%;
-    margin-left: 2.5%;
+    margin-left: 2%;
     border-radius: 15px;
 }
 
@@ -24,8 +24,8 @@
 }
 
 .invoiceCard {
-    width: 96%;
-    margin-left: 2%;
+    width: 93%;
+    margin-left: 4%;
 }
 
 .invoiceCard:last-child {
@@ -69,7 +69,7 @@
     }
 
     .ivoiceColumn, .searchRow {
-        width: 104vw !important;
+        width: 108vw !important;
     }
 
      .sideColumn {
@@ -90,6 +90,23 @@
 
     .searchRow, .ivoiceColumn {
         width: 96vw;
+    }
+
+    .mat-card:first-child {
+        margin-top: 10%;
+    }
+
+    .invoiceCard {
+        width: 98%;
+        margin-left: 3%;
+    }
+
+}
+
+@media (max-width: 500px) { 
+    .invoiceCard {
+        width: 96%;
+         margin-left: 5.3%;
     }
 
     .mat-card:first-child {

@@ -2,7 +2,6 @@
   <div class="overlay" *ngIf="slideDrawer === true" (click)="openDrawer();"></div>
 
   <div class='ivoiceColumn col-lg-10 col-md-10 col-sm-12'>
-    <!-- <div *ngIf="invoices.length < 2" style="height: 30vh;"></div> -->
     <mat-card *ngFor="let invoice of invoices" class='invoiceCard'>
       <p>
         Invoice#: {{invoice.id}}<br>

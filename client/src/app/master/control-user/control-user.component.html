@@ -1,4 +1,4 @@
-<div class='col-lg-12 col-md-12 col-sm-12'>
+<!-- <div class='col-lg-12 col-md-12 col-sm-12'> -->
   <div class='row' class='userForm' [ngClass]="{'show': addUser === true}">
     <mat-card>
       <div class="card-heading">Create User</div>
@@ -37,7 +37,7 @@
       <br />
       <button class='submit' (click)="submitUser();" mat-button>Save user</button>
       <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
-      <button *ngIf='editing === true' [disabled]="User.Username === 'josh' " (click)="deleteUser(User.id);" mat-button>Delete</button>
+      <button *ngIf='editing === true' [disabled]="User.Role !== 'Super' " (click)="deleteUser(User.id);" mat-button>Delete</button>
     </mat-card>
   </div>
 
@@ -61,4 +61,4 @@
     Search Users
   </button>
 
-</div>
+<!-- </div> -->

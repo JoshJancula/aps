@@ -64,11 +64,10 @@
     </mat-card>
   </div>
 
-  <div class='col-lg-12 col-md-12 col-sm-12 form'>
-    <div class='row' *ngIf="searchAppointments === true">
+<div class='row' *ngIf="searchAppointments === true">
+  <!-- <div class='col-lg-12 col-md-12 col-sm-12 '> -->
       <mat-card class='appointmentCard' *ngFor="let appointment of appointments">
         <div class='row'>
-
           <p>
             Client: {{ appointment.Client }}<br>
             Date: {{ formatDate(appointment.Date) }}<br>
@@ -84,8 +83,8 @@
       <mat-card class='appointmentCard' *ngIf='appointments.length < 1'>
         No appointments scheduled for {{ formatDate(searchDate) }}.
       </mat-card>
-    </div>
-  </div>
+  <!-- </div> -->
+</div>
 
   <br>
   <button class='add' *ngIf='searchAppointments === true' mat-button (click)="searchAppointments = false; addAppointment = true;">
