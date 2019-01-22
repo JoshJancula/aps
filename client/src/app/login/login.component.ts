@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 	checkCordova() {
 		if ((<any>window).deviceReady === true) {
 			(<any>window).Keyboard.hide();
-			setTimeout(() => this.login(), 500);
+			setTimeout(() => this.login(), 100);
 		} else {
 			this.login();
 		}

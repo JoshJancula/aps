@@ -51,11 +51,29 @@
     height: 2vh;
 }
 
+@media (min-width: 769px) and (max-width: 992px) {
+    .searchRow {
+          width: 105vw;
+    }
+
+    .invoiceCard {
+        width: 95%;
+        margin-left: 3%;
+    }
+}
+
 
 @media (max-width: 992px) {
     .searchRow {
         width: 92vw;
     }
+}
+
+@media (max-width: 768px) {
+    .invoiceCard {
+        width: 95%;
+        margin-left: 3%;
+        }
 }
 
 @media (max-width: 767px) { 
@@ -65,7 +83,7 @@
     }
 
     .sideColumnSpacer {
-        height: 4vh;
+        height: 6vh;
     }
 
     .ivoiceColumn, .searchRow {
@@ -76,9 +94,9 @@
         margin-left: unset;
         position: fixed;
         top: 7vh;
-        transform: translateX(200px);
+        transform: translateX(250px);
         transition: transform 0.25s;
-        width: 200px;
+        width: 250px;
         opacity: 1;
         z-index: 21;
     }

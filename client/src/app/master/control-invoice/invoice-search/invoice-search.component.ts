@@ -53,7 +53,7 @@ export class InvoiceSearchComponent implements OnInit {
 	}
 
 	openDrawer() {
-		if (window.outerWidth < 767) {
+		if (window.outerWidth < 769) {
 		if (this.slideDrawer === false) {
 			this.slideDrawer = true;
 		} else {

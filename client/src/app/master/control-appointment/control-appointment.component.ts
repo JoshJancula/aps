@@ -117,6 +117,9 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	submitAppointment() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		if (this.editing === false) {
 			this.Appointment.ScheduledBy = this.authService.currentUser.Name;
 			this.Appointment.ScheduledById = this.authService.currentUser.id;
@@ -135,25 +138,22 @@ export class ControlAppointmentComponent implements OnInit {
 		this.clearForm();
 	}
 
-	editAppointment(id) {
+	editAppointment(data) {
 		this.editing = true;
 		this.anytime = false;
 		this.searchAppointments = false;
 		this.addAppointment = true;
-		this.appointmentService.getAppointment(id).subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				const data = JSON.parse(JSON.stringify(events.body));
-				console.log('app: ', data);
-				this.Appointment = data;
-				this.selectedId = data.id;
-				if (this.Appointment.Time === 'Anytime') {
-					this.anytime = true;
-				}
-			}
-		});
+		this.Appointment = data;
+		this.selectedId = data.id;
+		if (this.Appointment.Time === 'Anytime') {
+			this.anytime = true;
+		}
 	}
 
 	clearForm() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		this.Appointment = {
 			Date: '',
 			Time: '',
@@ -191,6 +191,9 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	openCalendar(event) {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		event.preventDefault();
 		this.calendar.open();
 	}

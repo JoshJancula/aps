@@ -1,7 +1,7 @@
 <div class='row searchRow'>
   <div class="overlay" *ngIf="slideDrawer === true" (click)="openDrawer();"></div>
 
-  <div class='ivoiceColumn col-lg-10 col-md-10 col-sm-12'>
+  <div class='ivoiceColumn col-xl-10 col-lg-10 col-md-10 col-sm-12'>
     <mat-card *ngFor="let invoice of invoices" class='invoiceCard'>
       <p>
         Invoice#: {{invoice.id}}<br>
@@ -10,7 +10,7 @@
         Employee: {{ invoice.Employee }}<br>
       </p>
       <button (click)='editThis.emit(invoice);' mat-button>Edit</button>
-      <button (click)='openPreview(invoice);' mat-button>Invoice overview</button>
+      <button (click)='openPreview(invoice);' mat-button>Overview</button>
       <button (click)='printInvoice(invoice);' mat-button>Print</button>
       <button (click)='emailInvoice(invoice);' mat-button>Email</button>
     </mat-card>
@@ -25,7 +25,7 @@
     <mat-icon style="padding-top: 0px; z-index:100 !important;">add</mat-icon>
     New invoice
   </button>
-  <div class="col-lg-2 col-md-2 hidden-sm hidden-xs sideColumn" [ngClass]="{'open': slideDrawer === true}">
+  <div class="col-xl-2 col-lg-2 col-md-2 hidden-sm hidden-xs sideColumn" [ngClass]="{'open': slideDrawer === true}">
     <div class='sideColumnSpacer'></div>
     <div class="card-heading">Search invoices</div>
     <div *ngIf="searchBy !== 'Invoice number' ">

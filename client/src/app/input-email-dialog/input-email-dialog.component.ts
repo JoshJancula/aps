@@ -17,6 +17,9 @@ export class InputEmailDialogComponent implements OnInit {
 	}
 
 	setClientEmail() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		if (this.sendTo !== '') {
 			this.sendTo = '';
 		} else {

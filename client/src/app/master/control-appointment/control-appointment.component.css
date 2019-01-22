@@ -55,7 +55,14 @@
     }
     }
 
-@media (max-width: 767px) { 
+    @media (min-width: 769px) and (max-width: 992px) {
+        .search, .form {
+              width: 105vw;
+        }
+    }
+    
+
+@media (max-width: 768px) { 
 
     .appointmentCard, .formCard {
         width: 96%;

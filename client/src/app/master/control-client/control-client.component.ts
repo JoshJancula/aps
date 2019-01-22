@@ -35,7 +35,7 @@ export class ControlClientComponent implements OnInit {
 	// tslint:disable-next-line:max-line-length
 	constructor(private authService: AuthService, private messagingService: MessageService, private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
 		this.getClients();
-	 }
+	}
 
 	ngOnInit() {
 	}
@@ -51,7 +51,7 @@ export class ControlClientComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = {MessageType: 'update', Action: 'clients'};
+		const data = { MessageType: 'update', Action: 'clients' };
 		this.messagingService.sendUpdate(data);
 	}
 
@@ -63,6 +63,9 @@ export class ControlClientComponent implements OnInit {
 	}
 
 	submitClient() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		if (this.editing === false) {
 			console.log('client: ', this.Client);
 			this.clientService.createClient(this.Client).subscribe(res => {
@@ -80,22 +83,18 @@ export class ControlClientComponent implements OnInit {
 		this.clearForm();
 	}
 
-	editClient(id) {
+	editClient(data) {
 		this.editing = true;
 		this.addClient = true;
 		this.searchClients = false;
-		console.log('id for get client: ', id);
-		this.clientService.getClient(id).subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				const data = JSON.parse(JSON.stringify(events.body));
-				this.Client = data;
-				this.selectedId = data.id;
-				console.log('this.client: ', this.Client);
-			}
-		});
+		this.Client = data;
+		this.selectedId = data.id;
 	}
 
 	clearForm() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		this.Client = {
 			Name: '',
 			Address: '',

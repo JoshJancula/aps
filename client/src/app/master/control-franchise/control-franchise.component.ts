@@ -34,7 +34,7 @@ export class ControlFranchiseComponent implements OnInit {
 		Username: '',
 		FirstName: '',
 		LastName: '',
-		Role: '',
+		Role: 'Owner',
 		Password: '',
 		Email: '',
 		Phone: '',
@@ -91,17 +91,12 @@ export class ControlFranchiseComponent implements OnInit {
 		setTimeout(() => this.notifySocket(), 500);
 	}
 
-	editFranchise(id) {
+	editFranchise(data) {
 		this.searchFranchises = false;
 		this.addFranchise = true;
 		this.editing = true;
-		this.franchiseService.getFranchise(id).subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				const data = JSON.parse(JSON.stringify(events.body));
-				this.Franchise = data;
-				this.selectedId = data.id;
-			}
-		});
+		this.Franchise = data;
+		this.selectedId = data.id;
 	}
 
 	submitUser() {
@@ -116,6 +111,9 @@ export class ControlFranchiseComponent implements OnInit {
 	}
 
 	clearForm() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		this.Franchise = {
 			Name: '',
 			Phone: '',
@@ -135,7 +133,7 @@ export class ControlFranchiseComponent implements OnInit {
 			Username: '',
 			FirstName: '',
 			LastName: '',
-			Role: 'Super',
+			Role: 'Owner',
 			Password: '',
 			Email: '',
 			Phone: '',

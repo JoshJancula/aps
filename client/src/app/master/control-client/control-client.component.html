@@ -33,7 +33,7 @@
       <div class="card-heading">Name: {{client.Name}}</div>
       <div >
         <br>
-        <button (click)="editClient(client.id);" mat-button>Edit</button>
+        <button (click)="editClient(client);" mat-button>Edit</button>
       </div>
     </mat-card>
     <mat-card *ngIf='clients.length < 1'>

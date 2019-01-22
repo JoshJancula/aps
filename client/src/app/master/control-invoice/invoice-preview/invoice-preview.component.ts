@@ -86,8 +86,8 @@ export class InvoicePreviewComponent implements OnInit {
 			// check for email
 			if (sendTo !== '' && sendTo !== undefined && sendTo !== null) {
 				console.log('should be sending email to: ', sendTo);
-				// const div: HTMLDivElement = document.querySelector('#hiddenContent');
-				// this.emailService.sendInvoice(div.innerHTML).subscribe(response => { });
+				const div: HTMLDivElement = document.querySelector('#hiddenContent');
+				this.emailService.sendInvoice(div.innerHTML).subscribe(response => { });
 				this.dialogRef.close();
 			} else {
 				this.dialogRef.close();

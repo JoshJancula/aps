@@ -47,7 +47,13 @@
     }
     }
 
-@media (max-width: 767px) { 
+    @media (min-width: 769px) and (max-width: 992px) {
+        .search, .form{
+              width: 105vw;
+        }
+    }
+
+@media (max-width: 768px) { 
     .mat-card {
     width: 96%;
     margin-left: 2%;

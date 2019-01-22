@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class EmailService {
 
-	constructor(private http: HttpClient) { }
+	constructor(private authService: AuthService, private http: HttpClient) { }
 
 	private url = `https://aps-josh.herokuapp.com/api/email`;
 	private localUrl = `http://localhost:8080/api/email`;
@@ -15,9 +16,9 @@ export class EmailService {
 
 		console.log('invoice inside sendInvoice: ', invoice);
 		const msg = {
-			to: 'josh@jancula.com',
-			from: 'test@example.com',
-			subject: 'Test invoice',
+			to: 'joshjancula@gmail.com',
+			from: this.authService._franchiseInfo.Email,
+			subject: 'Automated test invoice from APS',
 			html: invoice.toString(),
 		};
 

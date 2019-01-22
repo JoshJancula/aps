@@ -69,7 +69,7 @@ export class ControlUserComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = {MessageType: 'update', Action: 'users'};
+		const data = { MessageType: 'update', Action: 'users' };
 		this.messagingService.sendUpdate(data);
 	}
 
@@ -120,19 +120,12 @@ export class ControlUserComponent implements OnInit {
 		});
 	}
 
-	editUser(id) {
-		console.log('id: ', id);
+	editUser(data) {
 		this.editing = true;
 		this.searchUsers = false;
 		this.addUser = true;
-		this.userService.getUser(id).subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				const data = JSON.parse(JSON.stringify(events.body));
-				console.log('data: ', data);
-				this.User = data;
-				this.selectedId = data.id;
-			}
-		});
+		this.User = data;
+		this.selectedId = data.id;
 	}
 
 	clearForm() {

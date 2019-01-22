@@ -1,4 +1,4 @@
-<div class='col-lg-12 col-md-12 col-sm-12'>
+<div class='col-lg-10 col-md-12 col-sm-12'>
   <div class='row form' *ngIf="addAppointment === true">
     <mat-card class='formCard'>
       <div class='appointment-content'>
@@ -75,7 +75,7 @@
           <span *ngIf="appointment.Location !== '' ">Location: {{ appointment.Location }}</span><br>
           Contact person: {{ appointment.ContactPerson }} {{ appointment.ContactPersonPhone }}
         </p>
-        <button class='editButton' (click)="editAppointment(appointment.id);" mat-button>Edit</button>
+        <button class='editButton' (click)="editAppointment(appointment);" mat-button>Edit</button>
       </div>
     </mat-card>
 
@@ -87,7 +87,7 @@
   <br>
   <button class='add' *ngIf='searchAppointments === true' mat-button (click)="searchAppointments = false; addAppointment = true;">
     <mat-icon style='color:white'>create</mat-icon>
-    Sechedule appointment
+    Sechedule 
   </button>
   <button class='searchButton' *ngIf='addAppointment === true' (click)="addAppointment = false; searchAppointments = true;"
     mat-button>

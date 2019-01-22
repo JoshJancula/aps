@@ -47,6 +47,12 @@
 }
 }
 
+@media (min-width: 768px) and (max-width: 992px) {
+    .userForm.show, .userRow.show {
+          width: 104vw;
+    }
+}
+
 @media (max-width: 767px) { 
 
     .mat-card {

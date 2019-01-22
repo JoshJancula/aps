@@ -73,9 +73,30 @@
 
 .desktopView {
     margin-top: 7%;
+    overflow-y: hidden;
 }
 
 button, button:focus { outline: none; }
+
+@media (max-width: 992px) {
+    .desktopView {
+        display: none;
+    } 
+
+    .homeIcon{
+        display: block;
+        z-index: 20;
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        background-color: red;
+        position: absolute;       
+        bottom: 10px;
+        left: calc(90vw);
+        cursor: pointer;
+    }
+    
+}
 
 @media (max-width: 767px) {
 .desktopView {
@@ -91,7 +112,7 @@ button, button:focus { outline: none; }
     background-color: red;
     position: absolute;       
     bottom: 10px;
-    left: calc(82vw);
+    left: calc(85vw);
     cursor: pointer;
 }
 
@@ -114,7 +135,7 @@ button, button:focus { outline: none; }
     background-color: blue;
     position: absolute;       
     bottom: 80px;
-    left: calc(82vw);
+    left: calc(85vw);
     cursor: pointer;
 }
 
@@ -124,4 +145,32 @@ button, button:focus { outline: none; }
     margin-top: 1%;
 }
 
+}
+
+@media (max-width: 500px) {
+    .homeIcon{
+        display: block;
+        z-index: 20;
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        background-color: red;
+        position: absolute;       
+        bottom: 10px;
+        left: calc(82vw);
+        cursor: pointer;
+    }
+    
+    .filterIcon.show {
+        display: block;
+        z-index: 20;
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        background-color: blue;
+        position: absolute;       
+        bottom: 80px;
+        left: calc(82vw);
+        cursor: pointer;
+    }
 }

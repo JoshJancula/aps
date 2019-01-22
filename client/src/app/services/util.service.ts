@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class UtilService {
 
-	constructor(private router: Router, private authService: AuthService, private http: HttpClient) { }
+	constructor(public dialog: MatDialog, private router: Router, private authService: AuthService, private http: HttpClient) { }
 
 	states = ['AL', 'AK', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NC', 'ND', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 	private userStore = [];
@@ -28,6 +30,12 @@ export class UtilService {
 	private invoiceSubject = new BehaviorSubject(this.invoiceSubject);
 	invoices = this.invoiceSubject.asObservable();
 
+
+	alertError(message) {
+		const newDialog = this.dialog.open(ErrorDialogComponent, {
+			data: message
+		});
+	}
 
 	getFranchises() {
 		let url;

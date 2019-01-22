@@ -205,17 +205,30 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	pushVehicle() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		if (this.addStock === true) {
-			this.stocks.push(this.stockNumber);
-			this.stockNumber = '';
-			this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
-			console.log('serviceTypes[1]', this.serviceTypes[1]);
-			this.updateTotal();
+			if (this.stocks.indexOf(this.stockNumber) > -1) {
+				this.utilService.alertError(`This vehicle has already been added to this invoice.`);
+				return;
+			} else {
+				this.stocks.push(this.stockNumber);
+				this.stockNumber = '';
+				this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
+				console.log('serviceTypes[1]', this.serviceTypes[1]);
+				this.updateTotal();
+			}
 		} else {
-			this.vins.push(this.stockNumber);
-			this.stockNumber = '';
-			this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
-			this.updateTotal();
+			if (this.vins.indexOf(this.stockNumber) > -1) {
+				this.utilService.alertError(`This vehicle has already been added to this invoice.`);
+				return;
+			} else {
+				this.vins.push(this.stockNumber);
+				this.stockNumber = '';
+				this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
+				this.updateTotal();
+			}
 		}
 		this.updateTotal();
 	}
@@ -223,9 +236,9 @@ export class InvoiceFormComponent implements OnInit {
 	scanVIN() {
 		this.barcodeScanner.scan().then(data => {
 			this.vins.push(data.text);
-		   }).catch(err => {
-			   console.log('Error', err);
-		   });
+		}).catch(err => {
+			console.log('Error', err);
+		});
 	}
 
 	removeVehicle(vehicle) {
@@ -270,6 +283,9 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	submitInvoice() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		this.updateTotal();
 		this.updateInvoiceData();
 		console.log('invoice to save: ', this.Invoice);
@@ -345,6 +361,9 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	clearForm() {
+		if ((<any>window).deviceReady === true) {
+			(<any>window).Keyboard.hide();
+		}
 		this.Invoice = {
 			Employee: '',
 			EmployeeId: '',

@@ -1,8 +1,6 @@
-<!-- <div class="row invoiceArea"> -->
   <!-- form view -->
   <app-invoice-form #invoiceForm class='invoiceForm' (switchToSearch)='setView(); invoiceSearch.loadInvoices();'
     [ngClass]="{'show': searchInvoices === false }"></app-invoice-form>
   <!-- search view -->
   <app-invoice-search #invoiceSearch (newInvoice)='invoiceForm.clearForm(); setView();' (editThis)='setView(); invoiceForm.editInvoice($event)'
     class='invoiceSearch' [ngClass]="{'show': searchInvoices === true }"></app-invoice-search>
-<!-- </div> -->
