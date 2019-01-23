@@ -93,16 +93,16 @@
     <div id='hiddenContent'>
   <div class='row'>
     <!-- <div class='col-xl-5 col-lg-5 col-md-5 col-sm-5 col-xs-3'> -->
-      <img style='display: inline-block; height: 100px; width: 250px;' src='https://firebasestorage.googleapis.com/v0/b/amee-store.appspot.com/o/logo2.png?alt=media&token=5be8e905-5e5e-496b-83a1-9e0811f96a0a' />
+      <img style='display: inline-block; height: 100px; width: 250px; position: absolute; left: 0px; top:0px;' src='https://firebasestorage.googleapis.com/v0/b/amee-store.appspot.com/o/logo2.png?alt=media&token=5be8e905-5e5e-496b-83a1-9e0811f96a0a' />
     <!-- </div> -->
     <!-- <div class='col-xl-7 col-lg-7 col-md-7 col-sm-7 col-xs-9 headerData' style='position: absolute; right: 0px; top: -90px !important;'> -->
-      <span class='headerData' style='display: inline-block; position: absolute; right: 0px; top: 0px !important;'>
+      <div class='headerData' style='display: inline-block; position: absolute; right: 0px; top: 0px !important;'>
           <span class='screenTitle'> {{ authService._franchiseInfo.Address }}</span><br>
           <span class='screenTitle'>{{ authService._franchiseInfo.Email }}</span><br>
           <span class='screenTitle'>{{ authService._franchiseInfo.Phone }}</span><br>
           <span class='screenTitle'>Invoice#: {{ invoiceNumber }}</span><br>
           <span class='screenTitle'>{{ formatDate(data.content.createdAt) }}</span>
-      </span>
+      </div>
     <!-- </div> -->
   </div>
   <div class='row'><span class='client'>
