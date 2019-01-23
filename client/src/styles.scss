@@ -24,7 +24,7 @@
     background-color: blue;
     color: white;
     opacity: .9 !important;
-    position: fixed !important;
+    position: sticky !important;
     z-index: 30;
     top: 0px !important;
 }
@@ -59,7 +59,7 @@ body {
 
 body, html {
     display: flex;
-    // flex-direction: column;
+    flex-direction: column;
     height: 100vh;  
     margin: none;
     background-color: black;
@@ -68,7 +68,7 @@ body, html {
     background-size: contain;
     background-repeat: no-repeat;
     padding: none;
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 .searchButton {

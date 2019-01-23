@@ -9,11 +9,7 @@
 }
 
 .mat-card:first-child {
-    margin-top: 10%;
-}
-
-.mat-card:last-child {
-    margin-bottom: 10%;
+    margin-top: 1%;
 }
 
 .mat-slide-toggle {
@@ -59,10 +55,6 @@
     width: 96%;
     }
 
-    .mat-card:first-child {
-        margin-top: 10%;
-    }
-
     .userForm.show, .userRow.show {
         display: block;
         width: 100vw;
@@ -70,8 +62,3 @@
     
 }
 
-@media (max-width: 500px) { 
-.mat-card:first-child {
-    margin-top: 17%;
-}
-}

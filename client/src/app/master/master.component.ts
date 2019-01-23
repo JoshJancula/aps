@@ -37,7 +37,7 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlInvoice') controlInvoice: ControlInvoiceComponent;
 	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
 
-	constructor(private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, private authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
+	constructor(private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, public authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
 		this.messagingService.initSocket();

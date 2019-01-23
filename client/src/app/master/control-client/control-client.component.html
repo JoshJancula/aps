@@ -19,7 +19,7 @@
         <input matInput placeholder="Email" [(ngModel)]="Client.Email" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="Client.Phone" (input)="formatPhone();" />
+        <input matInput pattern="[0-9]*" placeholder="Phone" maxlength="14" [(ngModel)]="Client.Phone" (input)="formatPhone();" />
       </mat-form-field>
       <br>
       <button class='submit' (click)="submitClient();" mat-button>Save client</button>

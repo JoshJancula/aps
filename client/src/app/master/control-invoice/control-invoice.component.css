@@ -3,13 +3,11 @@
 }
 
 .invoiceForm.show {
-    height: 100vh;
     display: block;
     width: 102vw;
 }
 
  .invoiceSearch.show {
-    height: 100vh;
     display: block;
     width: 100vw;
 }

@@ -28,7 +28,7 @@ export class ControlAppointmentComponent implements OnInit {
 		AssignedEmployee: '',
 		AssignedEmployeeId: '',
 		Comments: '',
-		FranchiseId: ''
+		FranchiseId: this.authService.currentUser.FranchiseId
 	};
 	clients: any;
 	appointments = [];
@@ -68,6 +68,8 @@ export class ControlAppointmentComponent implements OnInit {
 		res.forEach(app => {
 			if (moment(app.Date).format('MM/DD/YY') === moment(this.searchDate).format('MM/DD/YY')) {
 				this.appointments.push(app);
+			} else if (moment(app.Date).isBefore(this.searchDate)) {
+				this.appointmentService.deleteAppointment(app.id).subscribe(response => { console.log('res deleting old appointment: ', response); });
 			}
 		});
 	}
@@ -94,10 +96,12 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	loadFranchises() {
-		this.utilService.processFranchises();
-		this.utilService.franchises.subscribe(response => {
-			this.franchises = response;
-		});
+		if (this.authService.currentUser.Role === 'Super') {
+			this.utilService.processFranchises();
+			this.utilService.franchises.subscribe(response => {
+				this.franchises = response;
+			});
+		}
 	}
 
 	updateLocation(client) {
@@ -126,7 +130,7 @@ export class ControlAppointmentComponent implements OnInit {
 			this.appointmentService.createAppointment(this.Appointment).subscribe(res => {
 				console.log('response: ', res);
 			}, error => {
-				console.log('error: ', error);
+				this.utilService.alertError(`error submitting appointment: ${error}`);
 			});
 		} else {
 			this.appointmentService.updateAppointment(this.selectedId, this.Appointment).subscribe(res => {
@@ -166,7 +170,7 @@ export class ControlAppointmentComponent implements OnInit {
 			AssignedEmployee: '',
 			AssignedEmployeeId: '',
 			Comments: '',
-			FranchiseId: ''
+			FranchiseId: this.authService.currentUser.FranchiseId
 		};
 		this.editing = false;
 		this.anytime = false;
@@ -197,15 +201,6 @@ export class ControlAppointmentComponent implements OnInit {
 		event.preventDefault();
 		this.calendar.open();
 	}
-
-	// openCalendar2(event) {
-	// 	event.preventDefault();
-	// 	this.calendar2.open();
-	// }
-
-	renderAppointments() {
-	}
-
 
 	getMinDate() {
 		return new Date();

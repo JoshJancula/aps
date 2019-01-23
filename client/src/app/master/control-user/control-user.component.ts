@@ -51,10 +51,11 @@ export class ControlUserComponent implements OnInit {
 	getUsers() {
 		this.utilService.processUsers();
 		this.utilService.users.subscribe(response => {
-			this.users = [];
-			response.forEach(item => {
-				this.users.push({ Username: item.Username, FirstName: item.FirstName, LastName: item.LastName, Role: item.Role, id: item.id });
-			});
+			// this.users = [];
+			this.users = response;
+			// response.forEach(item => {
+			// 	this.users.push({ Username: item.Username, FirstName: item.FirstName, LastName: item.LastName, Phone: item.Phone, Email: item.Email, Role: item.Role, id: item.id, FranchiseId: item.FranchiseId });
+			// });
 		});
 	}
 
@@ -121,6 +122,7 @@ export class ControlUserComponent implements OnInit {
 	}
 
 	editUser(data) {
+		console.log('user to edit: ', data);
 		this.editing = true;
 		this.searchUsers = false;
 		this.addUser = true;

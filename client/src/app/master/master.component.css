@@ -3,15 +3,14 @@
 }
 
 .mainRow {
-    height: 100vh;
-    overflow-y: auto;
+    height: calc(100vh - 64px);
     overflow-x: hidden !important;
+    overflow-y: hidden;
 }
 
 .contentRow {
-    min-height: 100vh;
+    height: calc(100vh - 64px);
     width: 100%;
-    overflow-y: auto;
     overflow-x: hidden !important;
 }
 
@@ -26,6 +25,7 @@
 .controlInvoice.show, .calendar.show, .controlAppointment.show, .controlUser.show, .controlFranchise.show, .controlClient.show {
     display: block;
     overflow-x: hidden !important;
+    overflow-y: auto;
 }
 
 .submit {
@@ -72,7 +72,7 @@
 }
 
 .desktopView {
-    margin-top: 7%;
+    margin-top: 2%;
     overflow-y: hidden;
 }
 
@@ -117,7 +117,7 @@ button, button:focus { outline: none; }
 }
 
 .mainRow {
-    overflow: auto;
+    overflow: hidden !important;
     overflow-x: hidden !important;
 }
 

@@ -14,8 +14,8 @@
 </mat-toolbar>
 <div class='row mainRow'>
   <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
-    <div class='options' [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
-    <div class='options' [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
+    <div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'" [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
+    <div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' " [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
     <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>
     <div class='options' [ngClass]="{'selected': appointmentMode === true}" (click)="openAppointments();">Appointments</div>
     <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();">Invoices</div>

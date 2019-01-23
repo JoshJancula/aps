@@ -24,11 +24,7 @@
 }
 
 .mat-card:first-child {
-    margin-top: 10%;
-}
-
-.mat-card:last-child {
-    margin-bottom: 10%;
+    margin-top: 1%;
 }
 
 .form, .search {
@@ -63,14 +59,4 @@
         width: 100vw;
         overflow-x: hidden;
     }
-
-    .mat-card:first-child {
-        margin-top: 10%;
-    }
 }
-
-@media (max-width: 500px) { 
-    .mat-card:first-child {
-        margin-top: 17%;
-    }
-    }

@@ -37,7 +37,9 @@
       <br />
       <button class='submit' (click)="submitUser();" mat-button>Save user</button>
       <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
-      <button *ngIf='editing === true' [disabled]="User.Role !== 'Super' " (click)="deleteUser(User.id);" mat-button>Delete</button>
+      <div *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner'">
+      <button *ngIf="editing === true" [disabled]="User.Role === 'Super'" (click)="deleteUser(User.id);" mat-button>Delete</button>
+    </div>
     </mat-card>
   </div>
 

@@ -9,13 +9,13 @@
         <input matInput placeholder="Business address" [(ngModel)]="Franchise.Address" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Business phone" (input)="formatPhone();" [(ngModel)]="Franchise.Phone" />
+        <input matInput placeholder="Business phone" pattern="[0-9]*" (input)="formatPhone();" [(ngModel)]="Franchise.Phone" />
       </mat-form-field>
       <mat-form-field>
         <input matInput placeholder="Business email" [(ngModel)]="Franchise.Email" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="State sales tax rate" [(ngModel)]="Franchise.TaxRate" />
+        <input matInput placeholder="State sales tax rate" pattern="[0-9]*" [(ngModel)]="Franchise.TaxRate" />
         <mat-hint align="start">example: 0.0725</mat-hint>
       </mat-form-field>
       <div *ngIf='editing === false;'>
@@ -36,7 +36,7 @@
           <input matInput placeholder="Email" [(ngModel)]="User.Email" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Phone" maxlength="14" [(ngModel)]="User.Phone" (input)="formatUserPhone();" />
+          <input matInput placeholder="Phone" pattern="[0-9]*" maxlength="14" [(ngModel)]="User.Phone" (input)="formatUserPhone();" />
         </mat-form-field>
       </div>
       <button class='submit' (click)="submitFranchise();" mat-button>Save Franchise</button>

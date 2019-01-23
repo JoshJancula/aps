@@ -92,7 +92,7 @@
 <div id='hiddenEmail' style='display: none;'>
     <div id='hiddenContent'>
   <div class='row'>
-    <div class='col-md-5 col-sm-5 col-xs-3'>
+    <div class='col-xl-5 col-lg-5 col-md-5 col-sm-5 col-xs-3'>
       <img style='height: 100px; width: 250px;' src='https://firebasestorage.googleapis.com/v0/b/amee-store.appspot.com/o/logo2.png?alt=media&token=5be8e905-5e5e-496b-83a1-9e0811f96a0a' />
     </div>
     <div class='col-md-7 col-sm-7 col-xs-9 headerData' style='position: absolute; top: -90px;'>
@@ -108,19 +108,19 @@
   <div class='row servicesRow'>
     <div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12'>
       <table mat-table [dataSource]="dataSource" style='width: 100%; border-spacing: 0px;'>
-        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12); text-align: center; margin:0px;' matColumnDef="name">
+        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12); margin:0px;' matColumnDef="name">
           <th style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);' mat-header-cell *matHeaderCellDef>Product / Service</th>
           <td style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-cell *matCellDef="let service">{{ service.name }}</td>
         </ng-container>
-        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12); text-align: center;' matColumnDef="quantity">
+        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12);' matColumnDef="quantity">
           <th style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);'  mat-header-cell *matHeaderCellDef>Quantity</th>
           <td style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-cell *matCellDef="let service">{{ service.quantity }}</td>
         </ng-container>
-        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12); text-align: center;' matColumnDef="pricePer">
+        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12);' matColumnDef="pricePer">
           <th style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);'  mat-header-cell *matHeaderCellDef>Rate</th>
           <td style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-cell *matCellDef="let service">{{ service.pricePer }}</td>
         </ng-container>
-        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12); text-align: center;' matColumnDef="total">
+        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12);' matColumnDef="total">
           <th style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);'  mat-header-cell *matHeaderCellDef>Total</th>
           <td style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-cell *matCellDef="let service">${{ service.totalPrice }}</td>
         </ng-container>

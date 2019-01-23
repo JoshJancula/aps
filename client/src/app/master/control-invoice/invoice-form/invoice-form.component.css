@@ -38,12 +38,11 @@
 .invoiceCard {
     margin-left: 2%;
     width: 94%;
-    margin-bottom: 0%;
     border-radius: 15px;
 }
 
 .mat-card:first-child {
-    margin-top: 10%;
+    margin-top: 1%;
 }
 
 .form {
@@ -58,7 +57,26 @@
         border-radius: 10px !important;
         width: 98%;
         margin-left: 1%;
+        margin-bottom: 10%;
+        margin-top: 1%;
+    }
+
+}
+
+@media (max-width: 992px) { 
+    .invoiceCard {
+        background: #D7D6D6;
+        opacity: .9;
+        border-radius: 10px !important;
+        width: 100%;
+        margin-left: -1%;
         margin-bottom: 1%;
+        margin-top: 1%;
+    }
+
+    .form {
+        width: 102vw;
+        overflow-x: hidden !important;
     }
  }
 
@@ -67,22 +85,9 @@
     width: 100%;
     margin-left: -1%;
     }
-
-    .form {
-        width: 102vw;
-        overflow-x: hidden !important;
-    }
-
-    .mat-card:first-child {
-        margin-top: 10%;
-    }
 }
 
 @media (max-width: 500px) { 
-
-    .mat-card:first-child {
-        margin-top: 17%;
-    }
 
     .mat-card, .invoiceCard {
         width: 102%;
