@@ -24,7 +24,8 @@ module.exports = function (app) {
 							Phone: y.Phone,
 							Email: y.Email,
 							Role: y.Role,
-							id: y.id
+							id: y.id,
+							Active: y.Active
 						}
 						z.push(user);
 					});
@@ -57,7 +58,8 @@ module.exports = function (app) {
 								Phone: y.Phone,
 								Email: y.Email,
 								Role: y.Role,
-								id: y.id
+								id: y.id,
+								Active: y.Active
 							}
 							z.push(user);
 						}
@@ -87,6 +89,29 @@ module.exports = function (app) {
 						}
 					}).then(function (x) {
 						res.json(x);
+					})
+					.catch(function (err) {
+						res.json(err);
+					});
+			} else {
+				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
+			}
+		}, 500);
+	});
+
+	// PUT route for updating user password
+	app.put("/api/users/:id", function (req, res) {
+		let jancsta = new JancstaPort(req.headers.authorization.toString());
+		setTimeout(() => {
+			if (jancsta.bool == true) {
+				db.User.update({
+					Password: req.body.Password,
+				}, {
+						where: {
+							id: req.body.id
+						}
+					}).then(function (x) {
+						res.status(200).send({ success: true, msg: 'Success' });
 					})
 					.catch(function (err) {
 						res.json(err);

@@ -140,6 +140,7 @@ export class ControlAppointmentComponent implements OnInit {
 		setTimeout(() => this.utilService.processAppointments(), 500);
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
+		this.setView();
 	}
 
 	editAppointment(data) {

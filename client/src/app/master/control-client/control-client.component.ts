@@ -58,8 +58,13 @@ export class ControlClientComponent implements OnInit {
 	getClients() {
 		this.utilService.processClients();
 		this.utilService.clients.subscribe(response => {
-			this.clients = response;
+			this.sortClients(response);
 		});
+	}
+
+	sortClients(obj) {
+		obj.sort((a, b) => (a.Name > b.Name) ? 1 : ((b.Name > a.Name) ? -1 : 0));
+		this.clients = obj;
 	}
 
 	submitClient() {
@@ -67,7 +72,6 @@ export class ControlClientComponent implements OnInit {
 			(<any>window).Keyboard.hide();
 		}
 		if (this.editing === false) {
-			console.log('client: ', this.Client);
 			this.clientService.createClient(this.Client).subscribe(res => {
 				console.log('response: ', res);
 			}, error => {
@@ -81,6 +85,7 @@ export class ControlClientComponent implements OnInit {
 		setTimeout(() => this.utilService.processClients(), 500);
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
+		this.setView();
 	}
 
 	editClient(data) {

@@ -41,7 +41,7 @@
       </div>
       <button class='submit' (click)="submitFranchise();" mat-button>Save Franchise</button>
       <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
-      <button *ngIf='editing === true;' (click)="deleteFranchise(Franchise.id);" [disabled]="Franchise.Name === 'Master'"
+      <button *ngIf="editing === true && authService.currentUser.Role === 'Super'" (click)="deleteFranchise(Franchise.id);" [disabled]="Franchise.Name === 'Master'"
         mat-button>Delete</button>
     </mat-card>
   </div>
@@ -54,7 +54,6 @@
           Phone: {{ franchise.Phone }}<br>
           Email: {{ franchise.Email }}<br>
           Address: {{ franchise.Address }}<br>
-          Active: {{franchise.Active}}
         </p>
         <!-- this needs to be replaced with a deactivate method -->
         <button (click)="editFranchise(franchise);" mat-button>Edit</button>

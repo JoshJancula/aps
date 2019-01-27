@@ -112,7 +112,6 @@ export class InvoiceFormComponent implements OnInit {
 	];
 
 	constructor(private barcodeScanner: BarcodeScanner, private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
-		// this.loadInvoices();
 		this.loadFranchises();
 		this.getClients();
 	}
@@ -216,7 +215,6 @@ export class InvoiceFormComponent implements OnInit {
 				this.stocks.push(this.stockNumber);
 				this.stockNumber = '';
 				this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
-				console.log('serviceTypes[1]', this.serviceTypes[1]);
 				this.updateTotal();
 			}
 		} else {
@@ -235,7 +233,12 @@ export class InvoiceFormComponent implements OnInit {
 
 	scanVIN() {
 		this.barcodeScanner.scan().then(data => {
-			this.vins.push(data.text);
+			if (this.vins.indexOf(this.stockNumber) > -1) {
+				this.utilService.alertError(`This vehicle has already been added to this invoice.`);
+				return;
+			} else {
+				this.vins.push(data.text);
+			}
 		}).catch(err => {
 			console.log('Error', err);
 		});
@@ -279,7 +282,6 @@ export class InvoiceFormComponent implements OnInit {
 		}
 		this.Invoice.CustomPinstripe = JSON.stringify(this.customPinstripes);
 		this.Invoice.OtherServices = JSON.stringify(this.serviceTypes);
-		// this.Invoice.CalcTax = this.calculateTax;
 	}
 
 	submitInvoice() {
@@ -306,6 +308,7 @@ export class InvoiceFormComponent implements OnInit {
 		}
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
+		this.switchToSearch.emit();
 	}
 
 	editInvoice(x) {

@@ -9,7 +9,6 @@ module.exports = function (app) {
             if (jancsta.bool == true) {
                 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
                 sgMail.send(req.body);
-
             } else {
                 res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
             }

@@ -7,6 +7,7 @@ import { MessageService } from '../../services/message.service';
 import * as moment from 'moment';
 import { UserService } from 'src/app/services/user.service';
 import { PhonePipe } from 'src/app/phone.pipe';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -44,7 +45,7 @@ export class ControlFranchiseComponent implements OnInit {
 
 	location: ''; // this is dummy right now;
 
-	constructor(private phonePipe: PhonePipe, private userService: UserService, private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
+	constructor(public authService: AuthService, private phonePipe: PhonePipe, private userService: UserService, private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
 		this.loadFranchises();
 	}
 
@@ -89,6 +90,7 @@ export class ControlFranchiseComponent implements OnInit {
 		}
 		setTimeout(() => this.utilService.processFranchises(), 500);
 		setTimeout(() => this.notifySocket(), 500);
+		this.setView();
 	}
 
 	editFranchise(data) {

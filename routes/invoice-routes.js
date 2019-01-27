@@ -121,8 +121,10 @@ module.exports = function (app) {
 						FranchiseId: req.body.franchise,
 					},
 				}).then(function (a) {
-					let start = moment(req.body.dateFrom).format('MM/DD/YYYY');
-					let end = moment(req.body.dateTo).format('MM/DD/YYYY');
+					// let start = moment(req.body.dateFrom).format('MM/DD/YYYY');
+					// let end = moment(req.body.dateTo).format('MM/DD/YYYY');
+					let start = req.body.dateFrom;
+					let end = req.body.dateTo;
 					let inv = [];
 
 					a.forEach(b => {

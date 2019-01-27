@@ -16,8 +16,8 @@ import * as moment from 'moment';
 })
 export class ControlUserComponent implements OnInit {
 
-	searchUsers = false;
-	addUser = true;
+	searchUsers = true;
+	addUser = false;
 	User: any = {
 		Username: '',
 		FirstName: '',
@@ -26,6 +26,7 @@ export class ControlUserComponent implements OnInit {
 		Password: '',
 		Email: '',
 		Phone: '',
+		Avatar: '',
 		FranchiseId: '',
 		Active: true,
 	};
@@ -51,12 +52,13 @@ export class ControlUserComponent implements OnInit {
 	getUsers() {
 		this.utilService.processUsers();
 		this.utilService.users.subscribe(response => {
-			// this.users = [];
-			this.users = response;
-			// response.forEach(item => {
-			// 	this.users.push({ Username: item.Username, FirstName: item.FirstName, LastName: item.LastName, Phone: item.Phone, Email: item.Email, Role: item.Role, id: item.id, FranchiseId: item.FranchiseId });
-			// });
+			this.sortUsers(response);
 		});
+	}
+
+	sortUsers(obj) {
+		obj.sort((a, b) => (a.LastName > b.LastName) ? 1 : ((b.LastName > a.LastName) ? -1 : 0));
+		this.users = obj;
 	}
 
 	setView() {
@@ -87,6 +89,7 @@ export class ControlUserComponent implements OnInit {
 				console.log('res: ', JSON.stringify(res));
 			});
 		} else {
+			console.log('updating user info: ', this.User);
 			this.userService.updateUser(this.selectedId, this.User).subscribe(res => {
 				console.log('res: ', res);
 			});
@@ -94,6 +97,7 @@ export class ControlUserComponent implements OnInit {
 		setTimeout(() => this.utilService.processUsers(), 500);
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
+		this.setView();
 	}
 
 	testLogin() {
@@ -128,6 +132,7 @@ export class ControlUserComponent implements OnInit {
 		this.addUser = true;
 		this.User = data;
 		this.selectedId = data.id;
+		console.log('selectedId: ', data.id);
 	}
 
 	clearForm() {
@@ -149,5 +154,4 @@ export class ControlUserComponent implements OnInit {
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');
 	}
-
 }

@@ -19,12 +19,11 @@
     <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>
     <div class='options' [ngClass]="{'selected': appointmentMode === true}" (click)="openAppointments();">Appointments</div>
     <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();">Invoices</div>
-    <!-- <div class='options' (click)="openPopup();">Open popup</div> -->
   </div>
 
   <div class='col-xl-10 col-lg-10 col-md-12 col-sm-12 contentRow'>
-    <app-control-user #controlUser class='controlUser' [ngClass]="{'show': userMode === true}"></app-control-user>
-    <app-control-franchise #controlFranchise class='controlFranchise' [ngClass]="{'show': franchiseMode === true}"></app-control-franchise>
+    <app-control-user #controlUser class='controlUser'  *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"  [ngClass]="{'show': userMode === true}"></app-control-user>
+    <app-control-franchise #controlFranchise class='controlFranchise'  *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"  [ngClass]="{'show': franchiseMode === true}"></app-control-franchise>
     <app-control-client #controlClient class='controlClient' [ngClass]="{'show': clientMode === true}"></app-control-client>
     <app-control-appointment #controlAppointment class='controlAppointment' [ngClass]="{'show': appointmentMode === true}"></app-control-appointment>
     <app-control-invoice #controlInvoice class='controlInvoice' [ngClass]="{'show': invoiceMode === true}"></app-control-invoice>
