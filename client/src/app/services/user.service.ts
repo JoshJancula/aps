@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http } from '@angular/http';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ export class UserService {
 	private url = `https://aps-josh.herokuapp.com/api/users`;
 	private localUrl = `http://localhost:8080/api/users`;
 	private signinUrl = `http://localhost:8080/api/signin`;
-	constructor(private http: HttpClient, private signInHttp: Http) { }
+	constructor(private http: HttpClient, private signInHttp: Http, private authService: AuthService) { }
 
 	getUsers() {
 		if (localStorage.getItem('jwtToken')) {
@@ -74,6 +75,7 @@ export class UserService {
 	}
 
 	updateUser(id: string, updatedUser) {
+		console.log('updatedUser: ', updatedUser);
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -87,6 +89,29 @@ export class UserService {
 			}
 		}
 	}
+
+	updateProfileImage(avatar) {
+		console.log('avatar passed to uploadProfile: ', avatar);
+		const updateObject = { Avatar: avatar };
+		console.log('updateObject: ', updateObject);
+		if (localStorage.getItem('jwtToken')) {
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Authorization': localStorage.getItem('jwtToken'),
+				})
+			};
+			console.log('found token: ', localStorage.getItem('jwtToken'));
+			console.log('userId: ', this.authService.currentUser.id);
+			if (window.location.host === 'localhost:4200') {
+				const localUrl = `http://localhost:8080/api/users/avatar/${this.authService.currentUser.id}`;
+				return this.http.put(localUrl, updateObject, httpOptions);
+			} else {
+				const url = `https://aps-josh.herokuapp.com/api/users/avatar/${this.authService.currentUser.id}`;
+				return this.http.put(url, updateObject, httpOptions);
+			}
+		}
+	}
+
 
 	deleteUser(id: string) {
 		if (localStorage.getItem('jwtToken')) {

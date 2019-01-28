@@ -3,6 +3,7 @@ import { ControlUserComponent } from './control-user/control-user.component';
 import { ControlFranchiseComponent } from './control-franchise/control-franchise.component';
 import { ControlClientComponent } from './control-client/control-client.component';
 import { ControlAppointmentComponent } from './control-appointment/control-appointment.component';
+import { SettingsComponent } from './settings/settings.component';
 import { UtilService } from '../services/util.service';
 import { HttpEventType } from '@angular/common/http';
 import { UserService } from '../services/user.service';
@@ -26,11 +27,13 @@ export class MasterComponent implements OnInit {
 	clientMode = false;
 	appointmentMode = false;
 	invoiceMode = true;
+	settingsMode = false;
 	messageConnection: any;
 	updateConnection: any;
 	screen = 'Invoicing';
 	@ViewChild('appointmentCalendar') appointmentCalendar: any;
 	@ViewChild('controlUser') controlUser: ControlUserComponent;
+	@ViewChild('controlSettings') controlSettings: SettingsComponent;
 	@ViewChild('controlFranchise') controlFranchise: ControlFranchiseComponent;
 	@ViewChild('controlClient') controlClient: ControlClientComponent;
 	@ViewChild('controlAppointment') controlAppointment: ControlAppointmentComponent;
@@ -147,6 +150,16 @@ export class MasterComponent implements OnInit {
 		this.userMode = false;
 		this.franchiseMode = false;
 		this.screen = 'Invoicing';
+	}
+
+	openSettings() {
+		this.settingsMode = true;
+		this.invoiceMode = false;
+		this.appointmentMode = false;
+		this.clientMode = false;
+		this.userMode = false;
+		this.franchiseMode = false;
+		this.screen = 'Settings';
 	}
 
 }

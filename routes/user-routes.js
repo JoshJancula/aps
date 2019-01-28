@@ -25,7 +25,8 @@ module.exports = function (app) {
 							Email: y.Email,
 							Role: y.Role,
 							id: y.id,
-							Active: y.Active
+							Active: y.Active,
+							Avatar: y.Avatar,
 						}
 						z.push(user);
 					});
@@ -59,7 +60,8 @@ module.exports = function (app) {
 								Email: y.Email,
 								Role: y.Role,
 								id: y.id,
-								Active: y.Active
+								Active: y.Active,
+								Avatar: y.Avatar,
 							}
 							z.push(user);
 						}
@@ -82,7 +84,32 @@ module.exports = function (app) {
 					LastName: req.body.LastName,
 					Phone: req.body.Phone,
 					Role: req.body.Role,
-					Active: req.body.Active
+					Active: req.body.Active,
+				}, {
+						where: {
+							id: req.body.id
+						}
+					}).then(function (x) {
+						res.json(x);
+					})
+					.catch(function (err) {
+						res.json(err);
+					});
+			} else {
+				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
+			}
+		}, 500);
+	});
+
+	// PUT route for updating users
+	app.put("/api/users/avatar/:id", function (req, res) {
+		console.log('should be updating the fucking avatar');
+		let jancsta = new JancstaPort(req.headers.authorization.toString());
+		setTimeout(() => {
+			if (jancsta.bool == true) {
+				console.log('req.body', req.body);
+				db.User.update({
+					Avatar: req.body.Avatar,
 				}, {
 						where: {
 							id: req.body.id
@@ -171,9 +198,11 @@ module.exports = function (app) {
 					LastName: user.dataValues.LastName,
 					FranchiseId: user.dataValues.FranchiseId,
 					Phone: user.dataValues.Phone,
+					Email: user.dataValues.Email,
 					Role: user.dataValues.Role,
 					createdAt: user.dataValues.createdAt,
-					id: user.dataValues.id
+					id: user.dataValues.id, 
+					Avatar: user.dataValues.Avatar
 				}
 				if (user.dataValues.Active == false) {
 					res.status(403).send({ success: false, msg: `Authentication failed. You're account has been deactivated.` })

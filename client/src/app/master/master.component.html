@@ -19,6 +19,7 @@
     <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>
     <div class='options' [ngClass]="{'selected': appointmentMode === true}" (click)="openAppointments();">Appointments</div>
     <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();">Invoices</div>
+    <div class='options' [ngClass]="{'selected': settingsMode === true}" (click)="openSettings();">Settings</div>
   </div>
 
   <div class='col-xl-10 col-lg-10 col-md-12 col-sm-12 contentRow'>
@@ -27,6 +28,7 @@
     <app-control-client #controlClient class='controlClient' [ngClass]="{'show': clientMode === true}"></app-control-client>
     <app-control-appointment #controlAppointment class='controlAppointment' [ngClass]="{'show': appointmentMode === true}"></app-control-appointment>
     <app-control-invoice #controlInvoice class='controlInvoice' [ngClass]="{'show': invoiceMode === true}"></app-control-invoice>
+    <app-settings #controlSettings class='controlSettings' [ngClass]="{'show': settingsMode === true}"></app-settings>
   </div>
 
   <button class='filterIcon' [ngClass]="{'show': controlInvoice.searchInvoices === true && invoiceMode === true && controlInvoice.invoiceSearch.slideDrawer !== true }"><mat-icon (click)='controlInvoice.invoiceSearch.openDrawer();' style='color:white;'>search</mat-icon></button>

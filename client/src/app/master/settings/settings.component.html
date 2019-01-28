@@ -1,0 +1,5 @@
+<mat-card>
+   <button (click)="imageUploader.click();"><mat-icon>add</mat-icon>Upload</button>
+   <button (click)="submitImage();"><mat-icon>add</mat-icon>Submit</button>
+  <input hidden type="file" #imageUploader accept="image/*" (change)="uploadImage($event)">
+</mat-card>

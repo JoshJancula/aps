@@ -121,22 +121,20 @@ module.exports = function (app) {
 						FranchiseId: req.body.franchise,
 					},
 				}).then(function (a) {
-					// let start = moment(req.body.dateFrom).format('MM/DD/YYYY');
-					// let end = moment(req.body.dateTo).format('MM/DD/YYYY');
-					let start = req.body.dateFrom;
-					let end = req.body.dateTo;
+					let start = moment(req.body.dateFrom).format('MM/DD/YYYY');
+					let end = moment(req.body.dateTo).format('MM/DD/YYYY');
 					let inv = [];
 
 					a.forEach(b => {
 						let createdAt = moment(b.createdAt).format('MM/DD/YYYY');
-						if (moment(start).isSame(end)) {
-							if (moment(createdAt).isSame(end)) { inv.push(b); }
+						if (start === end) {
+							if (createdAt == start) { inv.push(b); }
 						} else {
 							if (moment(createdAt).isBefore(end)) {
 								if (moment(createdAt).isAfter(start)) { inv.push(b); }
 							}
-							if (moment(createdAt).isSame(end)) { inv.push(b); }
-							if (moment(createdAt).isSame(start)) { inv.push(b); }
+							if (createdAt == start) { inv.push(b); }
+							if (createdAt == end) { inv.push(b); }
 						}
 
 					});

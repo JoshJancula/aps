@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
-// import { FileUpload } from './fileupload';
-import { AngularFireStorage } from 'firebase/storage';
+import { FirebaseApp } from '@angular/fire';
+import { UserService } from './user.service';
+
+import 'firebase/storage';
 
 @Injectable({
 	providedIn: 'root'
@@ -10,11 +11,11 @@ import { AngularFireStorage } from 'firebase/storage';
 export class UploadFileService {
 
 	private basePath = '/uploads';
-	private progress: { percentage: number } = { percentage: 0 };
 
-	constructor(private storage: AngularFireStorage) { }
+	constructor(public app: FirebaseApp, private userService: UserService) { }
 
 	pushFileToStorage(name, file, progress: { percentage: number }) {
+		console.log('name: ', name, 'file: ', file);
 		const storageRef = firebase.storage().ref();
 		const uploadTask = storageRef.child(`${this.basePath}/${name}`).put(file);
 
@@ -32,6 +33,7 @@ export class UploadFileService {
 				// success
 				uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
 					console.log('File available at', downloadURL); // this will be avatar
+					setTimeout(() => this.userService.updateProfileImage(downloadURL), 500);
 				});
 			}
 		);
@@ -39,7 +41,7 @@ export class UploadFileService {
 
 
 	delete(downloadUrl) { // delete old avatar
-		return this.storage.storage.refFromURL(downloadUrl).delete();
+		return firebase.storage().refFromURL(downloadUrl).delete();
 	  }
 
 }

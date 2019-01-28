@@ -18,11 +18,11 @@
     margin: 2%;
 }
 
-.controlInvoice, .calendar, .controlAppointment, .controlUser, .controlFranchise, .controlClient {
+.controlInvoice, .controlSettings, .calendar, .controlAppointment, .controlUser, .controlFranchise, .controlClient {
     display: none;
 }
 
-.controlInvoice.show, .calendar.show, .controlAppointment.show, .controlUser.show, .controlFranchise.show, .controlClient.show {
+.controlInvoice.show, .calendar.show, .controlSettings.show, .controlAppointment.show, .controlUser.show, .controlFranchise.show, .controlClient.show {
     display: block;
     overflow-x: hidden !important;
     overflow-y: auto;

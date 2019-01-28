@@ -133,8 +133,8 @@
         <br>
       </div>
       <span class='optionBoxes' *ngFor="let option of ppfOptions">
-        <mat-checkbox  (change)="option.value = 0; option.quantity = 1;" color='primary'
-          [(ngModel)]="option.selected">{{ option.model }}</mat-checkbox>
+        <mat-checkbox (change)="option.value = 0; option.quantity = 1;" color='primary' [(ngModel)]="option.selected">{{
+          option.model }}</mat-checkbox>
       </span>
       <div *ngFor="let option of ppfOptions">
 
@@ -175,8 +175,7 @@
         <br>
       </div>
       <span class='optionBoxes' *ngFor="let option of windowOptions">
-        <mat-checkbox  color='primary' (change)="option.value = 0; option.quantity = 1;"
-          [(ngModel)]="option.selected">{{
+        <mat-checkbox color='primary' (change)="option.value = 0; option.quantity = 1;" [(ngModel)]="option.selected">{{
           option.model }}</mat-checkbox>
       </span>
       <div *ngFor="let option of windowOptions">
@@ -184,7 +183,7 @@
         <div class='row' *ngIf='option.selected === true'>
           <div class='col-lg-6 col-sm-6'>
             <mat-form-field>
-              <input matInput [readonly]='option.id !== 6'  [(ngModel)]="option.model" />
+              <input matInput [readonly]='option.id !== 6' [(ngModel)]="option.model" />
             </mat-form-field>
           </div>
           <div class='col-lg-3 col-sm-3'>
@@ -202,10 +201,11 @@
               <mat-select placeholder="Quantity" [(ngModel)]="option.quantity">
                 <mat-option (click)="updateTotal();" *ngFor="let num of numbers" [value]="num">{{ num }}</mat-option>
               </mat-select>
-              <mat-form-field *ngIf='manualAmountInput === true'>
-                <input matInput placeholder="Quantity" [(ngModel)]="option.quantity" />
-              </mat-form-field>
             </mat-form-field>
+            <mat-form-field *ngIf='manualAmountInput === true'>
+              <input matInput placeholder="Quantity" [(ngModel)]="option.quantity" />
+            </mat-form-field>
+
           </div>
         </div>
       </div>
@@ -216,12 +216,13 @@
     <div *ngIf="serviceSelected === true">
       <button class='submit' (click)="addRO = true; addStock = false; addVIN = false;" mat-button>Add RO#</button>
       <button class='submit' (click)="addStock = true; addVIN = false;" mat-button>Add Stock#</button>
-      <button class='submit'  *ngIf='cordova == false;'  (click)="addStock = false; addVIN = true;"  mat-button>Add
+      <button class='submit' *ngIf='cordova == false;' (click)="addStock = false; addVIN = true;" mat-button>Add
         VIN#</button>
-        <button class='submit'  *ngIf='cordova == true;' (click)="addStock = false; addVIN = true;"  mat-button>Manually add
-            VIN#</button>
-        <button class='submit' *ngIf='cordova == true;' (click)="scanVIN();" mat-button>Scan
-            VIN#</button>
+      <button class='submit' *ngIf='cordova == true;' (click)="addStock = false; addVIN = true;" mat-button>Manually
+        add
+        VIN#</button>
+      <button class='submit' *ngIf='cordova == true;' (click)="scanVIN();" mat-button>Scan
+        VIN#</button>
     </div>
     <br>
 
@@ -297,6 +298,7 @@
   <!-- end invoice form -->
 
   <button class='searchButton' (click)='switchToSearch.emit();' mat-button>
-    <mat-icon style="padding-top: 0px;">filter</mat-icon><span style='display:inline-block; width:6px;'></span>View invoices
+    <mat-icon style="padding-top: 0px;">filter</mat-icon><span style='display:inline-block; width:6px;'></span>View
+    invoices
   </button>
 </div>

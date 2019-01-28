@@ -128,7 +128,7 @@ export class InvoiceSearchComponent implements OnInit {
 				} else {
 					if (invoice.Paid === false) { returnThis.push(invoice); }
 				}
-			} else if (moment(newTemp).isSame(moment(this.filter.dateFrom).format('MM/DD/YYYY'))) {
+			} else if (moment(newTemp).isSame(moment(this.filter.dateFrom))) {
 				if (moment(invoice.Date).format('MM/DD/YYYY') === newTemp) { returnThis.push(invoice); }
 			} else { returnThis.push(invoice); }
 		});
@@ -197,6 +197,13 @@ export class InvoiceSearchComponent implements OnInit {
 	emailInvoice(invoice) {
 		const newDialog = this.dialog.open(InvoicePreviewComponent, {
 			data: { content: invoice, action: 'email' },
+			panelClass: 'invoicePreview'
+		});
+	}
+
+	downloadPDF(invoice) {
+		const newDialog = this.dialog.open(InvoicePreviewComponent, {
+			data: { content: invoice, action: 'download' },
 			panelClass: 'invoicePreview'
 		});
 	}

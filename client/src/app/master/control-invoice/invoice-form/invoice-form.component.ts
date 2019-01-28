@@ -201,6 +201,7 @@ export class InvoiceFormComponent implements OnInit {
 		const calc = this.Invoice.Total * this.authService._franchiseInfo.TaxRate;
 		const tax = Math.ceil(calc * 100) / 100;
 		this.Invoice.Total += tax;
+		this.Invoice.Total = Math.ceil(this.Invoice.Total * 100) / 100;
 	}
 
 	pushVehicle() {
@@ -290,21 +291,18 @@ export class InvoiceFormComponent implements OnInit {
 		}
 		this.updateTotal();
 		this.updateInvoiceData();
-		console.log('invoice to save: ', this.Invoice);
 		if (this.editing === false) {
 			this.Invoice.Employee = this.authService.currentUser.Name;
 			this.Invoice.EmployeeId = this.authService.currentUser.id;
 			this.Invoice.FranchiseId = this.authService.currentUser.FranchiseId;
 			this.invoiceService.createInvoice(this.Invoice).subscribe(res => {
 				console.log('response: ', res);
-			}, error => {
-				console.log('error: ', error);
-			});
+			}, error => { this.utilService.alertError(`Error submitting invoice, please try again.`); });
 		} else {
 			this.Invoice.EditedBy = this.authService.currentUser.Name;
 			this.invoiceService.updateInvoice(this.selectedId, this.Invoice).subscribe(res => {
 				console.log(res);
-			});
+			}, error => { this.utilService.alertError(`Error submitting invoice, please try again.`); });
 		}
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
@@ -359,7 +357,6 @@ export class InvoiceFormComponent implements OnInit {
 		this.customPinstripes = JSON.parse(data.CustomPinstripe);
 		this.serviceTypes = JSON.parse(data.OtherServices);
 		if (this.customPinstripes.quantity !== 0) { this.customPinstriping = true; }
-		// this.calculateTax = this.Invoice.CalcTax;
 		this.updateTotal();
 	}
 

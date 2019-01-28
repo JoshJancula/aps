@@ -25,9 +25,13 @@
     margin: 2%;
 }
 
-.optionBoxes  {
-    margin: 3%;
+/* .optionBoxes  {
+    margin: 2%;
     padding: 3%;
+} */
+
+.mat-checkbox {
+    margin: 2%;
 }
 
 .mat-chip {

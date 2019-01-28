@@ -43,11 +43,15 @@ export class LoginComponent implements OnInit {
 			console.log('login response: ', res);
 			if (res.status === 200) {
 				localStorage.setItem('jwtToken', res.json().token);
+				console.log('res.json() ', res.json());
+				localStorage.removeItem('currentUser');
 				this.authService.currentUser.Name = res.json().user.FirstName + ' ' + res.json().user.LastName;
 				this.authService.currentUser.Role = res.json().user.Role;
+				this.authService.currentUser.Email = res.json().user.Email;
 				this.authService.currentUser.Username = res.json().user.Username;
 				this.authService.currentUser.Phone = res.json().user.Phone;
 				this.authService.currentUser.id = res.json().user.id;
+				this.authService.currentUser.Avatar = res.json().user.Avatar;
 				this.authService.currentUser.FranchiseId = res.json().user.FranchiseId;
 				localStorage.setItem('currentUser', JSON.stringify(this.authService.currentUser));
 				this.navigate(res.json().user.Role);

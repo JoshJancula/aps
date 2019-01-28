@@ -30,8 +30,13 @@
 
   <div class='row search' *ngIf="searchClients === true">
     <mat-card *ngFor="let client of clients">
-      <div class="card-heading">Name: {{client.Name}}</div>
-      <div >
+      <div class="card-heading">
+        <span *ngIf="client.Name !==''">{{client.Name}}<br></span>
+        <span *ngIf="client.Address !==''">{{client.Address}}<br></span>
+        <span *ngIf="client.Email !==''">{{client.Email}}<br></span>
+        <span *ngIf="client.Phone !==''">{{client.Phone}}</span>
+      </div>
+      <div>
         <br>
         <button (click)="editClient(client);" mat-button>Edit</button>
       </div>

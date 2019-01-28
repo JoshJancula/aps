@@ -32,6 +32,19 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { InputEmailDialogComponent } from './input-email-dialog/input-email-dialog.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { SettingsComponent } from './master/settings/settings.component';
+import { environment } from '../environments/environment';
+
+const config = {
+	apiKey: 'AIzaSyBTiizpyWeqHfXdFDQsd6IoMdNWYvkceS8',
+	authDomain: 'amee-store.firebaseapp.com',
+	databaseURL: 'https://amee-store.firebaseio.com',
+	projectId: 'amee-store',
+	storageBucket: 'amee-store.appspot.com',
+	messagingSenderId: '457253723299'
+};
 
 @NgModule({
 	entryComponents: [
@@ -41,7 +54,7 @@ import { InputEmailDialogComponent } from './input-email-dialog/input-email-dial
 		InvoiceSearchComponent,
 		InvoicePreviewComponent,
 		ErrorDialogComponent,
-		InputEmailDialogComponent
+		InputEmailDialogComponent,
 	],
 	declarations: [
 		AppComponent,
@@ -60,6 +73,7 @@ import { InputEmailDialogComponent } from './input-email-dialog/input-email-dial
 		InvoicePreviewComponent,
 		ErrorDialogComponent,
 		InputEmailDialogComponent,
+		SettingsComponent
 	],
 	imports: [
 		BrowserModule,
@@ -125,6 +139,8 @@ import { InputEmailDialogComponent } from './input-email-dialog/input-email-dial
 		BrowserAnimationsModule,
 		HttpClientModule,
 		HttpModule,
+		AngularFireModule.initializeApp(config),
+		AngularFireDatabaseModule,
 		NgxMaterialTimepickerModule.forRoot(),
 		RouterModule.forRoot([
 			{ path: '', component: LoginComponent },

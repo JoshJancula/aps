@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { InputEmailDialogComponent } from 'src/app/input-email-dialog/input-email-dialog.component';
 import { UtilService } from '../../../services/util.service';
 import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -33,6 +34,7 @@ export class InvoicePreviewComponent implements OnInit {
 	calcTax = false;
 	printing = false;
 	clients: any;
+	_printIframe: any;
 
 	constructor(private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { this.getClients(); }
 
@@ -44,23 +46,55 @@ export class InvoicePreviewComponent implements OnInit {
 
 	performAction() {
 		switch (this.data.action) {
-			case 'print': this.print(); break;
+			case 'print': this.generatePDF('print'); break;
 			case 'email': this.emailInvoice(); break;
+			case 'download': this.generatePDF('download'); break;
 			case 'open': break;
 		}
 	}
 
-	print() {
-		// const pdf = new jsPDF();
-		// const div: HTMLDivElement = document.querySelector('#previewContent');
-		// setTimeout(() => pdf.fromHTML(div.innerHTML), 2000);
-  		// setTimeout(() => pdf.save('test.pdf'), 3000);
-		this.printing = true;
-		setTimeout(() => { window.print(); this.dialogRef.close(); this.printing = false; }, 100);
+	generatePDF(action) {
+		const data = document.querySelector('#previewContent');
+		html2canvas(data).then(canvas => {
+			const imgWidth = 208;
+			const imgHeight = canvas.height * imgWidth / canvas.width;
+			const contentDataURL = canvas.toDataURL('image/png');
+			let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+			let position = 0;
+			pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+			if (action === 'download') {
+			setTimeout(() => { pdf.save(`Invoice # ${this.invoiceNumber}, ${this.formatDatePDF(this.data.content.createdAt)}`); this.dialogRef.close(); }, 100); // Generated PDF
+			} else {
+				let blob = pdf.output('blob');
+				this.print(blob);
+				this.dialogRef.close();
+			}
+		});
+	}
+
+	print(blob) {
+		const fileUrl = URL.createObjectURL(blob);  // we will use url for iframe src
+		let iframe = this._printIframe;
+		if (!this._printIframe) {
+			iframe = this._printIframe = document.createElement('iframe');
+			document.body.appendChild(iframe);
+			iframe.style.display = 'none';
+			iframe.onload = function () {
+				setTimeout(() => {
+					iframe.focus(); // print contents of iframe window
+					iframe.contentWindow.print();
+				}, 10);
+			};
+		}
+		iframe.src = fileUrl;
 	}
 
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');
+	}
+
+	formatDatePDF(date) {
+		return moment(date).format('MM/DD/YYYY');
 	}
 
 	getClients() {
