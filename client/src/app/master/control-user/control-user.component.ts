@@ -40,13 +40,13 @@ export class ControlUserComponent implements OnInit {
 
 	// tslint:disable-next-line:max-line-length
 	constructor(public authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
-		this.getUsers();
 	}
 
 	ngOnInit() {
 		if (this.authService.currentUser.Role === 'Super') {
 			this.loadFranchises();
 		}
+		this.getUsers();
 	}
 
 	getUsers() {

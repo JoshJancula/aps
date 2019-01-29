@@ -1,5 +1,21 @@
-<mat-card>
-   <button (click)="imageUploader.click();"><mat-icon>add</mat-icon>Upload</button>
-   <button (click)="submitImage();"><mat-icon>add</mat-icon>Submit</button>
-  <input hidden type="file" #imageUploader accept="image/*" (change)="uploadImage($event)">
-</mat-card>
+<div class='row' class='search'>
+  <mat-card>
+    <div class='row'>
+      <div class='col-md-6'>
+        <img *ngIf="authService.currentUser.Avatar !== null" class='userAvatar' src="{{authService.currentUser.Avatar}}" />
+        <span *ngIf="authService.currentUser.Avatar === null" class='userInitials'>{{ authService.currentUser.Initials
+          }}</span>
+        <span class='userName'>{{ authService.currentUser.Name }}</span><br>
+        <button class='uploadImageButton' (click)="imageUploader.click();" mat-button>Upload</button>
+        <input hidden type="file" #imageUploader accept="image/*" (change)="uploadImage($event)">
+      </div>
+      <div class='col-md-6'>
+        <mat-radio-group class="radio-group" color='primary' [(ngModel)]="userAction">
+          <div class='radioDivs' *ngFor="let action of actions">
+             <span > {{ action }}</span>&nbsp;<span style='display: inline-block; width: 12px;'>&nbsp;</span><mat-radio-button color='primary' class="radio-button" [value]="action"> </mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+    </div>
+  </mat-card>
+</div>

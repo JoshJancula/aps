@@ -112,11 +112,11 @@ export class InvoiceFormComponent implements OnInit {
 	];
 
 	constructor(private barcodeScanner: BarcodeScanner, private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
-		this.loadFranchises();
-		this.getClients();
 	}
 
 	ngOnInit() {
+		this.loadFranchises();
+		this.getClients();
 		this.generateNumbers();
 		if ((<any>window).deviceReady === true) { this.cordova = true; }
 	}

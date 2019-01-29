@@ -25,7 +25,7 @@ export class ControlClientComponent implements OnInit {
 		Description: '',
 		FranchiseId: this.authService.currentUser.FranchiseId
 	};
-	clients: any;
+	clients = [];
 	franchises: any;
 	editing = false;
 	selectedId = '';
@@ -34,10 +34,10 @@ export class ControlClientComponent implements OnInit {
 
 	// tslint:disable-next-line:max-line-length
 	constructor(private authService: AuthService, private messagingService: MessageService, private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
-		this.getClients();
 	}
 
 	ngOnInit() {
+		this.getClients();
 	}
 
 	setView() {
@@ -124,10 +124,6 @@ export class ControlClientComponent implements OnInit {
 				console.log('error deleting');
 			}
 		});
-	}
-
-	states() {
-		return this.utilService.states;
 	}
 
 	formatPhone() {

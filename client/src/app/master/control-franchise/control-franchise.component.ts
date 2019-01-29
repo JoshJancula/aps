@@ -46,10 +46,10 @@ export class ControlFranchiseComponent implements OnInit {
 	location: ''; // this is dummy right now;
 
 	constructor(public authService: AuthService, private phonePipe: PhonePipe, private userService: UserService, private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
-		this.loadFranchises();
 	}
 
 	ngOnInit() {
+		this.loadFranchises();
 	}
 
 	setView() {

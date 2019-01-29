@@ -72,8 +72,33 @@
 }
 
 .desktopView {
-    margin-top: 2%;
+    margin-top: 1%;
+    padding-left: 2%;
     overflow-y: hidden;
+}
+
+.userAvatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 90px;
+   margin-left: 21%;
+}
+
+.userInitials {
+    border-radius: 90px;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    margin-bottom: 2%;
+    display: inline-block;
+}
+
+.userName {
+    display: block;
+    margin-top: 13%;
+     color: white;
+     font-size: 12px;
 }
 
 button, button:focus { outline: none; }

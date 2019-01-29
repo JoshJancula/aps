@@ -84,6 +84,10 @@
           <h3>Paid</h3>
         </span>
       </div>
+      <!-- signature -->
+      <div class='row' *ngIf="signature !== ''">
+          <img src="{{ signature }}" class='signature' />
+        </div>
     </div>
   </div>
 </div>
@@ -179,5 +183,6 @@
     <button class='printButton' (click)='generatePDF("print")' mat-button>Print</button>
     <button class='printButton' (click)='emailInvoice()' mat-button>Email</button>
     <button class='printButton' (click)='generatePDF("download")' mat-button>Download PDF</button>
+    <button class='printButton' (click)='openSignaturePad()' mat-button>Sign</button>
   </div>
 </div>

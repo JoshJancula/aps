@@ -37,6 +37,7 @@
     "angular-cordova": "^1.0.0",
     "angular-hammer": "^2.2.0",
     "angular2-jwt": "^0.2.3",
+    "angular2-signaturepad": "^2.8.0",
     "bootstrap": "^4.2.1",
     "core-js": "^2.6.3",
     "crypto": "^1.0.1",

@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
 				this.authService.currentUser.id = res.json().user.id;
 				this.authService.currentUser.Avatar = res.json().user.Avatar;
 				this.authService.currentUser.FranchiseId = res.json().user.FranchiseId;
+				this.authService.currentUser.Initials = `${res.json().user.FirstName.substr(0, 1)}${res.json().user.LastName.substr(0, 1)}`;
 				localStorage.setItem('currentUser', JSON.stringify(this.authService.currentUser));
 				this.navigate(res.json().user.Role);
 			}

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { FirebaseApp } from '@angular/fire';
 import { UserService } from './user.service';
-
 import 'firebase/storage';
+import { AuthService } from './auth.service';
+import { InvoiceService } from './invoice.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -12,12 +13,11 @@ export class UploadFileService {
 
 	private basePath = '/uploads';
 
-	constructor(public app: FirebaseApp, private userService: UserService) { }
+	constructor(private invoiceService: InvoiceService, public app: FirebaseApp, private userService: UserService, private authService: AuthService) { }
 
-	pushFileToStorage(name, file, progress: { percentage: number }) {
-		console.log('name: ', name, 'file: ', file);
-		const storageRef = firebase.storage().ref();
-		const uploadTask = storageRef.child(`${this.basePath}/${name}`).put(file);
+	pushFileToStorage(file, progress: { percentage: number }, action) {
+		const storageRef = firebase.storage().ref('/uploads/' + file.name);
+		const uploadTask = storageRef.put(file);
 
 		uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
 			(snapshot) => {
@@ -32,16 +32,27 @@ export class UploadFileService {
 			() => {
 				// success
 				uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-					console.log('File available at', downloadURL); // this will be avatar
-					setTimeout(() => this.userService.updateProfileImage(downloadURL), 500);
+					this.userService.updateProfileImage(downloadURL).subscribe(res => {
+						if (action === 'avatar') {
+							if (this.authService.currentUser.Avatar !== '') {
+								this.deleteImage(this.authService.currentUser.Avatar);
+								this.authService.currentUser.Avatar = downloadURL;
+								localStorage.removeItem('currentUser');
+								localStorage.setItem('currentUser', JSON.stringify(this.authService.currentUser));
+							} else {
+								// add signature
+							}
+						}
+					});
 				});
 			}
 		);
 	}
 
 
-	delete(downloadUrl) { // delete old avatar
-		return firebase.storage().refFromURL(downloadUrl).delete();
-	  }
+	deleteImage(url) { // delete old avatar
+		console.log('url to delete: ', url);
+		return firebase.storage().refFromURL(url).delete();
+	}
 
 }

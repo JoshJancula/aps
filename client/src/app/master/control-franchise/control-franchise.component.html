@@ -15,7 +15,7 @@
         <input matInput placeholder="Business email" [(ngModel)]="Franchise.Email" />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="State sales tax rate" pattern="[0-9]*" [(ngModel)]="Franchise.TaxRate" />
+        <input matInput placeholder="State sales tax rate" [(ngModel)]="Franchise.TaxRate" />
         <mat-hint align="start">example: 0.0725</mat-hint>
       </mat-form-field>
       <div *ngIf='editing === false;'>

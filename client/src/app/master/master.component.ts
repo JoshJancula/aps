@@ -9,7 +9,7 @@ import { HttpEventType } from '@angular/common/http';
 import { UserService } from '../services/user.service';
 import { MessageService } from '../services/message.service';
 import { AuthService } from '../services/auth.service';
-import {MatBottomSheet, MatBottomSheetRef } from '@angular/material';
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 import { BottomPopupComponent } from '../bottom-popup/bottom-popup.component';
 import { ControlInvoiceComponent } from './control-invoice/control-invoice.component';
 import { FranchiseService } from '../services/franchise.service';
@@ -44,12 +44,12 @@ export class MasterComponent implements OnInit {
 
 	ngOnInit() {
 		this.messagingService.initSocket();
-			this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
-				console.log('socket response: ', response);
-			});
-			this.subscribeToUpdates();
+		this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
+			console.log('socket response: ', response);
+		});
+		this.subscribeToUpdates();
 		setTimeout(() => this.sendConnectionMessage(), 500);
-		this.loadFranchiseInfo();
+		setTimeout(() => this.loadFranchiseInfo(), 600);
 	}
 
 	openPopup() {
@@ -61,16 +61,19 @@ export class MasterComponent implements OnInit {
 				case 'users': this.openUsers(); break;
 				case 'invoices': this.openInvoices(); break;
 				case 'appointments': this.openAppointments(); break;
+				case 'settings': this.openSettings(); break;
 			}
 		});
 	}
 
 	loadFranchiseInfo() {
-		this.franchiseService.getFranchise(this.authService.currentUser.FranchiseId).subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-			this.authService._franchiseInfo = events.body;
-			}
-		});
+		if (this.authService.currentUser.FranchiseId !== '') {
+			this.franchiseService.getFranchise(this.authService.currentUser.FranchiseId).subscribe((events) => {
+				if (events.type === HttpEventType.Response) {
+					this.authService._franchiseInfo = events.body;
+				}
+			});
+		} else { this.loadFranchiseInfo(); }
 	}
 
 	sendConnectionMessage() {
@@ -113,6 +116,7 @@ export class MasterComponent implements OnInit {
 		this.clientMode = false;
 		this.appointmentMode = false;
 		this.invoiceMode = false;
+		this.settingsMode = false;
 		this.screen = 'Staff';
 	}
 
@@ -122,6 +126,7 @@ export class MasterComponent implements OnInit {
 		this.clientMode = false;
 		this.appointmentMode = false;
 		this.invoiceMode = false;
+		this.settingsMode = false;
 		this.screen = 'Franchises';
 	}
 
@@ -131,6 +136,7 @@ export class MasterComponent implements OnInit {
 		this.franchiseMode = false;
 		this.appointmentMode = false;
 		this.invoiceMode = false;
+		this.settingsMode = false;
 		this.screen = 'Clients';
 	}
 
@@ -140,6 +146,7 @@ export class MasterComponent implements OnInit {
 		this.userMode = false;
 		this.franchiseMode = false;
 		this.invoiceMode = false;
+		this.settingsMode = false;
 		this.screen = 'Appointments';
 	}
 
@@ -149,6 +156,7 @@ export class MasterComponent implements OnInit {
 		this.clientMode = false;
 		this.userMode = false;
 		this.franchiseMode = false;
+		this.settingsMode = false;
 		this.screen = 'Invoicing';
 	}
 
@@ -159,7 +167,7 @@ export class MasterComponent implements OnInit {
 		this.clientMode = false;
 		this.userMode = false;
 		this.franchiseMode = false;
-		this.screen = 'Settings';
+		this.screen = 'My account';
 	}
 
 }

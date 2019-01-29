@@ -36,6 +36,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { SettingsComponent } from './master/settings/settings.component';
 import { environment } from '../environments/environment';
+import { SignatureDialogComponent } from './signature-dialog/signature-dialog.component';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 const config = {
 	apiKey: 'AIzaSyBTiizpyWeqHfXdFDQsd6IoMdNWYvkceS8',
@@ -55,6 +57,7 @@ const config = {
 		InvoicePreviewComponent,
 		ErrorDialogComponent,
 		InputEmailDialogComponent,
+		SignatureDialogComponent
 	],
 	declarations: [
 		AppComponent,
@@ -73,7 +76,8 @@ const config = {
 		InvoicePreviewComponent,
 		ErrorDialogComponent,
 		InputEmailDialogComponent,
-		SettingsComponent
+		SettingsComponent,
+		SignatureDialogComponent
 	],
 	imports: [
 		BrowserModule,
@@ -114,6 +118,7 @@ const config = {
 		MatFormFieldModule,
 		MatInputModule,
 		MatSlideToggleModule,
+		SignaturePadModule,
 		MatSliderModule,
 		MatButtonModule,
 		MatDialogModule,

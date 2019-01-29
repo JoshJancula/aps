@@ -1,0 +1,108 @@
+.mat-slide-toggle {
+    margin-left: 20%;
+}
+
+.mat-form-field {
+    margin: 2%;
+}
+
+.submit {
+    margin-top: 5%;
+}
+
+.toggle {
+    display: inline-block;
+}
+
+.mat-card {
+    background: #D7D6D6;
+    opacity: .9;
+    border-radius: 10px !important;
+    width: 90%;
+    margin-left: 2%;
+    margin-bottom: 1%;
+}
+
+.mat-card:first-child {
+    margin-top: 1%;
+}
+
+.form, .search {
+    width: 87vw;
+    overflow-x: hidden;
+}
+
+.userAvatar {
+    height: 80px;
+    width: 80px;
+    border-radius: 90px;
+   /* margin-left: 21%; */
+}
+
+.userInitials {
+    border-radius: 90px;
+    background-color: blue;
+    color: white;
+    font-size: 18px;
+    padding: 20px;
+    margin-bottom: 2%;
+    display: inline-block;
+}
+
+.uploadImageButton {
+    margin-left: -4%;
+    margin-top: -3%;
+    width: 100px;
+    font-size: 12px;
+}
+
+.mat-radio-group {
+    display: block;
+    float: right;
+}
+
+.radioDivs {
+    width: 100%;
+    position: relative;
+    right: -10px;
+    text-align: right;
+}
+
+.userName {
+    display: inline-block;
+    margin-left: 2%;
+    margin-top: 2%;
+    font-size: 18px;
+}
+
+@media (max-width: 1200px) { 
+
+    .mat-card {
+        background: #D7D6D6;
+        opacity: .9;
+        border-radius: 10px !important;
+        width: 92%;
+        margin-left: 2%;
+        margin-bottom: 1%;
+    }
+    }
+
+@media (min-width: 769px) and (max-width: 992px) {
+
+    .search, .form{
+            width: 105vw;
+    }
+}
+
+@media (max-width: 768px) { 
+
+    .mat-card {
+    width: 96%;
+    margin-left: 2%;
+    }
+
+    .form, .search {
+        width: 100vw;
+        overflow-x: hidden;
+    }
+}

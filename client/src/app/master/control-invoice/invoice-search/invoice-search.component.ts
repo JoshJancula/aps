@@ -44,12 +44,12 @@ export class InvoiceSearchComponent implements OnInit {
 	_printIframe;
 
 	constructor(private router: Router, private dialog: MatDialog, private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
-		this.loadInvoices();
-		this.loadFranchises();
-		this.getClients();
 	}
 
 	ngOnInit() {
+		this.loadInvoices();
+		this.loadFranchises();
+		this.getClients();
 	}
 
 	openDrawer() {

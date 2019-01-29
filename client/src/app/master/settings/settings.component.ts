@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UploadFileService } from '../../services/upload-file.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -10,8 +11,11 @@ import { UploadFileService } from '../../services/upload-file.service';
 export class SettingsComponent implements OnInit {
 
 	targetFile: any;
-	private progress: { percentage: number } = { percentage: 0 };
-	constructor(public uploadService: UploadFileService) { }
+	progress: { percentage: number } = { percentage: 0 };
+	actions = ['Change password', 'Edit my info', 'Set background'];
+	userAction = '';
+
+	constructor(public uploadService: UploadFileService, public authService: AuthService) { }
 
 	ngOnInit() {
 	}
@@ -19,14 +23,14 @@ export class SettingsComponent implements OnInit {
 	uploadImage($event) {
 		if ($event.target.files.length > 0) {
 			let reader = new FileReader();
-				reader.onload = () => {  };
-				reader.onerror = (error) => {  };
-				this.targetFile = $event.target.files[0];
+			reader.onload = () => { this.submitImage(); };
+			reader.onerror = (error) => { };
+			this.targetFile = $event.target.files[0];
 		}
 	}
 
 	submitImage() {
-		this.uploadService.pushFileToStorage( 'Test image', this.targetFile, this.progress);
+		this.uploadService.pushFileToStorage(this.targetFile, this.progress, 'avatar');
 	}
 
 }

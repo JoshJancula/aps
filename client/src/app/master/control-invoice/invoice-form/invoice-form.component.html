@@ -64,7 +64,7 @@
           <p>{{ type.model }}</p>
           <br>
         </div>
-        <div class='row'>
+        <div class='row priceAndQuantity'>
           <div class='col-lg-6 col-sm-6'>
             <mat-form-field>
               <input matInput [readonly]='type.id !== serviceTypes[7].id' [(ngModel)]="type.model" />
@@ -98,7 +98,7 @@
     <!-- custom striping -->
     <mat-checkbox *ngIf="serviceTypes[3].checked === true || serviceTypes[1].checked === true" color="primary"
       [(ngModel)]="customPinstriping">Add custom pinstriping?</mat-checkbox>
-    <div class='row' *ngIf='customPinstriping === true'>
+    <div class='row priceAndQuantity' *ngIf='customPinstriping === true'>
       <div class='col-lg-6 col-sm-6'>
         <mat-form-field placeholder="Description">
           <input matInput [(ngModel)]="customPinstripes.description" />
@@ -138,7 +138,7 @@
       </span>
       <div *ngFor="let option of ppfOptions">
 
-        <div class='row' *ngIf='option.selected === true'>
+        <div class='row priceAndQuantity' *ngIf='option.selected === true'>
           <div class='col-lg-6 col-sm-6'>
             <mat-form-field>
               <input matInput [readonly]="option.id !== 11" [(ngModel)]="option.model" />

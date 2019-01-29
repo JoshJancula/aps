@@ -50,14 +50,19 @@
 
 .buttons {
     position: absolute;
-    bottom: 24px;
-    width: 79%;
+    bottom: 36px;
+    width: 80%;
     background: white;
 }
 
 .content {
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.signature {
+    height: 100px;
+    width: 200px;
 }
 
 

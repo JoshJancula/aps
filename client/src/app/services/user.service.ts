@@ -92,7 +92,7 @@ export class UserService {
 
 	updateProfileImage(avatar) {
 		console.log('avatar passed to uploadProfile: ', avatar);
-		const updateObject = { Avatar: avatar };
+		const updateObject = { Avatar: avatar, id: this.authService.currentUser.id };
 		console.log('updateObject: ', updateObject);
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
@@ -103,6 +103,7 @@ export class UserService {
 			console.log('found token: ', localStorage.getItem('jwtToken'));
 			console.log('userId: ', this.authService.currentUser.id);
 			if (window.location.host === 'localhost:4200') {
+				console.log('should be posting to localhost');
 				const localUrl = `http://localhost:8080/api/users/avatar/${this.authService.currentUser.id}`;
 				return this.http.put(localUrl, updateObject, httpOptions);
 			} else {

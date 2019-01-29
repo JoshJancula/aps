@@ -47,13 +47,13 @@ export class ControlAppointmentComponent implements OnInit {
 
 	// tslint:disable-next-line:max-line-length
 	constructor(private phonePipe: PhonePipe, private authService: AuthService, private messagingService: MessageService, private appointmentService: AppointmentService, private utilService: UtilService) {
+	}
+
+	ngOnInit() {
 		this.loadAppointments();
 		this.getClients();
 		this.loadFranchises();
 		this.getUsers();
-	}
-
-	ngOnInit() {
 	}
 
 	loadAppointments() {

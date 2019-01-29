@@ -39,4 +39,9 @@ export class BottomPopupComponent implements OnInit {
 		event.preventDefault();
 	}
 
+	openSettings() {
+		this.bottomSheetRef.dismiss('settings');
+		event.preventDefault();
+	}
+
 }

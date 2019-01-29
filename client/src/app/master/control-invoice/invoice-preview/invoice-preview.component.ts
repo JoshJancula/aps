@@ -8,6 +8,7 @@ import { InputEmailDialogComponent } from 'src/app/input-email-dialog/input-emai
 import { UtilService } from '../../../services/util.service';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { SignatureDialogComponent } from '../../../signature-dialog/signature-dialog.component';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -35,13 +36,14 @@ export class InvoicePreviewComponent implements OnInit {
 	printing = false;
 	clients: any;
 	_printIframe: any;
+	signature = '';
 
-	constructor(private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { this.getClients(); }
+	constructor(private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {  }
 
 	ngOnInit() {
 		this.setServices(this.data.content);
 		setTimeout(() => this.performAction(), 500);
-
+		this.getClients();
 	}
 
 	performAction() {
@@ -63,7 +65,7 @@ export class InvoicePreviewComponent implements OnInit {
 			let position = 0;
 			pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
 			if (action === 'download') {
-			setTimeout(() => { pdf.save(`Invoice # ${this.invoiceNumber}, ${this.formatDatePDF(this.data.content.createdAt)}`); this.dialogRef.close(); }, 100); // Generated PDF
+				setTimeout(() => { pdf.save(`Invoice # ${this.invoiceNumber}, ${this.formatDatePDF(this.data.content.createdAt)}`); this.dialogRef.close(); }, 1000); // Generated PDF
 			} else {
 				let blob = pdf.output('blob');
 				this.print(blob);
@@ -73,7 +75,7 @@ export class InvoicePreviewComponent implements OnInit {
 	}
 
 	print(blob) {
-		const fileUrl = URL.createObjectURL(blob);  // we will use url for iframe src
+		const fileUrl = URL.createObjectURL(blob);
 		let iframe = this._printIframe;
 		if (!this._printIframe) {
 			iframe = this._printIframe = document.createElement('iframe');
@@ -81,9 +83,9 @@ export class InvoicePreviewComponent implements OnInit {
 			iframe.style.display = 'none';
 			iframe.onload = function () {
 				setTimeout(() => {
-					iframe.focus(); // print contents of iframe window
+					iframe.focus();
 					iframe.contentWindow.print();
-				}, 10);
+				}, 100);
 			};
 		}
 		iframe.src = fileUrl;
@@ -234,6 +236,17 @@ export class InvoicePreviewComponent implements OnInit {
 			let service = { name: parsed.description, quantity: parsed.quantity, pricePer: parsed.value, totalPrice: (parsed.value * parsed.quantity) };
 			this.serviceDisplay.push(service);
 		}
+	}
+
+	openSignaturePad() {
+		const newDialog = this.dialog.open(SignatureDialogComponent, {
+			data: '',
+			height: '400px',
+			width: '700px'
+		});
+		newDialog.beforeClose().subscribe(result => {
+			this.signature = newDialog.componentInstance.signatureURL;
+		});
 	}
 
 }
