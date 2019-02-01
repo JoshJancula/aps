@@ -6,7 +6,6 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const PORT = process.env.PORT || 8080;
-const path = require('path');
 const cors = require('cors');
 const db = require("./models");
 const Message = db.sequelize.import('./models/Message.js');
@@ -18,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 
 
-app.all('*', function (req, res, next) {
+app.all('*', (req, res, next) => {
     const origin = req.get('origin');
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -36,14 +35,14 @@ require("./routes/invoice-routes.js")(app);
 require("./routes/email.js")(app);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -59,22 +58,21 @@ app.use(function (err, req, res, next) {
 
 // Syncing sequelize models and then starting our Express app
 // =============================================================
-db.sequelize.sync().then(function () {
-    server.listen(PORT, function () {
+db.sequelize.sync().then(() => {
+    server.listen(PORT, () => {
         console.log("App listening on PORT " + PORT);
         console.log('===================================');
 
         io.on('connection', (socket) => {
 
             // on connection get all messages for user
-            socket.on('connectionInfo', function (data) {
-                console.log('data: ', data);
+            socket.on('connectionInfo', (data) => {
                 let messages = [];
                 Message.findAll({
                     where: {
                         AuthorId: data.AuthorId
                     },
-                }).then(function (x) {
+                }).then((x) => {
                     x.forEach(item => {
                         messages.push(item);
                     });
@@ -82,7 +80,7 @@ db.sequelize.sync().then(function () {
                         where: {
                             RecipientId: data.AuthorId
                         },
-                    }).then(function (y) {
+                    }).then((y) => {
                         y.forEach(z => {
                             messages.push(z);
                         });
@@ -93,50 +91,50 @@ db.sequelize.sync().then(function () {
                 });
             });
 
-            socket.on('update', function (data) {
+            socket.on('update', (data) => {
                 switch (data.Action) {
-					case 'franchises': socket.broadcast.emit('update', { Action: 'updateFranchises' }); break;
-					case 'clients': socket.broadcast.emit('update', { Action: 'updateClients' }); break;
-					case 'users': socket.broadcast.emit('update', { Action: 'updateUsers' }); break;
-					case 'invoices': socket.broadcast.emit('update', { Action: 'updateInvoices' }); break;
-					case 'appointments': socket.broadcast.emit('update', { Action: 'updateAppointments' }); break;
-				}
+                    case 'franchises': socket.broadcast.emit('update', { Action: 'updateFranchises' }); break;
+                    case 'clients': socket.broadcast.emit('update', { Action: 'updateClients' }); break;
+                    case 'users': socket.broadcast.emit('update', { Action: 'updateUsers' }); break;
+                    case 'invoices': socket.broadcast.emit('update', { Action: 'updateInvoices' }); break;
+                    case 'appointments': socket.broadcast.emit('update', { Action: 'updateAppointments' }); break;
+                }
             });
 
             // update that the recipient read the message
-            socket.on('read', function (data) {
-              Message.update({
-                Read: data.Read
-              }, {
-                  where: {
-                    id: data.id
-                  }
-                }).then(function (x) {
-                  console.log('message status updated');
-                })
-                .catch(function (err) {
-                  res.json(err);
-                });
+            socket.on('read', (data) => {
+                Message.update({
+                    Read: data.Read
+                }, {
+                        where: {
+                            id: data.id
+                        }
+                    }).then((x) => {
+                        console.log('message status updated');
+                    })
+                    .catch((err) => {
+                        res.json(err);
+                    });
             });
 
             // when new message is created
-            socket.on('message', function (data) {
-              Message.create({
-                Author: data.Author,
-                AuthorId: data.AuthorId,
-                Recipient: data.Recipient,
-                RecipientId: data.RecipientId,
-                Content: data.Content,
-                MessageType: data.MessageType,
-                Read: data.Read
-              }).then(function (data) {
-                socket.emit('message', {
-                  data
+            socket.on('message', (data) => {
+                Message.create({
+                    Author: data.Author,
+                    AuthorId: data.AuthorId,
+                    Recipient: data.Recipient,
+                    RecipientId: data.RecipientId,
+                    Content: data.Content,
+                    MessageType: data.MessageType,
+                    Read: data.Read
+                }).then((data) => {
+                    socket.emit('message', {
+                        data
+                    });
+                    socket.broadcast.emit('message', {
+                        data
+                    });
                 });
-                socket.broadcast.emit('message', {
-                  data
-                });
-              });
             });
 
         });

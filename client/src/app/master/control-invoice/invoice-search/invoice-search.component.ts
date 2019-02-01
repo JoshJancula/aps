@@ -158,10 +158,6 @@ export class InvoiceSearchComponent implements OnInit {
 		}
 	}
 
-	// editInvoice(invoice) {
-	// 	this.editThis.emit(invoice);
-	// }
-
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');
 	}
@@ -178,6 +174,14 @@ export class InvoiceSearchComponent implements OnInit {
 	openCalendar2(event) {
 		event.preventDefault();
 		this.calendar2.open();
+	}
+
+	getMinDate() {
+		return this.filter.dateFrom;
+	}
+
+	getMaxDate() {
+		return new Date();
 	}
 
 	openPreview(invoice) {

@@ -1,18 +1,17 @@
 const db = require("../models");
 const JancstaPort = require('../config/jancsta');
-const jancsta = new JancstaPort();
 
 // Master Routes
 // =============================================================
-module.exports = function (app) {
+module.exports = (app) => {
 
 	// GET route for getting all appointments
-	app.get("/api/appointments", function (req, res) {
+	app.get("/api/appointments", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
 				db.Appointment.findAll({
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -22,7 +21,7 @@ module.exports = function (app) {
 	});
 
 	// GET route for retrieving a single appointment
-	app.get("/api/appointments/:id", function (req, res) {
+	app.get("/api/appointments/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -30,7 +29,7 @@ module.exports = function (app) {
 					where: {
 						id: req.params.id
 					},
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -40,11 +39,11 @@ module.exports = function (app) {
 	});
 
 	// POST route for saving a new appointment
-	app.post("/api/appointments", function (req, res) {
+	app.post("/api/appointments", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
-				db.Appointment.create(req.body).then(function (x) {
+				db.Appointment.create(req.body).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -54,7 +53,7 @@ module.exports = function (app) {
 	});
 
 	// PUT route for updating appointment
-	app.put("/api/appointments/:id", function (req, res) {
+	app.put("/api/appointments/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -72,10 +71,10 @@ module.exports = function (app) {
 						where: {
 							id: req.body.id
 						}
-					}).then(function (x) {
+					}).then((x) => {
 						res.json(x);
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.json(err);
 					});
 			} else {
@@ -85,7 +84,7 @@ module.exports = function (app) {
 	});
 
 	// DELETE route for deleting an appointment 
-	app.delete("/api/appointments/:id", function (req, res) {
+	app.delete("/api/appointments/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -93,7 +92,7 @@ module.exports = function (app) {
 					where: {
 						id: req.params.id
 					}
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -106,7 +105,7 @@ module.exports = function (app) {
 	//=============================================================================
 
 	// GET route for getting all appointments
-	app.get("/api/appointments/sub/:id", function (req, res) {
+	app.get("/api/appointments/sub/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -114,7 +113,7 @@ module.exports = function (app) {
 					where: {
 						FranchiseId: req.params.id
 					},
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -124,7 +123,7 @@ module.exports = function (app) {
 	});
 
 	// GET route for retrieving a single appointment
-	app.get("/api/appointments/:id", function (req, res) {
+	app.get("/api/appointments/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -132,7 +131,7 @@ module.exports = function (app) {
 					where: {
 						id: req.params.id
 					},
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -142,11 +141,11 @@ module.exports = function (app) {
 	});
 
 	// POST route for saving a new appointment
-	app.post("/api/appointments", function (req, res) {
+	app.post("/api/appointments", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
-				db.Appointment.create(req.body).then(function (x) {
+				db.Appointment.create(req.body).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -156,7 +155,7 @@ module.exports = function (app) {
 	});
 
 	// PUT route for updating appointment
-	app.put("/api/appointments/:id", function (req, res) {
+	app.put("/api/appointments/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -174,10 +173,10 @@ module.exports = function (app) {
 						where: {
 							id: req.body.id
 						}
-					}).then(function (x) {
+					}).then((x) => {
 						res.json(x);
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.json(err);
 					});
 			} else {
@@ -187,7 +186,7 @@ module.exports = function (app) {
 	});
 
 	// DELETE route for deleting an appointment 
-	app.delete("/api/appointments/:id", function (req, res) {
+	app.delete("/api/appointments/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool) {
@@ -195,7 +194,7 @@ module.exports = function (app) {
 					where: {
 						id: req.params.id
 					}
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {

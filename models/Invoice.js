@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-    var Invoice = sequelize.define("Invoice", {
+module.exports = (sequelize, DataTypes) => {
+    const Invoice = sequelize.define("Invoice", {
         
         id: {
             type: DataTypes.INTEGER,
@@ -108,7 +108,7 @@ module.exports = function (sequelize, DataTypes) {
         timestamps: true,
     });
 
-    Invoice.associate = function (models) {
+    Invoice.associate = (models) => {
         Invoice.belongsTo(models.Franchise, {
             foreignKey: {
                 allowNull: false

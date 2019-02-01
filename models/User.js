@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 
-module.exports = function (sequelize, DataTypes) {
-    var User = sequelize.define("User", {
+module.exports = (sequelize, DataTypes) => {
+    const User = sequelize.define("User", {
         Username: {
             id: {
                 type: DataTypes.INTEGER,
@@ -55,11 +55,11 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    User.hook("beforeCreate", function (user) {
+    User.hook("beforeCreate", (user) => {
         user.Password = bcrypt.hashSync(user.Password, bcrypt.genSaltSync(10), null);
     });
 
-    User.associate = function (models) {
+    User.associate = (models) => {
         User.belongsTo(models.Franchise, {
             foreignKey: {
                 allowNull: false

@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-    var Appointment = sequelize.define("Appointment", {
+module.exports = (sequelize, DataTypes) => {
+    const Appointment = sequelize.define("Appointment", {
 
         id: {
             type: DataTypes.INTEGER,
@@ -64,7 +64,7 @@ module.exports = function (sequelize, DataTypes) {
 
     });
 
-    Appointment.associate = function (models) {
+    Appointment.associate = (models) => {
         Appointment.belongsTo(models.Franchise, {
             foreignKey: {
                 allowNull: false

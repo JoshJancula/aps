@@ -3,7 +3,7 @@ const JancstaPort = require('../config/jancsta');
 
 module.exports = function (app) {
 
-    app.post("/api/email", function (req, res) {
+    app.post("/api/email", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
         setTimeout(() => {
             if (jancsta.bool == true) {

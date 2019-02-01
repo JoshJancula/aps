@@ -4,8 +4,7 @@
       <div class='col-md-6'>
         <img *ngIf="authService.currentUser.Avatar !== null" class='userAvatar' src="{{authService.currentUser.Avatar}}" />
         <span *ngIf="authService.currentUser.Avatar === null" class='userInitials'>{{ authService.currentUser.Initials
-          }}</span>
-        <span class='userName'>{{ authService.currentUser.Name }}</span><br>
+          }}</span><br>
         <button class='uploadImageButton' (click)="imageUploader.click();" mat-button>Upload</button>
         <input hidden type="file" #imageUploader accept="image/*" (change)="uploadImage($event)">
       </div>

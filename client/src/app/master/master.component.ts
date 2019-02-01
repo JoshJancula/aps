@@ -167,7 +167,7 @@ export class MasterComponent implements OnInit {
 		this.clientMode = false;
 		this.userMode = false;
 		this.franchiseMode = false;
-		this.screen = 'My account';
+		this.screen = this.authService.currentUser.Name;
 	}
 
 }

@@ -5,15 +5,15 @@ const moment = require('moment');
 
 // Routes
 // =============================================================
-module.exports = function (app) {
+module.exports = (app) => {
 
 	// GET route for getting all users
-	app.get("/api/users", function (req, res) {
+	app.get("/api/users", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
 				db.User.findAll({
-				}).then(function (x) {
+				}).then((x) => {
 					let z = [];
 					x.forEach(y => {
 						const user = {
@@ -39,7 +39,7 @@ module.exports = function (app) {
 	});
 
 	// GET route for retrieving users by franchise
-	app.get("/api/users/:id", function (req, res) {
+	app.get("/api/users/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -47,7 +47,7 @@ module.exports = function (app) {
 					where: {
 						FranchiseId: req.params.id
 					},
-				}).then(function (x) {
+				}).then((x) => {
 					let z = [];
 					x.forEach(y => {
 						if (y.Active == true) {
@@ -75,7 +75,7 @@ module.exports = function (app) {
 	});
 
 	// PUT route for updating users
-	app.put("/api/users/:id", function (req, res) {
+	app.put("/api/users/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -89,10 +89,10 @@ module.exports = function (app) {
 						where: {
 							id: req.body.id
 						}
-					}).then(function (x) {
+					}).then((x) => {
 						res.json(x);
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.json(err);
 					});
 			} else {
@@ -102,7 +102,7 @@ module.exports = function (app) {
 	});
 
 	// PUT route for updating users
-	app.put("/api/users/avatar/:id", function (req, res) {
+	app.put("/api/users/avatar/:id", (req, res) => {
 		console.log('should be updating the fucking avatar');
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
@@ -114,10 +114,10 @@ module.exports = function (app) {
 						where: {
 							id: req.body.id
 						}
-					}).then(function (x) {
+					}).then((x) => {
 						res.json(x);
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.json(err);
 					});
 			} else {
@@ -127,7 +127,7 @@ module.exports = function (app) {
 	});
 
 	// PUT route for updating user password
-	app.put("/api/users/:id", function (req, res) {
+	app.put("/api/users/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -137,10 +137,10 @@ module.exports = function (app) {
 						where: {
 							id: req.body.id
 						}
-					}).then(function (x) {
+					}).then((x) => {
 						res.status(200).send({ success: true, msg: 'Success' });
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.json(err);
 					});
 			} else {
@@ -150,11 +150,11 @@ module.exports = function (app) {
 	});
 
 	// POST route for saving a new user
-	app.post("/api/users", function (req, res) {
+	app.post("/api/users", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
-				db.User.create(req.body).then(function (x) {
+				db.User.create(req.body).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -164,7 +164,7 @@ module.exports = function (app) {
 	});
 
 	// DELETE route for deleting a user 
-	app.delete("/api/users/:id", function (req, res) {
+	app.delete("/api/users/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -172,7 +172,7 @@ module.exports = function (app) {
 					where: {
 						id: req.params.id
 					}
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -181,12 +181,12 @@ module.exports = function (app) {
 		}, 500);
 	});
 
-	app.post('/api/signin', function (req, res) {
+	app.post('/api/signin', (req, res) => {
 		db.User.findOne({
 			where: {
 				Username: req.body.Username
 			},
-		}).done(function (user, err) {
+		}).done((user, err) => {
 			if (err) throw err;
 			if (!user) {
 				res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
@@ -208,14 +208,13 @@ module.exports = function (app) {
 					res.status(403).send({ success: false, msg: `Authentication failed. You're account has been deactivated.` })
 				} else {
 					// check if password matches
-					bcrypt.compare(req.body.Password, pwd, function (err, isMatch) {
+					bcrypt.compare(req.body.Password, pwd, (err, isMatch) => {
 						if (isMatch && !err) {
 							// if user is found and password is right create a token
-							let date = new Date();
-							let date2 = moment(date).format('MM/DD/YYYY');
-							let hashThis = `${date2}secret`
-							bcrypt.genSalt(1, function (err, salt) {
-								bcrypt.hash(hashThis, salt, function (err2, hash) {
+							let date = moment().format('MM/DD/YYYY');
+							let hashThis = `${date}secret`
+							bcrypt.genSalt(1, (err, salt) => {
+								bcrypt.hash(hashThis, salt, (err2, hash) => {
 									res.json({ success: true, token: hash, user: returnInfo });
 								});
 							});

@@ -15,31 +15,23 @@ export class SignatureDialogComponent implements OnInit {
 		'minWidth': 5,
 		'canvasWidth': 800,
 		'canvasHeight': 500
-	  };
+	};
 
-	  @ViewChild(SignaturePad) signaturePad: SignaturePad;
+	@ViewChild(SignaturePad) signaturePad: SignaturePad;
 
 	constructor(public dialogRef: MatDialogRef<SignatureDialogComponent>) { }
 
 	ngOnInit() {
 	}
 
-	drawComplete() {
-		// console.log(this.signaturePad.toDataURL());
-	  }
-
-	  drawStart() {
-		console.log('begin drawing');
-	  }
-
-	  clearPad() {
+	clearPad() {
 		this.signaturePad.clear();
-	  }
+	}
 
-	  finishSigning() {
+	finishSigning() {
 		this.signatureURL = this.signaturePad.toDataURL();
 		this.clearPad();
 		this.dialogRef.close();
-	  }
+	}
 
 }

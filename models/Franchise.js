@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-    var Franchise = sequelize.define("Franchise", {
+module.exports = (sequelize, DataTypes) => {
+    const Franchise = sequelize.define("Franchise", {
         Name: {
             id: {
                 type: DataTypes.INTEGER,
@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
         }
     });
 
-    Franchise.associate = function (models) {
+    Franchise.associate = (models) => {
         // Associating the franchise with the following
         Franchise.hasMany(models.User, {
             onDelete: "cascade"

@@ -3,15 +3,15 @@ const JancstaPort = require('../config/jancsta');
 
 // Routes
 // =============================================================
-module.exports = function (app) {
+module.exports = (app) => {
 
 	// GET route for getting all clients
-	app.get("/api/clients", function (req, res) {
+	app.get("/api/clients", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
 				db.Client.findAll({
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -21,7 +21,7 @@ module.exports = function (app) {
 	});
 
 	// GET route for retrieving a single client
-	app.get("/api/clients/:id", function (req, res) {
+	app.get("/api/clients/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool) {
@@ -29,7 +29,7 @@ module.exports = function (app) {
 					where: {
 						FranchiseId: req.params.id
 					},
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -39,11 +39,11 @@ module.exports = function (app) {
 	});
 
 	// POST route for saving a new client
-	app.post("/api/clients", function (req, res) {
+	app.post("/api/clients", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
-				db.Client.create(req.body).then(function (x) {
+				db.Client.create(req.body).then((x) => {
 					res.json(x);
 				});
 			} else {
@@ -67,10 +67,10 @@ module.exports = function (app) {
 						where: {
 							id: req.body.id
 						}
-					}).then(function (x) {
+					}).then((x) => {
 						res.json(x);
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.json(err);
 					});
 			} else {
@@ -80,7 +80,7 @@ module.exports = function (app) {
 	});
 
 	// DELETE route for deleting a client location
-	app.delete("/api/clients/:id", function (req, res) {
+	app.delete("/api/clients/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		setTimeout(() => {
 			if (jancsta.bool == true) {
@@ -88,7 +88,7 @@ module.exports = function (app) {
 					where: {
 						id: req.params.id
 					}
-				}).then(function (x) {
+				}).then((x) => {
 					res.json(x);
 				});
 			} else {

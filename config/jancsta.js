@@ -1,11 +1,10 @@
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 
-module.exports = function (token) {
+module.exports = function(token) {
 
-    let date = new Date();
-    let date2 = moment(date).format('MM/DD/YYYY');
-    let compareThis = `${date2}secret`;
+    let date = moment().format('MM/DD/YYYY');
+    let compareThis = `${date}secret`;
     if (token) {
         bcrypt.compare(compareThis, token).then((res) => {
             if (res) {

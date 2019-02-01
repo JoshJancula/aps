@@ -31,13 +31,13 @@
     <div class="card-heading">Search invoices</div>
     <div *ngIf="searchBy !== 'Invoice number' ">
       <mat-form-field style='cursor: pointer;'>
-        <input [(ngModel)]="filter.dateFrom" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
+        <input [(ngModel)]="filter.dateFrom" [max]="getMaxDate()" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
           placeholder="Date from" readonly>
         <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
         <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
       </mat-form-field>
       <mat-form-field style='cursor: pointer;'>
-        <input [(ngModel)]="filter.dateTo" (click)="openCalendar2($event)" matInput [matDatepicker]="calendar2"
+        <input [(ngModel)]="filter.dateTo" [min]="getMinDate()" [max]="getMaxDate()" (click)="openCalendar2($event)" matInput [matDatepicker]="calendar2"
           placeholder="Date to" readonly>
         <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
         <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>

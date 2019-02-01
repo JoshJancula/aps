@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-    var Client = sequelize.define("Client", {
+module.exports = (sequelize, DataTypes) => {
+    const Client = sequelize.define("Client", {
 
         Name: {
             id: {
@@ -38,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
         },
     });
 
-    Client.associate = function (models) {
+    Client.associate = (models) => {
         Client.belongsTo(models.Franchise, {
             foreignKey: {
                 allowNull: false

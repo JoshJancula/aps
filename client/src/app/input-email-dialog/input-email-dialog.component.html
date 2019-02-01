@@ -1,11 +1,10 @@
 <div>
-    <h5 >Please input the email address you'd like to send this invoice to.</h5>
-    <div class='row'>
-      <mat-form-field style="width:100%;">
-        <input matInput type='text' [(ngModel)]='sendTo' />
-      </mat-form-field>
-    </div>
-    <mat-checkbox *ngIf="data.clientEmail !== ''" (change)="setClientEmail();"
-      color="primary" >Use Client's saved email?</mat-checkbox>
-    <button class='sendEmail' (click)='dialogRef.close();' mat-button>Send</button>
+  <h5>Please input the email address you'd like to send this invoice to.</h5>
+  <div class='row'>
+    <mat-form-field style="width:100%;">
+      <input matInput type='text' [(ngModel)]='sendTo' />
+    </mat-form-field>
   </div>
+  <mat-checkbox *ngIf="data.clientEmail !== ''" (change)="setClientEmail();" color="primary">Use Client's saved email?</mat-checkbox>
+  <button class='sendEmail' (click)='dialogRef.close();' mat-button>Send</button>
+</div>
