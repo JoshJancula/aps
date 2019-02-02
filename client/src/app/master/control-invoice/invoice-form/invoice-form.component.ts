@@ -295,6 +295,7 @@ export class InvoiceFormComponent implements OnInit {
 			this.Invoice.Employee = this.authService.currentUser.Name;
 			this.Invoice.EmployeeId = this.authService.currentUser.id;
 			this.Invoice.FranchiseId = this.authService.currentUser.FranchiseId;
+			console.log('invoice to save: ', this.Invoice);
 			this.invoiceService.createInvoice(this.Invoice).subscribe(res => {
 				console.log('response: ', res);
 			}, error => { this.utilService.alertError(`Error submitting invoice, please try again.`); });
@@ -306,7 +307,7 @@ export class InvoiceFormComponent implements OnInit {
 		}
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
-		this.switchToSearch.emit();
+		setTimeout(() => this.switchToSearch.emit(), 600);
 	}
 
 	editInvoice(x) {
@@ -323,6 +324,7 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	setupEdit(data) {
+		console.log('invoice to edit: ', data);
 		if (data.Tint !== '') {
 			this.windowOptions = JSON.parse(data.Tint);
 		}

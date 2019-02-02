@@ -230,17 +230,18 @@
     <div class='row' style='padding-top: 1%' *ngIf='stocks.length > 0 || vins.length > 0'>
       <mat-chip-list>
         <mat-chip *ngFor="let stock of stocks">
-          <span style='font-size: 12px'>Stock#</span> {{ stock }}
+          <span style='font-size: 12px; margin-right: 5px;'>Stock#</span> {{ stock }}
           <mat-icon (click)="removeVehicle(stock);">close</mat-icon>
         </mat-chip>
       </mat-chip-list>
       <mat-chip-list>
         <mat-chip *ngFor="let vin of vins">
-          <span style='font-size: 12px'>VIN# </span> {{ vin }}
+          <span style='font-size: 12px; margin-right: 5px;'>VIN# </span> {{ vin }}
           <mat-icon (click)="removeVehicle(vin);">close</mat-icon>
         </mat-chip>
       </mat-chip-list>
     </div>
+    <br>
 
     <!-- manual input stocks vins and ro -->
     <mat-form-field *ngIf='addStock === true'>

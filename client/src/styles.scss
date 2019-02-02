@@ -8,11 +8,8 @@
 @include mat-core();
 
 .mat-card {
-    // width: 96%;
-    // margin: 2%;
     background: #D7D6D6;
     opacity: .9;
-    // border-radius: 10px !important;
 }
 
 .mat-form-field {
@@ -44,6 +41,8 @@ body {
     right: 0px;
 }
 
+.html2canvas-container { width: 1400px !important; height: 1000px !important; }
+
 .headerRow {
     height: 14vh;
     background-repeat: no-repeat;
@@ -63,7 +62,6 @@ body, html {
     height: 100vh;  
     margin: none;
     background-color: black;
-    background-image: url('./assets/logo.jpeg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;

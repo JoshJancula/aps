@@ -50,13 +50,13 @@
 }
 
 .uploadImageButton {
-    margin-left: -4%;
+    margin-left: -2%;
     margin-top: -3%;
     width: 100px;
     font-size: 12px;
 }
 
-.mat-radio-group {
+.radio-group {
     display: block;
     float: right;
 }
@@ -68,11 +68,36 @@
     text-align: right;
 }
 
+.radio-group2 {
+    width: 100%;
+    margin-left: 10%;
+    text-align: left;
+}
+
 .userName {
     display: inline-block;
     margin-left: 2%;
     margin-top: 2%;
     font-size: 18px;
+}
+
+.changePassword .mat-form-field {
+    margin-left: 10%;
+    height: 45px;
+}
+
+.actionHeader {
+    margin-top: 2%;
+    margin-left: 10%;
+    display: inline-block;
+    color: #673ab7;;
+}
+
+.backgroundSelect {
+    height: 80px;
+    width: 80px;
+    margin-top: 1%;
+    margin-left: 1%;
 }
 
 @media (max-width: 1200px) { 
@@ -95,6 +120,14 @@
 }
 
 @media (max-width: 768px) { 
+
+    .radio-group {
+        display: block;
+        float: right;
+        position: absolute;
+        top: -110px;
+        right: 10px;
+    }
 
     .mat-card {
     width: 96%;

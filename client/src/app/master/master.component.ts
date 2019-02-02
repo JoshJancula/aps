@@ -26,11 +26,11 @@ export class MasterComponent implements OnInit {
 	franchiseMode = false;
 	clientMode = false;
 	appointmentMode = false;
-	invoiceMode = true;
-	settingsMode = false;
+	invoiceMode = false;
+	settingsMode = true;
 	messageConnection: any;
 	updateConnection: any;
-	screen = 'Invoicing';
+	screen = this.authService.currentUser.Name;
 	@ViewChild('appointmentCalendar') appointmentCalendar: any;
 	@ViewChild('controlUser') controlUser: ControlUserComponent;
 	@ViewChild('controlSettings') controlSettings: SettingsComponent;
@@ -43,6 +43,12 @@ export class MasterComponent implements OnInit {
 	constructor(private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, public authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
+		if (localStorage.getItem('background')) {
+			document.body.style.backgroundImage = localStorage.getItem('background');
+			document.body.style.backgroundImage = `url(${localStorage.getItem('background')})`;
+		} else {
+			document.body.style.backgroundImage = 'url("assets/logo5.png")';
+		}
 		this.messagingService.initSocket();
 		this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
 			console.log('socket response: ', response);

@@ -90,18 +90,32 @@ export class UserService {
 		}
 	}
 
-	updateProfileImage(avatar) {
-		console.log('avatar passed to uploadProfile: ', avatar);
-		const updateObject = { Avatar: avatar, id: this.authService.currentUser.id };
-		console.log('updateObject: ', updateObject);
+	updatePassword(data) {
+		const updateObject = { Password: data, id: this.authService.currentUser.id };
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			console.log('found token: ', localStorage.getItem('jwtToken'));
-			console.log('userId: ', this.authService.currentUser.id);
+			if (window.location.host === 'localhost:4200') {
+				const localUrl = `http://localhost:8080/api/users/updatePassword/${this.authService.currentUser.id}`;
+				return this.http.put(localUrl, updateObject, httpOptions);
+			} else {
+				const url = `https://aps-josh.herokuapp.com/api/users/updatePassword/${this.authService.currentUser.id}`;
+				return this.http.put(url, updateObject, httpOptions);
+			}
+		}
+	}
+
+	updateProfileImage(avatar) {
+		const updateObject = { Avatar: avatar, id: this.authService.currentUser.id };
+		if (localStorage.getItem('jwtToken')) {
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Authorization': localStorage.getItem('jwtToken'),
+				})
+			};
 			if (window.location.host === 'localhost:4200') {
 				console.log('should be posting to localhost');
 				const localUrl = `http://localhost:8080/api/users/avatar/${this.authService.currentUser.id}`;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -10,11 +11,12 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-	constructor(private authService: AuthService, private router: Router) { }
+	constructor(private userService: UserService, private authService: AuthService, private router: Router) { }
 	username = '';
 	password = '';
 
 	ngOnInit() {
+		document.body.style.backgroundImage = 'url("assets/logo5.png")';
 		localStorage.removeItem('jwtToken');
 	}
 
@@ -59,6 +61,12 @@ export class LoginComponent implements OnInit {
 			}
 		}, error => {
 			console.log('error: ', error);
+		});
+	}
+
+	submitPasswordChange() {
+		this.userService.updatePassword('test').subscribe(response => {
+			console.log('response updating password', response);
 		});
 	}
 

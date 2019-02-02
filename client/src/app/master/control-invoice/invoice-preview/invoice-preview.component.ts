@@ -58,7 +58,7 @@ export class InvoicePreviewComponent implements OnInit {
 	generatePDF(action) {
 		const data = document.querySelector('#previewContent');
 		html2canvas(data).then(canvas => {
-			const imgWidth = 208;
+			const imgWidth = 210;
 			const imgHeight = canvas.height * imgWidth / canvas.width;
 			const contentDataURL = canvas.toDataURL('image/png');
 			let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF

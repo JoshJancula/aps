@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material';
+import { AuthService } from '../services/auth.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -9,7 +10,7 @@ import { MatBottomSheetRef } from '@angular/material';
 })
 export class BottomPopupComponent implements OnInit {
 
-	constructor(private bottomSheetRef: MatBottomSheetRef<BottomPopupComponent>) { }
+	constructor(public authService: AuthService, private bottomSheetRef: MatBottomSheetRef<BottomPopupComponent>) { }
 
 	ngOnInit() {
 	}

@@ -127,12 +127,13 @@ module.exports = (app) => {
 	});
 
 	// PUT route for updating user password
-	app.put("/api/users/:id", (req, res) => {
+	app.put("/api/users/updatePassword/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());
+		let pwd = bcrypt.hashSync(req.body.Password, bcrypt.genSaltSync(2), null);
 		setTimeout(() => {
 			if (jancsta.bool == true) {
 				db.User.update({
-					Password: req.body.Password,
+					Password: pwd,
 				}, {
 						where: {
 							id: req.body.id
@@ -142,11 +143,12 @@ module.exports = (app) => {
 					})
 					.catch((err) => {
 						res.json(err);
+						console.log('err: ', err);
 					});
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		}, 1000);
 	});
 
 	// POST route for saving a new user
