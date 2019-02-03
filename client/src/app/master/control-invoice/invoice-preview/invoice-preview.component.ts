@@ -9,6 +9,7 @@ import { UtilService } from '../../../services/util.service';
 import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { SignatureDialogComponent } from '../../../signature-dialog/signature-dialog.component';
+import { UploadFileService } from '../../../services/upload-file.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -21,6 +22,7 @@ export class InvoicePreviewComponent implements OnInit {
 	showTint = false;
 	serviceDisplay = [];
 	displayedColumns: string[] = ['name', 'quantity', 'pricePer', 'total'];
+	progress: { percentage: number } = { percentage: 0 };
 	dataSource = new MatTableDataSource<any>([]);
 	vins = [];
 	stocks = [];
@@ -37,13 +39,18 @@ export class InvoicePreviewComponent implements OnInit {
 	clients: any;
 	_printIframe: any;
 	signature = '';
+	isCordova = false;
 
-	constructor(private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {  }
+	constructor(public uploadService: UploadFileService, private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 	ngOnInit() {
 		this.setServices(this.data.content);
 		setTimeout(() => this.performAction(), 500);
 		this.getClients();
+		if ((<any>window).deviceReady === true) {
+			this.isCordova = true;
+		}
+		console.log('data passed to invoice: ', this.data.content);
 	}
 
 	performAction() {
@@ -160,6 +167,7 @@ export class InvoicePreviewComponent implements OnInit {
 		this.Description = data.Description;
 		this.Client = data.Client;
 		this.dataSource = new MatTableDataSource<any>(this.serviceDisplay);
+		this.signature = data.VehicleDescription;
 		this.processCustom(data);
 		this.getTotal();
 	}
@@ -238,14 +246,26 @@ export class InvoicePreviewComponent implements OnInit {
 		}
 	}
 
+	convertToBlob() {
+		const url = this.signature;
+		fetch(url)
+			.then(res => res.blob())
+			.then(blob => {
+				this.uploadService.pushFileToStorage(blob, this.progress, { value: 'signature', id: this.data.content.id });
+				this.dialog.closeAll();
+			});
+	}
+
 	openSignaturePad() {
 		const newDialog = this.dialog.open(SignatureDialogComponent, {
 			data: '',
-			height: '400px',
-			width: '700px'
+			panelClass: 'signaturePad'
 		});
 		newDialog.beforeClose().subscribe(result => {
 			this.signature = newDialog.componentInstance.signatureURL;
+			if (this.signature !== '') {
+				this.convertToBlob();
+			}
 		});
 	}
 

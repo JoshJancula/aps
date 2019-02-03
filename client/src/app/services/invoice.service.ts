@@ -100,4 +100,22 @@ export class InvoiceService {
 		}
 	}
 
+	addInvoiceSignature(data) {
+		console.log('data passed to addSignature', data);
+		if (localStorage.getItem('jwtToken')) {
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Authorization': localStorage.getItem('jwtToken'),
+				})
+			};
+			if (window.location.host === 'localhost:4200') {
+				return this.http.put(this.localUrl.replace('invoices', `invoices/signature/${data.id}`), data, httpOptions);
+			} else {
+				return this.http.put(this.url.replace('invoices', `invoices/signature/${data.id}`), data, httpOptions);
+			}
+		} else {
+			console.log('no token found');
+		}
+	}
+
 }

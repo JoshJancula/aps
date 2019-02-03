@@ -41,7 +41,7 @@ body {
     right: 0px;
 }
 
-.html2canvas-container { width: 1400px !important; height: 1000px !important; }
+.html2canvas-container { width: 1400px !important; height: 2400px !important; }
 
 .headerRow {
     height: 14vh;
@@ -138,6 +138,13 @@ body, html {
 .invoicePreview .mat-dialog-container {
     padding: 0px !important;
     overflow-x: hidden !important;
+}
+
+.signaturePad .mat-dialog-container {
+    padding: 0px !important;
+    overflow-x: hidden !important;
+    height: 500px;
+    width: 600px;
 }
 
 @media (max-width: 1024px) {

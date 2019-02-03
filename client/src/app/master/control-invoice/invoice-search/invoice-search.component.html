@@ -13,7 +13,7 @@
       <button (click)='openPreview(invoice);' mat-button>Overview</button>
       <button (click)='printInvoice(invoice);' mat-button>Print</button>
       <button (click)='emailInvoice(invoice);' mat-button>Email</button>
-      <button (click)='downloadPDF(invoice);' mat-button>Download PDF</button>
+      <button *ngIf='isCordova === false;' (click)='downloadPDF(invoice);' mat-button>Download PDF</button>
     </mat-card>
     <mat-card class='invoiceCard notFound' *ngIf='invoices.length < 1'>
       <div class='notFoundSpacer'></div>

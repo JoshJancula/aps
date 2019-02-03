@@ -91,6 +91,31 @@ module.exports = (app) => {
 		}, 500);
 	});
 
+
+	// PUT route for updating invoice signature
+	app.put("/api/invoices/signature/:id", (req, res) => {
+		let jancsta = new JancstaPort(req.headers.authorization.toString());
+		setTimeout(() => {
+			if (jancsta.bool == true) {
+				db.Invoice.update({
+					VehicleDescription: req.body.signature,
+				}, {
+						where: {
+							id: req.body.id
+						}
+					}).then((x) => {
+						res.json(x);
+					})
+					.catch((err) => {
+						res.json(err);
+					});
+			} else {
+				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
+			}
+		}, 500);
+	});
+
+
 	// DELETE route for deleting a invoice location
 	app.delete("/api/invoices/:id", (req, res) => {
 		let jancsta = new JancstaPort(req.headers.authorization.toString());

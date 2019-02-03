@@ -26,6 +26,7 @@ export class InvoiceSearchComponent implements OnInit {
 	franchises: any;
 	invoiceNumber = '';
 	franchise: any;
+	isCordova = false;
 	searchBy = '';
 	slideDrawer = false;
 	filter: any = {
@@ -50,6 +51,13 @@ export class InvoiceSearchComponent implements OnInit {
 		this.loadInvoices();
 		this.loadFranchises();
 		this.getClients();
+		setTimeout(() => this.checkCordova(), 500);
+	}
+
+	checkCordova() {
+		if ((<any>window).deviceReady === true) {
+			this.isCordova = true;
+		}
 	}
 
 	openDrawer() {
@@ -188,6 +196,9 @@ export class InvoiceSearchComponent implements OnInit {
 		const newDialog = this.dialog.open(InvoicePreviewComponent, {
 			data: { content: invoice, action: 'open' },
 			panelClass: 'invoicePreview'
+		});
+		newDialog.beforeClose().subscribe(result => {
+			setTimeout(() => this.loadInvoices(), 2000);
 		});
 	}
 

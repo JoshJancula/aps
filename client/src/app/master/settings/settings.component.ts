@@ -29,11 +29,11 @@ export class SettingsComponent implements OnInit {
 	progress: { percentage: number } = { percentage: 0 };
 	actions = ['Timesheet', 'Request time off', 'Change password', 'Set background'];
 	images = [
-		{ name: 'SharkNado', src: 'assets/logo.jpeg' },
-		{ name: 'Classic', src: 'assets/logo5.png' },
-		{ name: 'Stripes 1', src: 'assets/stripes1.png' },
-		{ name: 'Stripes 2', src: 'assets/stripes2.png' },
-		{ name: 'Stripes 3', src: 'assets/stripes5.png' },
+		{ id: 1, name: 'SharkNado', src: 'assets/logo.jpeg' },
+		{ id: 2, name: 'Classic', src: 'assets/logo5.png' },
+		{ id: 3, name: 'Stripes 1', src: 'assets/stripes1.png' },
+		{ id: 4, name: 'Stripes 2', src: 'assets/stripes2.png' },
+		{ id: 5, name: 'Stripes 3', src: 'assets/stripes5.png' },
 	];
 	userAction = 'Request time off';
 
@@ -119,9 +119,20 @@ export class SettingsComponent implements OnInit {
 		return this.leaveDate;
 	}
 
+	updateReturn(event) {
+		console.log('should be updating return date');
+		this.returnDate = this.leaveDate;
+	}
+
 	submitPtoRequest() {
 		// not sure if we need to connect to timesheet or just email request, will come back to this
 		this.clearForms();
+	}
+
+	selectImage(image) {
+		let button: HTMLButtonElement = document.querySelector(`#radioImage${image.id}`);
+		button.click();
+		this.backgroundImage = image.src;
 	}
 
 }

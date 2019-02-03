@@ -65,7 +65,9 @@
     width: 200px;
 }
 
-
+.servicesAndVehicles {
+    margin-bottom: 30%;
+}
 
 @media (max-width: 768px) {
     .headerData {
@@ -118,8 +120,17 @@
         height: 55%;
         width: 40%;
     }
-    
 
+
+}
+
+@media (max-width: 575px) {
+
+    .servicesAndVehicles {
+        margin-bottom: 60%;
+         margin-top: -8%;
+    }
+    
 }
 
 @media (max-width: 460px) {

@@ -68,7 +68,7 @@ export class ControlAppointmentComponent implements OnInit {
 		res.forEach(app => {
 			if (moment(app.Date).format('MM/DD/YY') === moment(this.searchDate).format('MM/DD/YY')) {
 				this.appointments.push(app);
-			} else if (moment(app.Date).isBefore(this.searchDate)) {
+			} else if (moment(app.Date).isBefore(moment(new Date))) {
 				this.appointmentService.deleteAppointment(app.id).subscribe(response => { console.log('res deleting old appointment: ', response); });
 			}
 		});
