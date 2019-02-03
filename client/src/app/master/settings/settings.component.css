@@ -138,4 +138,8 @@
         width: 100vw;
         overflow-x: hidden;
     }
+
+    .leave {
+        margin-bottom: 5%;
+    }
 }

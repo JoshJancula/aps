@@ -50,7 +50,6 @@ module.exports = (app) => {
 				}).then((x) => {
 					let z = [];
 					x.forEach(y => {
-						if (y.Active == true) {
 							const user = {
 								Username: y.Username,
 								FirstName: y.FirstName,
@@ -64,7 +63,6 @@ module.exports = (app) => {
 								Avatar: y.Avatar,
 							}
 							z.push(user);
-						}
 					});
 					res.json(z);
 				});

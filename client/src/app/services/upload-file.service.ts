@@ -6,7 +6,6 @@ import 'firebase/storage';
 import { AuthService } from './auth.service';
 import { InvoiceService } from './invoice.service';
 import { MessageService } from './message.service';
-import { UtilService } from './util.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -16,7 +15,7 @@ export class UploadFileService {
 	storageRef: any;
 	private basePath = '/uploads';
 
-	constructor(private utilService: UtilService, private messagingService: MessageService, private invoiceService: InvoiceService, public app: FirebaseApp, private userService: UserService, private authService: AuthService) { }
+	constructor(private messagingService: MessageService, private invoiceService: InvoiceService, public app: FirebaseApp, private userService: UserService, private authService: AuthService) { }
 
 	pushFileToStorage(file, progress: { percentage: number }, action) {
 		console.log('action: ', action);

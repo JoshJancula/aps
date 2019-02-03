@@ -147,11 +147,27 @@ body, html {
     width: 600px;
 }
 
+.errorAlert .mat-dialog-container {
+    max-height: 400px;
+    width: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 @media (max-width: 1024px) {
     // .toolbarLogo {
     //    display: none;
     // }
 } 
+
+@media (max-width: 812px) {
+.signaturePad .mat-dialog-container {
+    padding: 0px !important;
+    overflow-x: hidden !important;
+    height: 320px;
+    width: 600px;
+}
+}
 
 @media (max-width: 767px) { 
 

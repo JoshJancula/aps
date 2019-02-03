@@ -252,7 +252,6 @@ export class InvoicePreviewComponent implements OnInit {
 			.then(res => res.blob())
 			.then(blob => {
 				this.uploadService.pushFileToStorage(blob, this.progress, { value: 'signature', id: this.data.content.id });
-				this.dialog.closeAll();
 			});
 	}
 

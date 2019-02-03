@@ -47,6 +47,9 @@ export class ControlUserComponent implements OnInit {
 			this.loadFranchises();
 		}
 		this.getUsers();
+		// this.userService.updateProfileImage('').subscribe(res => {
+		// 	console.log('should be removing the unused avatar: ', res);
+		// });
 	}
 
 	getUsers() {

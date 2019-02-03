@@ -33,7 +33,8 @@ export class UtilService {
 
 	alertError(message) {
 		const newDialog = this.dialog.open(ErrorDialogComponent, {
-			data: message
+			data: message,
+			panelClass: 'errorAlert'
 		});
 	}
 

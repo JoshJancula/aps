@@ -109,6 +109,7 @@ export class UserService {
 	}
 
 	updateProfileImage(avatar) {
+		console.log('about to update profile image');
 		const updateObject = { Avatar: avatar, id: this.authService.currentUser.id };
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {

@@ -19,6 +19,7 @@ export class InvoiceSearchComponent implements OnInit {
 
 	@ViewChild('calendar') calendar: any;
 	@ViewChild('calendar2') calendar2: any;
+	@ViewChild('searchPanel') searchPanel: any;
 	@Output() editThis = new EventEmitter();
 	@Output() newInvoice = new EventEmitter();
 	clients: any;
@@ -52,6 +53,7 @@ export class InvoiceSearchComponent implements OnInit {
 		this.loadFranchises();
 		this.getClients();
 		setTimeout(() => this.checkCordova(), 500);
+		this.searchPanel.open();
 	}
 
 	checkCordova() {

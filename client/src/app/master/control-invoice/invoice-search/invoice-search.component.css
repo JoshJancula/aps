@@ -35,6 +35,21 @@
     margin-left: 4%;
     margin-top: 0px;
     height: calc(100vh - 64px);
+    padding: 0px;
+    overflow-y: auto;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: unset;
+}
+
+.mat-expansion-panel {
+    border-bottom: black solid 1px;
+    background: #D7D6D6;
+}
+
+.mat-expansion-panel-spacing {
+    margin: unset;
 }
 
 .mat-card:first-child {

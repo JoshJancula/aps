@@ -2,8 +2,8 @@
   <mat-card>
     <div class='row'>
       <div class='col-md-6'>
-        <img *ngIf="authService.currentUser.Avatar !== null" class='userAvatar' src="{{authService.currentUser.Avatar}}" />
-        <span *ngIf="authService.currentUser.Avatar === null" class='userInitials'>{{ authService.currentUser.Initials
+        <img *ngIf="authService.currentUser.Avatar !== null && authService.currentUser.Avatar !== '' " class='userAvatar' src="{{authService.currentUser.Avatar}}" />
+        <span *ngIf="authService.currentUser.Avatar === null || authService.currentUser.Avatar === ''" class='userInitials'>{{ authService.currentUser.Initials
           }}</span><br>
         <button class='uploadImageButton' (click)="imageUploader.click();" mat-button>Upload</button>
         <input hidden type="file" #imageUploader accept="image/*" (change)="uploadImage($event)">
@@ -55,7 +55,7 @@
       <!-- Request time off -->
       <div class='row changePassword' *ngIf="userAction === 'Request time off' ">
         <div class='row' style='width: 100%;'><span class='actionHeader'>Request time off</span></div><br><br>
-        <mat-form-field style='cursor: pointer;'>
+        <mat-form-field  class='leave' style='cursor: pointer;'>
           <input style='cursor: pointer;' [(ngModel)]="leaveDate" [min]="getMinDate()"  (dateInput)="updateReturn($event);" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
             placeholder="Leave date" readonly>
           <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>

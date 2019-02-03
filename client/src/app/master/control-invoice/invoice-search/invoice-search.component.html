@@ -19,7 +19,6 @@
       <div class='notFoundSpacer'></div>
       No invoices found for {{ formatDate(filter.dateTo) }}.
     </mat-card>
-
   </div>
 
   <button class='add' mat-button (click)="newInvoice.emit();" style="z-index:100 !important;">
@@ -27,47 +26,65 @@
     New invoice
   </button>
   <div class="col-xl-2 col-lg-2 col-md-2 hidden-sm hidden-xs sideColumn" [ngClass]="{'open': slideDrawer === true}">
-    <div class='sideColumnSpacer'></div>
-    <div class="card-heading">Search invoices</div>
-    <div *ngIf="searchBy !== 'Invoice number' ">
-      <mat-form-field style='cursor: pointer;'>
-        <input [(ngModel)]="filter.dateFrom" [max]="getMaxDate()" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
-          placeholder="Date from" readonly>
-        <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
-        <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field style='cursor: pointer;'>
-        <input [(ngModel)]="filter.dateTo" [min]="getMinDate()" [max]="getMaxDate()" (click)="openCalendar2($event)" matInput [matDatepicker]="calendar2"
-          placeholder="Date to" readonly>
-        <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
-        <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <mat-form-field>
-      <mat-select placeholder="Franchise" [(ngModel)]="filter.franchise">
-        <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Add filter" [(ngModel)]="searchBy">
-        <mat-option *ngFor="let option of searchOptions" [value]="option">{{ option }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field *ngIf="searchBy === 'Invoice number'">
-      <input matInput placeholder="Invoice number" [(ngModel)]="filter.invoiceNumber" />
-    </mat-form-field>
-    <mat-form-field *ngIf="searchBy === 'Employee'">
-      <input matInput placeholder="Employee" [(ngModel)]="filter.employee" />
-    </mat-form-field>
-    <mat-form-field *ngIf="searchBy === 'Payment'">
-        <mat-select placeholder="Payment" [(ngModel)]="filter.payment">
-          <mat-option *ngFor="let payment of payments" [value]="payment">{{ payment }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    <mat-form-field *ngIf="searchBy === 'Client'">
-      <input matInput placeholder="Client" [(ngModel)]="filter.client" />
-    </mat-form-field>
-    <button (click)='processSearch(); openDrawer();' mat-button>Search</button>
-    <button (click)='clearSearch();' mat-button>Clear</button>
+
+    <mat-accordion class='mat-elevation-0'>
+      <mat-expansion-panel #searchPanel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Search invoices
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- search components -->
+        <div class='sideColumnSpacer'></div>
+        <div *ngIf="searchBy !== 'Invoice number' ">
+          <mat-form-field style='cursor: pointer;'>
+            <input [(ngModel)]="filter.dateFrom" [max]="getMaxDate()" (click)="openCalendar($event)" matInput
+              [matDatepicker]="calendar" placeholder="Date from" readonly>
+            <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
+            <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field style='cursor: pointer;'>
+            <input [(ngModel)]="filter.dateTo" [min]="getMinDate()" [max]="getMaxDate()" (click)="openCalendar2($event)"
+              matInput [matDatepicker]="calendar2" placeholder="Date to" readonly>
+            <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
+            <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <mat-form-field>
+          <mat-select placeholder="Franchise" [(ngModel)]="filter.franchise">
+            <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Add filter" [(ngModel)]="searchBy">
+            <mat-option *ngFor="let option of searchOptions" [value]="option">{{ option }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="searchBy === 'Invoice number'">
+          <input matInput placeholder="Invoice number" [(ngModel)]="filter.invoiceNumber" />
+        </mat-form-field>
+        <mat-form-field *ngIf="searchBy === 'Employee'">
+          <input matInput placeholder="Employee" [(ngModel)]="filter.employee" />
+        </mat-form-field>
+        <mat-form-field *ngIf="searchBy === 'Payment'">
+          <mat-select placeholder="Payment" [(ngModel)]="filter.payment">
+            <mat-option *ngFor="let payment of payments" [value]="payment">{{ payment }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="searchBy === 'Client'">
+          <input matInput placeholder="Client" [(ngModel)]="filter.client" />
+        </mat-form-field>
+        <button (click)='processSearch(); openDrawer();' mat-button>Search</button>
+        <button (click)='clearSearch();' mat-button>Clear</button>
+      </mat-expansion-panel>
+      <mat-expansion-panel class='mat-elevation-0'>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Reports and statements
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Monthly, and anual reports coming soon. Employee weekly commision statements coming soon as well.</p>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </div>

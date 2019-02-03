@@ -22,8 +22,8 @@ export class SettingsComponent implements OnInit {
 	backgroundImage = '';
 	ptoTime = '';
 	ptoComments = '';
-	 date = moment(new Date()).add(7, 'days');
-	 minDate = (<any>this.date)._d;
+	date = moment(new Date()).add(7, 'days');
+	minDate = (<any>this.date)._d;
 	leaveDate = this.minDate;
 	returnDate = this.minDate;
 	progress: { percentage: number } = { percentage: 0 };
@@ -48,15 +48,20 @@ export class SettingsComponent implements OnInit {
 	}
 
 	uploadImage($event) {
+		console.log('upload image was called');
 		if ($event.target.files.length > 0) {
+			console.log('event.target.files: ', $event.target.files.length);
 			let reader = new FileReader();
-			reader.onload = () => { this.submitImage(); };
-			reader.onerror = (error) => { };
+			reader.onload = (event) => { console.log('reader.onload was called'); this.submitImage(event); };
+			reader.onerror = (error) => { this.utilService.alertError(`error uploading image ${error}`); };
+			reader.readAsBinaryString($event.target.files[0]);
 			this.targetFile = $event.target.files[0];
 		}
 	}
 
-	submitImage() {
+	submitImage(event) {
+		console.log('reader onload event passed is.... ', event);
+		console.log('should be submitting file');
 		this.uploadService.pushFileToStorage(this.targetFile, this.progress, 'avatar');
 	}
 
