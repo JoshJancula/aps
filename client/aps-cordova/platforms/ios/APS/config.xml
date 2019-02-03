@@ -25,14 +25,14 @@
     <feature name="Notification">
         <param name="ios-package" value="CDVNotification" />
     </feature>
+    <feature name="Keyboard">
+        <param name="ios-package" onload="true" value="CDVIonicKeyboard" />
+    </feature>
     <feature name="BarcodeScanner">
         <param name="ios-package" value="CDVBarcodeScanner" />
     </feature>
     <feature name="LaunchNavigator">
         <param name="ios-package" value="LaunchNavigator" />
-    </feature>
-    <feature name="Keyboard">
-        <param name="ios-package" onload="true" value="CDVIonicKeyboard" />
     </feature>
     <feature name="BluetoothSerial">
         <param name="ios-package" onload="true" value="MEGBluetoothSerial" />

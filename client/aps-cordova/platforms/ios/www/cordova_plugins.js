@@ -25,6 +25,14 @@ module.exports = [
     ]
   },
   {
+    "id": "cordova-plugin-ionic-keyboard.keyboard",
+    "file": "plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js",
+    "pluginId": "cordova-plugin-ionic-keyboard",
+    "clobbers": [
+      "window.Keyboard"
+    ]
+  },
+  {
     "id": "phonegap-plugin-barcodescanner.BarcodeScanner",
     "file": "plugins/phonegap-plugin-barcodescanner/www/barcodescanner.js",
     "pluginId": "phonegap-plugin-barcodescanner",
@@ -55,14 +63,6 @@ module.exports = [
     "merges": [
       "launchnavigator"
     ]
-  },
-  {
-    "id": "cordova-plugin-ionic-keyboard.keyboard",
-    "file": "plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js",
-    "pluginId": "cordova-plugin-ionic-keyboard",
-    "clobbers": [
-      "window.Keyboard"
-    ]
   }
 ];
 module.exports.metadata = 
@@ -71,10 +71,10 @@ module.exports.metadata =
   "cordova-plugin-actionsheet": "2.3.3",
   "cordova-plugin-bluetooth-serial": "0.4.7",
   "cordova-plugin-dialogs": "2.0.1",
+  "cordova-plugin-ionic-keyboard": "2.1.3",
   "cordova-plugin-whitelist": "1.3.3",
   "phonegap-plugin-barcodescanner": "8.0.1",
-  "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2",
-  "cordova-plugin-ionic-keyboard": "2.1.3"
+  "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2"
 };
 // BOTTOM OF METADATA
 });

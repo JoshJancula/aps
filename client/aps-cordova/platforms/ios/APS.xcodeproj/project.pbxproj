@@ -5,32 +5,33 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
-		0AFF6E1491C744C5B3451E3A /* CDVBarcodeScanner.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6119ADDFBA5F44A1BA43A3F9 /* CDVBarcodeScanner.bundle */; };
+		11E4F625C29646B9886F7C9C /* CDVBarcodeScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 831DB0E4389146F9BAF1C4E8 /* CDVBarcodeScanner.mm */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1E1B04B2BB354C26B3D5655C /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EAF97A79B4154ABDA0340 /* CDVNotification.m */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
-		3B0F38F8B79F4AE6840623F6 /* LaunchNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = EB87D40F91164EAAB75B1BE0 /* LaunchNavigator.m */; };
-		65DB79816D91437EB5BF465F /* LN_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6511DBD74D41B7A42D5A66 /* LN_Reachability.m */; };
+		4226A50E50094610B968C356 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8660AE2697C849558B1A2D95 /* AVFoundation.framework */; };
+		62CC0E94E1B041479E5827AD /* LN_Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D07284995C1421DB72876AB /* LN_Reachability.m */; };
+		63044677CA0142F5B844E425 /* CBPeripheral+BTSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E38857D994AF497B877E9A94 /* CBPeripheral+BTSExtensions.m */; };
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
-		802920D25ECF4C2B924185DD /* scannerOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9D5CFAED2743D09489E623 /* scannerOverlay.xib */; };
-		80C842D7B2DF4477A64506D8 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1814BCBF28FF429695D76510 /* CDVNotification.bundle */; };
-		857110A83FA348F784B6BEBA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B17924DDF74A4EDFABDC97BF /* SystemConfiguration.framework */; };
-		865AAA022C9E4A0B92E9431E /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F953BB2544453EB3D95917 /* CoreBluetooth.framework */; };
-		8C68286404E0451097B3E207 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = E856B3DBC5E5460EA92409B2 /* CDVNotification.m */; };
-		8CBAF14BC7A54E438FE26969 /* CDVBarcodeScanner.mm in Sources */ = {isa = PBXBuildFile; fileRef = 14E2B9828A824FAC9DF14241 /* CDVBarcodeScanner.mm */; };
-		91C887FADBD348A680B7BAAB /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 90F434B2F94E4818809E8BD0 /* ActionSheet.m */; };
-		976D8631F2F8454982C28453 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D8C69DD3FF9402B8806C092 /* MapKit.framework */; };
-		9BCB8A9D93EB453EA7028780 /* CBPeripheral+BTSExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 90BD053C866D4BE8B8DD174E /* CBPeripheral+BTSExtensions.m */; };
-		A0A431BF372A4F3DABAD7F23 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74F1CFEE3D64DD69355BBE0 /* CoreLocation.framework */; };
-		CABC3472FBC447CAAC00DE3A /* MEGBluetoothSerial.m in Sources */ = {isa = PBXBuildFile; fileRef = FBA92C35BC22405DB2AC987C /* MEGBluetoothSerial.m */; };
-		E4AE0AB86B4F4537A9423EB0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B7672053E54306A6F2817C /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		E86DDA1668E44626B8F849DA /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = B525123E348840EBA10E8E5E /* BLE.m */; };
-		FB6133B42BBF4538BA98756B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC7401A110C0443096F3E308 /* AVFoundation.framework */; };
-		4CAA879D4930436187A49101 /* CDVIonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8070ED9B3D4906BADB29FB /* CDVIonicKeyboard.m */; };
+		7086B3B3CA174C3AA0984BA1 /* scannerOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52D289C8312542EABD21A8B1 /* scannerOverlay.xib */; };
+		797154029D514B7E84F46EC7 /* CDVBarcodeScanner.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 245308F55B8241E58CDAA9CF /* CDVBarcodeScanner.bundle */; };
+		7DC1091DBBEA4C2CB45109C1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A484C83D6AFD4C4F979FCC30 /* CoreLocation.framework */; };
+		8536B8AF11D847E4963E6F66 /* LaunchNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 12849933E92240B4A3A435BE /* LaunchNavigator.m */; };
+		87D66DE349CD440483FC843E /* MEGBluetoothSerial.m in Sources */ = {isa = PBXBuildFile; fileRef = E010F01B26FC4D299E9E9083 /* MEGBluetoothSerial.m */; };
+		8DA4CAE3B04E4B7AAD8004AB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C74EF8EABAE42878223E8D4 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9B81AEE8EBB04909AAA39062 /* ActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5E1172918D42E3B1C7B838 /* ActionSheet.m */; };
+		A092271D10FB48139195E60F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 083B7DE5315840599BF5534D /* SystemConfiguration.framework */; };
+		AE78024EE2D24E40963CC8CB /* CDVIonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = B72BC9D157844E428EA71E78 /* CDVIonicKeyboard.m */; };
+		B200C58F630149B0A4918393 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D1BB58C5C6E457E86495DAF /* CoreBluetooth.framework */; };
+		EE6B33AE968A4DC38E104396 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E068BF7F36F45BCB3C2C2EA /* BLE.m */; };
+		EE91B89A2FDE48F2BFC87D2E /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9A4CA6FAEF974A98848E8AA7 /* CDVNotification.bundle */; };
+		F147446C302B45FD8DB56561 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B341047B04A4020AAA9284D /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +49,7 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = CordovaLib;
 		};
-		986D49BB21F3BD0400C6961A /* PBXContainerItemProxy */ = {
+		98D1FCEE2206949200062514 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib/CordovaLib.xcodeproj */;
 			proxyType = 2;
@@ -59,16 +60,19 @@
 
 /* Begin PBXFileReference section */
 		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = APS/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		1099AE4D97874861A7609FAD /* ActionSheet.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = ActionSheet.h; path = "cordova-plugin-actionsheet/ActionSheet.h"; sourceTree = "<group>"; };
-		128E022C567440DAB054C99C /* LaunchNavigator.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = LaunchNavigator.h; path = uk.co.workingedge.phonegap.plugin.launchnavigator/LaunchNavigator.h; sourceTree = "<group>"; };
-		14E2B9828A824FAC9DF14241 /* CDVBarcodeScanner.mm */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CDVBarcodeScanner.mm; path = "phonegap-plugin-barcodescanner/CDVBarcodeScanner.mm"; sourceTree = "<group>"; };
-		15F953BB2544453EB3D95917 /* CoreBluetooth.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		1814BCBF28FF429695D76510 /* CDVNotification.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
+		083B7DE5315840599BF5534D /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0B341047B04A4020AAA9284D /* MapKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		0C5E1172918D42E3B1C7B838 /* ActionSheet.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = ActionSheet.m; path = "cordova-plugin-actionsheet/ActionSheet.m"; sourceTree = "<group>"; };
+		0D0C8E37AFC4414ABA334024 /* BLEDefines.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = BLEDefines.h; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/BLEDefines.h"; sourceTree = "<group>"; };
+		12849933E92240B4A3A435BE /* LaunchNavigator.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = LaunchNavigator.m; path = uk.co.workingedge.phonegap.plugin.launchnavigator/LaunchNavigator.m; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* APS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		21F473190B8047DF946FDECE /* LaunchNavigator.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = LaunchNavigator.h; path = uk.co.workingedge.phonegap.plugin.launchnavigator/LaunchNavigator.h; sourceTree = "<group>"; };
+		245308F55B8241E58CDAA9CF /* CDVBarcodeScanner.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; path = CDVBarcodeScanner.bundle; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2D8C69DD3FF9402B8806C092 /* MapKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		2D1BB58C5C6E457E86495DAF /* CoreBluetooth.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		2E068BF7F36F45BCB3C2C2EA /* BLE.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = BLE.m; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/BLE.m"; sourceTree = "<group>"; };
 		301BF52D109A57CC0062928A /* CordovaLib/CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -78,33 +82,30 @@
 		3047A5101AB8059700498E2A /* build-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "build-release.xcconfig"; path = "cordova/build-release.xcconfig"; sourceTree = SOURCE_ROOT; };
 		3047A5111AB8059700498E2A /* build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = build.xcconfig; path = cordova/build.xcconfig; sourceTree = SOURCE_ROOT; };
 		32CA4F630368D1EE00C91783 /* APS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "APS-Prefix.pch"; sourceTree = "<group>"; };
-		3C9D5CFAED2743D09489E623 /* scannerOverlay.xib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = file.xib; path = scannerOverlay.xib; sourceTree = "<group>"; };
-		44B7672053E54306A6F2817C /* AudioToolbox.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		49E1AA87B43E436A81478A03 /* LN_Reachability.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = LN_Reachability.h; path = uk.co.workingedge.phonegap.plugin.launchnavigator/LN_Reachability.h; sourceTree = "<group>"; };
-		6119ADDFBA5F44A1BA43A3F9 /* CDVBarcodeScanner.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; path = CDVBarcodeScanner.bundle; sourceTree = "<group>"; };
+		43C01407B1654503ABE5217E /* CDVNotification.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVNotification.h; path = "cordova-plugin-dialogs/CDVNotification.h"; sourceTree = "<group>"; };
+		4D81E358C6C24BB2A1010AF6 /* ActionSheet.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = ActionSheet.h; path = "cordova-plugin-actionsheet/ActionSheet.h"; sourceTree = "<group>"; };
+		52D289C8312542EABD21A8B1 /* scannerOverlay.xib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = file.xib; path = scannerOverlay.xib; sourceTree = "<group>"; };
+		6AFAF353AB924E9D9D7D119F /* CDVIonicKeyboard.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVIonicKeyboard.h; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.h"; sourceTree = "<group>"; };
 		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = APS/CDVLaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
+		831DB0E4389146F9BAF1C4E8 /* CDVBarcodeScanner.mm */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = CDVBarcodeScanner.mm; path = "phonegap-plugin-barcodescanner/CDVBarcodeScanner.mm"; sourceTree = "<group>"; };
+		8660AE2697C849558B1A2D95 /* AVFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		8C74EF8EABAE42878223E8D4 /* AudioToolbox.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* APS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "APS-Info.plist"; path = "APS/APS-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
-		90BD053C866D4BE8B8DD174E /* CBPeripheral+BTSExtensions.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "CBPeripheral+BTSExtensions.m"; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/CBPeripheral+BTSExtensions.m"; sourceTree = "<group>"; };
-		90F434B2F94E4818809E8BD0 /* ActionSheet.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = ActionSheet.m; path = "cordova-plugin-actionsheet/ActionSheet.m"; sourceTree = "<group>"; };
-		AC7401A110C0443096F3E308 /* AVFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		ADF83D6067C345D9B6B18A93 /* CBPeripheral+BTSExtensions.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "CBPeripheral+BTSExtensions.h"; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/CBPeripheral+BTSExtensions.h"; sourceTree = "<group>"; };
-		B17924DDF74A4EDFABDC97BF /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		B525123E348840EBA10E8E5E /* BLE.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = BLE.m; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/BLE.m"; sourceTree = "<group>"; };
-		C48D4DFD77D94517A4F70125 /* MEGBluetoothSerial.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = MEGBluetoothSerial.h; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/MEGBluetoothSerial.h"; sourceTree = "<group>"; };
-		E856B3DBC5E5460EA92409B2 /* CDVNotification.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVNotification.m; path = "cordova-plugin-dialogs/CDVNotification.m"; sourceTree = "<group>"; };
-		EA6511DBD74D41B7A42D5A66 /* LN_Reachability.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = LN_Reachability.m; path = uk.co.workingedge.phonegap.plugin.launchnavigator/LN_Reachability.m; sourceTree = "<group>"; };
-		EB87D40F91164EAAB75B1BE0 /* LaunchNavigator.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = LaunchNavigator.m; path = uk.co.workingedge.phonegap.plugin.launchnavigator/LaunchNavigator.m; sourceTree = "<group>"; };
+		9A4CA6FAEF974A98848E8AA7 /* CDVNotification.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
+		9D07284995C1421DB72876AB /* LN_Reachability.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = LN_Reachability.m; path = uk.co.workingedge.phonegap.plugin.launchnavigator/LN_Reachability.m; sourceTree = "<group>"; };
+		A05ED277DB304E74A926FEEC /* LN_Reachability.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = LN_Reachability.h; path = uk.co.workingedge.phonegap.plugin.launchnavigator/LN_Reachability.h; sourceTree = "<group>"; };
+		A484C83D6AFD4C4F979FCC30 /* CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B72BC9D157844E428EA71E78 /* CDVIonicKeyboard.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVIonicKeyboard.m; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.m"; sourceTree = "<group>"; };
+		B95580274BBD4D4891DB4602 /* CBPeripheral+BTSExtensions.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "CBPeripheral+BTSExtensions.h"; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/CBPeripheral+BTSExtensions.h"; sourceTree = "<group>"; };
+		BB9EAF97A79B4154ABDA0340 /* CDVNotification.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVNotification.m; path = "cordova-plugin-dialogs/CDVNotification.m"; sourceTree = "<group>"; };
+		E010F01B26FC4D299E9E9083 /* MEGBluetoothSerial.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = MEGBluetoothSerial.m; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/MEGBluetoothSerial.m"; sourceTree = "<group>"; };
+		E38857D994AF497B877E9A94 /* CBPeripheral+BTSExtensions.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "CBPeripheral+BTSExtensions.m"; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/CBPeripheral+BTSExtensions.m"; sourceTree = "<group>"; };
+		E8AD8F704F0E4FE58583F3D2 /* BLE.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = BLE.h; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/BLE.h"; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		F74F1CFEE3D64DD69355BBE0 /* CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = APS/config.xml; sourceTree = "<group>"; };
-		FB1D1B2F3ED443EB86D85A39 /* CDVNotification.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVNotification.h; path = "cordova-plugin-dialogs/CDVNotification.h"; sourceTree = "<group>"; };
-		FBA92C35BC22405DB2AC987C /* MEGBluetoothSerial.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = MEGBluetoothSerial.m; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/MEGBluetoothSerial.m"; sourceTree = "<group>"; };
-		FBAFC2187D9D4EA1B6985E29 /* BLEDefines.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = BLEDefines.h; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/BLEDefines.h"; sourceTree = "<group>"; };
-		FCB853B917BB40A2BF7AE923 /* BLE.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = BLE.h; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/BLE.h"; sourceTree = "<group>"; };
-		BB8070ED9B3D4906BADB29FB /* CDVIonicKeyboard.m */ = {isa = PBXFileReference; name = "CDVIonicKeyboard.m"; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		432CDB5C9B324A88BD913FF0 /* CDVIonicKeyboard.h */ = {isa = PBXFileReference; name = "CDVIonicKeyboard.h"; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		FFB2613B5113425687830FD0 /* MEGBluetoothSerial.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = MEGBluetoothSerial.h; path = "cordova-plugin-bluetooth-serial/BluetoothSerial/MEGBluetoothSerial.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,12 +114,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
-				865AAA022C9E4A0B92E9431E /* CoreBluetooth.framework in Frameworks */,
-				E4AE0AB86B4F4537A9423EB0 /* AudioToolbox.framework in Frameworks */,
-				FB6133B42BBF4538BA98756B /* AVFoundation.framework in Frameworks */,
-				976D8631F2F8454982C28453 /* MapKit.framework in Frameworks */,
-				A0A431BF372A4F3DABAD7F23 /* CoreLocation.framework in Frameworks */,
-				857110A83FA348F784B6BEBA /* SystemConfiguration.framework in Frameworks */,
+				B200C58F630149B0A4918393 /* CoreBluetooth.framework in Frameworks */,
+				8DA4CAE3B04E4B7AAD8004AB /* AudioToolbox.framework in Frameworks */,
+				4226A50E50094610B968C356 /* AVFoundation.framework in Frameworks */,
+				F147446C302B45FD8DB56561 /* MapKit.framework in Frameworks */,
+				7DC1091DBBEA4C2CB45109C1 /* CoreLocation.framework in Frameworks */,
+				A092271D10FB48139195E60F /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,9 +182,9 @@
 				3047A50E1AB8057F00498E2A /* config */,
 				8D1107310486CEB800E47090 /* APS-Info.plist */,
 				6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */,
-				1814BCBF28FF429695D76510 /* CDVNotification.bundle */,
-				3C9D5CFAED2743D09489E623 /* scannerOverlay.xib */,
-				6119ADDFBA5F44A1BA43A3F9 /* CDVBarcodeScanner.bundle */,
+				9A4CA6FAEF974A98848E8AA7 /* CDVNotification.bundle */,
+				52D289C8312542EABD21A8B1 /* scannerOverlay.xib */,
+				245308F55B8241E58CDAA9CF /* CDVBarcodeScanner.bundle */,
 			);
 			name = Resources;
 			path = APS/Resources;
@@ -192,12 +193,12 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				15F953BB2544453EB3D95917 /* CoreBluetooth.framework */,
-				44B7672053E54306A6F2817C /* AudioToolbox.framework */,
-				AC7401A110C0443096F3E308 /* AVFoundation.framework */,
-				2D8C69DD3FF9402B8806C092 /* MapKit.framework */,
-				F74F1CFEE3D64DD69355BBE0 /* CoreLocation.framework */,
-				B17924DDF74A4EDFABDC97BF /* SystemConfiguration.framework */,
+				2D1BB58C5C6E457E86495DAF /* CoreBluetooth.framework */,
+				8C74EF8EABAE42878223E8D4 /* AudioToolbox.framework */,
+				8660AE2697C849558B1A2D95 /* AVFoundation.framework */,
+				0B341047B04A4020AAA9284D /* MapKit.framework */,
+				A484C83D6AFD4C4F979FCC30 /* CoreLocation.framework */,
+				083B7DE5315840599BF5534D /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -206,7 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				301BF535109A57CC0062928A /* libCordova.a */,
-				986D49BC21F3BD0400C6961A /* Cordova.framework */,
+				98D1FCEF2206949200062514 /* Cordova.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -224,24 +225,24 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				90F434B2F94E4818809E8BD0 /* ActionSheet.m */,
-				1099AE4D97874861A7609FAD /* ActionSheet.h */,
-				FBA92C35BC22405DB2AC987C /* MEGBluetoothSerial.m */,
-				90BD053C866D4BE8B8DD174E /* CBPeripheral+BTSExtensions.m */,
-				B525123E348840EBA10E8E5E /* BLE.m */,
-				C48D4DFD77D94517A4F70125 /* MEGBluetoothSerial.h */,
-				ADF83D6067C345D9B6B18A93 /* CBPeripheral+BTSExtensions.h */,
-				FCB853B917BB40A2BF7AE923 /* BLE.h */,
-				FBAFC2187D9D4EA1B6985E29 /* BLEDefines.h */,
-				E856B3DBC5E5460EA92409B2 /* CDVNotification.m */,
-				FB1D1B2F3ED443EB86D85A39 /* CDVNotification.h */,
-				14E2B9828A824FAC9DF14241 /* CDVBarcodeScanner.mm */,
-				EB87D40F91164EAAB75B1BE0 /* LaunchNavigator.m */,
-				EA6511DBD74D41B7A42D5A66 /* LN_Reachability.m */,
-				128E022C567440DAB054C99C /* LaunchNavigator.h */,
-				49E1AA87B43E436A81478A03 /* LN_Reachability.h */,
-				BB8070ED9B3D4906BADB29FB /* CDVIonicKeyboard.m */,
-				432CDB5C9B324A88BD913FF0 /* CDVIonicKeyboard.h */,
+				0C5E1172918D42E3B1C7B838 /* ActionSheet.m */,
+				4D81E358C6C24BB2A1010AF6 /* ActionSheet.h */,
+				E010F01B26FC4D299E9E9083 /* MEGBluetoothSerial.m */,
+				E38857D994AF497B877E9A94 /* CBPeripheral+BTSExtensions.m */,
+				2E068BF7F36F45BCB3C2C2EA /* BLE.m */,
+				FFB2613B5113425687830FD0 /* MEGBluetoothSerial.h */,
+				B95580274BBD4D4891DB4602 /* CBPeripheral+BTSExtensions.h */,
+				E8AD8F704F0E4FE58583F3D2 /* BLE.h */,
+				0D0C8E37AFC4414ABA334024 /* BLEDefines.h */,
+				BB9EAF97A79B4154ABDA0340 /* CDVNotification.m */,
+				43C01407B1654503ABE5217E /* CDVNotification.h */,
+				B72BC9D157844E428EA71E78 /* CDVIonicKeyboard.m */,
+				6AFAF353AB924E9D9D7D119F /* CDVIonicKeyboard.h */,
+				831DB0E4389146F9BAF1C4E8 /* CDVBarcodeScanner.mm */,
+				12849933E92240B4A3A435BE /* LaunchNavigator.m */,
+				9D07284995C1421DB72876AB /* LN_Reachability.m */,
+				21F473190B8047DF946FDECE /* LaunchNavigator.h */,
+				A05ED277DB304E74A926FEEC /* LN_Reachability.h */,
 			);
 			name = Plugins;
 			path = APS/Plugins;
@@ -288,7 +289,6 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = RQ76MD9MA4;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -322,11 +322,11 @@
 			remoteRef = 301BF534109A57CC0062928A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		986D49BC21F3BD0400C6961A /* Cordova.framework */ = {
+		98D1FCEF2206949200062514 /* Cordova.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Cordova.framework;
-			remoteRef = 986D49BB21F3BD0400C6961A /* PBXContainerItemProxy */;
+			remoteRef = 98D1FCEE2206949200062514 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -339,9 +339,9 @@
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */,
 				6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */,
-				80C842D7B2DF4477A64506D8 /* CDVNotification.bundle in Resources */,
-				802920D25ECF4C2B924185DD /* scannerOverlay.xib in Resources */,
-				0AFF6E1491C744C5B3451E3A /* CDVBarcodeScanner.bundle in Resources */,
+				EE91B89A2FDE48F2BFC87D2E /* CDVNotification.bundle in Resources */,
+				7086B3B3CA174C3AA0984BA1 /* scannerOverlay.xib in Resources */,
+				797154029D514B7E84F46EC7 /* CDVBarcodeScanner.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,15 +373,15 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
-				91C887FADBD348A680B7BAAB /* ActionSheet.m in Sources */,
-				CABC3472FBC447CAAC00DE3A /* MEGBluetoothSerial.m in Sources */,
-				9BCB8A9D93EB453EA7028780 /* CBPeripheral+BTSExtensions.m in Sources */,
-				E86DDA1668E44626B8F849DA /* BLE.m in Sources */,
-				8C68286404E0451097B3E207 /* CDVNotification.m in Sources */,
-				8CBAF14BC7A54E438FE26969 /* CDVBarcodeScanner.mm in Sources */,
-				3B0F38F8B79F4AE6840623F6 /* LaunchNavigator.m in Sources */,
-				65DB79816D91437EB5BF465F /* LN_Reachability.m in Sources */,
-				4CAA879D4930436187A49101 /* CDVIonicKeyboard.m in Sources */,
+				9B81AEE8EBB04909AAA39062 /* ActionSheet.m in Sources */,
+				87D66DE349CD440483FC843E /* MEGBluetoothSerial.m in Sources */,
+				63044677CA0142F5B844E425 /* CBPeripheral+BTSExtensions.m in Sources */,
+				EE6B33AE968A4DC38E104396 /* BLE.m in Sources */,
+				1E1B04B2BB354C26B3D5655C /* CDVNotification.m in Sources */,
+				AE78024EE2D24E40963CC8CB /* CDVIonicKeyboard.m in Sources */,
+				11E4F625C29646B9886F7C9C /* CDVBarcodeScanner.mm in Sources */,
+				8536B8AF11D847E4963E6F66 /* LaunchNavigator.m in Sources */,
+				62CC0E94E1B041479E5827AD /* LN_Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,8 +405,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = RQ76MD9MA4;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -419,7 +417,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_NAME = APS;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -433,8 +430,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEVELOPMENT_TEAM = RQ76MD9MA4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -445,7 +440,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				PRODUCT_NAME = APS;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

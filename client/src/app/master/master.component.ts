@@ -56,6 +56,7 @@ export class MasterComponent implements OnInit {
 		this.subscribeToUpdates();
 		setTimeout(() => this.sendConnectionMessage(), 500);
 		setTimeout(() => this.loadFranchiseInfo(), 600);
+		setTimeout(() => this.listenForResume(), 1000);
 	}
 
 	openPopup() {
@@ -70,6 +71,28 @@ export class MasterComponent implements OnInit {
 				case 'settings': this.openSettings(); break;
 			}
 		});
+	}
+
+	listenForResume() {
+		if ((<any>window).deviceReady === true) {
+			document.addEventListener('resume', (e) => {
+				this.getUpdates();
+			}, false);
+		}
+	}
+
+	getUpdates() {
+		this.messagingService.initSocket();
+		this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
+			console.log('socket response: ', response);
+		});
+		this.subscribeToUpdates();
+		setTimeout(() => this.sendConnectionMessage(), 500);
+		this.utilService.processClients();
+		setTimeout(() => this.utilService.processFranchises(), 100);
+		setTimeout(() => this.utilService.processUsers(), 200);
+		setTimeout(() => this.utilService.processInvoices(this.controlInvoice.invoiceSearch.filter), 300);
+		setTimeout(() => this.utilService.processAppointments(), 400);
 	}
 
 	loadFranchiseInfo() {
