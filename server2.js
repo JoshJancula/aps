@@ -33,10 +33,11 @@ require("./routes/appointment-routes.js")(app);
 require("./routes/client-routes.js")(app);
 require("./routes/invoice-routes.js")(app);
 require("./routes/email.js")(app);
+require("./routes/timecard-routes.js")(app);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-    var err = new Error('Not Found');
+    let err = new Error('Not Found');
     err.status = 404;
     next(err);
 });

@@ -3,6 +3,7 @@ import { UploadFileService } from '../../services/upload-file.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from '../../services/user.service';
 import { UtilService } from '../../services/util.service';
+import { TimesheetComponent } from './timesheet/timesheet.component';
 import * as moment from 'moment';
 
 @Component({
@@ -13,6 +14,7 @@ import * as moment from 'moment';
 })
 export class SettingsComponent implements OnInit {
 
+	@ViewChild('timeSheet') timeSheet: TimesheetComponent;
 	@ViewChild('calendar') calendar: any;
 	@ViewChild('calendar2') calendar2: any;
 	targetFile: any;

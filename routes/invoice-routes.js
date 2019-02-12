@@ -8,9 +8,8 @@ module.exports = (app) => {
 
 	// GET route for getting all invoices
 	app.get("/api/invoices", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Invoice.findAll({
 				}).then((x) => {
 					res.json(x);
@@ -18,14 +17,13 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// GET route for retrieving a single invoice
 	app.get("/api/invoices/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Invoice.findOne({
 					where: {
 						id: req.params.id
@@ -36,28 +34,26 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// POST route for saving a new invoice
 	app.post("/api/invoices", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Invoice.create(req.body).then((x) => {
 					res.json(x);
 				});
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// PUT route for updating invoice
 	app.put("/api/invoices/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Invoice.update({
 					Total: req.body.Total,
 					Paid: req.body.Paid,
@@ -88,15 +84,14 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 
 	// PUT route for updating invoice signature
 	app.put("/api/invoices/signature/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Invoice.update({
 					VehicleDescription: req.body.signature,
 				}, {
@@ -112,15 +107,30 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 
 	// DELETE route for deleting a invoice location
+	// app.delete("/api/invoices/:id", (req, res) => {
+	// 	let jancsta = new JancstaPort(req.headers.authorization.toString());
+	// 	setTimeout(() => {
+	// 		if (jancsta.bool == true) {
+	// 			db.Invoice.destroy({
+	// 				where: {
+	// 					id: req.params.id
+	// 				}
+	// 			}).then((x) =>{
+	// 				res.json(x);
+	// 			});
+	// 		} else {
+	// 			res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
+	// 		}
+	// 	}, 500);
+	// });
 	app.delete("/api/invoices/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+	 new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Invoice.destroy({
 					where: {
 						id: req.params.id
@@ -131,15 +141,14 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 
 	// POST route for params to enter, search by franchise and dates. Dates default to today
 	app.post("/api/invoices/sub/", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Invoice.findAll({
 					where: {
 						FranchiseId: req.body.franchise,
@@ -167,6 +176,6 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 };

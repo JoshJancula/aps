@@ -37,6 +37,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { SettingsComponent } from './master/settings/settings.component';
 import { SignatureDialogComponent } from './signature-dialog/signature-dialog.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import { TimesheetComponent } from './master/settings/timesheet/timesheet.component';
 
 const config = {
 	apiKey: 'AIzaSyBTiizpyWeqHfXdFDQsd6IoMdNWYvkceS8',
@@ -76,7 +77,8 @@ const config = {
 		ErrorDialogComponent,
 		InputEmailDialogComponent,
 		SettingsComponent,
-		SignatureDialogComponent
+		SignatureDialogComponent,
+		TimesheetComponent
 	],
 	imports: [
 		BrowserModule,

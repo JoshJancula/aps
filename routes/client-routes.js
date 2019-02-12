@@ -7,9 +7,8 @@ module.exports = (app) => {
 
 	// GET route for getting all clients
 	app.get("/api/clients", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Client.findAll({
 				}).then((x) => {
 					res.json(x);
@@ -17,14 +16,13 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// GET route for retrieving a single client
 	app.get("/api/clients/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Client.findAll({
 					where: {
 						FranchiseId: req.params.id
@@ -35,28 +33,26 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// POST route for saving a new client
 	app.post("/api/clients", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Client.create(req.body).then((x) => {
 					res.json(x);
 				});
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// PUT route for updating client
 	app.put("/api/clients/:id", function (req, res) {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Client.update({
 					Address: req.body.StreetAddress,
 					Description: req.body.Description,
@@ -76,14 +72,13 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500)
+		});
 	});
 
 	// DELETE route for deleting a client location
 	app.delete("/api/clients/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.Client.destroy({
 					where: {
 						id: req.params.id
@@ -94,7 +89,7 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 };

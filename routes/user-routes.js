@@ -9,9 +9,8 @@ module.exports = (app) => {
 
 	// GET route for getting all users
 	app.get("/api/users", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.User.findAll({
 				}).then((x) => {
 					let z = [];
@@ -35,14 +34,13 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// GET route for retrieving users by franchise
 	app.get("/api/users/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.User.findAll({
 					where: {
 						FranchiseId: req.params.id
@@ -50,33 +48,32 @@ module.exports = (app) => {
 				}).then((x) => {
 					let z = [];
 					x.forEach(y => {
-							const user = {
-								Username: y.Username,
-								FirstName: y.FirstName,
-								LastName: y.LastName,
-								FranchiseId: y.FranchiseId,
-								Phone: y.Phone,
-								Email: y.Email,
-								Role: y.Role,
-								id: y.id,
-								Active: y.Active,
-								Avatar: y.Avatar,
-							}
-							z.push(user);
+						const user = {
+							Username: y.Username,
+							FirstName: y.FirstName,
+							LastName: y.LastName,
+							FranchiseId: y.FranchiseId,
+							Phone: y.Phone,
+							Email: y.Email,
+							Role: y.Role,
+							id: y.id,
+							Active: y.Active,
+							Avatar: y.Avatar,
+						}
+						z.push(user);
 					});
 					res.json(z);
 				});
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// PUT route for updating users
 	app.put("/api/users/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.User.update({
 					FirstName: req.body.FirstName,
 					LastName: req.body.LastName,
@@ -96,16 +93,13 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// PUT route for updating users
 	app.put("/api/users/avatar/:id", (req, res) => {
-		console.log('should be updating the fucking avatar');
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
-				console.log('req.body', req.body);
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.User.update({
 					Avatar: req.body.Avatar,
 				}, {
@@ -121,15 +115,14 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// PUT route for updating user password
 	app.put("/api/users/updatePassword/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
 		let pwd = bcrypt.hashSync(req.body.Password, bcrypt.genSaltSync(2), null);
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.User.update({
 					Password: pwd,
 				}, {
@@ -146,28 +139,26 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 1000);
+		});
 	});
 
 	// POST route for saving a new user
 	app.post("/api/users", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.User.create(req.body).then((x) => {
 					res.json(x);
 				});
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	// DELETE route for deleting a user 
 	app.delete("/api/users/:id", (req, res) => {
-		let jancsta = new JancstaPort(req.headers.authorization.toString());
-		setTimeout(() => {
-			if (jancsta.bool == true) {
+		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			if (bool == true) {
 				db.User.destroy({
 					where: {
 						id: req.params.id
@@ -178,7 +169,7 @@ module.exports = (app) => {
 			} else {
 				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
 			}
-		}, 500);
+		});
 	});
 
 	app.post('/api/signin', (req, res) => {
@@ -201,7 +192,7 @@ module.exports = (app) => {
 					Email: user.dataValues.Email,
 					Role: user.dataValues.Role,
 					createdAt: user.dataValues.createdAt,
-					id: user.dataValues.id, 
+					id: user.dataValues.id,
 					Avatar: user.dataValues.Avatar
 				}
 				if (user.dataValues.Active == false) {

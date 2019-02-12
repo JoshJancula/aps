@@ -14,7 +14,7 @@ export class MessageService {
 
 	constructor() { }
 
-	public initSocket(): void {
+	 initSocket(): void {
 		if (window.location.host === 'localhost:4200') {
 		this.socket = socketIo(LOCAL_URL);
 		} else {
@@ -22,47 +22,47 @@ export class MessageService {
 		}
 	}
 
-	public sendConnectionInfo(message: any): void {
+	 sendConnectionInfo(message: any): void {
 		if (this.socket === undefined) {
 			this.initSocket();
 		}
 		this.socket.emit('connectionInfo', message);
 	}
 
-	public sendMessage(message: any): void {
+	 sendMessage(message: any): void {
 		if (this.socket === undefined) {
 			this.initSocket();
 		}
 		this.socket.emit('message', message);
 	}
 
-	public updateMessageStatus(message: any) {
+	 updateMessageStatus(message: any) {
 		if (this.socket === undefined) {
 			this.initSocket();
 		}
 		this.socket.emit('read', message);
 	}
 
-	public sendUpdate(message: any) {
+	 sendUpdate(message: any) {
 		if (this.socket === undefined) {
 			this.initSocket();
 		}
 		this.socket.emit('update', message);
 	}
 
-	public onUpdate(): Observable<any> {
+	 onUpdate(): Observable<any> {
 		return new Observable<any>(observer => {
 			this.socket.on('update', (data: any) => { observer.next(data); });
 		});
 	}
 
-	public onMessage(): Observable<any> {
+	 onMessage(): Observable<any> {
 		return new Observable<any>(observer => {
 			this.socket.on('message', (data: any) => { observer.next(data); });
 		});
 	}
 
-	public onEvent(event: Event): Observable<any> {
+	 onEvent(event: Event): Observable<any> {
 		return new Observable<Event>(observer => {
 			this.socket.on(event, () => observer.next());
 		});
