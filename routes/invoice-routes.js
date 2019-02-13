@@ -110,24 +110,6 @@ module.exports = (app) => {
 		});
 	});
 
-
-	// DELETE route for deleting a invoice location
-	// app.delete("/api/invoices/:id", (req, res) => {
-	// 	let jancsta = new JancstaPort(req.headers.authorization.toString());
-	// 	setTimeout(() => {
-	// 		if (jancsta.bool == true) {
-	// 			db.Invoice.destroy({
-	// 				where: {
-	// 					id: req.params.id
-	// 				}
-	// 			}).then((x) =>{
-	// 				res.json(x);
-	// 			});
-	// 		} else {
-	// 			res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
-	// 		}
-	// 	}, 500);
-	// });
 	app.delete("/api/invoices/:id", (req, res) => {
 	 new JancstaPort(req.headers.authorization.toString()).then((bool) => {
 			if (bool == true) {

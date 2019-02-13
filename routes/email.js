@@ -1,7 +1,7 @@
 const sgMail = require('@sendgrid/mail');
 const JancstaPort = require('../config/jancsta');
 
-module.exports = function (app) {
+module.exports = (app) => {
 
     app.post("/api/email", (req, res) => {
 		new JancstaPort(req.headers.authorization.toString()).then((bool) => {

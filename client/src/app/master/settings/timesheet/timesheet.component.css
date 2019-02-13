@@ -1,0 +1,9 @@
+.mainRow {
+    margin-left: 15%;
+    width: 100%;
+}
+
+.times, .buttons {
+    display: block;
+    width: 100%;
+}

@@ -8,7 +8,7 @@ export class TimecardService {
 
   constructor(private http: HttpClient) { }
 
-	createTimecard(newFranchise: string) {
+	createTimecard(newTimecard) {
 		if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
@@ -17,10 +17,10 @@ export class TimecardService {
 			};
 			if (window.location.host === 'localhost:4200') {
 				const localUrl = `http://localhost:8080/api/timecards`;
-				return this.http.post(localUrl, newFranchise, httpOptions);
+				return this.http.post(localUrl, newTimecard, httpOptions);
 			} else {
 				const url = `https://aps-josh.herokuapp.com/api/timecards`;
-				return this.http.post(url, newFranchise, httpOptions);
+				return this.http.post(url, newTimecard, httpOptions);
 			}
 		} else {
 			console.log('no token found');
@@ -35,10 +35,10 @@ export class TimecardService {
 				})
 			};
 			if (window.location.host === 'localhost:4200') {
-				const localUrl = `http://localhost:8080//api/timecards/employee/today/${id}`;
+				const localUrl = `http://localhost:8080/api/timecards/employee/today/${id}`;
 				return this.http.get(localUrl, httpOptions);
 			} else {
-				const url = `https://aps-josh.herokuapp.com//api/timecards/employee/today/${id}`;
+				const url = `https://aps-josh.herokuapp.com/api/timecards/employee/today/${id}`;
 				return this.http.get(url, httpOptions);
 			}
 		} else {
@@ -56,10 +56,10 @@ export class TimecardService {
 				observe: 'events' as 'events'
 			};
 			if (window.location.host === 'localhost:4200') {
-				const localUrl = `http://localhost:8080//api/timecards/employee/all/${params.EmployeeId}`;
+				const localUrl = `http://localhost:8080/api/timecards/employee/all/${params.EmployeeId}`;
 				return this.http.post(localUrl, params, httpOptions);
 			} else {
-				const url = `https://aps-josh.herokuapp.com//api/timecards/employee/all/${params.EmployeeId}`;
+				const url = `https://aps-josh.herokuapp.com/api/timecards/employee/all/${params.EmployeeId}`;
 				return this.http.post(url, params, httpOptions);
 			}
 		} else {

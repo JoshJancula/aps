@@ -1,3 +1,9 @@
-<p>
-  timesheet works!
-</p>
+<div class='row mainRow'>
+<div class='row buttons'>
+  <button *ngIf="isClockedIn === false" (click)='clockIn();' mat-button>Clock in</button>
+  <button *ngIf="isClockedIn === true" (click)='clockOut();' mat-button>Clock out</button>
+</div>
+<div class='row times'>
+  <div class='row ' *ngFor="let a of todaysActivity">{{ formatMinutes(a.TimeIn) }} -- {{ a.TimeOut ? formatMinutes(a.TimeOut) : 'Clocked in' }} -- Total: {{ getDiff(a.TimeIn, a.TimeOut) }}<br></div>
+</div>
+</div>

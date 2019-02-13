@@ -50,8 +50,9 @@ module.exports = (app) => {
                     },
                 }).then((x) => {
                     let cards = [];
+                    let today = moment(new Date()).format('MM/DD/YYYY');
                     x.forEach(entry => {
-                        if (moment(new Date()).isSame(entry.Date)) { cards.push(entry); }
+                        if (moment(today).isSame(entry.Date)) { cards.push(entry); }
                     });
                     res.json(cards);
                 });
@@ -75,7 +76,8 @@ module.exports = (app) => {
     });
 
     // PUT route for updating timecard
-    app.put("/api/appointments/:id", (req, res) => {
+    app.put("/api/timecards/:id", (req, res) => {
+        console.log('req: ', req.body);
         new JancstaPort(req.headers.authorization.toString()).then((bool) => {
 			if (bool == true) {
                 db.Timecard.update({

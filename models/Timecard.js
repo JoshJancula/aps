@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         TimeOut: {
             type: DataTypes.STRING,
             unique: false,
-            allowNull: false,
+            allowNull: true,
         },
     }, {
         timestamps: true,
