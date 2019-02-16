@@ -51,7 +51,7 @@ export class ControlClientComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = { MessageType: 'update', Action: 'clients' };
+		const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'clients' };
 		this.messagingService.sendUpdate(data);
 	}
 

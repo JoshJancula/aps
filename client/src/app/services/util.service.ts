@@ -13,7 +13,6 @@ export class UtilService {
 
 	constructor(public dialog: MatDialog, private router: Router, private authService: AuthService, private http: HttpClient) { }
 
-	states = ['AL', 'AK', 'AS', 'AZ', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NC', 'ND', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 	private userStore = [];
 	private userSubject = new BehaviorSubject(this.userStore);
 	users = this.userSubject.asObservable();

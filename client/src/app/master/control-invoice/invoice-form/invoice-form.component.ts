@@ -158,7 +158,7 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = { MessageType: 'update', Action: 'invoices' };
+		const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'invoices' };
 		this.messagingService.sendUpdate(data);
 	}
 

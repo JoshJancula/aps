@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { InternalFormsSharedModule } from '@angular/forms/src/directives';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
 	private _currentUser = { Username: null, Name: null, Role: null, FranchiseId: null, id: null, Phone: null, Email: null, Avatar: null, Initials: null };
 	public _franchiseInfo: any;
 
-	constructor(private http: Http) { }
+	constructor(private router: Router, private http: Http) { }
 
 	loginUser(username: string, password: string) {
 		// tslint:disable-next-line:prefer-const
@@ -27,6 +28,8 @@ export class AuthService {
 
 	logout() {
 		localStorage.removeItem('jwtToken');
+		this.router.navigate([`/`], {});
+		// console.log('invoiceSubject', this.utilService.invoices);
 	}
 
 	get currentUser() {

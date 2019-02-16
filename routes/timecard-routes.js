@@ -21,18 +21,14 @@ module.exports = (app) => {
 
                     a.forEach(b => {
                         let date = moment(a.Date).format('MM/DD/YYYY');
-                        if (moment(start).isSame(end)) {
-                            if (moment(date).isSame(end) || moment(date).isSame(start)) { cards.push(b); }
-                        } else {
-                            if (moment(date).isBefore(end)) {
-                                if (moment(date).isAfter(start)) { cards.push(b); }
-                            }
-                            if (moment(date).isSame(start)) { cards.push(b); }
-                            if (moment(date).isSame(end)) { cards.push(b); }
-                        }
+                        if (moment(date).isBetween(moment(start), moment(end))) {
+							cards.push(b);
+						} else if (moment(date).isSame(moment(start)) || moment(date).isSame(moment(start))) {
+							cards.push(b);
+						}
 
                     });
-                    res.json(inv);
+                    res.json(cards);
                 });
             } else {
                 res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });

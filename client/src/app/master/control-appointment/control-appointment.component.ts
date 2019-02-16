@@ -116,7 +116,7 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = { MessageType: 'update', Action: 'appointments' };
+		const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'appointments' };
 		this.messagingService.sendUpdate(data);
 	}
 

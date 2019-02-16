@@ -75,7 +75,7 @@ export class ControlUserComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = { MessageType: 'update', Action: 'users' };
+		const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'users' };
 		this.messagingService.sendUpdate(data);
 	}
 

@@ -202,7 +202,7 @@ module.exports = (app) => {
 					bcrypt.compare(req.body.Password, pwd, (err, isMatch) => {
 						if (isMatch && !err) {
 							// if user is found and password is right create a token
-							let date = moment().format('MM/DD/YYYY');
+							let date = moment(new Date()).format('MM/DD/YYYY');
 							let hashThis = `${date}secret`
 							bcrypt.genSalt(1, (err, salt) => {
 								bcrypt.hash(hashThis, salt, (err2, hash) => {

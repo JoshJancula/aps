@@ -20,8 +20,9 @@
     <div class='row' style='width: 100%;'>
       <!-- Timesheet -->
       <div class='row timesheet' *ngIf="userAction === 'Timesheet'">
-        <div class='row' style='width: 100%;'><span class='actionHeader'>Timesheet coming soon.</span></div>
-        <app-timesheet class='timesheetComponent' *ngIf="userAction === 'Timesheet'"></app-timesheet>
+        <div class='row' style='width: 100%;'><span class='actionHeader'>Timesheet</span></div>
+        <div class='row' style='width: 100%;' *ngIf='timeSheet.dayTotal'><span class='actionHeader'>Day total: {{ timeSheet.dayTotal }} </span></div>
+        <app-timesheet #timeSheet class='timesheetComponent' [ngClass]="{'show': userAction === 'Timesheet'}"></app-timesheet>
       </div>
       <!-- change password -->
       <div class='row changePassword' style='width: 100%;' *ngIf="userAction === 'Change password'">

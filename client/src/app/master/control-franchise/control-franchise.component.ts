@@ -70,7 +70,7 @@ export class ControlFranchiseComponent implements OnInit {
 	}
 
 	notifySocket() {
-		const data = { MessageType: 'update', Action: 'franchises' };
+		const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'franchises' };
 		this.messagingService.sendUpdate(data);
 	}
 

@@ -4,6 +4,6 @@
   <button *ngIf="isClockedIn === true" (click)='clockOut();' mat-button>Clock out</button>
 </div>
 <div class='row times'>
-  <div class='row ' *ngFor="let a of todaysActivity">{{ formatMinutes(a.TimeIn) }} -- {{ a.TimeOut ? formatMinutes(a.TimeOut) : 'Clocked in' }} -- Total: {{ getDiff(a.TimeIn, a.TimeOut) }}<br></div>
+  <div class='row ' *ngFor="let a of todaysActivity">{{ formatMinutes(a.TimeIn) }} -- {{ a.TimeOut ? formatMinutes(a.TimeOut) : 'Clocked in' }} -- Total: {{ getDiff(a.TimeIn, a.TimeOut, false) }}<br></div>
 </div>
 </div>

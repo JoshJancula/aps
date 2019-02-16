@@ -11,19 +11,10 @@
       <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
     </mat-form-field>
   </span>
+  <!-- <button *ngIf="controlSettings === true"  mat-button>Logout</button> -->
 </mat-toolbar>
 <div class='row mainRow'>
   <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
-    <!-- <div class='row' style='margin-bottom: 2%'> 
-      <div class='col-lg-4'>
-      <img *ngIf="authService.currentUser.Avatar !== null" class='userAvatar' src="{{authService.currentUser.Avatar}}" />
-      <span *ngIf="authService.currentUser.Avatar === null" class='userInitials'>{{ authService.currentUser.Initials }}</span>
-
-    </div>
-    <div class='col-lg-8'>
-      <span class='userName'>{{ authService.currentUser.Name }}</span>
-    </div>
-    </div> -->
     <div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'" [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
     <div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' " [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
     <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>

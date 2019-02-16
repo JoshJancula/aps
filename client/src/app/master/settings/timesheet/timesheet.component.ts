@@ -14,6 +14,7 @@ export class TimesheetComponent implements OnInit {
 
 	isClockedIn = false;
 	todaysActivity: any;
+	dayTotal: any;
 
 	constructor(private utilService: UtilService, private authService: AuthService, private timeCardService: TimecardService) { }
 
@@ -25,30 +26,52 @@ export class TimesheetComponent implements OnInit {
 		this.timeCardService.getTodaysTimecards(this.authService.currentUser.id).subscribe(response => {
 			console.log('response: ', response);
 			if ((<any>response).length <= 0) {
-				console.log('length was <= 0');
 				this.isClockedIn = false;
 			} else {
 				(<any>response).forEach(card => {
-					console.log('card: ', card);
 					if (card.TimeOut === '' || card.TimeOut === null || card.TimeIn === undefined) { this.isClockedIn = true; }
 				});
 				this.todaysActivity = response;
+				this.getTotal();
 			}
 		});
 	}
 
-	getDiff(a, b) {
+	getDiff(a, b, total) {
 		let diff;
 		if (b !== null && b !== '' && b !== undefined) {
 			let x = moment(a);
 			let y = moment(b);
-			 diff = moment.duration(x.diff(y));
+			diff = moment.duration(x.diff(y));
 		} else {
 			let x = moment(a);
 			let y = moment(new Date);
-			 diff = moment.duration(x.diff(y));
+			diff = moment.duration(x.diff(y));
 		}
-		return diff._data.minutes;
+		if (total) {
+			return diff._milliseconds.toString().replace('-', '');
+		} else {
+			let tempTime = moment.duration(diff._milliseconds);
+			if (tempTime.hours() < 0) {
+				return `${tempTime.hours().toString().replace('-', '')}  hour(s) ${tempTime.minutes().toString().replace('-', '')} minute(s)`;
+			} else {
+				return `${tempTime.minutes().toString().replace('-', '')} minute(s)`;
+			}
+		}
+	}
+
+	getTotal() {
+		let total = 0;
+		this.todaysActivity.forEach(card => {
+			// tslint:disable-next-line:radix
+			total += parseInt(this.getDiff(card.TimeIn, card.TimeOut, true));
+		});
+		let tempTime = moment.duration(total);
+		if (tempTime.hours() > 0) {
+			this.dayTotal = `${tempTime.hours().toString().replace('-', '')}  hour(s) ${tempTime.minutes().toString().replace('-', '')} minute(s)`;
+		} else {
+			this.dayTotal = `${tempTime.minutes().toString().replace('-', '')} minute(s)`;
+		}
 	}
 
 	formatMinutes(a) {
@@ -67,6 +90,7 @@ export class TimesheetComponent implements OnInit {
 		this.timeCardService.createTimecard(data).subscribe(res => {
 			console.log('res saving timecard: ', res);
 			this.isClockedIn = true;
+			this.getTodayHours();
 		}, error => {
 			this.utilService.alertError(`error saving timecard: ${error}`);
 		});

@@ -105,6 +105,11 @@
 }
 
 .timesheetComponent {
+    display: none;
+}
+
+.timesheetComponent.show {
+    display: block;
     margin-left: 10%;
 }
 

@@ -13,6 +13,7 @@ import { MatBottomSheet, MatBottomSheetRef } from '@angular/material';
 import { BottomPopupComponent } from '../bottom-popup/bottom-popup.component';
 import { ControlInvoiceComponent } from './control-invoice/control-invoice.component';
 import { FranchiseService } from '../services/franchise.service';
+import * as moment from 'moment';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -30,6 +31,7 @@ export class MasterComponent implements OnInit {
 	settingsMode = true;
 	messageConnection: any;
 	updateConnection: any;
+	pauseTime: any;
 	screen = this.authService.currentUser.Name;
 	@ViewChild('appointmentCalendar') appointmentCalendar: any;
 	@ViewChild('controlUser') controlUser: ControlUserComponent;
@@ -78,21 +80,28 @@ export class MasterComponent implements OnInit {
 			document.addEventListener('resume', (e) => {
 				this.getUpdates();
 			}, false);
+			document.addEventListener('pause', (e) => {
+				this.pauseTime = moment().add(2, 'hours');
+			}, false);
 		}
 	}
 
 	getUpdates() {
-		this.messagingService.initSocket();
-		this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
-			console.log('socket response: ', response);
-		});
-		this.subscribeToUpdates();
-		setTimeout(() => this.sendConnectionMessage(), 500);
-		this.utilService.processClients();
-		setTimeout(() => this.utilService.processFranchises(), 100);
-		setTimeout(() => this.utilService.processUsers(), 200);
-		setTimeout(() => this.utilService.processInvoices(this.controlInvoice.invoiceSearch.filter), 300);
-		setTimeout(() => this.utilService.processAppointments(), 400);
+		if (moment(new Date()).isBefore(moment(this.pauseTime))) {
+			this.messagingService.initSocket();
+			this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
+				console.log('socket response: ', response);
+			});
+			this.subscribeToUpdates();
+			setTimeout(() => this.sendConnectionMessage(), 500);
+			this.utilService.processClients();
+			setTimeout(() => this.utilService.processFranchises(), 100);
+			setTimeout(() => this.utilService.processUsers(), 200);
+			setTimeout(() => this.utilService.processInvoices(this.controlInvoice.invoiceSearch.filter), 300);
+			setTimeout(() => this.utilService.processAppointments(), 400);
+		} else {
+			this.authService.logout();
+		}
 	}
 
 	loadFranchiseInfo() {
@@ -116,17 +125,19 @@ export class MasterComponent implements OnInit {
 	subscribeToUpdates() {
 		this.updateConnection = this.messagingService.onUpdate().subscribe((response: any) => {
 			console.log('response: ', response);
-			this.processUpdate(response.Action);
+			this.processUpdate(response);
 		});
 	}
 
-	processUpdate(action) {
-		switch (action) {
-			case 'updateClients': this.utilService.processClients(); break;
-			case 'updateFranchises': this.utilService.processFranchises(); break;
-			case 'updateUsers': this.utilService.processUsers(); break;
-			case 'updateInvoices': this.utilService.processInvoices(this.controlInvoice.invoiceSearch.filter); break;
-			case 'updateAppointments': this.utilService.processAppointments(); break;
+	processUpdate(data) {
+		if (data.Franchise === this.authService.currentUser.FranchiseId) {
+			switch (data.Action) {
+				case 'updateClients': this.utilService.processClients(); break;
+				case 'updateFranchises': this.utilService.processFranchises(); break;
+				case 'updateUsers': this.utilService.processUsers(); break;
+				case 'updateInvoices': this.utilService.processInvoices(this.controlInvoice.invoiceSearch.filter); break;
+				case 'updateAppointments': this.utilService.processAppointments(); break;
+			}
 		}
 	}
 

@@ -3,3 +3,19 @@
     height: 100vh;
     overflow: hidden;
 }
+
+.mainCard {
+    width: 70%;
+    margin-left: 20%;
+    /* vertical-align: middle; */
+    margin-top: 25vh;
+    /* margin-top: 35%; */
+}
+
+@media (max-width: 768px) { 
+.mainCard {
+    width: 60%;
+    margin-left: 25%;
+    margin-top: 10%;
+}
+}

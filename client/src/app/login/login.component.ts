@@ -65,6 +65,8 @@ export class LoginComponent implements OnInit {
 			console.log('error: ', error);
 			if (error.status === 403) {
 				this.utilSerivce.alertError(`Your account has been deactivated. Please consult your supervisor if you feel you received this message in error.`);
+			} else if (error.status === 401) {
+				this.utilSerivce.alertError(`Invalid username or password.`);
 			}
 		});
 	}
