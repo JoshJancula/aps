@@ -76,6 +76,7 @@
           Contact person: {{ appointment.ContactPerson }} {{ appointment.ContactPersonPhone }}
         </p>
         <button class='editButton' (click)="editAppointment(appointment);" mat-button>Edit</button>
+        <button *ngIf="cordova === true && appointment.Location !== ''" class='editButton' (click)="getDirections(appointment);" mat-button>Get directions</button>
       </div>
     </mat-card>
 

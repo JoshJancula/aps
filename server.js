@@ -98,12 +98,12 @@ db.sequelize.sync().then(() => {
 
             socket.on('update', (data) => {
                 switch (data.Action) {
-					case 'franchises': socket.broadcast.emit('update', { Action: 'updateFranchises' }); break;
-					case 'clients': socket.broadcast.emit('update', { Action: 'updateClients' }); break;
-					case 'users': socket.broadcast.emit('update', { Action: 'updateUsers' }); break;
-					case 'invoices': socket.broadcast.emit('update', { Action: 'updateInvoices' }); break;
-					case 'appointments': socket.broadcast.emit('update', { Action: 'updateAppointments' }); break;
-				}
+                    case 'franchises': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateFranchises' }); break;
+                    case 'clients': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateClients' }); break;
+                    case 'users': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateUsers' }); break;
+                    case 'invoices': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateInvoices' }); break;
+                    case 'appointments': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateAppointments' }); break;
+                }
             });
 
             // update that the recipient read the message
