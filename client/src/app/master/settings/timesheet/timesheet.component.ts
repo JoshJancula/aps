@@ -29,6 +29,7 @@ export class TimesheetComponent implements OnInit {
 
 	getTodayHours() {
 		this.timeCardService.getTodaysTimecards(this.authService.currentUser.id).subscribe(response => {
+			console.log('response getting cards: ', response);
 			if ((<any>response).length <= 0) {
 				this.isClockedIn = false;
 			} else {
@@ -38,6 +39,8 @@ export class TimesheetComponent implements OnInit {
 				this.todaysActivity = response;
 				this.dayTotal = this.utilService.getTotalTime(response);
 			}
+		}, error => {
+			console.log('error getting timecards: ', error);
 		});
 	}
 
