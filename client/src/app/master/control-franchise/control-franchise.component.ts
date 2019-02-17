@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { UserService } from 'src/app/services/user.service';
 import { PhonePipe } from 'src/app/phone.pipe';
 import { AuthService } from 'src/app/services/auth.service';
+import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -45,7 +46,7 @@ export class ControlFranchiseComponent implements OnInit {
 
 	location: ''; // this is dummy right now;
 
-	constructor(public authService: AuthService, private phonePipe: PhonePipe, private userService: UserService, private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
+	constructor(private subService: SubscriptionsService, public authService: AuthService, private phonePipe: PhonePipe, private userService: UserService, private messagingService: MessageService, private franchiseService: FranchiseService, private utilService: UtilService) {
 	}
 
 	ngOnInit() {
@@ -63,8 +64,8 @@ export class ControlFranchiseComponent implements OnInit {
 	}
 
 	loadFranchises() {
-		this.utilService.processFranchises();
-		this.utilService.franchises.subscribe(response => {
+		this.subService.processFranchises();
+		this.subService.franchises.subscribe(response => {
 			this.franchises = response;
 		});
 	}
@@ -88,7 +89,7 @@ export class ControlFranchiseComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		setTimeout(() => this.utilService.processFranchises(), 500);
+		setTimeout(() => this.subService.processFranchises(), 500);
 		setTimeout(() => this.notifySocket(), 500);
 		this.setView();
 	}
@@ -105,9 +106,9 @@ export class ControlFranchiseComponent implements OnInit {
 		this.userService.createUser(this.User).subscribe(res => {
 			console.log('res: ', JSON.stringify(res));
 		});
-		setTimeout(() => this.utilService.processUsers(), 500);
+		setTimeout(() => this.subService.processUsers(), 500);
 		setTimeout(() => this.notifySocket(), 500);
-		setTimeout(() => this.utilService.processFranchises(), 600);
+		setTimeout(() => this.subService.processFranchises(), 600);
 		setTimeout(() => this.notifySocket(), 600);
 		this.clearForm();
 	}
@@ -149,7 +150,7 @@ export class ControlFranchiseComponent implements OnInit {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
 				this.clearForm();
-				this.utilService.processFranchises();
+				this.subService.processFranchises();
 				this.notifySocket();
 			} else {
 				console.log('error deleting');

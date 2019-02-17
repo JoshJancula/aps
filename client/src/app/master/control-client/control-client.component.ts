@@ -6,6 +6,7 @@ import { UtilService } from '../../services/util.service';
 import { PhonePipe } from 'src/app/phone.pipe';
 import { MessageService } from '../../services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 
 
 @Component({
@@ -33,7 +34,7 @@ export class ControlClientComponent implements OnInit {
 	searchClients = true;
 
 	// tslint:disable-next-line:max-line-length
-	constructor(private authService: AuthService, private messagingService: MessageService, private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
+	constructor(private subService: SubscriptionsService, private authService: AuthService, private messagingService: MessageService, private clientService: ClientService, private utilService: UtilService, private phonePipe: PhonePipe) {
 	}
 
 	ngOnInit() {
@@ -56,8 +57,8 @@ export class ControlClientComponent implements OnInit {
 	}
 
 	getClients() {
-		this.utilService.processClients();
-		this.utilService.clients.subscribe(response => {
+		this.subService.processClients();
+		this.subService.clients.subscribe(response => {
 			this.sortClients(response);
 		});
 	}
@@ -82,7 +83,7 @@ export class ControlClientComponent implements OnInit {
 				console.log('respnse: ', response);
 			});
 		}
-		setTimeout(() => this.utilService.processClients(), 500);
+		setTimeout(() => this.subService.processClients(), 500);
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
 		this.setView();
@@ -118,7 +119,7 @@ export class ControlClientComponent implements OnInit {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
 				this.clearForm();
-				this.utilService.processClients();
+				this.subService.processClients();
 				this.notifySocket();
 			} else {
 				console.log('error deleting');

@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TimecardService } from '../../../services/timecard.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UtilService } from 'src/app/services/util.service';
+import { TimesheetDialogComponent } from '../../../timesheet-dialog/timesheet-dialog.component';
 import * as moment from 'moment';
+import { HttpEventType } from '@angular/common/http';
+import { MatDialog } from '@angular/material';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -12,11 +15,13 @@ import * as moment from 'moment';
 })
 export class TimesheetComponent implements OnInit {
 
+	@ViewChild('timesheetCalendar') timesheetCalendar: any;
 	isClockedIn = false;
 	todaysActivity: any;
 	dayTotal: any;
+	dayForTimesheet: any;
 
-	constructor(private utilService: UtilService, private authService: AuthService, private timeCardService: TimecardService) { }
+	constructor(public dialog: MatDialog, public utilService: UtilService, private authService: AuthService, private timeCardService: TimecardService) { }
 
 	ngOnInit() {
 		this.getTodayHours();
@@ -24,7 +29,6 @@ export class TimesheetComponent implements OnInit {
 
 	getTodayHours() {
 		this.timeCardService.getTodaysTimecards(this.authService.currentUser.id).subscribe(response => {
-			console.log('response: ', response);
 			if ((<any>response).length <= 0) {
 				this.isClockedIn = false;
 			} else {
@@ -32,47 +36,11 @@ export class TimesheetComponent implements OnInit {
 					if (card.TimeOut === '' || card.TimeOut === null || card.TimeIn === undefined) { this.isClockedIn = true; }
 				});
 				this.todaysActivity = response;
-				this.getTotal();
+				this.dayTotal = this.utilService.getTotalTime(response);
 			}
 		});
 	}
 
-	getDiff(a, b, total) {
-		let diff;
-		if (b !== null && b !== '' && b !== undefined) {
-			let x = moment(a);
-			let y = moment(b);
-			diff = moment.duration(x.diff(y));
-		} else {
-			let x = moment(a);
-			let y = moment(new Date);
-			diff = moment.duration(x.diff(y));
-		}
-		if (total) {
-			return diff._milliseconds.toString().replace('-', '');
-		} else {
-			let tempTime = moment.duration(diff._milliseconds);
-			if (tempTime.hours() < 0) {
-				return `${tempTime.hours().toString().replace('-', '')}  hour(s) ${tempTime.minutes().toString().replace('-', '')} minute(s)`;
-			} else {
-				return `${tempTime.minutes().toString().replace('-', '')} minute(s)`;
-			}
-		}
-	}
-
-	getTotal() {
-		let total = 0;
-		this.todaysActivity.forEach(card => {
-			// tslint:disable-next-line:radix
-			total += parseInt(this.getDiff(card.TimeIn, card.TimeOut, true));
-		});
-		let tempTime = moment.duration(total);
-		if (tempTime.hours() > 0) {
-			this.dayTotal = `${tempTime.hours().toString().replace('-', '')}  hour(s) ${tempTime.minutes().toString().replace('-', '')} minute(s)`;
-		} else {
-			this.dayTotal = `${tempTime.minutes().toString().replace('-', '')} minute(s)`;
-		}
-	}
 
 	formatMinutes(a) {
 		return moment(a).format('hh:mm');
@@ -113,6 +81,34 @@ export class TimesheetComponent implements OnInit {
 				}
 			});
 		});
+	}
+
+	openCalendar(event) {
+		event.preventDefault();
+		this.timesheetCalendar.open();
+	}
+
+	getTimesheet() {
+		const params = {
+			EmployeeId: this.authService.currentUser.id,
+			Date: moment(this.dayForTimesheet).format('MM/DD/YYYY')
+		};
+		this.timeCardService.getRangeTimecards(params).subscribe((events) => {
+			if (events.type === HttpEventType.Response) {
+				if (events.status === 200 && events.type === 4) {
+					const newDialog = this.dialog.open(TimesheetDialogComponent, {
+						data: events.body,
+						panelClass: 'invoicePreview'
+					});
+				}
+			}
+		}, error => {
+			console.log('error: ', error);
+		});
+	}
+
+	getMax() {
+		return new Date();
 	}
 
 }

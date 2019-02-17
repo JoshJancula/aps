@@ -111,6 +111,7 @@
 .timesheetComponent.show {
     display: block;
     margin-left: 10%;
+    width: 100%;
 }
 
 @media (max-width: 1200px) { 

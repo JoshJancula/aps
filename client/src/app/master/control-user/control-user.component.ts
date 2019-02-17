@@ -7,6 +7,7 @@ import { HttpEventType } from '@angular/common/http';
 import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../../services/auth.service';
 import * as moment from 'moment';
+import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -39,7 +40,7 @@ export class ControlUserComponent implements OnInit {
 	roles = ['Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
 
 	// tslint:disable-next-line:max-line-length
-	constructor(public authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
+	constructor(private subService: SubscriptionsService, public authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
 	}
 
 	ngOnInit() {
@@ -53,8 +54,8 @@ export class ControlUserComponent implements OnInit {
 	}
 
 	getUsers() {
-		this.utilService.processUsers();
-		this.utilService.users.subscribe(response => {
+		this.subService.processUsers();
+		this.subService.users.subscribe(response => {
 			this.sortUsers(response);
 		});
 	}
@@ -80,8 +81,8 @@ export class ControlUserComponent implements OnInit {
 	}
 
 	loadFranchises() {
-		this.utilService.processFranchises();
-		this.utilService.franchises.subscribe(response => {
+		this.subService.processFranchises();
+		this.subService.franchises.subscribe(response => {
 			this.franchises = response;
 		});
 	}
@@ -97,7 +98,7 @@ export class ControlUserComponent implements OnInit {
 				console.log('res: ', res);
 			});
 		}
-		setTimeout(() => this.utilService.processUsers(), 500);
+		setTimeout(() => this.subService.processUsers(), 500);
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
 		this.setView();
@@ -121,7 +122,7 @@ export class ControlUserComponent implements OnInit {
 			if (res === 1) {
 				this.clearForm();
 				this.notifySocket();
-				this.utilService.processUsers();
+				this.subService.processUsers();
 			} else {
 				console.log('error deleting');
 			}

@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { InvoicePreviewComponent } from '../invoice-preview/invoice-preview.component';
 import { Router } from '@angular/router';
 import * as jsPDF from 'jspdf';
+import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -45,7 +46,7 @@ export class InvoiceSearchComponent implements OnInit {
 	display = '';
 	_printIframe;
 
-	constructor(private router: Router, private dialog: MatDialog, private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
+	constructor(private subService: SubscriptionsService, private router: Router, private dialog: MatDialog, private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
 	}
 
 	ngOnInit() {
@@ -73,8 +74,8 @@ export class InvoiceSearchComponent implements OnInit {
 	}
 
 	getClients() { // need this so I can filter on clients
-		this.utilService.processClients();
-		this.utilService.clients.subscribe(response => {
+		this.subService.processClients();
+		this.subService.clients.subscribe(response => {
 			this.clients = response;
 		});
 	}
@@ -90,8 +91,8 @@ export class InvoiceSearchComponent implements OnInit {
 	}
 
 	public loadInvoices() {
-		this.utilService.processInvoices(this.filter);
-		this.utilService.invoices.subscribe(response => {
+		this.subService.processInvoices(this.filter);
+		this.subService.invoices.subscribe(response => {
 			console.log('res status: ', response.status);
 			if (response.status === 401) {
 				this.router.navigate([`/`], {});
@@ -102,6 +103,7 @@ export class InvoiceSearchComponent implements OnInit {
 			}
 		}, error => {
 			console.log('error trying to get invoices: ', error);
+			if (error.status === 401) { this.subService.clearData(); }
 		});
 	}
 
@@ -161,8 +163,8 @@ export class InvoiceSearchComponent implements OnInit {
 
 	loadFranchises() { // for master mode
 		if (this.authService.currentUser.Role.toLowerCase().search('super|honcho') >= 0) {
-			this.utilService.processFranchises();
-			this.utilService.franchises.subscribe(response => {
+			this.subService.processFranchises();
+			this.subService.franchises.subscribe(response => {
 				this.franchises = response;
 			});
 		}

@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { UtilService } from '../../services/util.service';
 import { TimesheetComponent } from './timesheet/timesheet.component';
 import * as moment from 'moment';
+import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -37,9 +38,9 @@ export class SettingsComponent implements OnInit {
 		{ id: 4, name: 'Stripes 2', src: 'assets/stripes2.png' },
 		{ id: 5, name: 'Stripes 3', src: 'assets/stripes5.png' },
 	];
-	userAction = 'Request time off';
+	userAction = this.actions[0];
 
-	constructor(private utilService: UtilService, private userService: UserService, public uploadService: UploadFileService, public authService: AuthService) { }
+	constructor(private subService: SubscriptionsService, private utilService: UtilService, private userService: UserService, public uploadService: UploadFileService, public authService: AuthService) { }
 
 	ngOnInit() {
 		if (localStorage.getItem('background')) {

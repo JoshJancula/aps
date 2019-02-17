@@ -10,6 +10,7 @@ import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { SignatureDialogComponent } from '../../../signature-dialog/signature-dialog.component';
 import { UploadFileService } from '../../../services/upload-file.service';
+import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -41,7 +42,7 @@ export class InvoicePreviewComponent implements OnInit {
 	signature = '';
 	isCordova = false;
 
-	constructor(public uploadService: UploadFileService, private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+	constructor(private subService: SubscriptionsService, public uploadService: UploadFileService, private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 	ngOnInit() {
 		this.setServices(this.data.content);
@@ -107,8 +108,8 @@ export class InvoicePreviewComponent implements OnInit {
 	}
 
 	getClients() {
-		this.utilService.processClients();
-		this.utilService.clients.subscribe(response => {
+		this.subService.processClients();
+		this.subService.clients.subscribe(response => {
 			this.clients = response;
 		});
 	}

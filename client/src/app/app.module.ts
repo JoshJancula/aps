@@ -38,6 +38,7 @@ import { SettingsComponent } from './master/settings/settings.component';
 import { SignatureDialogComponent } from './signature-dialog/signature-dialog.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { TimesheetComponent } from './master/settings/timesheet/timesheet.component';
+import { TimesheetDialogComponent } from './timesheet-dialog/timesheet-dialog.component';
 
 const config = {
 	apiKey: 'AIzaSyBTiizpyWeqHfXdFDQsd6IoMdNWYvkceS8',
@@ -57,7 +58,8 @@ const config = {
 		InvoicePreviewComponent,
 		ErrorDialogComponent,
 		InputEmailDialogComponent,
-		SignatureDialogComponent
+		SignatureDialogComponent,
+		TimesheetDialogComponent
 	],
 	declarations: [
 		AppComponent,
@@ -78,7 +80,8 @@ const config = {
 		InputEmailDialogComponent,
 		SettingsComponent,
 		SignatureDialogComponent,
-		TimesheetComponent
+		TimesheetComponent,
+		TimesheetDialogComponent
 	],
 	imports: [
 		BrowserModule,

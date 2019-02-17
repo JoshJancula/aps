@@ -7,6 +7,7 @@ import { MessageService } from '../../services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { PhonePipe } from 'src/app/phone.pipe';
 import * as moment from 'moment';
+import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -46,7 +47,7 @@ export class ControlAppointmentComponent implements OnInit {
 	@ViewChild('calendar2') calendar2: any;
 
 	// tslint:disable-next-line:max-line-length
-	constructor(private phonePipe: PhonePipe, private authService: AuthService, private messagingService: MessageService, private appointmentService: AppointmentService, private utilService: UtilService) {
+	constructor(private subService: SubscriptionsService, private phonePipe: PhonePipe, private authService: AuthService, private messagingService: MessageService, private appointmentService: AppointmentService, private utilService: UtilService) {
 	}
 
 	ngOnInit() {
@@ -57,8 +58,8 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	loadAppointments() {
-		this.utilService.processAppointments();
-		this.utilService.appointments.subscribe(response => {
+		this.subService.processAppointments();
+		this.subService.appointments.subscribe(response => {
 			this.filterResponse(response);
 		});
 	}
@@ -85,8 +86,8 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	getUsers() {
-		this.utilService.processUsers();
-		this.utilService.users.subscribe(response => {
+		this.subService.processUsers();
+		this.subService.users.subscribe(response => {
 			this.users = [];
 			response.forEach(item => {
 				// tslint:disable-next-line:max-line-length
@@ -97,8 +98,8 @@ export class ControlAppointmentComponent implements OnInit {
 
 	loadFranchises() {
 		if (this.authService.currentUser.Role === 'Super') {
-			this.utilService.processFranchises();
-			this.utilService.franchises.subscribe(response => {
+			this.subService.processFranchises();
+			this.subService.franchises.subscribe(response => {
 				this.franchises = response;
 			});
 		}
@@ -109,8 +110,8 @@ export class ControlAppointmentComponent implements OnInit {
 	}
 
 	getClients() {
-		this.utilService.processClients();
-		this.utilService.clients.subscribe(response => {
+		this.subService.processClients();
+		this.subService.clients.subscribe(response => {
 			this.clients = response;
 		});
 	}
@@ -137,7 +138,7 @@ export class ControlAppointmentComponent implements OnInit {
 				console.log(res);
 			});
 		}
-		setTimeout(() => this.utilService.processAppointments(), 500);
+		setTimeout(() => this.subService.processAppointments(), 500);
 		setTimeout(() => this.notifySocket(), 500);
 		this.clearForm();
 		this.setView();
@@ -187,7 +188,7 @@ export class ControlAppointmentComponent implements OnInit {
 			console.log(`delete: ${res}`);
 			if (res === 1) {
 				this.clearForm();
-				this.utilService.processAppointments();
+				this.subService.processAppointments();
 				this.notifySocket();
 			} else {
 				console.log('error deleting');

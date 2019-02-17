@@ -4,8 +4,8 @@
   <span class='invoiceDisplay' *ngIf="controlInvoice.searchInvoices === true && invoiceMode === true">{{ controlInvoice.invoiceSearch.display }}</span>
   <span class='calendar' [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
     <mat-form-field class='datePicker' style='cursor: pointer;'>
-      <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput (dateInput)="utilService.processAppointments();"
-        (dateChange)="utilService.processAppointments();" [matDatepicker]="appointmentCalendar" placeholder="Date"
+      <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput (dateInput)="subService.processAppointments();"
+        (dateChange)="subService.processAppointments();" [matDatepicker]="appointmentCalendar" placeholder="Date"
         [min]="controlAppointment.getMinDate()" readonly>
       <mat-datepicker-toggle matSuffix [for]="appointmentCalendar"></mat-datepicker-toggle>
       <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>

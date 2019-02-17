@@ -14,6 +14,7 @@ import { BottomPopupComponent } from '../bottom-popup/bottom-popup.component';
 import { ControlInvoiceComponent } from './control-invoice/control-invoice.component';
 import { FranchiseService } from '../services/franchise.service';
 import * as moment from 'moment';
+import { SubscriptionsService } from '../services/subscriptions.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -42,7 +43,7 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlInvoice') controlInvoice: ControlInvoiceComponent;
 	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
 
-	constructor(private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, public authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
+	constructor(public subService: SubscriptionsService, private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, public authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
 		if (localStorage.getItem('background')) {
@@ -94,11 +95,11 @@ export class MasterComponent implements OnInit {
 			});
 			this.subscribeToUpdates();
 			setTimeout(() => this.sendConnectionMessage(), 500);
-			this.utilService.processClients();
-			setTimeout(() => this.utilService.processFranchises(), 100);
-			setTimeout(() => this.utilService.processUsers(), 200);
-			setTimeout(() => this.utilService.processInvoices(this.controlInvoice.invoiceSearch.filter), 300);
-			setTimeout(() => this.utilService.processAppointments(), 400);
+			this.subService.processClients();
+			setTimeout(() => this.subService.processFranchises(), 100);
+			setTimeout(() => this.subService.processUsers(), 200);
+			setTimeout(() => this.subService.processInvoices(this.controlInvoice.invoiceSearch.filter), 300);
+			setTimeout(() => this.subService.processAppointments(), 400);
 		} else {
 			this.authService.logout();
 		}
@@ -132,11 +133,11 @@ export class MasterComponent implements OnInit {
 	processUpdate(data) {
 		if (data.Franchise === this.authService.currentUser.FranchiseId) {
 			switch (data.Action) {
-				case 'updateClients': this.utilService.processClients(); break;
-				case 'updateFranchises': this.utilService.processFranchises(); break;
-				case 'updateUsers': this.utilService.processUsers(); break;
-				case 'updateInvoices': this.utilService.processInvoices(this.controlInvoice.invoiceSearch.filter); break;
-				case 'updateAppointments': this.utilService.processAppointments(); break;
+				case 'updateClients': this.subService.processClients(); break;
+				case 'updateFranchises': this.subService.processFranchises(); break;
+				case 'updateUsers': this.subService.processUsers(); break;
+				case 'updateInvoices': this.subService.processInvoices(this.controlInvoice.invoiceSearch.filter); break;
+				case 'updateAppointments': this.subService.processAppointments(); break;
 			}
 		}
 	}

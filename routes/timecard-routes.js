@@ -12,21 +12,12 @@ module.exports = (app) => {
 			if (bool == true) {
                 db.Timecard.findAll({
                     where: {
-                        EmployeeId: req.params.id
+                        EmployeeId: req.body.EmployeeId
                     },
                 }).then((a) => {
-                    let start = moment(req.body.dateFrom).format('MM/DD/YYYY');
-                    let end = moment(req.body.dateTo).format('MM/DD/YYYY');
                     let cards = [];
-
                     a.forEach(b => {
-                        let date = moment(a.Date).format('MM/DD/YYYY');
-                        if (moment(date).isBetween(moment(start), moment(end))) {
-							cards.push(b);
-						} else if (moment(date).isSame(moment(start)) || moment(date).isSame(moment(start))) {
-							cards.push(b);
-						}
-
+                        if (moment(b.Date).isSame(moment(req.body.Date), 'week')) { cards.push(b); }
                     });
                     res.json(cards);
                 });

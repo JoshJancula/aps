@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { InvoiceService } from '../../../services/invoice.service';
-import { NgModel } from '../../../../../node_modules/@angular/forms';
-import { HttpEventType } from '@angular/common/http';
 import { UtilService } from 'src/app/services/util.service';
 import { MessageService } from '../../../services/message.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { InvoiceSearchComponent } from '../invoice-search/invoice-search.component';
 import * as moment from 'moment';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -111,7 +109,7 @@ export class InvoiceFormComponent implements OnInit {
 		{ id: 7, model: 'Other', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false }
 	];
 
-	constructor(private barcodeScanner: BarcodeScanner, private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
+	constructor(private subService: SubscriptionsService, private barcodeScanner: BarcodeScanner, private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
 	}
 
 	ngOnInit() {
@@ -151,8 +149,8 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	getClients() {
-		this.utilService.processClients();
-		this.utilService.clients.subscribe(response => {
+		this.subService.processClients();
+		this.subService.clients.subscribe(response => {
 			this.clients = response;
 		});
 	}
@@ -163,8 +161,8 @@ export class InvoiceFormComponent implements OnInit {
 	}
 
 	loadFranchises() {
-		this.utilService.processFranchises();
-		this.utilService.franchises.subscribe(response => {
+		this.subService.processFranchises();
+		this.subService.franchises.subscribe(response => {
 			this.franchises = response;
 		});
 	}

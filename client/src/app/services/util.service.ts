@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import * as moment from 'moment';
 
 @Injectable({
 	providedIn: 'root'
@@ -13,23 +13,6 @@ export class UtilService {
 
 	constructor(public dialog: MatDialog, private router: Router, private authService: AuthService, private http: HttpClient) { }
 
-	private userStore = [];
-	private userSubject = new BehaviorSubject(this.userStore);
-	users = this.userSubject.asObservable();
-	private franchiseStore = [];
-	private franchiseSubject = new BehaviorSubject(this.franchiseStore);
-	franchises = this.franchiseSubject.asObservable();
-	private clientStore = [];
-	private clientSubject = new BehaviorSubject(this.clientStore);
-	clients = this.clientSubject.asObservable();
-	private appointmentStore = [];
-	private appointmentSubject = new BehaviorSubject(this.appointmentStore);
-	appointments = this.appointmentSubject.asObservable();
-	private invoiceStore = [];
-	private invoiceSubject = new BehaviorSubject(this.invoiceSubject);
-	invoices = this.invoiceSubject.asObservable();
-
-
 	alertError(message) {
 		const newDialog = this.dialog.open(ErrorDialogComponent, {
 			data: message,
@@ -37,159 +20,41 @@ export class UtilService {
 		});
 	}
 
-	getFranchises() {
-		let url;
-		let localUrl;
-		if (this.authService.currentUser.Role === 'Super') {
-			url = `https://aps-josh.herokuapp.com/api/franchises`;
-			localUrl = `http://localhost:8080/api/franchises`;
+	getDiff(a, b, total) {
+		let diff;
+		if (b !== null && b !== '' && b !== undefined) {
+			let x = moment(a);
+			let y = moment(b);
+			diff = moment.duration(x.diff(y));
 		} else {
-			url = `https://aps-josh.herokuapp.com/api/franchises`;
-			localUrl = `http://localhost:8080/api/franchises`;
+			let x = moment(a);
+			let y = moment(new Date);
+			diff = moment.duration(x.diff(y));
 		}
-		if (localStorage.getItem('jwtToken')) {
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Authorization': localStorage.getItem('jwtToken'),
-				}),
-				reportProgress: true,
-				observe: 'events' as 'events'
-			};
-			if (window.location.host === 'localhost:4200') {
-				return this.http.get(localUrl, httpOptions);
-			} else {
-				return this.http.get(url, httpOptions);
-			}
+		if (total) {
+			return diff._milliseconds.toString().replace('-', '');
 		} else {
-			console.log('no token found');
-		}
-	}
-
-	processFranchises() {
-		this.getFranchises().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				this.franchiseStore = JSON.parse(JSON.stringify(events.body));
-				this.franchiseSubject.next(this.franchiseStore);
-			}
-		});
-	}
-
-	getUsers() {
-		const url = `https://aps-josh.herokuapp.com/api/users/${this.authService.currentUser.FranchiseId}`;
-		const localUrl = `http://localhost:8080/api/users/${this.authService.currentUser.FranchiseId}`;
-		if (localStorage.getItem('jwtToken')) {
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Authorization': localStorage.getItem('jwtToken'),
-				}),
-				reportProgress: true,
-				observe: 'events' as 'events'
-			};
-			if (window.location.host === 'localhost:4200') {
-				return this.http.get(localUrl, httpOptions);
+			let tempTime = moment.duration(diff._milliseconds);
+			if (tempTime.hours() < 0) {
+				return `${tempTime.hours().toString().replace('-', '')}  hour(s) ${tempTime.minutes().toString().replace('-', '')} minute(s)`;
 			} else {
-				return this.http.get(url, httpOptions);
+				return `${tempTime.minutes().toString().replace('-', '')} minute(s)`;
 			}
 		}
 	}
 
-	processUsers() {
-		this.getUsers().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				this.userStore = JSON.parse(JSON.stringify(events.body));
-				this.userSubject.next(this.userStore);
-			}
+	getTotalTime(activity) {
+		let total = 0;
+		activity.forEach(card => {
+			// tslint:disable-next-line:radix
+			total += parseInt(this.getDiff(card.TimeIn, card.TimeOut, true));
 		});
-	}
-
-	getClients() {
-		const url = `https://aps-josh.herokuapp.com/api/clients/${this.authService.currentUser.FranchiseId}`;
-		const localUrl = `http://localhost:8080/api/clients/${this.authService.currentUser.FranchiseId}`;
-		if (localStorage.getItem('jwtToken')) {
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Authorization': localStorage.getItem('jwtToken'),
-				}),
-				reportProgress: true,
-				observe: 'events' as 'events'
-			};
-			if (window.location.host === 'localhost:4200') {
-				return this.http.get(localUrl, httpOptions);
-			} else {
-				return this.http.get(url, httpOptions);
-			}
-		}
-	}
-
-	processClients() {
-		this.getClients().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				this.clientStore = JSON.parse(JSON.stringify(events.body));
-				this.clientSubject.next(this.clientStore);
-			}
-		});
-	}
-
-	getAppointments() {
-		let url;
-		let localUrl;
-		url = `https://aps-josh.herokuapp.com/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
-		localUrl = `http://localhost:8080/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
-		if (localStorage.getItem('jwtToken')) {
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Authorization': localStorage.getItem('jwtToken'),
-				}),
-				reportProgress: true,
-				observe: 'events' as 'events'
-			};
-			if (window.location.host === 'localhost:4200') {
-				return this.http.get(localUrl, httpOptions);
-			} else {
-				return this.http.get(url, httpOptions);
-			}
+		let tempTime = moment.duration(total);
+		if (tempTime.hours() > 0) {
+			return `${tempTime.hours().toString().replace('-', '')}  hour(s) ${tempTime.minutes().toString().replace('-', '')} minute(s)`;
 		} else {
-			console.log('no token found');
+			return `${tempTime.minutes().toString().replace('-', '')} minute(s)`;
 		}
-	}
-
-	processAppointments() {
-		this.getAppointments().subscribe((events) => {
-			if (events.type === HttpEventType.Response) {
-				this.appointmentStore = JSON.parse(JSON.stringify(events.body));
-				this.appointmentSubject.next(this.appointmentStore);
-			}
-		}, error => {
-			if (error.status === 401) { this.router.navigate([`/`], {}); }
-		});
-	}
-
-	getInvoices(filter) {
-		const url = `https://aps-josh.herokuapp.com/api/invoices/sub/`;
-		const localUrl = `http://localhost:8080/api/invoices/sub/`;
-		if (localStorage.getItem('jwtToken')) {
-			const httpOptions = {
-				headers: new HttpHeaders({
-					'Authorization': localStorage.getItem('jwtToken'),
-				}),
-				reportProgress: true,
-				observe: 'events' as 'events'
-			};
-			if (window.location.host === 'localhost:4200') {
-				return this.http.post(localUrl, filter, httpOptions);
-			} else {
-				return this.http.post(url, filter, httpOptions);
-			}
-		} else {
-			console.log('no token found');
-		}
-	}
-
-	processInvoices(filter) {
-		this.getInvoices(filter).subscribe((events) => {
-			this.invoiceStore = JSON.parse(JSON.stringify(events));
-			this.invoiceSubject.next(this.invoiceStore);
-		});
 	}
 
 
