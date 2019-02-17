@@ -101,7 +101,7 @@ export class TimesheetComponent implements OnInit {
 			if (events.type === HttpEventType.Response) {
 				if (events.status === 200 && events.type === 4) {
 					const newDialog = this.dialog.open(TimesheetDialogComponent, {
-						data: events.body,
+						data: { Cards: events.body, Range: this.getDateRange() },
 						panelClass: 'invoicePreview'
 					});
 				}
@@ -120,6 +120,13 @@ export class TimesheetComponent implements OnInit {
 			console.log('deleted res: ', res);
 			this.getTodayHours();
 		});
+	}
+
+	getDateRange() {
+		const start = moment(this.dayForTimesheet).startOf('isoWeek');
+		const end = moment(this.dayForTimesheet).endOf('isoWeek');
+		const range = { Start: moment(start).format('dddd, MMMM Do YYYY'), End: moment(end).format('dddd, MMMM Do YYYY')};
+		return range;
 	}
 
 }

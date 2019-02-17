@@ -1,9 +1,28 @@
-<div class='row mainRow'>
+<div class='row mainRow' id='mainContent'>
+  <div class='row'>
+    <div class='row header'>{{ employeeName }}</div>
+    <div class='row header'>Starting: {{ data.Range.Start }}</div>
+    <div class='row header'>Ending: {{ data.Range.End }}</div>
+  </div>
+  <div class='row' style='width: 100%'>
   <table>
+      <tr>
+          <th>Day</th>
+          <th>Times in / out</th> 
+          <th>Day total</th>
+        </tr>
     <tr *ngFor='let date of dates'>
       <td>{{ date.model }}</td>
       <td><div *ngFor='let punch of date.data'>{{ formatMinutes(punch.TimeIn) }}&nbsp;-&nbsp;{{ punch.TimeOut ? formatMinutes(punch.TimeOut) : 'Clocked in' }}</div></td>
-      <td>Day total: {{ date.data.length > 0 ? utilService.getTotalTime(date.data) : '0 hr' }}</td>
+      <td>{{ date.data.length > 0 ? utilService.getTotalTime(date.data) : '0 hr' }}</td>
     </tr>
   </table>
+</div>
+<div class='row weekTotal'>
+ <span> Week total: {{ weekTotal }}</span>
+</div>
+</div>
+<div class='row mainRow'>
+  <button mat-button (click)="generatePDF('download');">Download copy</button>
+  <button mat-button (click)="generatePDF('print');">Print copy</button>
 </div>

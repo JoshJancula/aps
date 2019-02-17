@@ -17,7 +17,7 @@ module.exports = (app) => {
                 }).then((a) => {
                     let cards = [];
                     a.forEach(b => {
-                        if (moment(b.Date).isSame(moment(req.body.Date), 'week')) { cards.push(b); }
+                        if (moment(b.Date).isSame(moment(req.body.Date), 'isoWeek')) { cards.push(b); }
                     });
                     res.json(cards);
                 });

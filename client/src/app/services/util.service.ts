@@ -36,9 +36,9 @@ export class UtilService {
 		} else {
 			let tempTime = moment.duration(diff._milliseconds);
 			if (tempTime.hours() < 0) {
-				return `${tempTime.hours().toString().replace('-', '')}  hour(s) ${tempTime.minutes().toString().replace('-', '')} minute(s)`;
+				return `${tempTime.hours().toString().replace('-', '')}  hr ${tempTime.minutes().toString().replace('-', '')} minutes`;
 			} else {
-				return `${tempTime.minutes().toString().replace('-', '')} minute(s)`;
+				return `${tempTime.minutes().toString().replace('-', '')} minute`;
 			}
 		}
 	}
@@ -51,9 +51,9 @@ export class UtilService {
 		});
 		let tempTime = moment.duration(total);
 		if (tempTime.hours() > 0) {
-			return `${tempTime.hours().toString().replace('-', '')}  hour(s) ${tempTime.minutes().toString().replace('-', '')} minute(s)`;
+			return `${tempTime.hours().toString().replace('-', '')}  hr ${tempTime.minutes().toString().replace('-', '')} minutes`;
 		} else {
-			return `${tempTime.minutes().toString().replace('-', '')} minute(s)`;
+			return `${tempTime.minutes().toString().replace('-', '')} minutes`;
 		}
 	}
 
