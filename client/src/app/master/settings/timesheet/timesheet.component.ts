@@ -29,15 +29,16 @@ export class TimesheetComponent implements OnInit {
 
 	getTodayHours() {
 		this.timeCardService.getTodaysTimecards(this.authService.currentUser.id).subscribe(response => {
-			console.log('response getting cards: ', response);
-			if ((<any>response).length <= 0) {
-				this.isClockedIn = false;
-			} else {
-				(<any>response).forEach(card => {
-					if (card.TimeOut === '' || card.TimeOut === null || card.TimeIn === undefined) { this.isClockedIn = true; }
-				});
-				this.todaysActivity = response;
-				this.dayTotal = this.utilService.getTotalTime(response);
+			if (response) {
+				if ((<any>response).length <= 0) {
+					this.isClockedIn = false;
+				} else {
+					(<any>response).forEach(card => {
+						if (card.TimeOut === '' || card.TimeOut === null || card.TimeIn === undefined) { this.isClockedIn = true; }
+					});
+					this.todaysActivity = response;
+					this.dayTotal = this.utilService.getTotalTime(response);
+				}
 			}
 		}, error => {
 			console.log('error getting timecards: ', error);

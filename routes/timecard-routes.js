@@ -37,7 +37,7 @@ module.exports = (app) => {
                     },
                 }).then((x) => {
                     let cards = [];
-                    let today = moment(new Date()).format('MM/DD/YYYY');
+                    let today = moment(new Date()).tz("America/Toronto").format('MM/DD/YYYY');
                     x.forEach(entry => {
                         if (moment(today).isSame(entry.Date)) { cards.push(entry); }
                     });
