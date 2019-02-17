@@ -57,5 +57,30 @@ export class UtilService {
 		}
 	}
 
+	sortDates(data) {
+		let obj = {
+			Monday: { data: [], model: 'Monday' },
+			Tuesday: { data: [], model: 'Tuesday' },
+			Wednesday: { data: [], model: 'Wednesday' },
+			Thursday: { data: [], model: 'Thursday' },
+			Friday: { data: [], model: 'Friday' },
+			Saturday: { data: [], model: 'Saturday' },
+			Sunday: { data: [], model: 'Sunday' }
+		};
+		data.forEach(a => {
+			console.log(moment(a.createdAt).format('dddd, MMMM Do YYYY hh:mm'));
+			switch (moment(a.createdAt).format('dddd')) {
+				case 'Monday': obj.Monday.data.push(a); break;
+				case 'Tuesday': obj.Tuesday.data.push(a); break;
+				case 'Wednesday': obj.Wednesday.data.push(a); break;
+				case 'Thursday': obj.Thursday.data.push(a); break;
+				case 'Friday': obj.Friday.data.push(a); break;
+				case 'Saturday': obj.Saturday.data.push(a); break;
+				case 'Sunday': obj.Sunday.data.push(a); break;
+			}
+		});
+		return obj;
+	}
+
 
 }

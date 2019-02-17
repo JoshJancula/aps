@@ -1,0 +1,14 @@
+.mainRow {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+td {
+    padding-right: 5%;
+    margin: 2%;
+}
+
+tr {
+    border-bottom: black solid 1px;
+}

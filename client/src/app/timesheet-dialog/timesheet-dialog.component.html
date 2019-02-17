@@ -1,3 +1,9 @@
-<p>
-  timesheet-dialog works!
-</p>
+<div class='row mainRow'>
+  <table>
+    <tr *ngFor='let date of dates'>
+      <td>{{ date.model }}</td>
+      <td><div *ngFor='let punch of date.data'>{{ formatMinutes(punch.TimeIn) }}&nbsp;-&nbsp;{{ punch.TimeOut ? formatMinutes(punch.TimeOut) : 'Clocked in' }}</div></td>
+      <td>Day total: {{ date.data.length > 0 ? utilService.getTotalTime(date.data) : '0 hr' }}</td>
+    </tr>
+  </table>
+</div>

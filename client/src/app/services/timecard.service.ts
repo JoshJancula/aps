@@ -86,5 +86,22 @@ export class TimecardService {
 		}
 	}
 
+	deleteTimeCard(id: string) {
+		if (localStorage.getItem('jwtToken')) {
+			const httpOptions = {
+				headers: new HttpHeaders({
+					'Authorization': localStorage.getItem('jwtToken'),
+				})
+			};
+			if (window.location.host === 'localhost:4200') {
+				const localUrl = `http://localhost:8080/api/timecards/${id}`;
+				return this.http.delete(localUrl, httpOptions);
+			} else {
+				const url = `https://aps-josh.herokuapp.com/api/timecards/${id}`;
+				return this.http.delete(url, httpOptions);
+			}
+		}
+	}
+
 
 }

@@ -115,4 +115,11 @@ export class TimesheetComponent implements OnInit {
 		return new Date();
 	}
 
+	delete(id) {
+		this.timeCardService.deleteTimeCard(id).subscribe(res => {
+			console.log('deleted res: ', res);
+			this.getTodayHours();
+		});
+	}
+
 }
