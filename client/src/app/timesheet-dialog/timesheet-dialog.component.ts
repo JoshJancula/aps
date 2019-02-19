@@ -2,11 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AuthService } from '../services/auth.service';
 import { EmailService } from '../services/email.service';
-import { InvoicePreviewComponent } from '../master/control-invoice/invoice-preview/invoice-preview.component';
 import * as moment from 'moment';
 import { UtilService } from '../services/util.service';
-import * as jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { TimeChangeDialogComponent } from '../time-change-dialog/time-change-dialog.component';
+import { TimecardService } from '../services/timecard.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -20,58 +19,59 @@ export class TimesheetDialogComponent implements OnInit {
 	weekTotal: any;
 	_printIframe: any;
 	employeeName: '';
+	tempDates: any;
 
-	constructor(public utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+	constructor(private timeCardService: TimecardService, public utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<TimesheetDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 	ngOnInit() {
-		console.log('data: ', this.data);
-		let wt = 0;
 		const temp = this.utilService.sortDates(this.data.Cards);
 		let tempDates = [];
 		Object.keys(temp).forEach(key => { temp[key].data.forEach(k => { this.employeeName = k.EmployeeName; tempDates.push(k); }); this.dates.push(temp[key]); });
 		this.weekTotal = this.utilService.getTotalTime(tempDates);
-		console.log('weekTotal: ', this.weekTotal);
+		this.tempDates = tempDates;
 	}
 
 	formatMinutes(a) {
 		return moment(a).format('hh:mm');
 	}
 
-	generatePDF(action) {
-		const data = document.querySelector('#mainContent');
-		html2canvas(data).then(canvas => {
-			const imgWidth = 210;
-			const imgHeight = canvas.height * imgWidth / canvas.width;
-			const contentDataURL = canvas.toDataURL('image/png');
-			let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
-			let position = 0;
-			pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-			if (action === 'download') {
-				setTimeout(() => { pdf.save(`${this.employeeName}, ${this.data.Range.Start} ${this.data.Range.End} `); }, 1000); // Generated PDF
-			} else {
-				let blob = pdf.output('blob');
-				this.print(blob);
-				this.dialogRef.close();
-			}
+	editTimecard(card) {
+		const newDialog = this.dialog.open(TimeChangeDialogComponent, {
+			data: { timeIn: card.TimeIn, timeOut: card.TimeOut },
+			disableClose: true
 		});
-	}
-
-	print(blob) {
-		const fileUrl = URL.createObjectURL(blob);
-		let iframe = this._printIframe;
-		if (!this._printIframe) {
-			iframe = this._printIframe = document.createElement('iframe');
-			document.body.appendChild(iframe);
-			iframe.style.display = 'none';
-			iframe.onload = function () {
-				setTimeout(() => {
-					iframe.focus();
-					iframe.contentWindow.print();
-				}, 100);
-			};
+		newDialog.beforeClose().subscribe(result => {
+			const toSave = newDialog.componentInstance.saveData;
+			const diffIn = newDialog.componentInstance.diffIn;
+			const diffOut = newDialog.componentInstance.diffOut;
+			const addIn = newDialog.componentInstance.addIn;
+			const addOut = newDialog.componentInstance.addOut;
+			if (toSave === true) {
+				let data = {
+					TimeIn: undefined,
+					TimeOut: undefined,
+					id: card.id
+				};
+				if (addIn === true) { data.TimeIn = moment(card.TimeIn).add(diffIn, 'milliseconds'); }
+				if (addOut === true) { data.TimeOut = moment(card.TimeOut).add(diffOut, 'milliseconds'); }
+				if (addIn === false) { data.TimeIn = moment(card.TimeIn).subtract(diffIn, 'milliseconds'); }
+				if (addOut === false) { data.TimeOut = moment(card.TimeOut).subtract(diffOut, 'milliseconds'); }
+			this.timeCardService.updateTimecard(card.id, data).subscribe(res2 => {
+				console.log('clock out response: ', res2);
+				card.TimeIn = data.TimeIn;
+				card.TimeOut = data.TimeOut;
+				this.weekTotal = this.utilService.getTotalTime(this.tempDates);
+				// need to put a notify socket here
+			}, error => { console.log('error updating timecard'); });
 		}
-		iframe.src = fileUrl;
-	}
+		});
+}
+
+getPDF(action) {
+	const div = document.querySelector('#mainContent');
+	const message = `${this.employeeName}, ${this.data.Range.Start} ${this.data.Range.End} `;
+	this.utilService.generatePDF(action, div, message);
+}
 
 
 }

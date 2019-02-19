@@ -136,12 +136,15 @@ module.exports = (app) => {
 						FranchiseId: req.body.franchise,
 					},
 				}).then((a) => {
-					let start = moment(req.body.dateFrom).format('MM/DD/YYYY');
-					let end = moment(req.body.dateTo).format('MM/DD/YYYY');
+					
+					let offset = moment(req.body.dateTo).utcOffset();
+					let start = moment(req.body.dateFrom).utcOffset(offset).format('MM/DD/YYYY');
+					let end = moment(req.body.dateTo).utcOffset(offset).format('MM/DD/YYYY');
 					let inv = [];
 
 					a.forEach(b => {
-						let createdAt = moment(b.createdAt).format('MM/DD/YYYY');
+						let offset2 = moment(b.createdAt).utcOffset();
+						let createdAt = moment(b.createdAt).utcOffset(offset2).format('MM/DD/YYYY');
 						if (moment(createdAt).isBetween(moment(start), moment(end))) {
 							inv.push(b);
 						} else if (moment(createdAt).isSame(moment(start)) || moment(createdAt).isSame(moment(start))) {

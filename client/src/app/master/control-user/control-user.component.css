@@ -32,6 +32,10 @@
     width: 87vw;
 }
 
+.datePicker {
+    width: 20%;
+}
+
 @media (max-width: 1200px) { 
 .mat-card {
     background: #D7D6D6;

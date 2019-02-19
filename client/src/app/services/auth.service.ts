@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { InternalFormsSharedModule } from '@angular/forms/src/directives';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
@@ -11,8 +12,16 @@ export class AuthService {
 	// tslint:disable-next-line:max-line-length
 	private _currentUser = { Username: null, Name: null, Role: null, FranchiseId: null, id: null, Phone: null, Email: null, Avatar: null, Initials: null };
 	public _franchiseInfo: any;
+	public isLoggedIn = false;
+	public logoutSubject = new BehaviorSubject(this.isLoggedIn);
+	loginStatus = this.logoutSubject.asObservable();
 
-	constructor(private router: Router, private http: Http) { }
+	constructor(private router: Router, private http: Http) {
+		if (localStorage.getItem('jwtToken')) {
+			this.isLoggedIn = true;
+			this.logoutSubject.next(this.isLoggedIn);
+		}
+	 }
 
 	loginUser(username: string, password: string) {
 		// tslint:disable-next-line:prefer-const
@@ -29,6 +38,8 @@ export class AuthService {
 	logout() {
 		localStorage.removeItem('jwtToken');
 		this.router.navigate([`/`], {});
+		this.isLoggedIn = false;
+		this.logoutSubject.next(this.isLoggedIn);
 		// console.log('invoiceSubject', this.utilService.invoices);
 	}
 

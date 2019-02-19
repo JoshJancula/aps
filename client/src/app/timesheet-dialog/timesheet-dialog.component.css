@@ -39,14 +39,32 @@ table {
     width: 98%
 }
 
-@media (max-width: 800px) {
+.totalText {
+    display: none;
+}
+
+
+@media (max-width: 767px) {
     table {
-        margin-left: 4%;
-        width: 96%;
+       display: none
     }
 
-    .header {
-        width: 100%;
-        margin-left: 4%;
+    .mainRow {
+        margin-left: 3%;
     }
+
+    .totalText {
+        display: block;
+    }
+
 }
+
+@media (max-width: 540px) {
+    .mainRow {
+        margin-left: 5%;
+    }
+
+}
+
+
+

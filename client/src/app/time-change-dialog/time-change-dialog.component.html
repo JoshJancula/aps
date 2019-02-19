@@ -1,0 +1,15 @@
+<div class='row mainRow'>
+  <p>Please input the time you'd like to change</p>
+  <mat-form-field>
+      <!-- <input matInput placeholder="Time in"  pattern="[0-9]*"  maxlength="14" [(ngModel)]="timeIn" /> -->
+      <input matInput placeholder="Time In" type="time" id="appt" 
+      min="00:00" max="23:59" [(ngModel)]="timeIn">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Time out" type="time" id="appt" 
+        min="{{timeIn}}" max="23:59" [(ngModel)]="timeOut">
+        <!-- <input matInput placeholder="Time out"  pattern="[0-9]*"  maxlength="14" [(ngModel)]="timeOut" /> -->
+      </mat-form-field>
+      <button (click)="save(false);" mat-button>Cancel</button>
+      <button  (click)="save(true);" mat-button>Save changes</button>
+</div>

@@ -140,14 +140,13 @@ export class InvoiceSearchComponent implements OnInit {
 				} else {
 					if (invoice.Paid === false) { returnThis.push(invoice); }
 				}
-			} else if (moment(newTemp).isSame(moment(this.filter.dateFrom))) {
-				if (moment(invoice.Date).format('MM/DD/YYYY') === newTemp) { returnThis.push(invoice); }
 			} else { returnThis.push(invoice); }
 		});
 		this.invoices = returnThis;
 	}
 
 	clearSearch() {
+		console.log(moment.utc().local());
 		this.filter = {
 			dateFrom: new Date(),
 			dateTo: new Date(),

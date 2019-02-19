@@ -6,8 +6,6 @@ import { EmailService } from '../../../services/email.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { InputEmailDialogComponent } from 'src/app/input-email-dialog/input-email-dialog.component';
 import { UtilService } from '../../../services/util.service';
-import * as jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import { SignatureDialogComponent } from '../../../signature-dialog/signature-dialog.component';
 import { UploadFileService } from '../../../services/upload-file.service';
 import { SubscriptionsService } from 'src/app/services/subscriptions.service';
@@ -56,47 +54,17 @@ export class InvoicePreviewComponent implements OnInit {
 
 	performAction() {
 		switch (this.data.action) {
-			case 'print': this.generatePDF('print'); break;
+			case 'print': this.getPDF('print'); break;
 			case 'email': this.emailInvoice(); break;
-			case 'download': this.generatePDF('download'); break;
+			case 'download': this.getPDF('download'); break;
 			case 'open': break;
 		}
 	}
 
-	generatePDF(action) {
-		const data = document.querySelector('#previewContent');
-		html2canvas(data).then(canvas => {
-			const imgWidth = 210;
-			const imgHeight = canvas.height * imgWidth / canvas.width;
-			const contentDataURL = canvas.toDataURL('image/png');
-			let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
-			let position = 0;
-			pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-			if (action === 'download') {
-				setTimeout(() => { pdf.save(`Invoice # ${this.invoiceNumber}, ${this.formatDatePDF(this.data.content.createdAt)}`); this.dialogRef.close(); }, 1000); // Generated PDF
-			} else {
-				let blob = pdf.output('blob');
-				this.print(blob);
-				this.dialogRef.close();
-			}
-		});
-	}
-
-	print(blob) {
-		const fileUrl = URL.createObjectURL(blob);
-		let iframe = this._printIframe;
-		if (!this._printIframe) {
-			iframe = this._printIframe = document.createElement('iframe');
-			document.body.appendChild(iframe);
-			iframe.style.display = 'none';
-			iframe.onload = function () {
-				setTimeout(() => {
-					iframe.focus();
-					iframe.contentWindow.print();
-				}, 100);
-			};
-		}
-		iframe.src = fileUrl;
+	getPDF(action) {
+		const div = document.querySelector('#previewContent');
+		const message = `Invoice # ${this.invoiceNumber}, ${this.formatDatePDF(this.data.content.createdAt)}`;
+		this.utilService.generatePDF(action, div, message);
 	}
 
 	formatDate(date) {

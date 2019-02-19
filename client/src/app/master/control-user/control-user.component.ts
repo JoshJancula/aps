@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { TestBed } from '@angular/core/testing';
 import { UtilService } from 'src/app/services/util.service';
@@ -8,6 +8,9 @@ import { MessageService } from 'src/app/services/message.service';
 import { AuthService } from '../../services/auth.service';
 import * as moment from 'moment';
 import { SubscriptionsService } from 'src/app/services/subscriptions.service';
+import { TimesheetDialogComponent } from 'src/app/timesheet-dialog/timesheet-dialog.component';
+import { MatDialog } from '@angular/material';
+import { TimecardService } from 'src/app/services/timecard.service';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -17,6 +20,8 @@ import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 })
 export class ControlUserComponent implements OnInit {
 
+	@ViewChild('timesheetCalendar') timesheetCalendar: any;
+	dayForTimesheet: any;
 	searchUsers = true;
 	addUser = false;
 	User: any = {
@@ -40,7 +45,7 @@ export class ControlUserComponent implements OnInit {
 	roles = ['Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
 
 	// tslint:disable-next-line:max-line-length
-	constructor(private subService: SubscriptionsService, public authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
+	constructor(public dialog: MatDialog, private timeCardService: TimecardService, private subService: SubscriptionsService, public authService: AuthService, private userService: UserService, private utilService: UtilService, private phonePipe: PhonePipe, private messagingService: MessageService) {
 	}
 
 	ngOnInit() {
@@ -48,9 +53,7 @@ export class ControlUserComponent implements OnInit {
 			this.loadFranchises();
 		}
 		this.getUsers();
-		// this.userService.updateProfileImage('').subscribe(res => {
-		// 	console.log('should be removing the unused avatar: ', res);
-		// });
+		console.log('moment.utc(), ', moment().utc());
 	}
 
 	getUsers() {
@@ -58,6 +61,26 @@ export class ControlUserComponent implements OnInit {
 		this.subService.users.subscribe(response => {
 			this.sortUsers(response);
 		});
+	}
+
+	editTimesheet(id) {
+		console.log('id: ', id);
+			const params = {
+				EmployeeId: this.authService.currentUser.id,
+				Date: moment(this.dayForTimesheet).format('MM/DD/YYYY')
+			};
+			this.timeCardService.getRangeTimecards(params).subscribe((events) => {
+				if (events.type === HttpEventType.Response) {
+					if (events.status === 200 && events.type === 4) {
+						const newDialog = this.dialog.open(TimesheetDialogComponent, {
+							data: { Cards: events.body, Range: this.utilService.getDateRange(this.dayForTimesheet) },
+							panelClass: 'invoicePreview'
+						});
+					}
+				}
+			}, error => {
+				console.log('error: ', error);
+			});
 	}
 
 	sortUsers(obj) {
@@ -158,4 +181,14 @@ export class ControlUserComponent implements OnInit {
 	formatDate(date) {
 		return moment(date).format('MMMM Do YYYY');
 	}
+
+	getMax() {
+		return new Date();
+	}
+
+	openCalendar(event) {
+		event.preventDefault();
+		this.timesheetCalendar.open();
+	}
+
 }

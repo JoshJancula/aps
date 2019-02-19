@@ -5,24 +5,29 @@
     <div class='row header'>Ending: {{ data.Range.End }}</div>
   </div>
   <div class='row' style='width: 100%'>
-  <table>
+    <table>
       <tr>
-          <th>Day</th>
-          <th>Times in / out</th> 
-          <th>Day total</th>
-        </tr>
-    <tr *ngFor='let date of dates'>
-      <td>{{ date.model }}</td>
-      <td><div *ngFor='let punch of date.data'>{{ formatMinutes(punch.TimeIn) }}&nbsp;-&nbsp;{{ punch.TimeOut ? formatMinutes(punch.TimeOut) : 'Clocked in' }}</div></td>
-      <td>{{ date.data.length > 0 ? utilService.getTotalTime(date.data) : '0 hr' }}</td>
-    </tr>
-  </table>
-</div>
-<div class='row weekTotal'>
- <span> Week total: {{ weekTotal }}</span>
-</div>
+        <th>Day</th>
+        <th style='text-align: center;'>Times in / out</th>
+        <th>Day total</th>
+      </tr>
+    </table>
+    <div class='row mainRow'>
+        <div class='row' style='width: 100%; border-bottom: solid black 1px;' *ngFor='let date of dates'>
+            <div class='col-md-3'>{{ date.model }}</div>
+            <div class='col-md-6' style='text-align: center;'>
+              <div *ngFor='let punch of date.data'>{{ formatMinutes(punch.TimeIn) }}&nbsp;-&nbsp;{{ punch.TimeOut ?
+                formatMinutes(punch.TimeOut) : 'Clocked in' }} <button class='editButton'  *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"  mat-button (click)='editTimecard(punch);'>Edit</button></div>
+              </div>
+            <div class='col-md-3'><span class='totalText'>Total: </span>{{ date.data.length > 0 ? utilService.getTotalTime(date.data) : '0 hr' }}</div>
+            </div>
+    </div>
+  </div>
+  <div class='row weekTotal'>
+    <span> Week total: {{ weekTotal }}</span>
+  </div>
 </div>
 <div class='row mainRow'>
-  <button mat-button (click)="generatePDF('download');">Download copy</button>
-  <button mat-button (click)="generatePDF('print');">Print copy</button>
+  <button mat-button (click)="getPDF('download');">Download copy</button>
+  <button mat-button (click)="getPDF('print');">Print copy</button>
 </div>

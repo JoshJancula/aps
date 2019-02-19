@@ -9,7 +9,11 @@ import { Router } from '@angular/router';
 })
 export class SubscriptionsService {
 
-	constructor(private router: Router, private authService: AuthService, private http: HttpClient) { }
+	constructor(private router: Router, private authService: AuthService, private http: HttpClient) {
+		this.authService.loginStatus.subscribe(res => {
+			if (res === false) { this.clearData(); }
+		});
+	}
 
 	private userStore = [];
 	private userSubject = new BehaviorSubject(this.userStore);
