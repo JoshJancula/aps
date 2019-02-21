@@ -198,7 +198,7 @@ module.exports = (app) => {
 					id: user.dataValues.id,
 					Avatar: user.dataValues.Avatar,
 					PTO: user.dataValues.PTO,
-					RequireTimesheet: y.RequireTimesheet
+					RequireTimesheet: user.dataValues.RequireTimesheet
 				}
 				if (user.dataValues.Active == false) {
 					res.status(403).send({ success: false, msg: `Authentication failed. You're account has been deactivated.` })
