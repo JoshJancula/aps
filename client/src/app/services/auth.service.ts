@@ -37,10 +37,9 @@ export class AuthService {
 
 	logout() {
 		localStorage.removeItem('jwtToken');
-		this.router.navigate([`/`], {});
 		this.isLoggedIn = false;
 		this.logoutSubject.next(this.isLoggedIn);
-		// console.log('invoiceSubject', this.utilService.invoices);
+		this.router.navigate([`/`], {});
 	}
 
 	get currentUser() {

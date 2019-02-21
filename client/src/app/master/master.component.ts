@@ -76,6 +76,10 @@ export class MasterComponent implements OnInit {
 		});
 	}
 
+	logout() {
+		this.authService.logout();
+	}
+
 	listenForResume() {
 		if ((<any>window).deviceReady === true) {
 			document.addEventListener('resume', (e) => {
@@ -100,6 +104,7 @@ export class MasterComponent implements OnInit {
 			setTimeout(() => this.subService.processUsers(), 200);
 			setTimeout(() => this.subService.processInvoices(this.controlInvoice.invoiceSearch.filter), 300);
 			setTimeout(() => this.subService.processAppointments(), 400);
+			setTimeout(() => this.processTimeCards(), 500);
 		} else {
 			this.authService.logout();
 		}
@@ -138,6 +143,15 @@ export class MasterComponent implements OnInit {
 				case 'updateUsers': this.subService.processUsers(); break;
 				case 'updateInvoices': this.subService.processInvoices(this.controlInvoice.invoiceSearch.filter); break;
 				case 'updateAppointments': this.subService.processAppointments(); break;
+				case 'updateTimeCards': this.processTimeCards(); break;
+			}
+		}
+	}
+
+	processTimeCards() {
+		if (this.settingsMode === true) {
+			if (this.controlSettings.userAction === this.controlSettings.actions[0]) {
+				this.controlSettings.timeSheet.getTodayHours();
 			}
 		}
 	}

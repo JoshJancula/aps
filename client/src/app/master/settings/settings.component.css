@@ -47,6 +47,8 @@
     padding: 20px;
     margin-bottom: 2%;
     display: inline-block;
+    margin-left: 2%;
+    width: auto;
 }
 
 .uploadImageButton {

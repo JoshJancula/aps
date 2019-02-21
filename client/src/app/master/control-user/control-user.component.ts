@@ -35,6 +35,7 @@ export class ControlUserComponent implements OnInit {
 		Avatar: '',
 		FranchiseId: '',
 		Active: true,
+		RequireTimesheet: true
 	};
 	users = [];
 	testPassword = '';
@@ -63,17 +64,17 @@ export class ControlUserComponent implements OnInit {
 		});
 	}
 
-	editTimesheet(id) {
-		console.log('id: ', id);
+	editTimesheet(user) {
+		console.log('user: ', user);
 			const params = {
-				EmployeeId: this.authService.currentUser.id,
+				EmployeeId: user.id,
 				Date: moment(this.dayForTimesheet).format('MM/DD/YYYY')
 			};
 			this.timeCardService.getRangeTimecards(params).subscribe((events) => {
 				if (events.type === HttpEventType.Response) {
 					if (events.status === 200 && events.type === 4) {
 						const newDialog = this.dialog.open(TimesheetDialogComponent, {
-							data: { Cards: events.body, Range: this.utilService.getDateRange(this.dayForTimesheet) },
+							data: { Cards: events.body, Range: this.utilService.getDateRange(this.dayForTimesheet), Name: `${user.FirstName} ${user.LastName}`},
 							panelClass: 'invoicePreview'
 						});
 					}
@@ -173,6 +174,7 @@ export class ControlUserComponent implements OnInit {
 			Phone: '',
 			FranchiseId: '',
 			Active: true,
+			RequireTimesheet: true
 		};
 		this.editing = false;
 		this.selectedId = '';

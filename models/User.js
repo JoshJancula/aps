@@ -48,6 +48,16 @@ module.exports = (sequelize, DataTypes) => {
             unique: false,
             allowNull: true,
         },
+        PTO: {
+            type: DataTypes.STRING,
+            unique: false,
+            allowNull: true,
+        },
+        RequireTimesheet: {
+            type: DataTypes.BOOLEAN,
+            unique: false,
+            allowNull: false,
+        },
         Active: {
             type: DataTypes.BOOLEAN,
             unique: false,

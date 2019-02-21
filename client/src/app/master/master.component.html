@@ -11,7 +11,7 @@
       <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
     </mat-form-field>
   </span>
-  <!-- <button *ngIf="controlSettings === true"  mat-button>Logout</button> -->
+  <button class='logout' (click)="logout();" style='position: absolute; right: 24px;' *ngIf="settingsMode === true"  mat-button>Logout</button>
 </mat-toolbar>
 <div class='row mainRow'>
   <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>

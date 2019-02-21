@@ -17,7 +17,9 @@
             <div class='col-md-3'>{{ date.model }}</div>
             <div class='col-md-6' style='text-align: center;'>
               <div *ngFor='let punch of date.data'>{{ formatMinutes(punch.TimeIn) }}&nbsp;-&nbsp;{{ punch.TimeOut ?
-                formatMinutes(punch.TimeOut) : 'Clocked in' }} <button class='editButton'  *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"  mat-button (click)='editTimecard(punch);'>Edit</button></div>
+                formatMinutes(punch.TimeOut) : 'Clocked in' }} <button class='editButton'  *ngIf="(authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager') && punch.TimeOut !== null"  mat-button (click)='editTimecard(punch);'>Edit</button>
+                <button class='editButton'  *ngIf="(authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager') && punch.TimeOut === null"  mat-button (click)='clockUserOut(punch);'>Clock out</button>
+              </div>
               </div>
             <div class='col-md-3'><span class='totalText'>Total: </span>{{ date.data.length > 0 ? utilService.getTotalTime(date.data) : '0 hr' }}</div>
             </div>

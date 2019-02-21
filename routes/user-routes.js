@@ -26,6 +26,7 @@ module.exports = (app) => {
 							id: y.id,
 							Active: y.Active,
 							Avatar: y.Avatar,
+							RequireTimesheet: y.RequireTimesheet
 						}
 						z.push(user);
 					});
@@ -59,6 +60,8 @@ module.exports = (app) => {
 							id: y.id,
 							Active: y.Active,
 							Avatar: y.Avatar,
+							PTO: y.PTO,
+							RequireTimesheet: y.RequireTimesheet
 						}
 						z.push(user);
 					});
@@ -193,7 +196,9 @@ module.exports = (app) => {
 					Role: user.dataValues.Role,
 					createdAt: user.dataValues.createdAt,
 					id: user.dataValues.id,
-					Avatar: user.dataValues.Avatar
+					Avatar: user.dataValues.Avatar,
+					PTO: user.dataValues.PTO,
+					RequireTimesheet: y.RequireTimesheet
 				}
 				if (user.dataValues.Active == false) {
 					res.status(403).send({ success: false, msg: `Authentication failed. You're account has been deactivated.` })

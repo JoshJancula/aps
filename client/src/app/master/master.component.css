@@ -151,6 +151,11 @@ button, button:focus { outline: none; }
     font-size: 18px;
 }
 
+.logout {
+    position: absolute;
+    right: 24px;
+}
+
 .filterIcon.show {
     display: block;
     z-index: 20;

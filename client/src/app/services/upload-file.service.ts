@@ -46,7 +46,7 @@ export class UploadFileService {
 				uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
 					if (action === 'avatar') {
 						this.userService.updateProfileImage(downloadURL).subscribe(res => {
-							if (this.authService.currentUser.Avatar !== '') {
+							if (this.authService.currentUser.Avatar !== '' && this.authService.currentUser.Avatar !== null) {
 								this.deleteImage(this.authService.currentUser.Avatar);
 								this.authService.currentUser.Avatar = downloadURL;
 								localStorage.removeItem('currentUser');

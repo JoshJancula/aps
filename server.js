@@ -103,6 +103,7 @@ db.sequelize.sync().then(() => {
                     case 'users': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateUsers' }); break;
                     case 'invoices': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateInvoices' }); break;
                     case 'appointments': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateAppointments' }); break;
+                    case 'timeCards': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateTimeCards' }); break;
                 }
             });
 
