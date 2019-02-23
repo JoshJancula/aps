@@ -126,6 +126,8 @@ db.sequelize.sync().then(() => {
                     AuthorId: data.AuthorId,
                     Recipient: data.Recipient,
                     RecipientId: data.RecipientId,
+                    RecipientDelete: data.RecipientDelete,
+                    AuthorDelete: data.AuthorDelete,
                     Content: data.Content,
                     MessageType: data.MessageType,
                     Read: data.Read

@@ -11,8 +11,10 @@
       <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
     </mat-form-field>
   </span>
-  <button class='logout' (click)="logout();" style='position: absolute; right: 24px;' *ngIf="settingsMode === true"  mat-button>Logout</button>
+    <mat-icon (click)='showMessages = true;' style='color:white; position: absolute; right: 24px;'>chat</mat-icon>
+  <button class='logout' (click)="logout();" style='position: absolute; right: 40px;' *ngIf="settingsMode === true"  mat-button>Logout</button>
 </mat-toolbar>
+<div class="mainOverlay" *ngIf="showMessages === true" (click)="showMessages = false;"></div>
 <div class='row mainRow'>
   <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
     <div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'" [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
@@ -30,6 +32,7 @@
     <app-control-appointment #controlAppointment class='controlAppointment' [ngClass]="{'show': appointmentMode === true}"></app-control-appointment>
     <app-control-invoice #controlInvoice class='controlInvoice' [ngClass]="{'show': invoiceMode === true}"></app-control-invoice>
     <app-settings #controlSettings class='controlSettings' [ngClass]="{'show': settingsMode === true}"></app-settings>
+    <app-messaging #messagingComponent class='messageDrawer' [ngClass]="{'open': showMessages === true}"></app-messaging>
   </div>
 
   <button class='filterIcon' [ngClass]="{'show': controlInvoice.searchInvoices === true && invoiceMode === true && controlInvoice.invoiceSearch.slideDrawer !== true }"><mat-icon (click)='controlInvoice.invoiceSearch.openDrawer();' style='color:white;'>search</mat-icon></button>

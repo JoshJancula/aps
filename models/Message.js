@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         Recipient: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             unique: false,
             allowNull: false,
         },
         RecipientId: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             unique: false,
             allowNull: false,
         },
@@ -39,7 +39,17 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             unique: false,
             allowNull: false,
-        },   
+        }, 
+        AuthorDelete: {
+            type: DataTypes.BOOLEAN,
+            unique: false,
+            allowNull: false,
+        },  
+        RecipientDelete: {
+            type: DataTypes.BOOLEAN,
+            unique: false,
+            allowNull: false,
+        },      
     }, {
         timestamps: true,
     });

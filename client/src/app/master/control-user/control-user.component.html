@@ -1,7 +1,8 @@
 <!-- <div class='col-lg-12 col-md-12 col-sm-12'> -->
   <div class='row' class='userForm' [ngClass]="{'show': addUser === true}">
     <mat-card>
-      <div class="card-heading">Add new team member</div>
+      <div class="card-heading" *ngIf='editing === false'>Add new team member</div>
+      <div class="card-heading" *ngIf='editing === true'>{{ User.FirstName }} {{ User.LastName }}</div>
       <mat-form-field>
         <input matInput placeholder="Username" [readonly]="editing === true" [(ngModel)]="User.Username" />
       </mat-form-field>
@@ -32,9 +33,20 @@
         </mat-select>
       </mat-form-field>
       <br>
-      <label>Active</label>
-      <mat-slide-toggle color="primary" [(ngModel)]="User.Active"></mat-slide-toggle>
+      <mat-slide-toggle color="primary" [(ngModel)]="User.RequireTimesheet"></mat-slide-toggle>
+      <label>Require timesheet?</label>
       <br />
+      <mat-slide-toggle color="primary" [(ngModel)]="User.Active"></mat-slide-toggle>
+      <label>Active</label>
+      <!-- <br /> -->
+      <mat-form-field class='datePicker' *ngIf='User.RequireTimesheet === true && editing === true' style='cursor: pointer;'>
+        <input [(ngModel)]="dayForTimesheet" (click)="openCalendar($event)" [max]="getMax()" matInput 
+          (dateChange)="editTimesheet(User);" [matDatepicker]="timesheetCalendar" placeholder="View timesheets"
+          readonly>
+        <mat-datepicker-toggle matSuffix [for]="timesheetCalendar"></mat-datepicker-toggle>
+        <mat-datepicker touchUi tabindex="-1" #timesheetCalendar></mat-datepicker>
+      </mat-form-field>
+      <br/>
       <button class='submit' (click)="submitUser();" mat-button>Save user</button>
       <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
       <div *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner'">
@@ -48,14 +60,7 @@
       <div class="card-heading">Name: {{user.FirstName}} {{user.LastName}}</div>
       <div>
         <p><br>Role: {{user.Role}}</p>
-        <button (click)="editUser(user);" mat-button>Edit user </button>
-        <mat-form-field class='datePicker' style='cursor: pointer;'>
-            <input [(ngModel)]="dayForTimesheet" (click)="openCalendar($event)" [max]="getMax()" matInput 
-              (dateChange)="editTimesheet(user);" [matDatepicker]="timesheetCalendar" placeholder="View timesheets"
-              readonly>
-            <mat-datepicker-toggle matSuffix [for]="timesheetCalendar"></mat-datepicker-toggle>
-            <mat-datepicker touchUi tabindex="-1" #timesheetCalendar></mat-datepicker>
-          </mat-form-field>
+        <button (click)="editUser(user);" mat-button>View</button>
       </div>
     </mat-card>
   </div>

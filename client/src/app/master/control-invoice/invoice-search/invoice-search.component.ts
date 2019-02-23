@@ -46,7 +46,7 @@ export class InvoiceSearchComponent implements OnInit {
 	display = '';
 	_printIframe;
 
-	constructor(private subService: SubscriptionsService, private router: Router, private dialog: MatDialog, private invoiceService: InvoiceService, private authService: AuthService, public utilService: UtilService) {
+	constructor(private subService: SubscriptionsService, private router: Router, private dialog: MatDialog, private invoiceService: InvoiceService, public authService: AuthService, public utilService: UtilService) {
 	}
 
 	ngOnInit() {

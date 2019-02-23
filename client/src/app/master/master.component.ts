@@ -15,6 +15,7 @@ import { ControlInvoiceComponent } from './control-invoice/control-invoice.compo
 import { FranchiseService } from '../services/franchise.service';
 import * as moment from 'moment';
 import { SubscriptionsService } from '../services/subscriptions.service';
+import { MessagingComponent } from '../messaging/messaging.component';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -30,6 +31,7 @@ export class MasterComponent implements OnInit {
 	appointmentMode = false;
 	invoiceMode = false;
 	settingsMode = true;
+	showMessages = false;
 	messageConnection: any;
 	updateConnection: any;
 	pauseTime: any;
@@ -41,6 +43,7 @@ export class MasterComponent implements OnInit {
 	@ViewChild('controlClient') controlClient: ControlClientComponent;
 	@ViewChild('controlAppointment') controlAppointment: ControlAppointmentComponent;
 	@ViewChild('controlInvoice') controlInvoice: ControlInvoiceComponent;
+	@ViewChild('messagingComponent') messagingComponent: MessagingComponent;
 	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
 
 	constructor(public subService: SubscriptionsService, private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, public authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }

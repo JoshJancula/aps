@@ -50,7 +50,7 @@
             <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
           </mat-form-field>
         </div>
-        <mat-form-field>
+        <mat-form-field *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho'">
           <mat-select placeholder="Franchise" [(ngModel)]="filter.franchise">
             <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
           </mat-select>

@@ -73,6 +73,7 @@ export class ControlUserComponent implements OnInit {
 			this.timeCardService.getRangeTimecards(params).subscribe((events) => {
 				if (events.type === HttpEventType.Response) {
 					if (events.status === 200 && events.type === 4) {
+						console.log('user is... ', user);
 						const newDialog = this.dialog.open(TimesheetDialogComponent, {
 							data: { Cards: events.body, Range: this.utilService.getDateRange(this.dayForTimesheet), Name: `${user.FirstName} ${user.LastName}`},
 							panelClass: 'invoicePreview'
