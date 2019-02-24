@@ -25,7 +25,7 @@ export class MessagingComponent implements OnInit {
 	}
 
 	processUserSelect(user) {
-		if (this.messages !== undefined && this.messages !== []) {
+		if (this.messages !== undefined && this.messages !== [] && this.inboxes !== [] && this.messages.length > 0) {
 			this.inboxes.forEach(box => {
 				if (box.otherUserId === user.id) {
 					this.openChat(box);
@@ -35,6 +35,8 @@ export class MessagingComponent implements OnInit {
 			});
 		} else {
 			this.messageChat.newChat(user);
+			this.showUserSelector = false;
+			this.showChat = true;
 		}
 	}
 

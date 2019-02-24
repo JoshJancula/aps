@@ -15,7 +15,6 @@ export class MessageChatComponent implements OnInit {
 	public otherUserId = '';
 	public messages = [];
 	public currentUserId: any;
-	public currentUserIdString: any;
 	public drawerOpen = false;
 	constructor(public authService: AuthService, private messageService: MessageService) { }
 
@@ -39,8 +38,12 @@ export class MessageChatComponent implements OnInit {
 	}
 
 	newChat(data) {
+		this.drawerOpen = true;
+		this.messages = [];
 		this.otherUser = `${data.FirstName} ${data.LastName}`;
 		this.otherUserId = data.id;
+		this.currentUserId = this.authService.currentUser.id.toString();
+		setTimeout(() => document.getElementById('scrollHere').scrollIntoView(), 30);
 	}
 
 	loadChat(box) {
@@ -49,8 +52,7 @@ export class MessageChatComponent implements OnInit {
 		this.messages = box.Messages;
 		this.otherUser = box.User;
 		this.otherUserId = box.otherUserId;
-		this.currentUserId = this.authService.currentUser.id;
-		this.currentUserIdString = this.authService.currentUser.id.toString();
+		this.currentUserId = this.authService.currentUser.id.toString();
 		setTimeout(() => document.getElementById('scrollHere').scrollIntoView(), 30);
 	}
 
