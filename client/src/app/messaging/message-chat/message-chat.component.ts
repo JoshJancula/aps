@@ -15,6 +15,7 @@ export class MessageChatComponent implements OnInit {
 	public otherUserId = '';
 	public messages = [];
 	public currentUserId: any;
+	public drawerOpen = false;
 	constructor(public authService: AuthService, private messageService: MessageService) { }
 
 	ngOnInit() {
@@ -37,6 +38,7 @@ export class MessageChatComponent implements OnInit {
 	}
 
 	loadChat(box) {
+		this.drawerOpen = true;
 		this.messages = [];
 		this.messages = box.Messages;
 		this.otherUser = box.User;
