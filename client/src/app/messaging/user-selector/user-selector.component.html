@@ -1,0 +1,14 @@
+<div class='row container' style='width: 110%;'>
+  <div class='row topRow container'>
+    <span class='drawerHeader'>Select user</span>
+  </div>
+  <div class='row container cardRow'>
+    <mat-card style='margin:1%; margin-top: 5%; width: 100%;'>
+      <p>This is the user selector</p>
+      <div class='userRow' *ngFor="let user of users" (click)='userSelected.emit(user);'>
+        <span>{{ user.FirstName }} {{ user.LastName }}</span><br>
+        <span>{{ user.Email }}</span>
+      </div>
+    </mat-card>
+  </div>
+</div>

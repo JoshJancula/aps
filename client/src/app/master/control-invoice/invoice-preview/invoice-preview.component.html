@@ -179,9 +179,9 @@
 
 <div class='buttons'>
   <div *ngIf="printing == false && data.action === 'open'"  class='row'>
-    <button class='printButton' (click)='generatePDF("print")' mat-button>Print</button>
+    <button class='printButton' (click)='getPDF("print")' mat-button>Print</button>
     <button class='printButton' (click)='emailInvoice()' mat-button>Email</button>
-    <button *ngIf='isCordova === false' class='printButton' (click)='generatePDF("download")' mat-button>Download PDF</button>
+    <button *ngIf='isCordova === false' class='printButton' (click)='getPDF("download")' mat-button>Download PDF</button>
     <button *ngIf="signature === ''" class='printButton' (click)='openSignaturePad()' mat-button>Sign</button>
   </div>
 </div>

@@ -16,30 +16,12 @@
 
 .cardRow {
     width: 111%;
-    margin-top: 21%;
+    margin-top: 19%;
 }
 
 .userRow {
     margin-top: 2%;
     border-bottom: black solid 1px;
-}
-
-.messageInput {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    margin-left: 1%;
-}
-
-.otherUserMessage {
-    float: left;
-    color: black;
-}
-
-.currentUserMessage {
-    float: right;
-    color: white;
-    background: blue;
 }
 
 @media (max-width: 599px) {

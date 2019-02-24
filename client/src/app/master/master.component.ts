@@ -32,6 +32,7 @@ export class MasterComponent implements OnInit {
 	invoiceMode = false;
 	settingsMode = true;
 	showMessages = false;
+	showUserSelector = false;
 	messageConnection: any;
 	updateConnection: any;
 	pauseTime: any;
@@ -56,8 +57,15 @@ export class MasterComponent implements OnInit {
 			document.body.style.backgroundImage = 'url("assets/logo5.png")';
 		}
 		this.messagingService.initSocket();
+		this.messagingService.onConnectionMessage().subscribe((response: any) => {
+			console.log('all messages response: ', response);
+			this.messagingComponent.messages = response.messages;
+			if (response.messages.length > 0) { this.messagingComponent.getUsers(); }
+		});
 		this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
 			console.log('socket response: ', response);
+			this.messagingComponent.messages.push(response);
+			this.messagingComponent.getUsers();
 		});
 		this.subscribeToUpdates();
 		setTimeout(() => this.sendConnectionMessage(), 500);

@@ -15,6 +15,8 @@
   <button class='logout' (click)="logout();" style='position: absolute; right: 40px;' *ngIf="settingsMode === true"  mat-button>Logout</button>
 </mat-toolbar>
 <div class="mainOverlay" *ngIf="showMessages === true" (click)="showMessages = false;"></div>
+<div class="selectorOverlay" *ngIf="messagingComponent.showUserSelector === true" (click)="messagingComponent.showUserSelector = false;"></div>
+<div class="selectorOverlay" *ngIf="messagingComponent.showChat === true" (click)="messagingComponent.showChat = false;"></div>
 <div class='row mainRow'>
   <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
     <div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'" [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>

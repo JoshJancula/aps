@@ -142,6 +142,19 @@ body, html {
     cursor: pointer;
 }
 
+.selectorOverlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.0);
+    z-index: 40;
+    cursor: pointer;
+}
+
 .invoicePreview {
     height: 90vh;
     width: 90vw;
@@ -179,11 +192,12 @@ body, html {
     height: calc(100vh);
     background: white;
     padding: 1%;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.8);
 }
 
 .chatDrawer {
     z-index: 100;
-    background: yellow;
+    background: teal;
 }
 
 
@@ -227,7 +241,7 @@ body, html {
     .searchButton {
         position: fixed !important;
         top: 12px;
-        right: 0px;
+        right: 40px;
         color:white;
         font-size: 10px;
     }

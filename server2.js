@@ -85,7 +85,7 @@ db.sequelize.sync().then(() => {
                         y.forEach(z => {
                             messages.push(z);
                         });
-                        socket.emit('message', {
+                        socket.emit('allMessages', {
                             messages
                         });
                     });

@@ -42,6 +42,7 @@ import { TimesheetDialogComponent } from './timesheet-dialog/timesheet-dialog.co
 import { TimeChangeDialogComponent } from './time-change-dialog/time-change-dialog.component';
 import { MessagingComponent } from './messaging/messaging.component';
 import { MessageChatComponent } from './messaging/message-chat/message-chat.component';
+import { UserSelectorComponent } from './messaging/user-selector/user-selector.component';
 
 const config = {
 	apiKey: 'AIzaSyBTiizpyWeqHfXdFDQsd6IoMdNWYvkceS8',
@@ -88,7 +89,8 @@ const config = {
 		TimesheetDialogComponent,
 		TimeChangeDialogComponent,
 		MessagingComponent,
-		MessageChatComponent
+		MessageChatComponent,
+		UserSelectorComponent
 	],
 	imports: [
 		BrowserModule,

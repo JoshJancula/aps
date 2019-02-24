@@ -1,3 +1,20 @@
-<div class='row container'>
-  <p>This is the chat drawer</p>
+<div class='row container' style='width: 110%;'>
+  <div class='row topRow container'>
+    <span class='drawerHeader'>{{ otherUser }}</span>
+  </div>
+  <!-- <div class='row container cardRow'>
+    This is the messaging chat
+  </div> -->
+  <div class='row container cardRow'>
+    <div class='row container' *ngFor='let message of messages'>
+      <mat-card *ngIf="message.RecipientId === currentUserId" class='otherUserMessage'>{{ message.Content }}</mat-card>
+      <mat-card *ngIf="message.RecipientId !== currentUserId" class='currentUserMessage'>{{ message.Content }}</mat-card>
+    </div>
+  </div>
+  <div class='row messageInput'>
+    <mat-form-field class="example-full-width">
+      <textarea [(ngModel)]="newMessage" matInput></textarea>
+    </mat-form-field>
+    <button (click)='submitMessage();' mat-button>Submit</button>
+  </div>
 </div>

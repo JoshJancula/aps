@@ -62,6 +62,12 @@ export class MessageService {
 		});
 	}
 
+	onConnectionMessage(): Observable<any> {
+		return new Observable<any>(observer => {
+			this.socket.on('allMessages', (data: any) => { observer.next(data); });
+		});
+	}
+
 	 onEvent(event: Event): Observable<any> {
 		return new Observable<Event>(observer => {
 			this.socket.on(event, () => observer.next());

@@ -21,8 +21,8 @@
     </mat-card>
   </div>
 
-  <button class='add' mat-button (click)="newInvoice.emit();" style="z-index:100 !important;">
-    <mat-icon style="padding-top: 0px; z-index:100 !important;">add</mat-icon>
+  <button class='add' mat-button (click)="newInvoice.emit();" >
+    <mat-icon style="padding-top: 0px;">add</mat-icon>
     New invoice
   </button>
   <div class="col-xl-2 col-lg-2 col-md-2 hidden-sm hidden-xs sideColumn" [ngClass]="{'open': slideDrawer === true}">
