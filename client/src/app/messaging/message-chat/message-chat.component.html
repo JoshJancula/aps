@@ -7,8 +7,8 @@
   </div> -->
   <div class='row container cardRow'>
     <div class='row container' style='width: 100%;' *ngFor='let message of messages'>
-      <mat-card *ngIf="message.AuthorId !== currentUserId" class='otherUserMessage' [ngClass]="{'open': drawerOpen === true}">{{ message.Content }}</mat-card>
-      <mat-card *ngIf="message.AuthorId === currentUserId" class='currentUserMessage' [ngClass]="{'open': drawerOpen === true}">{{ message.Content }}</mat-card>
+      <mat-card *ngIf="message.AuthorId !== currentUserId || message.AuthorId !== currentUserIdString" class='otherUserMessage' [ngClass]="{'open': drawerOpen === true}">{{ message.Content }}</mat-card>
+      <mat-card *ngIf="message.AuthorId === currentUserId || message.AuthorId === currentUserIdString" class='currentUserMessage' [ngClass]="{'open': drawerOpen === true}">{{ message.Content }}</mat-card>
     </div>
     <div id='scrollHere'></div>
   </div>

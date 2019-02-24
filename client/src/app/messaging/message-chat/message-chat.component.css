@@ -48,14 +48,14 @@
     color: white;
     background: blue;
     position: relative;
-    /* left: 20%; */
+    /* left: 0px; */
     width: 90%;
     text-align: right;
     margin-bottom: 5%;
 }
 
 .currentUserMessage.open {
-    left: 20%;
+    left: 10%;
 }
 
 .otherUserMessage {

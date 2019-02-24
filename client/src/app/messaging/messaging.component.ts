@@ -25,13 +25,17 @@ export class MessagingComponent implements OnInit {
 	}
 
 	processUserSelect(user) {
-		this.inboxes.forEach(box => {
-			if (box.otherUserId === user.id) {
-				this.openChat(box);
-				this.showUserSelector = false;
-				this.showChat = true;
-			}
-		});
+		if (this.messages !== undefined && this.messages !== []) {
+			this.inboxes.forEach(box => {
+				if (box.otherUserId === user.id) {
+					this.openChat(box);
+					this.showUserSelector = false;
+					this.showChat = true;
+				}
+			});
+		} else {
+			this.messageChat.newChat(user);
+		}
 	}
 
 	getUsers() {
@@ -69,14 +73,6 @@ export class MessagingComponent implements OnInit {
 			});
 		}
 		this.inboxes = inboxes;
-		// if (this.showChat === true) {
-		// 	this.inboxes.forEach(box => {
-		// 		if (box.otherUserId === this.messageChat.otherUserId) {
-		// 			this.messageChat.messages.push()
-		// 			this.messageChat.loadChat(box);
-		// 		}
-		// 	});
-		// }
 		console.log('inboxes: ', this.inboxes);
 	}
 
