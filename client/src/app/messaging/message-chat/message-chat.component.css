@@ -30,18 +30,18 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
-    width: 103%;
+    width: 100%;
     /* margin-left: 1%; */
     background:white
 }
 
-.otherUserMessage {
-    float: left;
-    color: black;
-}
-
 .drawerRow {
     width: 100%;
+}
+
+.mat-card {
+    border-radius: 6px !important;
+    height: auto;
 }
 
 .currentUserMessage {
@@ -53,12 +53,12 @@
     width: 90%;
     text-align: right;
     margin-bottom: 5%;
-    margin-right: -20%;
 }
 
 .otherUserMessage {
     position: relative;
     left: 5px;
+    color: black;
     width: 90%;
     margin-bottom: 5%;
 }
