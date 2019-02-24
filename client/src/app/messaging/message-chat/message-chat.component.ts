@@ -12,17 +12,12 @@ export class MessageChatComponent implements OnInit {
 
 	public otherUser = '';
 	public newMessage = '';
-	private otherUserId = '';
+	public otherUserId = '';
 	public messages = [];
 	public currentUserId: any;
 	constructor(public authService: AuthService, private messageService: MessageService) { }
 
 	ngOnInit() {
-	}
-
-	resetContent(data) {
-		this.otherUser = `${data.FirstName} ${data.LastName}`;
-		this.otherUserId = data.id;
 	}
 
 	submitMessage() {
@@ -38,6 +33,7 @@ export class MessageChatComponent implements OnInit {
 			Read: false
 		};
 		this.messageService.sendMessage(message);
+		this.newMessage = '';
 	}
 
 	loadChat(box) {
@@ -46,6 +42,7 @@ export class MessageChatComponent implements OnInit {
 		this.otherUser = box.User;
 		this.otherUserId = box.otherUserId;
 		this.currentUserId = this.authService.currentUser.id.toString();
+		setTimeout(() => document.getElementById('scrollHere').scrollIntoView(), 30);
 	}
 
 }

@@ -6,15 +6,16 @@
     This is the messaging chat
   </div> -->
   <div class='row container cardRow'>
-    <div class='row container' *ngFor='let message of messages'>
+    <div class='row container' style='width: 100%;' *ngFor='let message of messages'>
       <mat-card *ngIf="message.RecipientId === currentUserId" class='otherUserMessage'>{{ message.Content }}</mat-card>
       <mat-card *ngIf="message.RecipientId !== currentUserId" class='currentUserMessage'>{{ message.Content }}</mat-card>
     </div>
+    <div id='scrollHere'></div>
   </div>
   <div class='row messageInput'>
     <mat-form-field class="example-full-width">
       <textarea [(ngModel)]="newMessage" matInput></textarea>
     </mat-form-field>
-    <button (click)='submitMessage();' mat-button>Submit</button>
+    <button (click)='submitMessage();' mat-button>Send</button>
   </div>
 </div>
