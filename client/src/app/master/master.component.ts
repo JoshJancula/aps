@@ -73,13 +73,10 @@ export class MasterComponent implements OnInit {
 		this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
 			console.log('socket response: ', response);
 			if (response.data.AuthorId === this.authService.currentUser.id || response.data.RecipientId === this.authService.currentUser.id) {
-				// this.messagingComponent.messages.push(response.data);
-				// this.messagingComponent.getUsers();
 				if (this.messagingComponent.showChat === true) {
 					this.messagingComponent.inboxes.forEach(box => {
 						if (box.otherUserId === this.messagingComponent.messageChat.otherUserId) {
 							box.Messages.push(response.data);
-							this.messagingComponent.messageChat.messages.push(response.data);
 							setTimeout(() => document.getElementById('scrollHere').scrollIntoView(), 30);
 						}
 					});
