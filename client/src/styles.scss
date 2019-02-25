@@ -43,6 +43,15 @@ body {
     right: 0px;
 }
 
+.masterComponent {
+    position: fixed !important;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow-x: hidden !important;
+}
+
 .html2canvas-container { width: 1400px !important; height: 2400px !important; }
 
 .headerRow {
@@ -74,7 +83,7 @@ body, html {
 .searchButton {
     position: fixed !important;
     top: 17px;
-    right: 5vw;
+    right: 8vw;
     color:white;
     z-index: 40;
 }
@@ -82,7 +91,7 @@ body, html {
 .add {
     position: fixed !important;
     top: 17px;
-    right: 6vw;
+    right: 8vw;
     color:white;
     z-index: 40;
 }

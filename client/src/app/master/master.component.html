@@ -1,44 +1,66 @@
-<mat-toolbar>
-  <img class='toolbarLogo' src='assets/logo2.png' />
-  <span class='screenTitle'>{{ screen }}</span>
-  <span class='invoiceDisplay' *ngIf="controlInvoice.searchInvoices === true && invoiceMode === true">{{ controlInvoice.invoiceSearch.display }}</span>
-  <span class='calendar' [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
-    <mat-form-field class='datePicker' style='cursor: pointer;'>
-      <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput (dateInput)="subService.processAppointments();"
-        (dateChange)="subService.processAppointments();" [matDatepicker]="appointmentCalendar" placeholder="Date"
-        [min]="controlAppointment.getMinDate()" readonly>
-      <mat-datepicker-toggle matSuffix [for]="appointmentCalendar"></mat-datepicker-toggle>
-      <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
-    </mat-form-field>
-  </span>
+<div class='masterComponent'>
+  <mat-toolbar>
+    <img class='toolbarLogo' src='assets/logo2.png' />
+    <span class='screenTitle'>{{ screen }}</span>
+    <span class='invoiceDisplay'
+      *ngIf="controlInvoice.searchInvoices === true && invoiceMode === true">{{ controlInvoice.invoiceSearch.display }}</span>
+    <span class='calendar'
+      [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
+      <mat-form-field class='datePicker' style='cursor: pointer;'>
+        <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput
+          (dateInput)="subService.processAppointments();" (dateChange)="subService.processAppointments();"
+          [matDatepicker]="appointmentCalendar" placeholder="Date" [min]="controlAppointment.getMinDate()" readonly>
+        <mat-datepicker-toggle matSuffix [for]="appointmentCalendar"></mat-datepicker-toggle>
+        <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
+      </mat-form-field>
+    </span>
     <mat-icon (click)='showMessages = true;' style='color:white; position: absolute; right: 24px;'>chat</mat-icon>
-  <button class='logout' (click)="logout();" style='position: absolute; right: 40px;' *ngIf="settingsMode === true"  mat-button>Logout</button>
-</mat-toolbar>
-<div class="mainOverlay" *ngIf="showMessages === true" (click)="showMessages = false;"></div>
-<div class="selectorOverlay" *ngIf="messagingComponent.showUserSelector === true" (click)="messagingComponent.showUserSelector = false;"></div>
-<div class="selectorOverlay" *ngIf="messagingComponent.showChat === true" (click)="messagingComponent.showChat = false; messageDrawer.messageChat.drawerOpen = false;"></div>
-<div class='row mainRow'>
-  <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
-    <div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'" [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
-    <div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' " [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
-    <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>
-    <div class='options' [ngClass]="{'selected': appointmentMode === true}" (click)="openAppointments();">Appointments</div>
-    <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();">Invoices</div>
-    <div class='options' [ngClass]="{'selected': settingsMode === true}" (click)="openSettings();">My account</div>
-  </div>
+    <button class='logout' (click)="logout();" style='position: absolute; right: 40px;' *ngIf="settingsMode === true"
+      mat-button>Logout</button>
+  </mat-toolbar>
+  <div class="mainOverlay" *ngIf="showMessages === true" (click)="showMessages = false;"></div>
+  <div class="selectorOverlay" *ngIf="messagingComponent.showUserSelector === true"
+    (click)="messagingComponent.showUserSelector = false;"></div>
+  <div class="selectorOverlay" *ngIf="messagingComponent.showChat === true"
+    (click)="messagingComponent.showChat = false; messageDrawer.messageChat.drawerOpen = false;"></div>
+  <div class='row mainRow'>
+    <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
+      <div class='options'
+        *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"
+        [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
+      <div class='options'
+        *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' "
+        [ngClass]="{'selected': franchiseMode === true}" (click)="openFranchises();">Franchises</div>
+      <div class='options' [ngClass]="{'selected': clientMode === true}" (click)="openClients();">Clients</div>
+      <div class='options' [ngClass]="{'selected': appointmentMode === true}" (click)="openAppointments();">Appointments
+      </div>
+      <div class='options' [ngClass]="{'selected': invoiceMode === true}" (click)="openInvoices();">Invoices</div>
+      <div class='options' [ngClass]="{'selected': settingsMode === true}" (click)="openSettings();">My account</div>
+    </div>
 
-  <div class='col-xl-10 col-lg-10 col-md-12 col-sm-12 contentRow'>
-    <app-control-user #controlUser class='controlUser'  *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"  [ngClass]="{'show': userMode === true}"></app-control-user>
-    <app-control-franchise #controlFranchise class='controlFranchise'  *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"  [ngClass]="{'show': franchiseMode === true}"></app-control-franchise>
-    <app-control-client #controlClient class='controlClient' [ngClass]="{'show': clientMode === true}"></app-control-client>
-    <app-control-appointment #controlAppointment class='controlAppointment' [ngClass]="{'show': appointmentMode === true}"></app-control-appointment>
-    <app-control-invoice #controlInvoice class='controlInvoice' [ngClass]="{'show': invoiceMode === true}"></app-control-invoice>
-    <app-settings #controlSettings class='controlSettings' [ngClass]="{'show': settingsMode === true}"></app-settings>
-    <app-messaging #messagingComponent class='messageDrawer' [ngClass]="{'open': showMessages === true}"></app-messaging>
-  </div>
+    <div class='col-xl-10 col-lg-10 col-md-12 col-sm-12 contentRow'>
+      <app-control-user #controlUser class='controlUser'
+        *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"
+        [ngClass]="{'show': userMode === true}"></app-control-user>
+      <app-control-franchise #controlFranchise class='controlFranchise'
+        *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'"
+        [ngClass]="{'show': franchiseMode === true}"></app-control-franchise>
+      <app-control-client #controlClient class='controlClient' [ngClass]="{'show': clientMode === true}">
+      </app-control-client>
+      <app-control-appointment #controlAppointment class='controlAppointment'
+        [ngClass]="{'show': appointmentMode === true}"></app-control-appointment>
+      <app-control-invoice #controlInvoice class='controlInvoice' [ngClass]="{'show': invoiceMode === true}">
+      </app-control-invoice>
+      <app-settings #controlSettings class='controlSettings' [ngClass]="{'show': settingsMode === true}"></app-settings>
+    </div>
 
-  <button class='filterIcon' [ngClass]="{'show': controlInvoice.searchInvoices === true && invoiceMode === true && controlInvoice.invoiceSearch.slideDrawer !== true }"><mat-icon (click)='controlInvoice.invoiceSearch.openDrawer();' style='color:white;'>search</mat-icon></button>
-  <button class='homeIcon' (click)='openPopup();'> 
-    <mat-icon style='color:white;'>home</mat-icon>
-  </button>
+    <button class='filterIcon'
+      [ngClass]="{'show': controlInvoice.searchInvoices === true && invoiceMode === true && controlInvoice.invoiceSearch.slideDrawer !== true }">
+      <mat-icon (click)='controlInvoice.invoiceSearch.openDrawer();' style='color:white;'>search</mat-icon>
+    </button>
+    <button class='homeIcon' (click)='openPopup();'>
+      <mat-icon style='color:white;'>home</mat-icon>
+    </button>
+  </div>
 </div>
+<app-messaging #messagingComponent class='messageDrawer' [ngClass]="{'open': showMessages === true}"></app-messaging>

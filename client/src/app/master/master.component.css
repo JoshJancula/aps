@@ -3,7 +3,12 @@
 }
 
 .mainRow {
+    position: absolute;
     height: calc(100vh - 64px);
+    top: 64px;
+    right: 0px !important;
+    left: 0px !important;
+    bottom: 0px !important;
     overflow-x: hidden !important;
     overflow-y: hidden;
 }
@@ -171,7 +176,7 @@ button, button:focus { outline: none; }
 
 .invoiceDisplay {
     margin-left: 5%;
-    font-size: 14px;
+    font-size: 9px;
     margin-top: 1%;
 }
 

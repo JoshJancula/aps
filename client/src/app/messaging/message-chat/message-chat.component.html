@@ -1,16 +1,13 @@
-<div class='row container' style='width: 110%;'>
+<div class='row container drawerRow' style='width: 110%;'>
   <div class='row topRow container'>
     <span class='drawerHeader'>{{ otherUser }}</span>
   </div>
-  <!-- <div class='row container cardRow'>
-    This is the messaging chat
-  </div> -->
-  <div class='row container cardRow'>
-    <div class='row container' style='width: 100%;' *ngFor='let message of messages'>
-      <mat-card *ngIf="message.AuthorId.toString() !== currentUserId" class='otherUserMessage' [ngClass]="{'open': drawerOpen === true}">{{ message.Content }}</mat-card>
-      <mat-card *ngIf="message.AuthorId.toString() === currentUserId" class='currentUserMessage' [ngClass]="{'open': drawerOpen === true}">{{ message.Content }}</mat-card>
+  <div class='row cardRow'>
+    <div class='row container' style='width: 110%; overflow-x: hidden !important;' *ngFor='let message of messages'>
+      <mat-card *ngIf="message.AuthorId.toString() !== currentUserId" class='otherUserMessage'>{{ message.Content }}</mat-card>
+      <mat-card *ngIf="message.AuthorId.toString() === currentUserId" class='currentUserMessage'>{{ message.Content }}</mat-card>
     </div>
-    <div id='scrollHere'></div>
+    <div class='row container' id='scrollHere'></div>
   </div>
   <div class='row container messageInput'>
     <mat-form-field class="example-full-width">

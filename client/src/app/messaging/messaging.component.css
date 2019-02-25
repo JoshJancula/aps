@@ -16,6 +16,10 @@
     transform: translateX(0px);
 } 
 
+.mainRow {
+    overflow-x: hidden !important;
+}
+
 .newMessage {
     position: fixed !important;
     top: 17px;
