@@ -35,6 +35,22 @@
     color: white;
 }
 
+.unread {
+    background-color: blue;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: relative;
+    left: -19px;
+    top: -10px;
+    display: inline-block;
+}
+
+.lastMessage.notRead {
+    position: relative;
+    left: -10px;
+}
+
 .topRow {
     height: 64px;
     background: blue;

@@ -72,7 +72,6 @@ export class UtilService {
 			Sunday: { data: [], model: 'Sunday' }
 		};
 		data.forEach(a => {
-			console.log(moment(a.createdAt).format('dddd, MMMM Do YYYY hh:mm'));
 			switch (moment(a.createdAt).format('dddd')) {
 				case 'Monday': obj.Monday.data.push(a); break;
 				case 'Tuesday': obj.Tuesday.data.push(a); break;
@@ -89,11 +88,11 @@ export class UtilService {
 	getDateRange(date) {
 		const start = moment(date).startOf('isoWeek');
 		const end = moment(date).endOf('isoWeek');
-		const range = { Start: moment(start).format('dddd, MMMM Do YYYY'), End: moment(end).format('dddd, MMMM Do YYYY')};
+		const range = { Start: moment(start).format('dddd, MMMM Do YYYY'), End: moment(end).format('dddd, MMMM Do YYYY') };
 		return range;
 	}
 
-	generatePDF(action, div,  message) {
+	generatePDF(action, div, message) {
 		html2canvas(div).then(canvas => {
 			const imgWidth = 210;
 			const imgHeight = canvas.height * imgWidth / canvas.width;

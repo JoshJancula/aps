@@ -18,8 +18,9 @@ export class MessagingComponent implements OnInit {
 	showChat = false;
 	inboxes = [];
 	messages: any;
+	totalUnread = 0;
 
-	constructor(private subService: SubscriptionsService, private authService: AuthService) { }
+	constructor(private subService: SubscriptionsService, public authService: AuthService) { }
 
 	ngOnInit() {
 	}
@@ -71,11 +72,23 @@ export class MessagingComponent implements OnInit {
 				});
 			});
 			inboxes.forEach(box => {
-				this.sortMessages(box.Messages);
+				box.Messages = this.sortMessages(box.Messages);
 			});
+			this.inboxes = inboxes;
+			this.setTotalUnread();
+			console.log('inboxes: ', this.inboxes);
+			console.log('totalUnread: ', this.totalUnread);
 		}
-		this.inboxes = inboxes;
-		console.log('inboxes: ', this.inboxes);
+	}
+
+	setTotalUnread() {
+		this.totalUnread = 0;
+		this.messages.forEach(message => {
+			// tslint:disable-next-line:radix
+			if (message.Read === false && parseInt(message.RecipientId) === this.authService.currentUser.id) {
+				this.totalUnread++;
+			}
+		});
 	}
 
 	openChat(box) {
@@ -85,7 +98,7 @@ export class MessagingComponent implements OnInit {
 
 	sortMessages(obj) {
 		obj.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
-		this.messages = obj;
+		return obj;
 	}
 
 }

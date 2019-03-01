@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
 
@@ -10,6 +10,7 @@ import { MessageService } from 'src/app/services/message.service';
 })
 export class MessageChatComponent implements OnInit {
 
+	@Output() public emitRead = new EventEmitter();
 	public otherUser = '';
 	public newMessage = '';
 	public otherUserId = '';
@@ -54,6 +55,19 @@ export class MessageChatComponent implements OnInit {
 		this.otherUserId = box.otherUserId;
 		this.currentUserId = this.authService.currentUser.id.toString();
 		setTimeout(() => document.getElementById('scrollHere').scrollIntoView(), 30);
+		this.updateRead();
+	}
+
+	updateRead() {
+		this.messages.forEach(message => {
+			// tslint:disable-next-line:radix
+			if (message.Read === false && parseInt(message.RecipientId) === this.authService.currentUser.id) {
+				const unread = { Read: true, id: message.id };
+				message.Read = true;
+				this.messageService.updateMessageStatus(unread);
+			}
+		});
+		this.emitRead.emit();
 	}
 
 }

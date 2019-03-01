@@ -15,13 +15,14 @@
       <div *ngFor='let box of inboxes'>
         <div class='inboxRow' *ngIf='box.Messages.length > 0' (click)='openChat(box)'>
           <span>{{ box.User }}</span><br>
-          <span>{{ box.Messages[box.Messages.length - 1].Content }}</span>
+          <span *ngIf="box.Messages[box.Messages.length - 1].Read === false && box.Messages[box.Messages.length - 1].Recipient === authService.currentUser.Name" class='unread'></span>
+          <span class='lastMessage' [ngClass]="{'notRead': box.Messages[box.Messages.length - 1].Read === false && box.Messages[box.Messages.length - 1].Recipient === authService.currentUser.Name}">{{ box.Messages[box.Messages.length - 1].Content }}</span>
         </div>
       </div>
     </mat-card>
 </div>
   <app-user-selector #userSelector class='userSelector' (userSelected)='processUserSelect($event);'  [ngClass]="{'open': showUserSelector === true}">
   </app-user-selector>
-  <app-message-chat #messageChat class='userSelector' [ngClass]="{'open': showChat === true}">
+  <app-message-chat #messageChat class='userSelector' (emitRead)='setTotalUnread();' [ngClass]="{'open': showChat === true}">
     </app-message-chat>
 </div>
