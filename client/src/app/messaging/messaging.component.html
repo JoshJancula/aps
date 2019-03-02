@@ -1,6 +1,7 @@
 <div class='row mainRow container' style='width: 110%;'>
   <div class='row topRow container'>
-    <span class='drawerHeader'>Messages</span>
+    <span class='drawerHeader' (click)='close.emit();'><mat-icon style='color:white; height: 24px; width:24px; position: relative;top: 6px;left: -4px;'>keyboard_arrow_left</mat-icon>
+      Messages</span>
   <button class='newMessage' style='color:white; font-size: 10px' mat-button (click)="showUserSelector = true;">
     <mat-icon style='color:white'>add</mat-icon>
     New message
@@ -21,8 +22,8 @@
       </div>
     </mat-card>
 </div>
-  <app-user-selector #userSelector class='userSelector' (userSelected)='processUserSelect($event);'  [ngClass]="{'open': showUserSelector === true}">
+  <app-user-selector #userSelector (close)='showUserSelector = false;' class='userSelector' (userSelected)='processUserSelect($event);'  [ngClass]="{'open': showUserSelector === true}">
   </app-user-selector>
-  <app-message-chat #messageChat class='userSelector' (emitRead)='setTotalUnread();' [ngClass]="{'open': showChat === true}">
+  <app-message-chat #messageChat  (close)='showChat = false;' class='userSelector' (emitRead)='setTotalUnread();' [ngClass]="{'open': showChat === true}">
     </app-message-chat>
 </div>

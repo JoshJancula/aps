@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class UserSelectorComponent implements OnInit {
 
+	@Output() public close = new EventEmitter();
 	@Output() userSelected = new EventEmitter();
 	public users: any;
 	constructor(private subService: SubscriptionsService, private authService: AuthService) { }

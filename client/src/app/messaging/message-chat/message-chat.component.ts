@@ -10,6 +10,7 @@ import { MessageService } from 'src/app/services/message.service';
 })
 export class MessageChatComponent implements OnInit {
 
+	@Output() public close = new EventEmitter();
 	@Output() public emitRead = new EventEmitter();
 	public otherUser = '';
 	public newMessage = '';

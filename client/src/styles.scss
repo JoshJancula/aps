@@ -177,6 +177,12 @@ body, html {
     overflow-x: hidden !important;
 }
 
+.bottomSnackbar {
+    width: 40vw;
+    position: relative;
+    left: 30vw;
+}
+
 .signaturePad .mat-dialog-container {
     padding: 0px !important;
     overflow-x: hidden !important;
@@ -283,6 +289,12 @@ body, html {
     .invoicePreview, app-invoice-preview  {
         height: 90vh;
         width: 96vw;
+    }
+
+    .bottomSnackbar {
+        width: 100vw !important;
+        position: unset;
+        left: unset;
     }
     
 }

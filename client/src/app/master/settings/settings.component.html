@@ -11,10 +11,10 @@
       <div class='col-md-6'>
         <mat-radio-group class="radio-group" color='primary' [(ngModel)]="userAction">
           <div class='radioDivs' *ngFor="let action of actions">
-            <span> {{ action }}</span>&nbsp;<span style='display: inline-block; width: 12px;'>&nbsp;</span>
+            <span style='cursor:pointer;' (click)="userAction = action"> {{ action }}</span>&nbsp;<span style='display: inline-block; width: 12px;'>&nbsp;</span>
             <mat-radio-button color='primary' class="radio-button" [value]="action"> </mat-radio-button>
           </div>
-        </mat-radio-group>
+        </mat-radio-group><br>
       </div>
     </div>
     <div class='row' style='width: 100%;'>
@@ -45,9 +45,9 @@
         <div class='row' style='width: 100%;'><span class='actionHeader'>Set background image</span></div><br><br>
         <div class='row' style='width: 100%;'>
           <mat-radio-group class="radio-group2" color='primary' [(ngModel)]="backgroundImage">
-            <div class='radioDivs2' *ngFor="let image of images">
-              <mat-radio-button color='primary' id='radioImage{{image.id}}' class="radio-button" [value]="image.src"></mat-radio-button><img src='{{image.src}}'
-                class='backgroundSelect' (click)="selectImage(image);" /><span (click)="selectImage(image);" > {{ image.name }}</span>&nbsp;<span style='display: inline-block; width: 12px;'>&nbsp;</span>
+            <div class='radioDivs2' style='cursor:pointer;' *ngFor="let image of images">
+              <mat-radio-button color='primary' id='radioImage{{image.id}}' class="radio-button" [value]="image.src"></mat-radio-button><img style='cursor:pointer;'src='{{image.src}}'
+                class='backgroundSelect' (click)="selectImage(image);" /><span style='cursor:pointer;' (click)="selectImage(image);" > {{ image.name }}</span>&nbsp;<span style='display: inline-block; width: 12px;'>&nbsp;</span>
             </div>
           </mat-radio-group>
         </div>
@@ -81,4 +81,5 @@
       </div>
     </div>
   </mat-card>
+  <button class="add"  (click)="authService.logout();" mat-button>Logout</button>
 </div>

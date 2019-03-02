@@ -155,8 +155,13 @@ export class InvoiceFormComponent implements OnInit {
 		});
 	}
 
-	notifySocket() {
+	notifySocket() { // would change this...
 		const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'invoices' };
+		this.messagingService.sendUpdate(data);
+	}
+
+	notifySocketNew() { // ...to this for audit log
+		const data = { User: this.authService.currentUser.Name, UserId: this.authService.currentUser.id, Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'invoices', ActionDetails: 'This would be whatever it was the user did' };
 		this.messagingService.sendUpdate(data);
 	}
 

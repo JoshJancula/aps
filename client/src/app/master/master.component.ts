@@ -77,9 +77,14 @@ export class MasterComponent implements OnInit {
 					this.messagingComponent.inboxes.forEach(box => {
 						if (box.otherUserId === this.messagingComponent.messageChat.otherUserId) {
 							box.Messages.push(response.data);
+							this.messagingComponent.messageChat.updateRead();
 							setTimeout(() => document.getElementById('scrollHere').scrollIntoView(), 30);
 						}
 					});
+				} else {
+					this.messagingComponent.messages.push(response.data);
+					this.messagingComponent.createInboxes(this.messagingComponent.userStore);
+					this.utilService.openSnackBar(`New message from ${response.data.Author}`);
 				}
 			}
 		});

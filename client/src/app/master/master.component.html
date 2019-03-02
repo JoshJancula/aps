@@ -14,16 +14,14 @@
         <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
       </mat-form-field>
     </span>
-    <span *ngIf="messagingComponent.totalUnread > 0" class='totalUnread'>{{ messagingComponent.totalUnread }}</span>
-    <mat-icon (click)='showMessages = true;' style='color:white; position: absolute; right: 24px;'>chat</mat-icon>
-    <button class='logout' (click)="logout();" style='position: absolute; right: 40px;' *ngIf="settingsMode === true"
-      mat-button>Logout</button>
+    <span *ngIf="messagingComponent.totalUnread > 0" style='cursor:pointer;' (click)='showMessages = true;' class='totalUnread'>{{ messagingComponent.totalUnread }}</span>
+    <mat-icon (click)='showMessages = true;' class='messageButton'>chat</mat-icon>
   </mat-toolbar>
   <div class="mainOverlay" *ngIf="showMessages === true" (click)="showMessages = false;"></div>
   <div class="selectorOverlay" *ngIf="messagingComponent.showUserSelector === true"
     (click)="messagingComponent.showUserSelector = false;"></div>
   <div class="selectorOverlay" *ngIf="messagingComponent.showChat === true"
-    (click)="messagingComponent.showChat = false; messageDrawer.messageChat.drawerOpen = false;"></div>
+    (click)="messagingComponent.showChat = false; messagingComponent.messageChat.drawerOpen = false;"></div>
   <div class='row mainRow'>
     <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
       <div class='options'
@@ -64,4 +62,4 @@
     </button>
   </div>
 </div>
-<app-messaging #messagingComponent class='messageDrawer' [ngClass]="{'open': showMessages === true}"></app-messaging>
+<app-messaging (close)='showMessages = false;' #messagingComponent class='messageDrawer' [ngClass]="{'open': showMessages === true}"></app-messaging>

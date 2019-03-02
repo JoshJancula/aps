@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import * as moment from 'moment';
@@ -15,12 +15,20 @@ export class UtilService {
 
 	_printIframe: any;
 
-	constructor(public dialog: MatDialog, private router: Router, private authService: AuthService, private http: HttpClient) { }
+	constructor(public dialog: MatDialog, private router: Router, public snackBar: MatSnackBar, private authService: AuthService, private http: HttpClient) { }
 
 	alertError(message) {
 		const newDialog = this.dialog.open(ErrorDialogComponent, {
 			data: message,
 			panelClass: 'errorAlert'
+		});
+	}
+
+	openSnackBar(message: string) {
+		this.snackBar.open(message, null, {
+			duration: 2000,
+			verticalPosition: 'bottom',
+			panelClass: 'bottomSnackbar',
 		});
 	}
 

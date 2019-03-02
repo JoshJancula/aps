@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output } from '@angular/core';
 import { UserSelectorComponent } from './user-selector/user-selector.component';
 import { MessageChatComponent } from './message-chat/message-chat.component';
 import { SubscriptionsService } from '../services/subscriptions.service';
@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class MessagingComponent implements OnInit {
 
+	@Output() public close = new EventEmitter();
 	@ViewChild('userSelector') userSelector: UserSelectorComponent;
 	@ViewChild('messageChat') messageChat: MessageChatComponent;
 	showUserSelector = false;
@@ -19,6 +20,7 @@ export class MessagingComponent implements OnInit {
 	inboxes = [];
 	messages: any;
 	totalUnread = 0;
+	userStore = [];
 
 	constructor(private subService: SubscriptionsService, public authService: AuthService) { }
 
@@ -43,13 +45,12 @@ export class MessagingComponent implements OnInit {
 
 	getUsers() {
 		this.subService.users.subscribe(response => {
-			let temp = [];
 			response.forEach(item => {
 				if (item.Username !== this.authService.currentUser.Username) {
-					temp.push(item);
+					this.userStore.push(item);
 				}
 			});
-			this.createInboxes(temp);
+			this.createInboxes(this.userStore);
 		});
 	}
 
@@ -62,6 +63,7 @@ export class MessagingComponent implements OnInit {
 	}
 
 	loadInboxes(inboxes) {
+		this.inboxes = [];
 		if (this.messages !== undefined && this.messages !== []) {
 			inboxes.forEach(box => {
 				this.messages.forEach(message => {

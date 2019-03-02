@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
 		{ id: 4, name: 'Stripes 2', src: 'assets/stripes2.png' },
 		{ id: 5, name: 'Stripes 3', src: 'assets/stripes5.png' },
 	];
-	userAction = this.actions[0];
+	userAction = this.actions[1];
 
 	constructor(private subService: SubscriptionsService, private utilService: UtilService, private userService: UserService, public uploadService: UploadFileService, public authService: AuthService) { }
 
