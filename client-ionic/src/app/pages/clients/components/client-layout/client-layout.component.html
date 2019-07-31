@@ -1,0 +1,59 @@
+<!-- <div class='col-lg-12 col-md-12 col-sm-12'> -->
+  <div class='row form' style="width: 100%" *ngIf="addClient === true">
+    <mat-card class="formCard">
+      <div class="card-heading" *ngIf='editing === false'>Add Client</div>
+      <div class="card-heading" *ngIf='editing === true'>Edit Client</div>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="Client.Name" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Address" [(ngModel)]="Client.Address" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Description" [(ngModel)]="Client.Description" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Contact Person" [(ngModel)]="Client.ContactPerson" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="Client.Email" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput pattern="[0-9]*" placeholder="Phone" maxlength="14" [(ngModel)]="Client.Phone" (input)="formatPhone();" />
+      </mat-form-field>
+      <br>
+      <button class='submit' (click)="submitClient();" mat-button>Save client</button>
+      <button (click)="clearForm();" mat-button>Clear form</button>
+      <button *ngIf='editing === true' (click)="deleteClient(Client.id);" mat-button>Delete</button>
+    </mat-card>
+  </div>
+
+  <div class='row search' *ngIf="searchClients === true">
+    <mat-card *ngFor="let client of clients" class='clientCard'>
+      <div class="card-heading">
+        <span *ngIf="client.Name !==''">{{client.Name}}<br></span>
+        <span *ngIf="client.Address !==''">{{client.Address}}<br></span>
+        <span *ngIf="client.Email !==''">{{client.Email}}<br></span>
+        <span *ngIf="client.Phone !==''">{{client.Phone}}</span>
+      </div>
+      <div>
+        <br>
+        <button (click)="editClient(client);" mat-button>Edit</button>
+      </div>
+    </mat-card>
+    <mat-card *ngIf='clients.length < 1'>
+      There are no clients associated to your franchise.
+    </mat-card>
+  </div>
+
+  <button class='add' *ngIf='searchClients === true' mat-button (click)="searchClients = false; addClient = true;">
+    <mat-icon style='color:white'>add</mat-icon>
+    New Client
+  </button>
+  <button class='searchButton' *ngIf='searchClients === false' (click)="addClient = false; searchClients = true;"
+    mat-button>
+    <mat-icon>search</mat-icon>
+    View Clients
+  </button>
+
+<!-- </div> -->

@@ -1,0 +1,15 @@
+<app-toolbar #nav style="position: sticky; top: 0; left: 0;"></app-toolbar>
+<div class='row  mainRow'>
+  <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
+    <app-side-nav></app-side-nav>
+ </div>
+ <div class='col-xl-10 col-lg-10 col-md-12 col-sm-12 contentRow'>
+  <app-client-layout></app-client-layout>
+</div>
+<button class='filterIcon'>
+  <mat-icon style='color:white;'>search</mat-icon>
+</button>
+<button class='homeIcon' (click)='nav.openPopup();'>
+  <mat-icon style='color:white;'>home</mat-icon>
+</button>
+</div>

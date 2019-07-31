@@ -147,15 +147,15 @@ module.exports = (app) => {
 
 	// POST route for saving a new user
 	app.post("/api/users", (req, res) => {
-		new JancstaPort(req.headers.authorization.toString()).then((bool) => {
-			if (bool == true) {
+		// new JancstaPort(req.headers.authorization.toString()).then((bool) => {
+			// if (bool == true) {
 				db.User.create(req.body).then((x) => {
 					res.json(x);
 				});
-			} else {
-				res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
-			}
-		});
+			// } else {
+			// 	res.status(401).send({ success: false, msg: 'Unauthorized, GTFO' });
+			// }
+		// });
 	});
 
 	// DELETE route for deleting a user 
@@ -207,7 +207,7 @@ module.exports = (app) => {
 					bcrypt.compare(req.body.Password, pwd, (err, isMatch) => {
 						if (isMatch && !err) {
 							// if user is found and password is right create a token
-							let date = moment(new Date()).format('MM/DD/YYYY');
+							let date = moment(new Date().toISOString()).format('MM/DD/YYYY');
 							let hashThis = `${date}secret`
 							bcrypt.genSalt(1, (err, salt) => {
 								bcrypt.hash(hashThis, salt, (err2, hash) => {

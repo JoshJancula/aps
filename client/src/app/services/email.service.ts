@@ -28,7 +28,7 @@ export class EmailService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.post(this.localUrl, msg, httpOptions);
 			} else {
 				return this.http.post(this.url, msg, httpOptions);

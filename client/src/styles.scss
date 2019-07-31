@@ -179,7 +179,7 @@ body, html {
 
 .bottomSnackbar {
     width: 40vw;
-    position: relative;
+    position: absolute;
     left: 30vw;
 }
 
@@ -292,7 +292,7 @@ body, html {
     }
 
     .bottomSnackbar {
-        width: 100vw !important;
+        width: 100vw;
         position: unset;
         left: unset;
     }

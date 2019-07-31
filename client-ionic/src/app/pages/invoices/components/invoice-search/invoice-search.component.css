@@ -1,0 +1,134 @@
+.mat-card {
+    /* width: 96%; */
+    /* margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 2%; */
+    border-radius: 15px;
+}
+
+.searchCard {
+    position: sticky;
+    z-index: 5;
+    right: 30px;
+}
+
+.searchRow {
+    width: 80vw;
+}
+
+.ivoiceColumn {
+    width: 100%;
+    overflow-x: hidden !important;
+    /* position: absolute; */
+}
+
+.invoiceCard {
+    /* width: 92%;
+    margin-left: 3%; */
+}
+
+.sideColumn {
+    position: fixed;
+    right: 0px;
+    background: #D7D6D6;
+    opacity: .9;
+    margin-left: 4%;
+    margin-top: 0px;
+    height: calc(100vh - 64px);
+    padding: 0px;
+    overflow-y: auto;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: unset;
+}
+
+.mat-expansion-panel {
+    border-bottom: black solid 1px;
+    background: #D7D6D6;
+}
+
+.mat-expansion-panel-spacing {
+    margin: unset;
+}
+
+.mat-card:first-child {
+    margin-top: 1%;
+}
+
+.sideColumnSpacer {
+    height: 1vh;
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+    .searchRow {
+          /* width: 105vw; */
+    }
+
+    .invoiceCard {
+        /* width: 95%;
+        margin-left: 3%; */
+    }
+}
+
+
+@media (max-width: 992px) {
+    .searchRow {
+        /* width: 92vw; */
+    }
+}
+
+@media (max-width: 768px) {
+    .invoiceCard {
+        /* width: 92%;
+        margin-left: 3%; */
+        }
+}
+
+@media (max-width: 767px) { 
+    .mat-card {
+    /* width: 96%;
+    margin-left: 8%; */
+    }
+
+    .sideColumnSpacer {
+        height: 3vh;
+    }
+
+    .ivoiceColumn, .searchRow {
+        /* width: 108vw !important; */
+    }
+
+     .sideColumn {
+        margin-left: unset;
+        position: fixed;
+        transform: translateX(250px);
+        transition: transform 0.25s;
+        width: 250px;
+        opacity: 1;
+        z-index: 21;
+        height: calc(100vh - 56px);
+    }
+
+
+    .sideColumn.open {
+        transform: translateX(0px);
+    } 
+
+    .searchRow, .ivoiceColumn {
+        /* width: 96vw; */
+    }
+
+    .invoiceCard {
+        /* width: 98%;
+        margin-left: 1%; */
+    }
+
+}
+
+@media (max-width: 500px) { 
+    .invoiceCard {
+        /* width: 97%;
+         margin-left: 1%; */
+    }
+}

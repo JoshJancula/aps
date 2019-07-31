@@ -1,0 +1,18 @@
+<div class='row mainRow'>
+  <div class='col-lg-3'></div>
+  <div class='col-lg-6'>
+      <mat-card class='mainCard'> 
+          <div class="card-heading">Login</div>
+          <mat-form-field style='width: 100%'>
+              <input matInput placeholder="Username" [(ngModel)]="username" />
+            </mat-form-field>
+            <br />
+            <mat-form-field style='width: 100%'>
+              <input matInput placeholder="Password" type='password' [(ngModel)]="password" />
+            </mat-form-field>
+            <br />
+            <button  (click)="checkCordova();" mat-button>Login</button>
+        </mat-card>
+  </div>
+  <div class='col-lg-3'></div>
+</div>

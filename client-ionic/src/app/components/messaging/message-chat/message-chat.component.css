@@ -1,0 +1,83 @@
+.drawerHeader {
+    position: absolute;
+    top: 20px;
+    font-size: 18px;
+    color: white;
+}
+
+.topRow {
+    height: 64px;
+    background: blue;
+    width: 105%;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+.cardRow {
+    width: 110%;
+    margin-top: 23%;
+    overflow-y: auto;
+    overflow-x: hidden !important;
+    /* height: 75vh; */
+    height: auto;
+    max-height: calc(100vh - 203px);
+}
+
+.userRow {
+    margin-top: 2%;
+    border-bottom: black solid 1px;
+}
+
+.messageInput {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 103%;
+    /* margin-left: 1%; */
+    background:white
+}
+
+.drawerRow {
+    overflow-x: hidden !important;
+}
+
+.mat-card {
+    border-radius: 6px !important;
+    height: auto;
+}
+
+.currentUserMessage {
+    color: white;
+    background: blue;
+    position: relative;
+    left: 12.5%;
+    width: 82%;
+    text-align: right;
+    margin-bottom: 5%;
+}
+
+.otherUserMessage {
+    position: relative;
+    left: 20px;
+    color: black;
+    width: 82%;
+    margin-bottom: 5%;
+}
+
+@media (max-width: 599px) {
+
+    .topRow {
+        height: 56px;
+        background: blue;
+        width: 105%;
+        position: fixed;
+        top: 0px;
+        right: 0px;
+    }
+
+    .drawerHeader {
+        top: 14px
+    }
+    
+}

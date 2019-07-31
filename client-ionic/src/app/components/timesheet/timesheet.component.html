@@ -1,0 +1,20 @@
+<div class='row topRow'>
+<div class='row buttons'>
+  <button *ngIf="isClockedIn === false" (click)='clockIn();' mat-button>Clock in</button>
+  <button *ngIf="isClockedIn === true" (click)='clockOut();' mat-button>Clock out</button>
+</div>
+<div class='row times'>
+  <div class='col-md-8'>
+  <div class='row ' *ngFor="let a of todaysActivity">{{ formatMinutes(a.TimeIn) }} -- {{ a.TimeOut ? formatMinutes(a.TimeOut) : 'Clocked in' }} -- Total: {{ utilService.getDiff(a.TimeIn, a.TimeOut, false) }}</div>
+</div>
+<div class='col-md-4'>
+    <mat-form-field class='datePicker' style='cursor: pointer;'>
+        <input [(ngModel)]="dayForTimesheet" (click)="openCalendar($event)" [max]="getMax()" matInput 
+          (dateChange)="getTimesheet();" [matDatepicker]="timesheetCalendar" placeholder="View timesheets"
+          readonly>
+        <mat-datepicker-toggle matSuffix [for]="timesheetCalendar"></mat-datepicker-toggle>
+        <mat-datepicker touchUi tabindex="-1" #timesheetCalendar></mat-datepicker>
+      </mat-form-field>
+</div>
+</div>
+</div>

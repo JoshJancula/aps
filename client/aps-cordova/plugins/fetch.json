@@ -56,5 +56,29 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-background-mode": {
+    "source": {
+      "type": "registry",
+      "id": "https://github.com/katzer/cordova-plugin-background-mode"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-device": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "phonegap-plugin-local-notification": {
+    "source": {
+      "type": "registry",
+      "id": "phonegap-plugin-local-notification"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

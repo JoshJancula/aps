@@ -18,7 +18,7 @@ export class FranchiseService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.post(this.localUrl, newFranchise, httpOptions);
 			} else {
 				return this.http.post(this.url, newFranchise, httpOptions);
@@ -37,7 +37,7 @@ export class FranchiseService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl, httpOptions);
 			} else {
 				return this.http.get(this.url, httpOptions);
@@ -56,7 +56,7 @@ export class FranchiseService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl.replace('franchises', `franchises/${id}`), httpOptions);
 			} else {
 				return this.http.get(this.url.replace('franchises', `franchises/${id}`), httpOptions);
@@ -73,7 +73,7 @@ export class FranchiseService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.delete(this.localUrl.replace('franchises', `franchises/${id}`), httpOptions);
 			} else {
 				return this.http.delete(this.url.replace('franchises', `franchises/${id}`), httpOptions);
@@ -90,7 +90,7 @@ export class FranchiseService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.put(this.localUrl.replace('franchises', `franchises/${id}`), updatedFranchise, httpOptions);
 			} else {
 				return this.http.put(this.url.replace('franchises', `franchises/${id}`), updatedFranchise, httpOptions);

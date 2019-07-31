@@ -1,0 +1,29 @@
+<div class='row mainRow container' style='width: 110%;'>
+  <div class='row topRow container'>
+    <span class='drawerHeader' (click)='close.emit();'><mat-icon style='color:white; height: 24px; width:24px; position: relative;top: 6px;left: -4px;'>keyboard_arrow_left</mat-icon>
+      Messages</span>
+  <button class='newMessage' style='color:white; font-size: 10px' mat-button (click)="showUserSelector = true;">
+    <mat-icon style='color:white'>add</mat-icon>
+    New message
+  </button>
+</div>
+<div class='row container cardRow'>
+  <mat-card *ngIf='inboxes.length < 1' style='margin:1%; margin-left: 2%; margin-top: 4%; width: 100%;'>
+    <p>You have no messages</p>
+  </mat-card>
+  <mat-card  *ngIf='inboxes.length > 0' style='margin:1%; margin-left: 2%; margin-top: 4%; width: 100%;'>
+      <p>This is the message drawer</p>
+      <div *ngFor='let box of inboxes'>
+        <div class='inboxRow' *ngIf='box.Messages.length > 0' (click)='openChat(box)'>
+          <span>{{ box.User }}</span><br>
+          <span *ngIf="box.Messages[box.Messages.length - 1].Read === false && box.Messages[box.Messages.length - 1].Recipient === authService.currentUser.Name" class='unread'></span>
+          <span class='lastMessage' [ngClass]="{'notRead': box.Messages[box.Messages.length - 1].Read === false && box.Messages[box.Messages.length - 1].Recipient === authService.currentUser.Name}">{{ box.Messages[box.Messages.length - 1].Content }}</span>
+        </div>
+      </div>
+    </mat-card>
+</div>
+  <app-user-selector #userSelector (close)='showUserSelector = false;' class='userSelector' (userSelected)='processUserSelect($event);'  [ngClass]="{'open': showUserSelector === true}">
+  </app-user-selector>
+  <app-message-chat #messageChat  (close)='showChat = false;' class='userSelector' (emitRead)='setTotalUnread();' [ngClass]="{'open': showChat === true}">
+    </app-message-chat>
+</div>

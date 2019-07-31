@@ -18,7 +18,7 @@ export class AppointmentService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.post(this.localUrl, newAppointment, httpOptions);
 			} else {
 				return this.http.post(this.url, newAppointment, httpOptions);
@@ -37,7 +37,7 @@ export class AppointmentService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl, httpOptions);
 			} else {
 				return this.http.get(this.url, httpOptions);
@@ -56,7 +56,7 @@ export class AppointmentService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl.replace('appointments', `appointments/${id}`), httpOptions);
 			} else {
 				return this.http.get(this.url.replace('appointments', `appointments/${id}`), httpOptions);
@@ -73,7 +73,7 @@ export class AppointmentService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.delete(this.localUrl.replace('appointments', `appointments/${id}`), httpOptions);
 			} else {
 				return this.http.delete(this.url.replace('appointments', `appointments/${id}`), httpOptions);
@@ -90,7 +90,7 @@ export class AppointmentService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.put(this.localUrl.replace('appointments', `appointments/${id}`), updatedAppointment, httpOptions);
 			} else {
 				return this.http.put(this.url.replace('appointments', `appointments/${id}`), updatedAppointment, httpOptions);

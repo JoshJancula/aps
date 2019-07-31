@@ -1,0 +1,24 @@
+<mat-toolbar>
+    <img class='toolbarLogo' src='assets/logo2.png' />
+    <span class='screenTitle'>{{ screen }}</span>
+    <!-- <span class='invoiceDisplay'
+      *ngIf="controlInvoice.searchInvoices === true && invoiceMode === true">{{ controlInvoice.invoiceSearch.display }}</span>
+    <span class='calendar'
+      [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
+      <mat-form-field class='datePicker' style='cursor: pointer;'>
+        <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput
+          (dateInput)="subService.processAppointments();" (dateChange)="subService.processAppointments();"
+          [matDatepicker]="appointmentCalendar" placeholder="Date" [min]="controlAppointment.getMinDate()" readonly>
+        <mat-datepicker-toggle matSuffix [for]="appointmentCalendar"></mat-datepicker-toggle>
+        <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
+      </mat-form-field>
+    </span>
+    <span *ngIf="messagingComponent.totalUnread > 0" style='cursor:pointer;' (click)='showMessages = true;' class='totalUnread'>{{ messagingComponent.totalUnread }}</span>
+    <mat-icon (click)='showMessages = true;' class='messageButton'>chat</mat-icon> -->
+  </mat-toolbar>
+
+  <!-- <div class="mainOverlay" *ngIf="showMessages === true" (click)="showMessages = false;"></div>
+  <div class="selectorOverlay" *ngIf="messagingComponent.showUserSelector === true"
+    (click)="messagingComponent.showUserSelector = false;"></div>
+  <div class="selectorOverlay" *ngIf="messagingComponent.showChat === true"
+    (click)="messagingComponent.showChat = false; messagingComponent.messageChat.drawerOpen = false;"></div> -->

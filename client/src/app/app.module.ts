@@ -43,6 +43,8 @@ import { TimeChangeDialogComponent } from './time-change-dialog/time-change-dial
 import { MessagingComponent } from './messaging/messaging.component';
 import { MessageChatComponent } from './messaging/message-chat/message-chat.component';
 import { UserSelectorComponent } from './messaging/user-selector/user-selector.component';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification/ngx';
 
 const config = {
 	apiKey: 'AIzaSyBTiizpyWeqHfXdFDQsd6IoMdNWYvkceS8',
@@ -163,7 +165,7 @@ const config = {
 		RouterModule.forRoot([
 			{ path: '', component: LoginComponent },
 			{ path: 'master', component: MasterComponent },
-		], { useHash: true })
+		])
 	],
 	providers: [
 		BluetoothSerial,
@@ -171,6 +173,8 @@ const config = {
 		BarcodeScanner,
 		PhonePipe,
 		AuthService,
+		BackgroundMode,
+		PhonegapLocalNotification
 	],
 	bootstrap: [AppComponent]
 })

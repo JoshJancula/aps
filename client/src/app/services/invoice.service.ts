@@ -18,7 +18,7 @@ export class InvoiceService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.post(this.localUrl, newInvoice, httpOptions);
 			} else {
 				return this.http.post(this.url, newInvoice, httpOptions);
@@ -37,7 +37,7 @@ export class InvoiceService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl, httpOptions);
 			} else {
 				return this.http.get(this.url, httpOptions);
@@ -56,7 +56,7 @@ export class InvoiceService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl.replace('invoices', `invoices/${id}`), httpOptions);
 			} else {
 				return this.http.get(this.url.replace('invoices', `invoices/${id}`), httpOptions);
@@ -73,7 +73,7 @@ export class InvoiceService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.delete(this.localUrl.replace('invoices', `invoices/${id}`), httpOptions);
 			} else {
 				return this.http.delete(this.url.replace('invoices', `invoices/${id}`), httpOptions);
@@ -90,7 +90,7 @@ export class InvoiceService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.put(this.localUrl.replace('invoices', `invoices/${id}`), updatedInvoice, httpOptions);
 			} else {
 				return this.http.put(this.url.replace('invoices', `invoices/${id}`), updatedInvoice, httpOptions);
@@ -108,7 +108,7 @@ export class InvoiceService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.put(this.localUrl.replace('invoices', `invoices/signature/${data.id}`), data, httpOptions);
 			} else {
 				return this.http.put(this.url.replace('invoices', `invoices/signature/${data.id}`), data, httpOptions);

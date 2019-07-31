@@ -1,0 +1,35 @@
+<div class='row mainRow' id='mainContent'>
+  <div class='row'>
+    <div class='row header'>{{ employeeName }}</div>
+    <div class='row header'>Starting: {{ data.Range.Start }}</div>
+    <div class='row header'>Ending: {{ data.Range.End }}</div>
+  </div>
+  <div class='row' style='width: 100%'>
+    <table>
+      <tr>
+        <th>Day</th>
+        <th style='text-align: center;'>Times in / out</th>
+        <th>Day total</th>
+      </tr>
+    </table>
+    <div class='row mainRow'>
+        <div class='row' style='width: 100%; border-bottom: solid black 1px;' *ngFor='let date of dates'>
+            <div class='col-md-3'>{{ date.model }}</div>
+            <div class='col-md-6' style='text-align: center;'>
+              <div *ngFor='let punch of date.data'>{{ formatMinutes(punch.TimeIn) }}&nbsp;-&nbsp;{{ punch.TimeOut ?
+                formatMinutes(punch.TimeOut) : 'Clocked in' }} <button class='editButton'  *ngIf="(authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager') && punch.TimeOut !== null"  mat-button (click)='editTimecard(punch);'>Edit</button>
+                <button class='editButton'  *ngIf="(authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager') && punch.TimeOut === null"  mat-button (click)='clockUserOut(punch);'>Clock out</button>
+              </div>
+              </div>
+            <div class='col-md-3'><span class='totalText'>Total: </span>{{ date.data.length > 0 ? utilService.getTotalTime(date.data) : '0 hr' }}</div>
+            </div>
+    </div>
+  </div>
+  <div class='row weekTotal'>
+    <span> Week total: {{ weekTotal }}</span>
+  </div>
+</div>
+<div class='row mainRow'>
+  <button mat-button (click)="getPDF('download');">Download copy</button>
+  <button mat-button (click)="getPDF('print');">Print copy</button>
+</div>

@@ -1,0 +1,19 @@
+<app-toolbar #nav style="position: sticky; top: 0; left: 0;"></app-toolbar>
+<div class='row  mainRow'>
+  <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
+    <app-side-nav></app-side-nav>
+ </div>
+ <div class='col-xl-10 col-lg-10 col-md-12 col-sm-12 contentRow'>
+  <app-invoice-form #invoiceForm class='invoiceForm' (switchToSearch)='setView(); invoiceSearch.loadInvoices();'
+  [ngClass]="{'show': searchInvoices === false }"></app-invoice-form>
+<!-- search view -->
+<app-invoice-search #invoiceSearch (newInvoice)='setView();' (editThis)='setView(); invoiceForm.editInvoice($event)'
+  class='invoiceSearch' [ngClass]="{'show': searchInvoices === true }"></app-invoice-search>
+</div>
+<button class='filterIcon' (click)="invoiceSearch.slideDrawer = !invoiceSearch.slideDrawer" [ngClass]="{'show': searchInvoices === true}">
+  <mat-icon style='color:white;'>search</mat-icon>
+</button>
+<button class='homeIcon' (click)='nav.openPopup();'>
+  <mat-icon style='color:white;'>home</mat-icon>
+</button>
+</div>

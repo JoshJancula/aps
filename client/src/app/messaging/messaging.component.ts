@@ -44,6 +44,8 @@ export class MessagingComponent implements OnInit {
 	}
 
 	getUsers() {
+		this.userStore = [];
+		this.inboxes = [];
 		this.subService.users.subscribe(response => {
 			response.forEach(item => {
 				if (item.Username !== this.authService.currentUser.Username) {

@@ -1,0 +1,76 @@
+<div class='col-lg-12 col-md-12 col-sm-12' style='overflow-x: hidden;'>
+  <div class='row form' [ngClass]="{'show': addFranchise === true}">
+    <mat-card>
+      <div class="card-heading">Create Franchise</div>
+      <mat-form-field>
+        <input matInput placeholder="Name" [readonly]="editing === true" [(ngModel)]="Franchise.Name" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Business address" [(ngModel)]="Franchise.Address" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Business phone" pattern="[0-9]*" (input)="formatPhone();" [(ngModel)]="Franchise.Phone" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Business email" [(ngModel)]="Franchise.Email" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="State sales tax rate" [(ngModel)]="Franchise.TaxRate" />
+        <mat-hint align="start">example: 0.0725</mat-hint>
+      </mat-form-field>
+      <div *ngIf='editing === false;'>
+        <p>Add owner information</p>
+        <mat-form-field>
+          <input matInput placeholder="First name" [(ngModel)]="User.FirstName" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last name" [(ngModel)]="User.LastName" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Username" [readonly]="editing === true" [(ngModel)]="User.Username" />
+        </mat-form-field>
+        <mat-form-field *ngIf='editing === false'>
+          <input matInput placeholder="Password" [(ngModel)]="User.Password" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" [(ngModel)]="User.Email" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Phone" pattern="[0-9]*" maxlength="14" [(ngModel)]="User.Phone" (input)="formatUserPhone();" />
+        </mat-form-field>
+      </div>
+      <button class='submit' (click)="submitFranchise();" mat-button>Save Franchise</button>
+      <button class='submit' (click)="clearForm();" mat-button>Clear Form</button>
+      <button *ngIf="editing === true && authService.currentUser.Role === 'Super'" (click)="deleteFranchise(Franchise.id);" [disabled]="Franchise.Name === 'Master'"
+        mat-button>Delete</button>
+    </mat-card>
+  </div>
+
+  <div class='row results' [ngClass]="{'show': searchFranchises === true}">
+    <mat-card *ngFor="let franchise of franchises">
+      <div>
+        <p>Name: {{franchise.Name}}<br>
+          Proudly striping since: {{ formatDate(franchise.createdAt) }}<br>
+          Phone: {{ franchise.Phone }}<br>
+          Email: {{ franchise.Email }}<br>
+          Address: {{ franchise.Address }}<br>
+        </p>
+        <!-- this needs to be replaced with a deactivate method -->
+        <button (click)="editFranchise(franchise);" mat-button>Edit</button>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- end data area and display options below -->
+
+  <button class='add' *ngIf='searchFranchises === true' mat-button (click)="searchFranchises = false; addFranchise = true; editing = false;">
+    <mat-icon style='color:white'>add</mat-icon>
+    Add Franchise
+  </button>
+  <button class='searchButton' *ngIf='searchFranchises === false' (click)="addFranchise = false; searchFranchises = true;"
+    mat-button>
+    <mat-icon>search</mat-icon>
+    Search Franchises
+  </button>
+
+</div>

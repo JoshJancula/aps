@@ -1,0 +1,187 @@
+<div class='content'>
+<div id='previewContent'>
+  <div class='row'>
+    <div class='col-md-5 col-sm-5 col-xs-3'>
+      <img class='invoiceLogo' src='assets/logo2.png' />
+    </div>
+    <div class='col-md-7 col-sm-7 col-xs-9 headerData'>
+      <span class='screenTitle'> {{ authService._franchiseInfo.Address }}</span><br>
+      <span class='screenTitle'>{{ authService._franchiseInfo.Email }}</span><br>
+      <span class='screenTitle'>{{ authService._franchiseInfo.Phone }}</span><br>
+      <span class='screenTitle'>Invoice#: {{ invoiceNumber }}</span><br>
+      <span class='screenTitle'>{{ formatDate(data.content.createdAt) }}</span>
+    </div>
+  </div>
+  <div class='row'><span class='client'>
+      <h4 style='word-wrap: none;'>Client: {{ Client }}</h4>
+    </span></div>
+  <div class='row servicesRow'>
+    <div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+      <table mat-table [dataSource]="dataSource" style='width: 100%'>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Product / Service</th>
+          <td mat-cell *matCellDef="let service">{{ service.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let service">{{ service.quantity }}</td>
+        </ng-container>
+        <ng-container matColumnDef="pricePer">
+          <th mat-header-cell *matHeaderCellDef>Rate</th>
+          <td mat-cell *matCellDef="let service">{{ service.pricePer }}</td>
+        </ng-container>
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef>Total</th>
+          <td mat-cell *matCellDef="let service">${{ service.totalPrice }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+  <div class='row servicesAndVehicles'>
+    <div class='col-lg-8 col-md-8 col-sm-8   vehicles'>
+      <div *ngIf='stocks.length > 0 || vins.length > 0' class='row'>
+        <h4>Stock#'s / VIN#'s</h4><br>
+      </div>
+      <div class='row'>
+        <div class='row vehicle' *ngIf='stocks.length > 0'><span *ngFor="let stock of stocks" class='vehicle'><span
+              style='font-size: 10px;'>Stock#&nbsp;</span>{{ stock }}</span></div>
+        <div class='row vehicle' *ngIf='vins.length > 0'><span *ngFor="let vin of vins" class='vehicle'><span style='font-size: 10px;'>VIN#&nbsp;</span>{{
+            vin }}</span></div>
+      </div>
+      <div class='row' style='height: 20px;'></div>
+      <div class='row'>
+        <span *ngIf="Description !== ''">Description: {{ Description }} </span>
+      </div>
+      <div class='row' style='height: 20px;'></div>
+    </div>
+    <div class='col-lg-3 col-md-3 col-sm-3 totals'>
+      <!-- <div class='row'>
+        <span *ngIf="data.content.PaymentMethod !== 'PO'">Payment method: {{ data.content.PaymentMethod }} </span>
+      </div> -->
+      <div class='row'>
+        <span *ngIf="RO !== ''">RO#: {{ RO }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="PO !== ''">PO#: {{ PO }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="data.content.CheckNumber !== ''">Check#: {{ data.content.CheckNumber }} </span>
+      </div>
+      <div class='row'>
+        <span>Amount: ${{ total }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="calcTax == true">Tax: ${{ tax }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="grandTotal !== total">Total: ${{ grandTotal }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="data.content.Paid === true">
+          <h3>Paid</h3>
+        </span>
+      </div>
+      <!-- signature -->
+      <div class='row' *ngIf="signature !== ''">
+          <img src="{{ signature }}" class='signature' />
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- hidden div to email -->
+<div id='hiddenEmail' style='display: none;'>
+    <div id='hiddenContent'>
+  <div class='row'>
+      <img style='display: inline-block; height: 100px; width: 250px; position: absolute; left: 0px; top: 0px;' src='https://firebasestorage.googleapis.com/v0/b/amee-store.appspot.com/o/uploads%2Flogo2.png?alt=media&token=e61bbbd4-134c-4bc2-9cd2-ce402a84898f' />
+      <div class='headerData' style='float:right; text-align: right; position: absolute; right: 0px; top: 0px !important;'>
+          <span class='screenTitle'> {{ authService._franchiseInfo.Address }}</span><br>
+          <span class='screenTitle'>{{ authService._franchiseInfo.Email }}</span><br>
+          <span class='screenTitle'>{{ authService._franchiseInfo.Phone }}</span><br>
+          <span class='screenTitle'>Invoice#: {{ invoiceNumber }}</span><br>
+          <span class='screenTitle'>{{ formatDate(data.content.createdAt) }}</span>
+      </div>  </div>
+  <div class='row'><span class='client'>
+      <h4 style='word-wrap: none;'>Client: {{ Client }}</h4>
+    </span></div>
+  <div class='row servicesRow'>
+    <div class='col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+      <table mat-table [dataSource]="dataSource" style='width: 100%; border-spacing: 0px; text-align: left;'>
+        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12); margin:0px;' matColumnDef="name">
+          <th style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);' mat-header-cell *matHeaderCellDef>Product / Service</th>
+          <td style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-cell *matCellDef="let service">{{ service.name }}</td>
+        </ng-container>
+        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12);' matColumnDef="quantity">
+          <th style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);'  mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-cell *matCellDef="let service">{{ service.quantity }}</td>
+        </ng-container>
+        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12);' matColumnDef="pricePer">
+          <th style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);'  mat-header-cell *matHeaderCellDef>Rate</th>
+          <td style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-cell *matCellDef="let service">{{ service.pricePer }}</td>
+        </ng-container>
+        <ng-container style='border-bottom: 1px solid rgba(0,0,0,.12);' matColumnDef="total">
+          <th style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);'  mat-header-cell *matHeaderCellDef>Total</th>
+          <td style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-cell *matCellDef="let service">${{ service.totalPrice }}</td>
+        </ng-container>
+        <tr style='border-bottom: 1px solid rgba(0,0,0,.12); color: rgba(0,0,0,.4);'  mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr style='border-bottom: 1px solid rgba(0,0,0,.12); padding-top: 8px; padding-bottom: 8px;' mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-lg-8 col-md-8 col-sm-8   vehicles'>
+      <div *ngIf='stocks.length > 0 || vins.length > 0' class='row'>
+        <h4>Stock#'s / VIN#'s</h4><br>
+      </div>
+      <div class='row'>
+        <div class='row vehicle' *ngIf='stocks.length > 0'><span *ngFor="let stock of stocks" style='margin: 2%;' class='vehicle'><span
+              style='font-size: 10px;'>Stock#&nbsp;</span>&nbsp;{{ stock }}</span></div>
+        <div class='row vehicle' *ngIf='vins.length > 0'><span *ngFor="let vin of vins" style='margin: 2%;' class='vehicle'><span style='font-size: 10px;'>VIN#&nbsp;</span>&nbsp;{{
+            vin }}</span></div>
+      </div>
+      <div class='row' style='height: 20px;'></div>
+      <div class='row'>
+        <span *ngIf="Description !== ''">Description: {{ Description }} </span>
+      </div>
+      <div class='row' style='height: 20px;'></div>
+    </div>
+    <div class='col-lg-3 col-md-3 col-sm-3 totals'>
+      <div class='row'>
+        <span *ngIf="RO !== ''">RO#: {{ RO }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="PO !== ''">PO#: {{ PO }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="data.content.CheckNumber !== ''">Check#: {{ data.content.CheckNumber }} </span>
+      </div>
+      <div class='row'>
+        <span>Amount: ${{ total }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="calcTax == true">Tax: ${{ tax }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="grandTotal !== total">Total: ${{ grandTotal }} </span>
+      </div>
+      <div class='row'>
+        <span *ngIf="data.content.Paid === true">
+          <h3>Paid</h3>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class='buttons'>
+  <div *ngIf="printing == false && data.action === 'open'"  class='row'>
+    <button class='printButton' (click)='getPDF("print")' mat-button>Print</button>
+    <button class='printButton' (click)='emailInvoice()' mat-button>Email</button>
+    <button *ngIf='isCordova === false' class='printButton' (click)='getPDF("download")' mat-button>Download PDF</button>
+    <button *ngIf="signature === ''" class='printButton' (click)='openSignaturePad()' mat-button>Sign</button>
+  </div>
+</div>

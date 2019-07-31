@@ -1,0 +1,46 @@
+.drawerHeader {
+    position: absolute;
+    top: 20px;
+    font-size: 18px;
+    color: white;
+}
+
+.topRow {
+    height: 64px;
+    background: blue;
+    width: 105%;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+.cardRow {
+    width: 111%;
+    margin-top: 19%;
+}
+
+.userRow {
+    margin-top: 2%;
+    border-bottom: black solid 1px;
+}
+
+@media (max-width: 599px) {
+
+    .topRow {
+        height: 56px;
+        background: blue;
+        width: 105%;
+        position: fixed;
+        top: 0px;
+        right: 0px;
+    }
+
+    .newMessage {
+        top: 10px;
+    }
+
+    .drawerHeader {
+        top: 14px
+    }
+    
+}

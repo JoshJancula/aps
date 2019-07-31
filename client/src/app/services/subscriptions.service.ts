@@ -58,7 +58,7 @@ export class SubscriptionsService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(localUrl, httpOptions);
 			} else {
 				return this.http.get(url, httpOptions);
@@ -90,7 +90,7 @@ export class SubscriptionsService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(localUrl, httpOptions);
 			} else {
 				return this.http.get(url, httpOptions);
@@ -120,7 +120,7 @@ export class SubscriptionsService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(localUrl, httpOptions);
 			} else {
 				return this.http.get(url, httpOptions);
@@ -152,7 +152,7 @@ export class SubscriptionsService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(localUrl, httpOptions);
 			} else {
 				return this.http.get(url, httpOptions);
@@ -184,7 +184,7 @@ export class SubscriptionsService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.post(localUrl, filter, httpOptions);
 			} else {
 				return this.http.post(url, filter, httpOptions);

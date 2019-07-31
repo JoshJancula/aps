@@ -28,7 +28,7 @@ export class AuthService {
 		let url = `https://aps-josh.herokuapp.com/api/users`;
 		const signinUrl = `http://localhost:8080/api/signin`;
 		const info = { Username: username, Password: password };
-		if (window.location.host === 'localhost:4200') {
+		if (window.location.host.indexOf('localhost') > -1) {
 			return this.http.post(signinUrl, info);
 		} else {
 			return this.http.post(url.replace('users', 'signin'), info);

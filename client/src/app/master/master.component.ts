@@ -16,6 +16,8 @@ import { FranchiseService } from '../services/franchise.service';
 import * as moment from 'moment';
 import { SubscriptionsService } from '../services/subscriptions.service';
 import { MessagingComponent } from '../messaging/messaging.component';
+import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -25,14 +27,15 @@ import { MessagingComponent } from '../messaging/messaging.component';
 })
 export class MasterComponent implements OnInit {
 
-	userMode = false;
+	userMode = true;
 	franchiseMode = false;
 	clientMode = false;
 	appointmentMode = false;
 	invoiceMode = false;
-	settingsMode = true;
+	settingsMode = false;
 	showMessages = false;
 	showUserSelector = false;
+	canSendNotification = false;
 	messageConnection: any;
 	updateConnection: any;
 	pauseTime: any;
@@ -47,7 +50,7 @@ export class MasterComponent implements OnInit {
 	@ViewChild('messagingComponent') messagingComponent: MessagingComponent;
 	@ViewChild('bottomSheet') bottomSheet: MatBottomSheetRef<BottomPopupComponent>;
 
-	constructor(public subService: SubscriptionsService, private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, public authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
+	constructor(private backgroundMode: BackgroundMode, private localNotification: PhonegapLocalNotification, public subService: SubscriptionsService, private franchiseService: FranchiseService, private bottomSheetRef: MatBottomSheet, public authService: AuthService, public utilService: UtilService, private userService: UserService, private messagingService: MessageService) { }
 
 	ngOnInit() {
 		if (localStorage.getItem('background')) {
@@ -64,12 +67,14 @@ export class MasterComponent implements OnInit {
 		});
 		this.subscribe2OnMessage();
 		this.subscribeToUpdates();
+		setTimeout(() => this.enablePushNotification(), 500);
 		setTimeout(() => this.sendConnectionMessage(), 500);
 		setTimeout(() => this.loadFranchiseInfo(), 600);
 		setTimeout(() => this.listenForResume(), 1000);
 	}
 
 	subscribe2OnMessage() {
+		if (this.messageConnection) { this.messageConnection.unsubscribe(); }
 		this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
 			console.log('socket response: ', response);
 			if (response.data.AuthorId === this.authService.currentUser.id || response.data.RecipientId === this.authService.currentUser.id) {
@@ -85,9 +90,40 @@ export class MasterComponent implements OnInit {
 					this.messagingComponent.messages.push(response.data);
 					this.messagingComponent.createInboxes(this.messagingComponent.userStore);
 					this.utilService.openSnackBar(`New message from ${response.data.Author}`);
+					this.sendPushNotification(response.data);
 				}
 			}
 		});
+	}
+
+	enablePushNotification() {
+		if ((<any>window).deviceReady === true) {
+			this.localNotification.requestPermission().then((permission) => {
+				if (permission === 'granted') {
+					this.canSendNotification = true;
+				}
+			});
+		}
+	}
+
+	sendPushNotification(data) {
+		if (this.canSendNotification === true && this.backgroundMode.isActive() === true) {
+			this.localNotification.create('My Title', {
+				tag: `New message from ${data.Author}`,
+				body: data.Content,
+			});
+		}
+	}
+
+	test() {
+		this.backgroundMode.disableWebViewOptimizations();
+		// this.backgroundMode.
+	}
+
+	enableBackground() {
+		if ((<any>window).deviceReady === true) {
+			this.backgroundMode.enable();
+		}
 	}
 
 	openPopup() {
@@ -121,10 +157,13 @@ export class MasterComponent implements OnInit {
 
 	getUpdates() {
 		if (moment(new Date()).isBefore(moment(this.pauseTime))) {
-			this.messagingService.initSocket();
-			this.messageConnection = this.messagingService.onMessage().subscribe((response: any) => {
-				console.log('socket response: ', response);
-			});
+		this.messagingService.initSocket();
+		this.messagingService.onConnectionMessage().subscribe((response: any) => {
+			console.log('all messages response: ', response);
+			this.messagingComponent.messages = response.messages;
+			if (response.messages.length > 0) { this.messagingComponent.getUsers(); }
+		});
+		this.subscribe2OnMessage();
 			this.subscribeToUpdates();
 			setTimeout(() => this.sendConnectionMessage(), 500);
 			this.subService.processClients();

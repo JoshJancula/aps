@@ -15,7 +15,7 @@ export class MessageService {
 	constructor() { }
 
 	 initSocket(): void {
-		if (window.location.host === 'localhost:4200') {
+		if (window.location.host.indexOf('localhost') > -1) {
 		this.socket = socketIo(LOCAL_URL);
 		} else {
 			this.socket = socketIo(SERVER_URL);

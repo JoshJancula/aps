@@ -1,0 +1,95 @@
+ .userSelector {
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    transform: translateX(300px);
+    transition: transform 0.25s;
+    width: 300px;
+    opacity: 1;
+    z-index: 100;
+    height: calc(100vh);
+    background: white;
+    padding: 1%;
+}
+
+.userSelector.open {
+    transform: translateX(0px);
+} 
+
+.mainRow {
+    overflow-x: hidden !important;
+}
+
+.newMessage {
+    position: fixed !important;
+    top: 17px;
+    right: 0px;
+    color: white;
+    z-index: 40;
+}
+
+.drawerHeader {
+    position: absolute;
+    top: 20px;
+    font-size: 18px;
+    color: white;
+}
+
+.unread {
+    background-color: blue;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: relative;
+    left: -19px;
+    top: -10px;
+    display: inline-block;
+}
+
+.lastMessage.notRead {
+    position: relative;
+    left: -10px;
+}
+
+.topRow {
+    height: 64px;
+    background: blue;
+    width: 105%;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+}
+
+.cardRow {
+    width: 111%;
+    margin-top: 19%;
+}
+
+.inboxRow {
+    margin-top: 2%;
+    border-bottom: black solid 1px;
+}
+
+@media (max-width: 599px) {
+
+    .topRow {
+        height: 56px;
+        background: blue;
+        width: 105%;
+        position: fixed;
+        top: 0px;
+        right: 0px;
+    }
+
+    .newMessage {
+        top: 10px;
+    }
+
+    .drawerHeader {
+        top: 14px
+    }
+    
+}
+
+
+

@@ -1,0 +1,18 @@
+<div class='row container drawerRow' style='width: 110%;'>
+  <div class='row topRow container'>
+    <span class='drawerHeader'(click)='close.emit();'><mat-icon style='color:white; height: 24px; width:24px; position: relative;top: 6px;left: -4px;'>keyboard_arrow_left</mat-icon>{{ otherUser }}</span>
+  </div>
+  <div class='row cardRow'>
+    <div class='row container' style='width: 110%; overflow-x: hidden !important;' *ngFor='let message of messages'>
+      <mat-card *ngIf="message.AuthorId.toString() !== currentUserId" class='otherUserMessage'>{{ message.Content }}</mat-card>
+      <mat-card *ngIf="message.AuthorId.toString() === currentUserId" class='currentUserMessage'>{{ message.Content }}</mat-card>
+    </div>
+    <div class='row container' id='scrollHere'></div>
+  </div>
+  <div class='row container messageInput'>
+    <mat-form-field class="example-full-width">
+      <textarea [(ngModel)]="newMessage" matInput></textarea>
+    </mat-form-field>
+    <button (click)='submitMessage();' mat-button>Send</button>
+  </div>
+</div>

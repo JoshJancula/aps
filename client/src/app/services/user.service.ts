@@ -15,25 +15,25 @@ export class UserService {
 	constructor(private http: HttpClient, private signInHttp: Http, private authService: AuthService) { }
 
 	getUsers() {
-		if (localStorage.getItem('jwtToken')) {
+		// if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
-					'Authorization': localStorage.getItem('jwtToken'),
+					'Authorization': localStorage.getItem('jwtToken') ? localStorage.getItem('jwtToken') : 'blahhhhh',
 				}),
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
-				return this.http.get(this.localUrl, httpOptions);
+			if (window.location.host.indexOf('localhost') > -1) {
+				return this.http.get(this.localUrl);
 			} else {
-				return this.http.get(this.url, httpOptions);
+				// return this.http.get(this.url, httpOptions);
 			}
-		}
+		// }
 	}
 
 	loginUser(username: string, password: string) {
 		const info = { Username: username, Password: password };
-		if (window.location.host === 'localhost:4200') {
+		if (window.location.host.indexOf('localhost') > -1) {
 			return this.signInHttp.post(this.signinUrl, info);
 		} else {
 			return this.signInHttp.get(this.url.replace('users', 'signin'));
@@ -49,7 +49,7 @@ export class UserService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl.replace('users', `users/${id}`), httpOptions);
 			} else {
 				return this.http.get(this.url.replace('users', `users/${id}`), httpOptions);
@@ -58,20 +58,20 @@ export class UserService {
 	}
 
 	createUser(newUser: string) {
-		if (localStorage.getItem('jwtToken')) {
+		// if (localStorage.getItem('jwtToken')) {
 			const httpOptions = {
 				headers: new HttpHeaders({
-					'Authorization': localStorage.getItem('jwtToken'),
+					'Authorization': localStorage.getItem('jwtToken') ? localStorage.getItem('jwtToken') : 'blahhh',
 				}),
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.post(this.localUrl, newUser, httpOptions);
 			} else {
 				return this.http.post(this.url, newUser, httpOptions);
 			}
-		}
+		// }
 	}
 
 	updateUser(id: string, updatedUser) {
@@ -82,7 +82,7 @@ export class UserService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.put(this.localUrl.replace('users', `users/${id}`), updatedUser, httpOptions);
 			} else {
 				return this.http.put(this.url.replace('users', `users/${id}`), updatedUser, httpOptions);
@@ -98,7 +98,7 @@ export class UserService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				const localUrl = `http://localhost:8080/api/users/updatePassword/${this.authService.currentUser.id}`;
 				return this.http.put(localUrl, updateObject, httpOptions);
 			} else {
@@ -117,7 +117,7 @@ export class UserService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				console.log('should be posting to localhost');
 				const localUrl = `http://localhost:8080/api/users/avatar/${this.authService.currentUser.id}`;
 				return this.http.put(localUrl, updateObject, httpOptions);
@@ -136,7 +136,7 @@ export class UserService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.delete(this.localUrl.replace('users', `users/${id}`), httpOptions);
 			} else {
 				return this.http.delete(this.url.replace('users', `users/${id}`), httpOptions);

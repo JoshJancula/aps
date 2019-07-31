@@ -15,7 +15,7 @@ export class TimecardService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				const localUrl = `http://localhost:8080/api/timecards`;
 				return this.http.post(localUrl, newTimecard, httpOptions);
 			} else {
@@ -34,7 +34,7 @@ export class TimecardService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				const localUrl = `http://localhost:8080/api/timecards/employee/today/${id}`;
 				return this.http.get(localUrl, httpOptions);
 			} else {
@@ -55,7 +55,7 @@ export class TimecardService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				const localUrl = `http://localhost:8080/api/timecards/employee/all/${params.EmployeeId}`;
 				return this.http.post(localUrl, params, httpOptions);
 			} else {
@@ -74,7 +74,7 @@ export class TimecardService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				const localUrl = `http://localhost:8080/api/timecards/${id}`;
 				return this.http.put(localUrl, updatedTimecard, httpOptions);
 			} else {
@@ -93,7 +93,7 @@ export class TimecardService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				const localUrl = `http://localhost:8080/api/timecards/${id}`;
 				return this.http.delete(localUrl, httpOptions);
 			} else {

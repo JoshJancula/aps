@@ -35,7 +35,7 @@ export class ControlUserComponent implements OnInit {
 		Avatar: '',
 		FranchiseId: '',
 		Active: true,
-		RequireTimesheet: true
+		RequireTimesheet: false
 	};
 	users = [];
 	testPassword = '';
@@ -50,11 +50,12 @@ export class ControlUserComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		if (this.authService.currentUser.Role === 'Super') {
-			this.loadFranchises();
-		}
-		this.getUsers();
-		console.log('moment.utc(), ', moment().utc());
+		// if (this.authService.currentUser.Role === 'Super') {
+		// 	this.loadFranchises();
+		// }
+		// this.getUsers();
+		// console.log('moment.utc(), ', moment().utc());
+		this.submitUser();
 	}
 
 	getUsers() {

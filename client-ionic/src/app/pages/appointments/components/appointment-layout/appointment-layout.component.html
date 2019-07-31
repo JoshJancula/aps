@@ -1,0 +1,104 @@
+<div class='col-lg-10 col-md-12 col-sm-12'>
+  <div class='row form' *ngIf="addAppointment === true">
+    <mat-card class='formCard'>
+      <div class='appointment-content'>
+        <div class="card-heading" *ngIf='editing === false'>Add Appointment</div>
+        <div class="card-heading" *ngIf='editing === true'>Edit Appointment</div>
+        <mat-checkbox *ngIf="editing === false" color='primary'
+          (change)="Appointment.Client = ''; Appointment.Location = ''" [(ngModel)]="selectFromClients">Select
+          from clients</mat-checkbox>
+        <br>
+        <mat-form-field *ngIf='selectFromClients === true'>
+          <mat-select placeholder="Client" [(ngModel)]="Appointment.Client">
+            <mat-option *ngFor="let client of clients" (click)="updateLocation(client);" [value]="client.Name">{{
+              client.Name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf='selectFromClients === false'>
+          <input matInput placeholder="Client" [readonly]="editing === true" [(ngModel)]="Appointment.Client" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Location" [readonly]="editing === true" [(ngModel)]="Appointment.Location" />
+        </mat-form-field>
+        <br>
+        <mat-checkbox color='primary' (change)="setTime();" [(ngModel)]="anytime">Anytime</mat-checkbox>
+        <br>
+        <mat-form-field style='cursor: pointer'>
+          <input [(ngModel)]="Appointment.Date" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
+            placeholder="Date" [min]="getMinDate()" readonly>
+          <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
+          <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field style='cursor: pointer' *ngIf='anytime === false'>
+          <input matInput placeholder="Time" readonly [(ngModel)]="Appointment.Time" [ngxTimepicker]="defaultTime">
+          <ngx-material-timepicker #defaultTime [defaultTime]="'12:00 pm'"></ngx-material-timepicker>
+        </mat-form-field>
+        <mat-form-field *ngIf='anytime === true'>
+          <input matInput [(ngModel)]="Appointment.Time" placeholder="Time" readonly
+            [(ngModel)]="Appointment.ContactPerson" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Contact Person" [(ngModel)]="Appointment.ContactPerson" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Contact Person phone" pattern="[0-9]*" maxlength="14" (input)="formatPhone();"
+            [(ngModel)]="Appointment.ContactPersonPhone" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Assigned employee" [(ngModel)]="Appointment.AssignedEmployee">
+            <mat-option *ngFor="let user of users" (click)='Appointment.AssignedEmployeeId = user.id'
+              [value]="user.Name">{{
+              user.Name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field *ngIf="authService.currentUser.Role === 'Super'">
+          <mat-select placeholder="Franchise" [(ngModel)]="Appointment.FranchiseId">
+            <mat-option *ngFor="let franchise of franchises" [value]="franchise.id">{{ franchise.Name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Comments" [(ngModel)]="Appointment.Comments" />
+        </mat-form-field>
+        <br>
+        <button class='submit' (click)="submitAppointment();" mat-button>Save Appointment</button><br>
+        <button (click)="clearForm();" mat-button>Clear form</button><br>
+        <button *ngIf='editing === true' (click)="deleteAppointment(Appointment.id);" mat-button>Delete</button>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class='row search' *ngIf="searchAppointments === true">
+    <mat-card class='appointmentCard' *ngFor="let appointment of appointments">
+      <div class='row'>
+        <p>
+          Client: {{ appointment.Client }}<br>
+          Date: {{ formatDate(appointment.Date) }}<br>
+          Time: {{ appointment.Time }}<br>
+          Assigned employee: {{ appointment.AssignedEmployee }}<br>
+          <span *ngIf="appointment.Location !== '' ">Location: {{ appointment.Location }}</span><br>
+          Contact person: {{ appointment.ContactPerson }} {{ appointment.ContactPersonPhone }}
+        </p>
+        <button class='editButton' (click)="editAppointment(appointment);" mat-button>Edit</button>
+        <button *ngIf="cordova === true && appointment.Location !== ''" class='editButton'
+          (click)="getDirections(appointment);" mat-button>Get directions</button>
+      </div>
+    </mat-card>
+
+    <mat-card class='appointmentCard' *ngIf='appointments.length < 1'>
+      No appointments scheduled for {{ formatDate(searchDate) }}.
+    </mat-card>
+  </div>
+
+  <br>
+  <button class='add' *ngIf='searchAppointments === true' mat-button
+    (click)="searchAppointments = false; addAppointment = true;">
+    <mat-icon style='color:white'>create</mat-icon>
+    Schedule
+  </button>
+  <button class='searchButton' *ngIf='addAppointment === true'
+    (click)="addAppointment = false; searchAppointments = true;" mat-button>
+    <mat-icon>today</mat-icon>
+    View appointments
+  </button>
+
+</div>

@@ -20,6 +20,28 @@ export class LoginComponent implements OnInit {
 		document.body.style.backgroundImage = 'url("assets/logo5.png")';
 		localStorage.removeItem('jwtToken');
 		localStorage.removeItem('currentUser');
+		// this.userService.getUsers().subscribe(res => {
+		// 	console.log('users.... ', res);
+		// }, error => {
+		// 	console.log('error.... ', error);
+		// });
+
+		const User: any = {
+			Username: 'josh',
+			FirstName: 'Josh',
+			LastName: 'Jancula',
+			Role: 'Super',
+			Password: 'test',
+			Email: 'josh@jancula.com',
+			Phone: '(704) 277-2181',
+			Avatar: '',
+			FranchiseId: '2',
+			Active: true,
+			RequireTimesheet: false
+		};
+		// this.userService.createUser(User).subscribe(res => {
+		// 	console.log('res: ', JSON.stringify(res));
+		// });
 	}
 
 	navigate(role) {

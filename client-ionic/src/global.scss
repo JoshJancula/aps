@@ -1,0 +1,457 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+// @import "styles-variables";
+@import '~bootstrap/scss/bootstrap-reboot';
+@import '~bootstrap/scss/bootstrap-grid';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~@angular/material/theming';
+@include mat-core();
+
+.ion-page {
+    overflow: auto !important;
+}
+
+// .mainRow {
+//     background-color: black !important;
+//     background-position: center;
+//     background-size: contain;
+//     background-repeat: no-repeat;
+// }
+
+.mat-card {
+    background: #D7D6D6;
+    opacity: .9;
+}
+
+.mat-form-field {
+    width: 95%;
+}
+
+.mat-toolbar {
+    width: 100vw;
+    background-color: blue;
+    color: white;
+    opacity: .9 !important;
+    position: sticky !important;
+    z-index: 30;
+    top: 0px !important;
+    left: 0px;
+    right: 0px;
+}
+
+html,
+body {
+    height: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.html2canvas-container { width: 1400px !important; height: 2400px !important; }
+
+.headerRow {
+    height: 14vh;
+    background-repeat: no-repeat;
+    background-image: url('https://chambermaster.blob.core.windows.net/images/customers/391/members/6298/logos/MEMBER_LOGO/ATLPinATLWraps.jpg');
+}
+
+.toolbarLogo {
+    height: 64px;
+    width: 17vw;
+    position: absolute;
+    left: 0;
+}
+
+body, html {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;  
+    margin: none;
+    background-color: black;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: none;
+    overflow: hidden !important;
+}
+
+.searchButton {
+    position: fixed !important;
+    top: 17px;
+    right: 8vw;
+    color:white;
+    z-index: 40;
+}
+
+.add {
+    position: fixed !important;
+    top: 17px;
+    right: 8vw;
+    color:white;
+    z-index: 40;
+}
+
+.calendar .mat-form-field-appearance-legacy .mat-form-field-underline {
+    background-color: white !important;
+}
+
+.calendar .mat-form-field-underline, .calendar .mat-datepicker-toggle, .calendar .mat-datepicker-toggle, .calendar .mat-form-field-appearance-legacy .mat-form-field-label  {
+    color: white !important;
+}
+
+.calendar .mat-form-field {
+    font-size: 12px;
+    width: 100%;
+    position: relative;
+    top: 7px;
+    left: 2vw;
+    z-index: 10;
+}
+
+.notFound {
+    padding: 5%;
+    padding-top: 20%;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.notFoundSpacer {
+    height: 10vh;
+}
+
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.mainOverlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    cursor: pointer;
+}
+
+.selectorOverlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.0);
+    z-index: 40;
+    cursor: pointer;
+}
+
+.invoicePreview {
+    height: 90vh;
+    width: 90vw;
+    overflow-x: hidden !important;
+}
+
+.invoicePreview .mat-dialog-container {
+    padding: 0px !important;
+    overflow-x: hidden !important;
+}
+
+.bottomSnackbar {
+    width: 40vw;
+    position: absolute;
+    left: 30vw;
+}
+
+.signaturePad .mat-dialog-container {
+    padding: 0px !important;
+    overflow-x: hidden !important;
+    height: 500px;
+    width: 600px;
+}
+
+.errorAlert .mat-dialog-container {
+    max-height: 400px;
+    width: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.messageDrawer, .chatDrawer {
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    transform: translateX(300px);
+    transition: transform 0.25s;
+    width: 300px;
+    opacity: 1;
+    z-index: 99;
+    height: calc(100vh);
+    background: white;
+    padding: 1%;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.8);
+}
+
+.chatDrawer {
+    z-index: 100;
+}
+
+
+.messageDrawer.open, .chatDrawer.open {
+    transform: translateX(0px);
+} 
+
+@media (max-width: 1024px) {
+    // .toolbarLogo {
+    //    display: none;
+    // }
+} 
+
+@media (max-width: 812px) {
+.signaturePad .mat-dialog-container {
+    padding: 0px !important;
+    overflow-x: hidden !important;
+    height: 320px;
+    width: 600px;
+}
+}
+
+@media (max-width: 767px) { 
+
+    .mat-toolbar {
+        opacity: 1 !important;
+    }
+
+    .toolbarLogo {
+        display: none;
+     }
+
+    .add {
+        position: fixed !important;
+        top: 12px;
+        right: 60px;
+        color:white;
+        font-size: 10px;
+    }
+
+    .searchButton {
+        position: fixed !important;
+        top: 12px;
+        right: 60px;
+        color:white;
+        font-size: 10px;
+    }
+
+    body, html {
+        overflow-y: auto !important;
+    }
+
+    .calendar .mat-form-field {
+        font-size: 12px;
+        width: 60%;
+        position: relative;
+        top: 7px;
+        left: 2vw;
+        z-index: 10;
+    }
+}
+
+@media (max-width: 440px) {
+    .calendar .mat-form-field {
+        font-size: 12px;
+        width: 40%;
+        position: relative;
+        top: 7px;
+        left: 2vw;
+        z-index: 10;
+    }
+
+    .invoicePreview, app-invoice-preview  {
+        height: 90vh;
+        width: 96vw;
+    }
+
+    .bottomSnackbar {
+        width: 100vw;
+        position: unset;
+        left: unset;
+    }
+    
+}
+
+
+//==================================================================================
+// new beginning on css
+//==================================================================================
+.mainRow {
+    position: absolute;
+    height: calc(100vh - 64px);
+    top: 64px;
+    right: 0px !important;
+    left: 0px !important;
+    bottom: 0px !important;
+    overflow-x: hidden !important;
+    padding: 0!important; 
+    margin:0 !important;
+}
+
+.contentRow {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    position: absolute;
+    right: 0;
+    padding: 0!important; 
+    margin:0 !important
+}
+
+.desktopView {
+    padding: 0!important;
+    margin: 0 !important;
+    position: fixed;
+    top: 72px !important;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    display: block;
+}
+
+.homeIcon {
+    display: none;
+}
+
+.filterIcon {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .desktopView {
+        display: none;
+    } 
+
+    .homeIcon{
+        display: block;
+        z-index: 20;
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        background-color: red;
+        position: fixed;       
+        bottom: 10px;
+        left: calc(90vw);
+        cursor: pointer;
+    }
+    
+}
+
+@media (max-width: 767px) {
+.desktopView {
+    display: none;
+} 
+
+.homeIcon{
+    display: block;
+    z-index: 20;
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+    background-color: red;
+    position: fixed;       
+    bottom: 10px;
+    left: calc(85vw);
+    cursor: pointer;
+}
+
+.filterIcon.show {
+    display: block;
+    z-index: 20;
+    height: 60px;
+    width: 60px;
+    border-radius: 30px;
+    background-color: blue;
+    position: fixed;       
+    bottom: 80px;
+    left: calc(85vw);
+    cursor: pointer;
+}
+
+}
+
+@media (max-width: 500px) {
+    .homeIcon{
+        display: block;
+        z-index: 20;
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        background-color: red;
+        position: fixed;       
+        bottom: 10px;
+        left: calc(82vw);
+        cursor: pointer;
+    }
+    
+    .filterIcon.show {
+        display: block;
+        z-index: 20;
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        background-color: blue;
+        position: fixed;       
+        bottom: 80px;
+        left: calc(82vw);
+        cursor: pointer;
+    }
+}
+
+

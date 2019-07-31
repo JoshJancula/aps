@@ -18,7 +18,7 @@ export class ClientService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.post(this.localUrl, newClient, httpOptions);
 			} else {
 				return this.http.post(this.url, newClient, httpOptions);
@@ -37,7 +37,7 @@ export class ClientService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl, httpOptions);
 			} else {
 				return this.http.get(this.url, httpOptions);
@@ -56,7 +56,7 @@ export class ClientService {
 				reportProgress: true,
 				observe: 'events' as 'events'
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.get(this.localUrl.replace('clients', `clients/${id}`), httpOptions);
 			} else {
 				return this.http.get(this.url.replace('clients', `clients/${id}`), httpOptions);
@@ -73,7 +73,7 @@ export class ClientService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.delete(this.localUrl.replace('clients', `clients/${id}`), httpOptions);
 			} else {
 				return this.http.delete(this.url.replace('clients', `clients/${id}`), httpOptions);
@@ -90,7 +90,7 @@ export class ClientService {
 					'Authorization': localStorage.getItem('jwtToken'),
 				})
 			};
-			if (window.location.host === 'localhost:4200') {
+			if (window.location.host.indexOf('localhost') > -1) {
 				return this.http.put(this.localUrl.replace('clients', `clients/${id}`), updatedClient, httpOptions);
 			} else {
 				return this.http.put(this.url.replace('clients', `clients/${id}`), updatedClient, httpOptions);
