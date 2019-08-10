@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
-
+import { User } from 'src/app/models/user.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,23 +14,6 @@ export class UserService {
   private signinUrl = `http://localhost:8080/api/signin`;
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  async getUsers() {
-    // if (localStorage.getItem('jwtToken')) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: localStorage.getItem('jwtToken') ? localStorage.getItem('jwtToken') : 'blahhhhh',
-      }),
-      reportProgress: true,
-      observe: 'events' as 'events'
-    };
-    if (window.location.host.indexOf('localhost') > -1) {
-      return this.http.get(this.localUrl).toPromise();
-    } else {
-      // return this.http.get(this.url, httpOptions).toPromise();
-    }
-    // }
-  }
-
   async loginUser(username: string, password: string) {
     const info = { Username: username, Password: password };
     if (window.location.host.indexOf('localhost') > -1) {
@@ -39,7 +23,7 @@ export class UserService {
     }
   }
 
-  async getUser(id: string) {
+  async getUser(id: number) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -49,14 +33,14 @@ export class UserService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(this.localUrl.replace('users', `users/${id}`), httpOptions).toPromise();
+        return this.http.get(this.localUrl.replace('users', `users/${id}`), httpOptions).pipe(map(u => new User(u))).toPromise();
       } else {
-        return this.http.get(this.url.replace('users', `users/${id}`), httpOptions).toPromise();
+        return this.http.get(this.url.replace('users', `users/${id}`), httpOptions).pipe(map(u => new User(u))).toPromise();
       }
     }
   }
 
-  async createUser(newUser: string) {
+  async createUser(newUser: User) {
     // if (localStorage.getItem('jwtToken')) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -73,7 +57,7 @@ export class UserService {
     // }
   }
 
-  async updateUser(id: string, updatedUser) {
+  async updateUser(id: number, updatedUser: User) {
     console.log('updatedUser: ', updatedUser);
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
@@ -89,7 +73,7 @@ export class UserService {
     }
   }
 
-  async updatePassword(data) {
+  async updatePassword(data: any) {
     const updateObject = { Password: data, id: this.authService.currentUser.id };
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
@@ -107,7 +91,7 @@ export class UserService {
     }
   }
 
-  async updateProfileImage(avatar) {
+  async updateProfileImage(avatar: string) {
     console.log('about to update profile image');
     const updateObject = { Avatar: avatar, id: this.authService.currentUser.id };
     if (localStorage.getItem('jwtToken')) {
@@ -128,7 +112,7 @@ export class UserService {
   }
 
 
-  async deleteUser(id: string) {
+  async deleteUser(id: number) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({

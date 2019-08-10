@@ -63,88 +63,89 @@ app.use((err, req, res, next) => {
 // Syncing sequelize models and then starting our Express app
 // =============================================================
 db.sequelize.sync().then(() => {
-  server.listen(PORT, () => {
-      console.log("App listening on PORT " + PORT);
-      console.log('===================================');
+    server.listen(PORT, () => {
+        console.log("App listening on PORT " + PORT);
+        console.log('===================================');
 
-      io.on('connection', (socket) => {
+        io.on('connection', (socket) => {
+            // on connection get all messages for user
+            socket.on('connectionInfo', (data) => {
+                let messages = [];
+                Message.findAll({
+                    where: {
+                        AuthorId: data.AuthorId
+                    },
+                }).then((x) => {
+                    x.forEach(item => {
+                        messages.push(item);
+                    });
+                    Message.findAll({
+                        where: {
+                            RecipientId: data.AuthorId
+                        },
+                    }).then((y) => {
+                        y.forEach(z => {
+                            messages.push(z);
+                        });
+                        socket.emit('allMessages', {
+                            messages
+                        });
+                    });
+                });
 
-          // on connection get all messages for user
-          socket.on('connectionInfo', (data) => {
-              let messages = [];
-              Message.findAll({
-                  where: {
-                      AuthorId: data.AuthorId
-                  },
-              }).then((x) => {
-                  x.forEach(item => {
-                      messages.push(item);
-                  });
-                  Message.findAll({
-                      where: {
-                          RecipientId: data.AuthorId
-                      },
-                  }).then((y) => {
-                      y.forEach(z => {
-                          messages.push(z);
-                      });
-                      socket.emit('allMessages', {
-                          messages
-                      });
-                  });
-              });
-          });
+                socket.join(`Room${data.FranchiseId}`, () => { });
+            });
 
-          socket.on('update', (data) => {
-              switch (data.Action) {
-                  case 'franchises': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateFranchises' }); break;
-                  case 'clients': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateClients' }); break;
-                  case 'users': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateUsers' }); break;
-                  case 'invoices': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateInvoices' }); break;
-                  case 'appointments': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateAppointments' }); break;
-                  case 'timeCards': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateTimeCards' }); break;
-              }
-          });
+            socket.on('update', (data) => {
+                switch (data.Action) {
+                    case 'franchises': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateFranchises' }); break;
+                    case 'clients': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateClients' }); break;
+                    case 'users': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateUsers' }); break;
+                    case 'invoices': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateInvoices' }); break;
+                    case 'appointments': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateAppointments' }); break;
+                    case 'timeCards': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateTimeCards' }); break;
+                }
+            });
 
-          // update that the recipient read the message
-          socket.on('read', (data) => {
-              Message.update({
-                  Read: data.Read
-              }, {
-                      where: {
-                          id: data.id
-                      }
-                  }).then((x) => {
-                      console.log('message status updated');
-                  })
-                  .catch((err) => {
-                      res.json(err);
-                  });
-          });
+            // update that the recipient read the message
+            socket.on('read', (data) => {
+                Message.update({
+                    Read: data.Read
+                }, {
+                        where: {
+                            id: data.id
+                        }
+                    }).then((x) => {
+                        console.log('message status updated');
+                    })
+                    .catch((err) => {
+                        res.json(err);
+                    });
+            });
 
-          // when new message is created
-          socket.on('message', (data) => {
-              Message.create({
-                  Author: data.Author,
-                  AuthorId: data.AuthorId,
-                  Recipient: data.Recipient,
-                  RecipientId: data.RecipientId,
-                  RecipientDelete: data.RecipientDelete,
-                  AuthorDelete: data.AuthorDelete,
-                  Content: data.Content,
-                  MessageType: data.MessageType,
-                  Read: data.Read
-              }).then((data) => {
-                  socket.emit('message', {
-                      data
-                  });
-                  socket.broadcast.emit('message', {
-                      data
-                  });
-              });
-          });
+            // when new message is created
+            socket.on('message', (data) => {
+                Message.create({
+                    Author: data.Author,
+                    AuthorId: data.AuthorId,
+                    Recipient: data.Recipient,
+                    RecipientId: data.RecipientId,
+                    RecipientDelete: data.RecipientDelete,
+                    AuthorDelete: data.AuthorDelete,
+                    Content: data.Content,
+                    MessageType: data.MessageType,
+                    Read: data.Read
+                }).then((data) => {
+                    socket.emit('message', {
+                        data
+                    });
+                    socket.broadcast.emit('message', {
+                        data
+                    });
+                });
+            });
 
-      });
+        });
 
-  });
+    });
 });

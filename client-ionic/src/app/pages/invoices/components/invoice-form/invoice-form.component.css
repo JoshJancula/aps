@@ -25,11 +25,6 @@
     margin: 2%;
 }
 
-/* .optionBoxes  {
-    margin: 2%;
-    padding: 3%;
-} */
-
 .mat-checkbox {
     margin: 2%;
 }
@@ -40,62 +35,11 @@
     margin: 8px;
 }
 
-.invoiceCard {
-    margin-left: 2%;
-    width: 94%;
-    border-radius: 15px;
-}
 
-.mat-card:first-child {
-    margin-top: 1%;
-}
 
-.form {
-    width: 84vw;
-    overflow-x: hidden !important;
-}
 
-@media (max-width: 1200px) { 
-    .invoiceCard {
-        background: #D7D6D6;
-        opacity: .9;
-        border-radius: 10px !important;
-        width: 98%;
-        margin-left: 1%;
-        margin-bottom: 10%;
-        margin-top: 1%;
-    }
 
-}
 
-@media (max-width: 992px) { 
-    .invoiceCard {
-        background: #D7D6D6;
-        opacity: .9;
-        border-radius: 10px !important;
-        width: 100%;
-        margin-left: -1%;
-        margin-bottom: 1%;
-        margin-top: 1%;
-    }
 
-    .form {
-        width: 102vw;
-        overflow-x: hidden !important;
-    }
- }
 
-@media (max-width: 768px) { 
-    .mat-card, .invoiceCard {
-    width: 100%;
-    margin-left: -1%;
-    }
-}
 
-@media (max-width: 500px) { 
-
-    .mat-card, .invoiceCard {
-        width: 102%;
-        margin-left: -2%;
-    }
-}

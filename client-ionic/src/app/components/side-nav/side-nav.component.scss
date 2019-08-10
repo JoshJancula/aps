@@ -1,0 +1,16 @@
+.options {
+    cursor: pointer;
+    padding: 2%;
+    color: red;
+    font-size: 20px;
+}
+
+.options:hover {
+    color: teal;
+}
+
+.options.selected {
+    cursor: pointer;
+    padding: 2%;
+    color: teal;
+}

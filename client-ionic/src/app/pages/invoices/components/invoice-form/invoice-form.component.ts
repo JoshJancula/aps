@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/services/auth.service';
 import * as moment from 'moment';
@@ -6,6 +6,10 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 import { MessageService } from 'src/app/services/message.service';
 import { InvoiceService } from 'src/app/services/invoice.service';
+import { Invoice } from 'src/app/models/invoice.model';
+import { Client } from 'src/app/models/client.model';
+import { Subscription } from 'rxjs';
+import { Franchise } from 'src/app/models/franchise.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -13,61 +17,39 @@ import { InvoiceService } from 'src/app/services/invoice.service';
   templateUrl: './invoice-form.component.html',
   styleUrls: ['./invoice-form.component.css']
 })
-export class InvoiceFormComponent implements OnInit {
+export class InvoiceFormComponent implements OnInit, OnDestroy {
 
   @Output() switchToSearch = new EventEmitter();
-  Invoice: any = {
-    Employee: '',
-    EmployeeId: '',
-    Stripes: '',
-    Tint: '',
-    PPF: '',
-    OtherServices: '',
-    CustomPinstripe: '',
-    Client: '',
-    Total: 0,
-    Paid: '',
-    PaymentMethod: '',
-    PO: '',
-    CheckNumber: '',
-    RO: '',
-    VIN: '',
-    Stock: '',
-    Description: '',
-    VehicleDescription: '',
-    CalcTax: false,
-    Comments: '',
-    Vehicle: '',
-    EditedBy: '',
-    FranchiseId: '',
-  };
-  serviceSelected = false;
-  editing = false;
-  selectedId = '';
-  selectFromClients = false;
-  addRO = false;
-  addStock = false;
-  addVIN = false;
-  addDescription = false;
-  additionalServices = false;
-  calculateTax = false;
-  clients: any;
-  franchises: any;
-  vins = [];
-  stocks = [];
-  vehicles = [];
-  panelsStriped: any;
-  customPinstriping = false;
-  customPinstripes = { description: 'Custom pinstriping', value: 0, quantity: 0 };
-  newCarRate = 0;
-  numbers = [];
-  prices = [];
-  paymentMethods = ['Cash', 'PO', 'Check', 'Other', 'None'];
-  stockNumber = '';
-  manualAmountInput = false;
-  cordova = false;
-  fieldsToValidate = [];
-  panelOptions: any = [
+  public Invoice: Invoice = new Invoice();
+  public serviceSelected: boolean = false;
+  public editing: boolean = false;
+  public selectedId: any = null;
+  public selectFromClients: boolean = false;
+  public addRO: boolean = false;
+  public addStock: boolean = false;
+  public addVIN: boolean = false;
+  public addDescription: boolean = false;
+  public additionalServices: boolean = false;
+  public calculateTax: boolean = false;
+  public clients: Client[] = [];
+  public franchises: Franchise[] = [];
+  public vins: any[] = [];
+  public stocks: any[] = [];
+  public vehicles: any[] = [];
+  public panelsStriped: any = null;
+  public customPinstriping: boolean = false;
+  public customPinstripes: any = { description: 'Custom pinstriping', value: 0, quantity: 0 };
+  public newCarRate: number = 0;
+  public numbers: any[] = [];
+  public prices: any[] = [];
+  public paymentMethods: string[] = ['Cash', 'PO', 'Check', 'Other', 'None'];
+  public stockNumber: string = '';
+  public manualAmountInput: boolean = false;
+  public cordova: boolean = false;
+  public fieldsToValidate: any[] = [];
+
+  private subscriptions: Subscription[] = [];
+  public panelOptions: any = [
     { id: 1, model: 'First panel', value: 45, checked: false },
     { id: 2, model: 'Second panel', value: 20, checked: false },
     { id: 3, model: 'Third panel', value: 10, checked: false },
@@ -77,7 +59,7 @@ export class InvoiceFormComponent implements OnInit {
     { id: 7, model: 'Seventh panel', value: 10, checked: false },
     { id: 8, model: 'Whole car', value: 95, checked: false }
   ];
-  windowOptions: any = [
+  public windowOptions: any[] = [
     { id: 1, model: 'Roll up window', quantity: 0, value: 0, selected: false, error: false },
     { id: 2, model: 'Butterfly window', quantity: 0, value: 0, selected: false, error: false },
     { id: 3, model: 'Back windshield', quantity: 0, value: 0, selected: false, error: false },
@@ -85,7 +67,7 @@ export class InvoiceFormComponent implements OnInit {
     { id: 5, model: 'Whole car', quantity: 0, value: 0, selected: false, error: false },
     { id: 6, model: 'Other', quantity: 0, value: 0, selected: false, error: false }
   ];
-  ppfOptions: any = [
+  public ppfOptions: any[] = [
     { id: 1, model: 'Edge guard', value: 0, quantity: 0, selected: false, error: false },
     { id: 2, model: 'Door cup', value: 0, quantity: 0, selected: false, error: false },
     { id: 3, model: 'Whole fender', value: 0, quantity: 0, selected: false, error: false },
@@ -98,7 +80,7 @@ export class InvoiceFormComponent implements OnInit {
     { id: 10, model: 'Stone guard', value: 0, quantity: 0, selected: false, error: false },
     { id: 11, model: 'Other', value: 0, quantity: 0, selected: false, error: false }
   ];
-  serviceTypes: any = [
+  public serviceTypes: any[] = [
     { id: 0, model: 'Decals', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
     { id: 1, model: 'New car pinstriping', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false },
     { id: 2, model: 'Paint protection', checked: false, array: true, optionsArray: [{ value: 0, quantity: 0 }], error: false },
@@ -109,17 +91,26 @@ export class InvoiceFormComponent implements OnInit {
     { id: 7, model: 'Other', checked: false, array: false, optionsArray: [{ value: 0, quantity: 0 }], error: false }
   ];
 
-  constructor(private subService: SubscriptionsService, private barcodeScanner: BarcodeScanner, private authService: AuthService, private messagingService: MessageService, private invoiceService: InvoiceService, private utilService: UtilService) {
-  }
+  constructor(
+    private subService: SubscriptionsService,
+    private barcodeScanner: BarcodeScanner,
+    private authService: AuthService,
+    private messagingService: MessageService,
+    private invoiceService: InvoiceService,
+    private utilService: UtilService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadFranchises();
     this.getClients();
     this.generateNumbers();
-    if ((<any>window).deviceReady === true) { this.cordova = true; }
   }
 
-  clearZeros() {
+  ngOnDestroy(): void {
+    console.log('destroy lifecycle called');
+    this.subscriptions.forEach(s => s.unsubscribe);
+  }
+
+  public clearZeros(): void {
     this.panelOptions.forEach(opt => {
       if (opt.value === 0) {
         opt.value = null;
@@ -127,7 +118,7 @@ export class InvoiceFormComponent implements OnInit {
     });
   }
 
-  generateNumbers() {
+  public generateNumbers(): void {
     for (let i = 0; i < 201; i++) {
       this.numbers.push(i);
       const five = i * 5;
@@ -135,7 +126,7 @@ export class InvoiceFormComponent implements OnInit {
     }
   }
 
-  addService(service) {
+  public addService(service: any): void {
     if (service.id === 7 && this.serviceTypes[service.id].checked === true) {
       this.serviceTypes[service.id].model = 'Other';
     }
@@ -148,31 +139,33 @@ export class InvoiceFormComponent implements OnInit {
     this.updateTotal();
   }
 
-  getClients() {
+  private getClients() {
     this.subService.processClients();
-    this.subService.clients.subscribe(response => {
-      this.clients = response;
-    });
+    this.subscriptions.push(
+      this.subService.clients.subscribe((response: Client[]) => {
+        this.clients = response;
+      }));
   }
 
-  notifySocket() { // would change this...
+  private notifySocket(): void { // would change this...
     const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'invoices' };
     this.messagingService.sendUpdate(data);
   }
 
-  notifySocketNew() { // ...to this for audit log
+  private notifySocketNew(): void {
     const data = { User: this.authService.currentUser.Name, UserId: this.authService.currentUser.id, Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'invoices', ActionDetails: 'This would be whatever it was the user did' };
     this.messagingService.sendUpdate(data);
   }
 
-  loadFranchises() {
+  private loadFranchises(): void {
     this.subService.processFranchises();
-    this.subService.franchises.subscribe(response => {
-      this.franchises = response;
-    });
+    this.subscriptions.push(
+      this.subService.franchises.subscribe((response: Franchise[]) => {
+        this.franchises = response;
+      }));
   }
 
-  updateTotal() {
+  public updateTotal(): void {
     this.Invoice.Total = 0;
     this.serviceTypes.forEach(service => {
       if (service.checked === true) { // all other services
@@ -200,17 +193,14 @@ export class InvoiceFormComponent implements OnInit {
     if (this.Invoice.CalcTax === true) { this.applyTax(); }
   }
 
-  applyTax() {
+  public applyTax(): void {
     const calc = this.Invoice.Total * this.authService._franchiseInfo.TaxRate;
     const tax = Math.ceil(calc * 100) / 100;
     this.Invoice.Total += tax;
     this.Invoice.Total = Math.ceil(this.Invoice.Total * 100) / 100;
   }
 
-  pushVehicle() {
-    if ((<any>window).deviceReady === true) {
-      (<any>window).Keyboard.hide();
-    }
+  public pushVehicle(): void {
     if (this.addStock === true) {
       if (this.stocks.indexOf(this.stockNumber) > -1) {
         this.utilService.alertError(`This vehicle has already been added to this invoice.`);
@@ -235,7 +225,7 @@ export class InvoiceFormComponent implements OnInit {
     this.updateTotal();
   }
 
-  scanVIN() {
+  public scanVIN(): void {
     this.barcodeScanner.scan().then(data => {
       if (this.vins.indexOf(this.stockNumber) > -1) {
         this.utilService.alertError(`This vehicle has already been added to this invoice.`);
@@ -248,7 +238,7 @@ export class InvoiceFormComponent implements OnInit {
     });
   }
 
-  removeVehicle(vehicle) {
+  public removeVehicle(vehicle: any): void {
     if (this.stocks.indexOf(vehicle), 1) {
       this.stocks.splice(this.stocks.indexOf(vehicle), 1);
       this.serviceTypes[1].optionsArray[0].quantity = this.stocks.length + this.vins.length;
@@ -260,14 +250,14 @@ export class InvoiceFormComponent implements OnInit {
     this.updateTotal();
   }
 
-  updateInvoiceData() {
-    if (this.Invoice.PaymentMethod === '') {
+  private updateInvoiceData(): void {
+    if (this.Invoice.PaymentMethod === '' && this.Invoice.PaymentMethod !== null) {
       this.Invoice.PaymentMethod = 'None';
     }
     if (this.Invoice.PaymentMethod === 'None') {
       this.Invoice.Paid = false;
     }
-    if (this.authService.currentUser.Role !== 'Super' && this.authService.currentUser.Role !== 'Honch' && this.authService.currentUser.Role !== 'Manager' && this.authService.currentUser.Role !== 'Owner') {
+    if (this.authService.currentUser.Role !== 'Super' && this.authService.currentUser.Role !== 'Honcho' && this.authService.currentUser.Role !== 'Manager' && this.authService.currentUser.Role !== 'Owner') {
       this.Invoice.Paid = false;
     }
     this.Invoice.VIN = this.vins.toString();
@@ -288,24 +278,19 @@ export class InvoiceFormComponent implements OnInit {
     this.Invoice.OtherServices = JSON.stringify(this.serviceTypes);
   }
 
-  submitInvoice() {
-    if ((<any>window).deviceReady === true) {
-      (<any>window).Keyboard.hide();
-    }
+  public submitInvoice() {
     this.updateTotal();
     this.updateInvoiceData();
     if (this.editing === false) {
       this.Invoice.Employee = this.authService.currentUser.Name;
       this.Invoice.EmployeeId = this.authService.currentUser.id;
       this.Invoice.FranchiseId = this.authService.currentUser.FranchiseId;
-      console.log('invoice to save: ', this.Invoice);
-      this.invoiceService.createInvoice(this.Invoice).subscribe(res => {
+      this.invoiceService.createInvoice(this.Invoice).then(res => {
         console.log('response: ', res);
       }, error => { this.utilService.alertError(`Error submitting invoice, please try again.`); });
     } else {
       this.Invoice.EditedBy = this.authService.currentUser.Name;
-      this.invoiceService.updateInvoice(this.selectedId, this.Invoice).subscribe(res => {
-        console.log(res);
+      this.invoiceService.updateInvoice(this.selectedId, this.Invoice).then(res => {
       }, error => { this.utilService.alertError(`Error submitting invoice, please try again.`); });
     }
     setTimeout(() => this.notifySocket(), 500);
@@ -313,25 +298,21 @@ export class InvoiceFormComponent implements OnInit {
     setTimeout(() => this.switchToSearch.emit(), 600);
   }
 
-  editInvoice(x) {
+  public editInvoice(inv: Invoice): void {
     this.clearForm();
     this.serviceSelected = true;
     this.editing = true;
-    const data = JSON.parse(JSON.stringify(x));
-    this.Invoice = data;
-    this.selectedId = data.id;
-    this.Invoice.CalcTax = data.CalcTax;
-    // tslint:disable-next-line:radix
-    this.Invoice.Total = parseInt(this.Invoice.Total);
-    this.setupEdit(data);
+    this.Invoice = new Invoice(inv);
+    this.selectedId = inv.id;
+    // this.Invoice.CalcTax = inv.CalcTax;
+    this.setupEdit(inv);
   }
 
-  setupEdit(data) {
-    console.log('invoice to edit: ', data);
-    if (data.Tint !== '') {
+  private setupEdit(data: Invoice): void {
+    if (data.Tint !== '' && data.Tint !== null) {
       this.windowOptions = JSON.parse(data.Tint);
     }
-    if (data.Stripes !== '') {
+    if (data.Stripes !== '' && data.Stripes !== null) {
       this.panelOptions = JSON.parse(data.Stripes);
       let panels = 0;
       // tslint:disable-next-line:prefer-for-of
@@ -342,22 +323,19 @@ export class InvoiceFormComponent implements OnInit {
         }
       }
     }
-    if (data.PPF !== '') {
+    if (data.PPF !== '' && data.PPF !== null) {
       this.ppfOptions = JSON.parse(data.PPF);
     }
-    if (this.Invoice.VIN !== '') {
+    if (this.Invoice.VIN !== '' && this.Invoice.VIN !== null) {
       this.vins = JSON.parse('[' + data.VIN + ']');
     }
-    if (this.Invoice.Stock !== '') {
+    if (this.Invoice.Stock !== '' && this.Invoice.Stock !== null) {
       this.stocks = JSON.parse('[' + data.Stock + ']');
     }
-    if (this.Invoice.RO !== '') {
+    if (this.Invoice.RO !== '' && this.Invoice.RO !== null) {
       this.addRO = true;
     }
-    if (this.Invoice.RO !== '') {
-      this.addRO = true;
-    }
-    if (this.Invoice.Description !== '') {
+    if (this.Invoice.Description !== '' && this.Invoice.Description !== null) {
       this.addDescription = true;
     }
     this.customPinstripes = JSON.parse(data.CustomPinstripe);
@@ -366,35 +344,8 @@ export class InvoiceFormComponent implements OnInit {
     this.updateTotal();
   }
 
-  clearForm() {
-    if ((<any>window).deviceReady === true) {
-      (<any>window).Keyboard.hide();
-    }
-    this.Invoice = {
-      Employee: '',
-      EmployeeId: '',
-      Stripes: '',
-      Tint: '',
-      PPF: '',
-      Client: '',
-      Total: 0,
-      Paid: '',
-      PaymentMethod: '',
-      PO: '',
-      CheckNumber: '',
-      CustomPinstripes: '',
-      RO: '',
-      VIN: '',
-      Stock: '',
-      Description: '',
-      CalcTax: false,
-      OtherServices: '',
-      VehicleDescription: '',
-      Comments: '',
-      Vehicle: '',
-      EditedBy: '',
-      FranchiseId: '',
-    };
+  public clearForm(): void {
+    this.Invoice = new Invoice();
     this.stocks = [];
     this.vins = [];
     this.stockNumber = '';
@@ -459,8 +410,8 @@ export class InvoiceFormComponent implements OnInit {
     ];
   }
 
-  deleteInvoice(id) {
-    this.invoiceService.deleteInvoice(id).subscribe(res => {
+  public deleteInvoice(id: number): void {
+    this.invoiceService.deleteInvoice(id).then(res => {
       console.log(`delete: ${res}`);
       if (res === 1) {
         this.clearForm();
@@ -471,7 +422,7 @@ export class InvoiceFormComponent implements OnInit {
     });
   }
 
-  formatDate(date) {
+  public formatDate(date: any): string {
     return moment(date).format('MMMM Do YYYY');
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material';
 import * as moment from 'moment';
@@ -9,6 +9,8 @@ import { UtilService } from 'src/app/services/util.service';
 import { SignatureDialogComponent } from '../signature-dialog/signature-dialog.component';
 import { UploadFileService } from 'src/app/services/upload-file.service';
 import { SubscriptionsService } from 'src/app/services/subscriptions.service';
+import { Subscription } from 'rxjs';
+import { Client } from 'src/app/models/client.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -16,32 +18,41 @@ import { SubscriptionsService } from 'src/app/services/subscriptions.service';
   templateUrl: './invoice-preview.component.html',
   styleUrls: ['./invoice-preview.component.css']
 })
-export class InvoicePreviewComponent implements OnInit {
+export class InvoicePreviewComponent implements OnInit, OnDestroy {
 
-  public showTint = false;
-  public serviceDisplay = [];
+  public showTint: boolean = false;
+  public serviceDisplay: any[] = [];
   public displayedColumns: string[] = ['name', 'quantity', 'pricePer', 'total'];
   private progress: { percentage: number } = { percentage: 0 };
   public dataSource = new MatTableDataSource<any>([]);
-  public vins = [];
-  public stocks = [];
-  public RO = '';
-  public PO = '';
-  public Description = '';
-  public Client = '';
-  public invoiceNumber = 0;
-  public tax = 0;
-  public total = 0;
-  public grandTotal = 0;
-  public calcTax = false;
-  public printing = false;
-  public clients: any;
+  public vins: string[] = [];
+  public stocks: string[] = [];
+  public RO: string = null;
+  public PO: string = null;
+  public Description: string = null;
+  public Client: string = null;
+  public invoiceNumber: number = 0;
+  public tax: number = 0;
+  public total: number = 0;
+  public grandTotal: number = 0;
+  public calcTax: boolean = false;
+  public printing: boolean = false;
+  public clients: Client[] = [];
   // tslint:disable-next-line:variable-name
   private _printIframe: any;
-  public signature = '';
-  public isCordova = false;
+  public signature: string = null;
+  public isCordova: boolean = false;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private subService: SubscriptionsService, public uploadService: UploadFileService, private utilService: UtilService, private dialog: MatDialog, public authService: AuthService, private emailService: EmailService, public dialogRef: MatDialogRef<InvoicePreviewComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    private subService: SubscriptionsService,
+    public uploadService: UploadFileService,
+    private utilService: UtilService,
+    private dialog: MatDialog,
+    public authService: AuthService,
+    private emailService: EmailService,
+    public dialogRef: MatDialogRef<InvoicePreviewComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.setServices(this.data.content);
@@ -51,6 +62,10 @@ export class InvoicePreviewComponent implements OnInit {
       this.isCordova = true;
     }
     console.log('data passed to invoice: ', this.data.content);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe);
   }
 
   public performAction(): void {
@@ -68,7 +83,7 @@ export class InvoicePreviewComponent implements OnInit {
     this.utilService.generatePDF(action, div, message);
   }
 
-  public formatDate(date): string {
+  public formatDate(date: any): string {
     return moment(date).format('MMMM Do YYYY');
   }
 
@@ -78,9 +93,10 @@ export class InvoicePreviewComponent implements OnInit {
 
   private getClients(): void {
     this.subService.processClients();
-    this.subService.clients.subscribe(response => {
+    this.subscriptions.push(
+    this.subService.clients.subscribe((response: Client[]) => {
       this.clients = response;
-    });
+    }));
   }
 
   public emailInvoice(): void {
@@ -100,7 +116,7 @@ export class InvoicePreviewComponent implements OnInit {
       if (sendTo !== '' && sendTo !== undefined && sendTo !== null) {
         console.log('should be sending email to: ', sendTo);
         const div: HTMLDivElement = document.querySelector('#hiddenContent');
-        this.emailService.sendInvoice(div.innerHTML).subscribe(response => { });
+        this.emailService.sendInvoice(div.innerHTML).then(response => { });
         this.dialogRef.close();
       } else {
         this.dialogRef.close();
@@ -111,25 +127,25 @@ export class InvoicePreviewComponent implements OnInit {
 
   public setServices(data: any): void {
     this.processOthers(data);
-    if (data.Tint !== '') {
+    if (data.Tint !== '' && data.Tint !== null) {
       this.processTint(data);
     }
-    if (data.Stripes !== '') {
+    if (data.Stripes !== '' && data.Stripes !== null) {
       this.processStripes(data);
     }
-    if (data.PPF !== '') {
+    if (data.PPF !== '' && data.PPF !== null) {
       this.processPPF(data);
     }
-    if (data.VIN !== '') {
+    if (data.VIN !== '' && data.VIN !== null) {
       this.vins = JSON.parse('[' + data.VIN + ']');
     }
-    if (data.Stock !== '') {
+    if (data.Stock !== '' && data.Stock !== null) {
       this.stocks = JSON.parse('[' + data.Stock + ']');
     }
-    if (data.RO !== '') {
+    if (data.RO !== '' && data.RO !== null) {
       this.RO = data.RO;
     }
-    if (data.PO !== '') {
+    if (data.PO !== '' && data.PO !== null) {
       this.PO = data.PO;
     }
     this.calcTax = data.CalcTax;
@@ -177,7 +193,7 @@ export class InvoicePreviewComponent implements OnInit {
     this.serviceDisplay.push(service);
   }
 
-  private processPPF(data: any) {
+  private processPPF(data: any): void {
     const options = JSON.parse(data.PPF);
     options.forEach(item => {
       if (item.selected === true) {
@@ -233,7 +249,7 @@ export class InvoicePreviewComponent implements OnInit {
     });
     newDialog.beforeClose().subscribe(result => {
       this.signature = newDialog.componentInstance.signatureURL;
-      if (this.signature !== '') {
+      if (this.signature !== '' && this.signature !== null) {
         this.convertToBlob();
       }
     });

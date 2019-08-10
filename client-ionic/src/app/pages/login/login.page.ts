@@ -12,17 +12,23 @@ import { Platform } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private platform: Platform, private utilSerivce: UtilService, private userService: UserService, private authService: AuthService, private router: Router) { }
-  username = '';
-  password = '';
+  public username: string = '';
+  public password: string = '';
 
-  ngOnInit() {
+  constructor(
+    private platform: Platform,
+    private utilSerivce: UtilService,
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router) { }
+
+  ngOnInit(): void {
     document.body.style.backgroundImage = 'url("assets/logo5.png")';
-    // localStorage.removeItem('jwtToken');
-    // localStorage.removeItem('currentUser');
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('currentUser');
   }
 
-  navigate(role) {
+  private navigate(role: string): void {
     switch (role) {
       case 'Super': this.router.navigate([`/home`], {}); break;
       case 'Tech': this.router.navigate([`/home`], {}); break;
@@ -37,7 +43,7 @@ export class LoginPage implements OnInit {
     this.login();
   }
 
-  login() {
+  public login(): void {
     this.authService.loginUser(this.username, this.password).then(res => {
       console.log('login response: ', res);
       // tslint:disable-next-line:no-angle-bracket-type-assertion

@@ -2,23 +2,36 @@
     <img class='toolbarLogo' src='assets/logo2.png' />
     <span class='screenTitle'>{{ screen }}</span>
     <!-- <span class='invoiceDisplay'
-      *ngIf="controlInvoice.searchInvoices === true && invoiceMode === true">{{ controlInvoice.invoiceSearch.display }}</span>
+      *ngIf="controlInvoice.searchInvoices === true && invoiceMode === true">{{ controlInvoice.invoiceSearch.display }}</span> -->
     <span class='calendar'
-      [ngClass]="{'show': controlAppointment.searchAppointments === true && appointmentMode === true}">
+      [ngClass]="{'show': screen.toLowerCase().indexOf('appointment') > -1}">
       <mat-form-field class='datePicker' style='cursor: pointer;'>
-        <input [(ngModel)]="controlAppointment.searchDate" (click)="openCalendar($event)" matInput
+        <input [(ngModel)]="searchDate" (click)="openCalendar($event)" matInput
           (dateInput)="subService.processAppointments();" (dateChange)="subService.processAppointments();"
-          [matDatepicker]="appointmentCalendar" placeholder="Date" [min]="controlAppointment.getMinDate()" readonly>
+          [matDatepicker]="appointmentCalendar" placeholder="Date" [min]="getMinDate()" readonly>
         <mat-datepicker-toggle matSuffix [for]="appointmentCalendar"></mat-datepicker-toggle>
         <mat-datepicker touchUi tabindex="-1" #appointmentCalendar></mat-datepicker>
       </mat-form-field>
     </span>
-    <span *ngIf="messagingComponent.totalUnread > 0" style='cursor:pointer;' (click)='showMessages = true;' class='totalUnread'>{{ messagingComponent.totalUnread }}</span>
-    <mat-icon (click)='showMessages = true;' class='messageButton'>chat</mat-icon> -->
+    <!-- <span *ngIf="messagingComponent.totalUnread > 0" style='cursor:pointer;' (click)='showMessages = true;' class='totalUnread'>{{ messagingComponent.totalUnread }}</span> -->
+    
+    <button class='add' *ngIf="search === true" mat-button
+    (click)="actionClick.emit();">
+    <mat-icon style='color:white'>{{ addIcon }}</mat-icon>
+    {{ addText }}
+  </button>
+  <button class='searchButton' *ngIf="search === false"
+    (click)="actionClick.emit();" mat-button>
+    <mat-icon>{{ searchIcon }}</mat-icon>
+    {{ searchText }}
+  </button>
+    
+    <mat-icon (click)='setMessageDisplay();' class='messageButton'>chat</mat-icon> 
   </mat-toolbar>
 
-  <!-- <div class="mainOverlay" *ngIf="showMessages === true" (click)="showMessages = false;"></div>
+  <div class="mainOverlay" *ngIf="showMessages === true" (click)="setMessageDisplay();"></div>
   <div class="selectorOverlay" *ngIf="messagingComponent.showUserSelector === true"
     (click)="messagingComponent.showUserSelector = false;"></div>
   <div class="selectorOverlay" *ngIf="messagingComponent.showChat === true"
-    (click)="messagingComponent.showChat = false; messagingComponent.messageChat.drawerOpen = false;"></div> -->
+    (click)="messagingComponent.showChat = false; messagingComponent.messageChat.drawerOpen = false;"></div>
+  <app-messaging (close)='showMessages = false;' #messagingComponent class='messageDrawer' [ngClass]="{'open': showMessages === true}"></app-messaging>

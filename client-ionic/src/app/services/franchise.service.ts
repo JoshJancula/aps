@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Franchise } from '../models/franchise.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class FranchiseService {
   private url = `https://aps-josh.herokuapp.com/api/franchises`;
   private localUrl = `http://localhost:8080/api/franchises`;
 
-  async createFranchise(newFranchise: string) {
+  async createFranchise(newFranchise: Franchise) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -28,7 +30,7 @@ export class FranchiseService {
     }
   }
 
-  async getFranchises() {
+  async getFranchise(id: number) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -38,35 +40,16 @@ export class FranchiseService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(this.localUrl, httpOptions).toPromise();
+        return this.http.get(this.localUrl.replace('franchises', `franchises/${id}`), httpOptions).pipe(map(f => new Franchise(f))).toPromise();
       } else {
-        return this.http.get(this.url, httpOptions).toPromise();
+        return this.http.get(this.url.replace('franchises', `franchises/${id}`), httpOptions).pipe(map(f => new Franchise(f))).toPromise();
       }
     } else {
       console.log('no token found');
     }
   }
 
-  async getFranchise(id) {
-    if (localStorage.getItem('jwtToken')) {
-      const httpOptions = {
-        headers: new HttpHeaders({
-          Authorization: localStorage.getItem('jwtToken'),
-        }),
-        reportProgress: true,
-        observe: 'events' as 'events'
-      };
-      if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(this.localUrl.replace('franchises', `franchises/${id}`), httpOptions).toPromise();
-      } else {
-        return this.http.get(this.url.replace('franchises', `franchises/${id}`), httpOptions).toPromise();
-      }
-    } else {
-      console.log('no token found');
-    }
-  }
-
-  async deleteFranchise(id) {
+  async deleteFranchise(id: number) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -83,7 +66,7 @@ export class FranchiseService {
     }
   }
 
-  async updateFranchise(id, updatedFranchise) {
+  async updateFranchise(id: number, updatedFranchise: Franchise) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({

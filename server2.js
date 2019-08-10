@@ -65,7 +65,6 @@ db.sequelize.sync().then(() => {
         console.log('===================================');
 
         io.on('connection', (socket) => {
-
             // on connection get all messages for user
             socket.on('connectionInfo', (data) => {
                 let messages = [];
@@ -90,16 +89,27 @@ db.sequelize.sync().then(() => {
                         });
                     });
                 });
+
+                socket.join(`Room${data.FranchiseId}`, () => { });
             });
 
             socket.on('update', (data) => {
+                // io.to('room 237').emit('a new user has joined the room');
+                // switch (data.Action) {
+                //     case 'franchises': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateFranchises' }); break;
+                //     case 'clients': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateClients' }); break;
+                //     case 'users': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateUsers' }); break;
+                //     case 'invoices': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateInvoices' }); break;
+                //     case 'appointments': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateAppointments' }); break;
+                //     case 'timeCards': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateTimeCards' }); break;
+                // }
                 switch (data.Action) {
-                    case 'franchises': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateFranchises' }); break;
-                    case 'clients': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateClients' }); break;
-                    case 'users': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateUsers' }); break;
-                    case 'invoices': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateInvoices' }); break;
-                    case 'appointments': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateAppointments' }); break;
-                    case 'timeCards': socket.broadcast.emit('update', { Franchise: data.Franchise, Action: 'updateTimeCards' }); break;
+                    case 'franchises': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateFranchises' }); break;
+                    case 'clients': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateClients' }); break;
+                    case 'users': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateUsers' }); break;
+                    case 'invoices': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateInvoices' }); break;
+                    case 'appointments': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateAppointments' }); break;
+                    case 'timeCards': socket.to(`Room${data.Franchise}`).emit('update', { Franchise: data.Franchise, Action: 'updateTimeCards' }); break;
                 }
             });
 

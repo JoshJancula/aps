@@ -14,7 +14,7 @@ export class AuthService {
   public _franchiseInfo: any;
   public isLoggedIn = false;
   public logoutSubject = new BehaviorSubject(this.isLoggedIn);
-  loginStatus = this.logoutSubject.asObservable();
+  public loginStatus = this.logoutSubject.asObservable();
 
   constructor(private router: Router, private http: HttpClient) {
     if (localStorage.getItem('jwtToken')) {
@@ -24,7 +24,6 @@ export class AuthService {
   }
 
   async loginUser(username: string, password: string) {
-    // tslint:disable-next-line:prefer-const
     const url = `https://aps-josh.herokuapp.com/api/users`;
     const signinUrl = `http://localhost:8080/api/signin`;
     const info = { Username: username, Password: password };
@@ -35,7 +34,7 @@ export class AuthService {
     }
   }
 
-  public logout() {
+  public logout(): void {
     localStorage.removeItem('jwtToken');
     this.isLoggedIn = false;
     this.logoutSubject.next(this.isLoggedIn);
@@ -51,7 +50,6 @@ export class AuthService {
         this._currentUser = { Username: null, Name: null, Role: null, FranchiseId: null, id: null, Phone: null, Email: null, Avatar: null, Initials: null };
       }
     }
-
     return this._currentUser;
   }
 

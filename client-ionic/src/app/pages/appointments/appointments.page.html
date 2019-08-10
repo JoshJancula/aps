@@ -1,10 +1,10 @@
-<app-toolbar #nav style="position: sticky; top: 0; left: 0;"></app-toolbar>
+<app-toolbar #nav (actionClick)="layout ? layout.setView() : null" style="z-index: 999; position: sticky; top: 0; left: 0;" [search]="layout ? layout.searchAppointments : null" [searchText]=" 'View Appointments' " [addIcon]=" 'create' " [searchDate]="layout ? layout.searchDate : null" [searchIcon]=" 'today' " [addIcon]=""></app-toolbar>
 <div class='row  mainRow'>
   <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
     <app-side-nav></app-side-nav>
  </div>
  <div class='col-xl-10 col-lg-10 col-md-12 col-sm-12 contentRow'>
-  <app-appointment-layout></app-appointment-layout>
+  <app-appointment-layout #layout [searchDate]="nav ? nav.searchDate : null"></app-appointment-layout>
 </div>
 <button class='filterIcon'>
   <mat-icon style='color:white;'>search</mat-icon>

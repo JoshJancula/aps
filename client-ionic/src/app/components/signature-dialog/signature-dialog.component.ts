@@ -10,25 +10,23 @@ import { MatDialogRef } from '@angular/material';
 })
 export class SignatureDialogComponent implements OnInit {
 
-  signatureURL = '';
-  signaturePadOptions = {
+  @ViewChild(SignaturePad, null) signaturePad: SignaturePad;
+  public signatureURL: string = '';
+  public signaturePadOptions: any = {
     minWidth: 5,
     canvasWidth: 800,
     canvasHeight: 500
   };
 
-  @ViewChild(SignaturePad, null) signaturePad: SignaturePad;
-
   constructor(public dialogRef: MatDialogRef<SignatureDialogComponent>) { }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void {}
 
-  clearPad() {
+  public clearPad(): void {
     this.signaturePad.clear();
   }
 
-  finishSigning() {
+  public finishSigning(): void {
     this.signatureURL = this.signaturePad.toDataURL();
     this.clearPad();
     this.dialogRef.close();

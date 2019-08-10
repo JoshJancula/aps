@@ -1,48 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'app-bottom-popup',
   templateUrl: './bottom-popup.component.html',
   styleUrls: ['./bottom-popup.component.css']
 })
 export class BottomPopupComponent implements OnInit {
 
-  constructor(public authService: AuthService, private bottomSheetRef: MatBottomSheetRef<BottomPopupComponent>) { }
+  constructor(
+    private router: Router,
+    public authService: AuthService,
+    private bottomSheetRef: MatBottomSheetRef<BottomPopupComponent>) { }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void {}
 
-  openUsers() {
-    this.bottomSheetRef.dismiss('staff');
+  public routeUser(screen: string): void {
+    this.bottomSheetRef.dismiss(screen);
     event.preventDefault();
   }
 
-  openFranchises() {
-    this.bottomSheetRef.dismiss('franchises');
-    event.preventDefault();
-  }
-
-  openClients() {
-    this.bottomSheetRef.dismiss('clients');
-    event.preventDefault();
-  }
-
-  openAppointments() {
-    this.bottomSheetRef.dismiss('appointments');
-    event.preventDefault();
-  }
-
-  openInvoices() {
-    this.bottomSheetRef.dismiss('invoices');
-    event.preventDefault();
-  }
-
-  openSettings() {
-    this.bottomSheetRef.dismiss('home');
-    event.preventDefault();
+  public isActiveScreen(screen: string): boolean {
+    let valid = false;
+    if (this.router.url.indexOf(screen) > -1) { valid = true; }
+    return valid;
   }
 
 }

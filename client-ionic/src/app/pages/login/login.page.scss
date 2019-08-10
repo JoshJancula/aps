@@ -1,10 +1,10 @@
-.mainRow {
+.loginCard {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
 }
 
-.mainCard {
+.loginCard {
     width: 70%;
     margin-left: 20%;
     /* vertical-align: middle; */
@@ -13,7 +13,7 @@
 }
 
 @media (max-width: 768px) { 
-.mainCard {
+.loginCard {
     width: 60%;
     margin-left: 25%;
     margin-top: 10%;

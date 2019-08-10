@@ -11,14 +11,18 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class UploadFileService {
-  uploadTask: any;
-  storageRef: any;
-  private basePath = '/uploads';
+  public uploadTask: any = null;
+  public storageRef: any = null;
+  private basePath: string = '/uploads';
 
-  constructor(private messagingService: MessageService, private invoiceService: InvoiceService, public app: FirebaseApp, private userService: UserService, private authService: AuthService) { }
+  constructor(
+    private messagingService: MessageService,
+    private invoiceService: InvoiceService,
+    public app: FirebaseApp,
+    private userService: UserService,
+    private authService: AuthService) { }
 
-  pushFileToStorage(file, progress: { percentage: number }, action) {
-    console.log('action: ', action);
+  public pushFileToStorage(file: any, progress: { percentage: number }, action: any) {
     let storageRef;
     let uploadTask;
 
@@ -59,8 +63,7 @@ export class UploadFileService {
             }).catch(err => { console.log('err uploading image... ', err); });
           }
           if (action.value === 'signature') {
-            this.invoiceService.addInvoiceSignature({ id: action.id, signature: downloadURL }).subscribe(res2 => {
-              console.log('response updating invoice signature: ', res2);
+            this.invoiceService.addInvoiceSignature({ id: action.id, signature: downloadURL }).then(res2 => {
               const data = { MessageType: 'update', Action: 'invoices' };
               this.messagingService.sendUpdate(data);
             });

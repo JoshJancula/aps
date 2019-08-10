@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-franchises',
   templateUrl: './franchises.page.html',
   styleUrls: ['./franchises.page.scss'],
 })
-export class FranchisesPage implements OnInit {
+export class FranchisesPage implements OnInit, OnDestroy {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {}
 
 }

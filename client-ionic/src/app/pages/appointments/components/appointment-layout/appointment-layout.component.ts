@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { SubscriptionsService } from 'src/app/services/subscriptions.service';
 import { PhonePipe } from 'src/app/pipes/phone.pipe';
@@ -7,46 +7,37 @@ import { MessageService } from 'src/app/services/message.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { UtilService } from 'src/app/services/util.service';
 import * as moment from 'moment';
+import { Appointment } from 'src/app/models/appointment.model';
+import { Subscription } from 'rxjs';
+import { Client } from 'src/app/models/client.model';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-appointment-layout',
   templateUrl: './appointment-layout.component.html',
   styleUrls: ['./appointment-layout.component.scss'],
 })
+
 export class AppointmentLayoutComponent implements OnInit, OnDestroy {
-  Appointment: any = {
-    Date: '',
-    Time: '',
-    Client: '',
-    Location: '',
-    ContactPerson: '',
-    ContactPersonPhone: '',
-    ScheduledBy: '',
-    ScheduledById: '',
-    AssignedEmployee: '',
-    AssignedEmployeeId: '',
-    Comments: '',
-    FranchiseId: this.authService.currentUser.FranchiseId
-  };
-  clients: any;
-  appointments = [];
-  franchises: any;
-  editing = false;
-  selectedId = '';
-  selectFromClients = false;
-  users: any;
-  anytime = false;
-  searchAppointments = true;
-  addAppointment = false;
-  showTodays = true;
-  searchDate = new Date();
-  cordova = false;
+
   @ViewChild('calendar', null) calendar: any;
   @ViewChild('calendar2', null) calendar2: any;
+  @Input() searchDate: string = new Date().toISOString();
+  public Appointment = new Appointment();
+  public clients: Client[] = [];
+  public appointments: Appointment[] = [];
+  public franchises: any;
+  public editing: boolean = false;
+  public selectedId: any = null;
+  public selectFromClients: boolean = false;
+  public users: any = [];
+  public anytime: boolean = false;
+  public searchAppointments: boolean = true;
+  public addAppointment: boolean = false;
+  public showTodays: boolean = true;
+  public cordova: boolean = false;
+  public subscriptions: Subscription[] = [];
 
-  public subscriptions = [];
-
-  // tslint:disable-next-line:max-line-length
   constructor(
     private launchNavigator: LaunchNavigator,
     private subService: SubscriptionsService,
@@ -56,14 +47,11 @@ export class AppointmentLayoutComponent implements OnInit, OnDestroy {
     private appointmentService: AppointmentService,
     private utilService: UtilService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAppointments();
     this.getClients();
     this.loadFranchises();
     this.getUsers();
-    if ((<any>window).deviceReady === true) {
-      this.cordova = true;
-    }
   }
 
   ngOnDestroy(): void {
@@ -71,32 +59,32 @@ export class AppointmentLayoutComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe);
   }
 
-  loadAppointments() {
+  private loadAppointments(): void {
     this.subService.processAppointments();
     this.subscriptions.push(
-      this.subService.appointments.subscribe(response => {
+      this.subService.appointments.subscribe((response: Appointment[]) => {
         this.filterResponse(response);
       }));
   }
 
-  filterResponse(res) {
+  private filterResponse(res: Appointment[]): void {
     this.appointments = [];
     res.forEach(app => {
       if (moment(app.Date).format('MM/DD/YY') === moment(this.searchDate).format('MM/DD/YY')) {
         this.appointments.push(app);
-      } else if (moment(app.Date).isBefore(moment(new Date()))) {
+      } else if (moment(app.Date).isBefore(moment(new Date().toISOString()))) {
         this.appointmentService.deleteAppointment(app.id).then(response => { console.log('res deleting old appointment: ', response); });
       }
     });
   }
 
-  getDirections(address) {
+  public getDirections(address: any): void {
     if ((<any>window).deviceReady === true) {
       this.launchNavigator.navigate(address.Location);
     }
   }
 
-  setView() {
+  public setView(): void {
     if (this.searchAppointments === true) {
       this.searchAppointments = false;
       this.addAppointment = true;
@@ -106,19 +94,18 @@ export class AppointmentLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  getUsers() {
+  public getUsers(): void {
     this.subService.processUsers();
     this.subscriptions.push(
       this.subService.users.subscribe(response => {
         this.users = [];
         response.forEach(item => {
-          // tslint:disable-next-line:max-line-length
           this.users.push({ Name: item.FirstName + ' ' + item.LastName, Username: item.Username, FirstName: item.FirstName, LastName: item.LastName, Role: item.Role, id: item.id });
         });
       }));
   }
 
-  loadFranchises() {
+  private loadFranchises(): void {
     if (this.authService.currentUser.Role === 'Super') {
       this.subService.processFranchises();
       this.subscriptions.push(
@@ -128,32 +115,29 @@ export class AppointmentLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateLocation(client) {
+  public updateLocation(client: Client): void {
     this.Appointment.Location = client.Address;
   }
 
-  getClients() {
+  private getClients(): void {
     this.subService.processClients();
     this.subscriptions.push(
-      this.subService.clients.subscribe(response => {
+      this.subService.clients.subscribe((response: Client[]) => {
         this.clients = response;
       }));
   }
 
-  notifySocket() {
+  private notifySocket(): void {
     const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'appointments' };
     this.messagingService.sendUpdate(data);
   }
 
-  submitAppointment() {
-    if ((<any>window).deviceReady === true) {
-      (<any>window).Keyboard.hide();
-    }
+  public submitAppointment(): void {
     if (this.editing === false) {
+      this.Appointment.FranchiseId = this.authService._franchiseInfo.id;
       this.Appointment.ScheduledBy = this.authService.currentUser.Name;
       this.Appointment.ScheduledById = this.authService.currentUser.id;
       this.appointmentService.createAppointment(this.Appointment).then(res => {
-        console.log('response: ', res);
         this.appointmentSuccess();
       }).catch(error => {
         this.utilService.alertError(`error submitting appointment: ${error}`);
@@ -168,55 +152,38 @@ export class AppointmentLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  appointmentSuccess() {
+  private appointmentSuccess(): void {
     setTimeout(() => this.subService.processAppointments(), 500);
     setTimeout(() => this.notifySocket(), 500);
     this.clearForm();
     this.setView();
   }
 
-  editAppointment(data) {
+  public editAppointment(data: Appointment): void {
     this.editing = true;
     this.anytime = false;
     this.searchAppointments = false;
     this.addAppointment = true;
-    this.Appointment = data;
+    this.Appointment = new Appointment(data);
     this.selectedId = data.id;
     if (this.Appointment.Time === 'Anytime') {
       this.anytime = true;
     }
   }
 
-  clearForm() {
-    if ((<any>window).deviceReady === true) {
-      (<any>window).Keyboard.hide();
-    }
-    this.Appointment = {
-      Date: '',
-      Time: '',
-      Client: '',
-      Location: '',
-      ContactPerson: '',
-      ContactPersonPhone: '',
-      ScheduledBy: '',
-      ScheduledById: '',
-      AssignedEmployee: '',
-      AssignedEmployeeId: '',
-      Comments: '',
-      FranchiseId: this.authService.currentUser.FranchiseId
-    };
+  public clearForm(): void {
+    this.Appointment = new Appointment();
     this.editing = false;
     this.anytime = false;
     this.selectedId = '';
   }
 
-  formatPhone() {
+  public formatPhone(): void {
     this.Appointment.ContactPersonPhone = this.phonePipe.transform(this.Appointment.ContactPersonPhone);
   }
 
-  deleteAppointment(id) {
+  public deleteAppointment(id: number): void {
     this.appointmentService.deleteAppointment(id).then(res => {
-      console.log(`delete: ${res}`);
       if (res === 1) {
         this.clearForm();
         this.subService.processAppointments();
@@ -229,19 +196,16 @@ export class AppointmentLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  openCalendar(event) {
-    if ((<any>window).deviceReady === true) {
-      (<any>window).Keyboard.hide();
-    }
+  public openCalendar(event: any): void {
     event.preventDefault();
     this.calendar.open();
   }
 
-  getMinDate() {
+  public getMinDate(): Date {
     return new Date();
   }
 
-  setTime() {
+  public setTime(): void {
     if (this.anytime === true) {
       this.Appointment.Time = 'Anytime';
     } else {
@@ -249,8 +213,8 @@ export class AppointmentLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  formatDate(date) {
-    const temp = new Date();
+  public formatDate(date: any): string {
+    const temp = new Date().toISOString();
     const newTemp = moment(temp).format('MM/DD/YYYY');
     if (moment(newTemp).isSame(moment(date).format('MM/DD/YYYY'))) {
       return 'Today';

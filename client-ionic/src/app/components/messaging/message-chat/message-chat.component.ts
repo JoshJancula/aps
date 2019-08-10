@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessageService } from 'src/app/services/message.service';
+import { Message } from 'src/app/models/message.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -12,18 +13,17 @@ export class MessageChatComponent implements OnInit {
 
   @Output() public close = new EventEmitter();
   @Output() public emitRead = new EventEmitter();
-  public otherUser = '';
-  public newMessage = '';
-  public otherUserId = '';
-  public messages = [];
-  public currentUserId: any;
-  public drawerOpen = false;
+  public otherUser: string = '';
+  public newMessage: string = '';
+  public otherUserId: any = null;
+  public messages: Message[] = [];
+  public currentUserId: any = null;
+  public drawerOpen: boolean = false;
   constructor(public authService: AuthService, private messageService: MessageService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void {}
 
-  submitMessage() {
+  public submitMessage(): void {
     const message = {
       Author: this.authService.currentUser.Name,
       AuthorId: this.authService.currentUser.id,
@@ -35,11 +35,11 @@ export class MessageChatComponent implements OnInit {
       MessageType: 'private',
       Read: false
     };
-    this.messageService.sendMessage(message);
+    this.messageService.sendMessage(new Message(message));
     this.newMessage = '';
   }
 
-  newChat(data) {
+  public newChat(data: any): any {
     this.drawerOpen = true;
     this.messages = [];
     this.otherUser = `${data.FirstName} ${data.LastName}`;
@@ -48,7 +48,7 @@ export class MessageChatComponent implements OnInit {
     setTimeout(() => document.getElementById('scrollHere').scrollIntoView(), 30);
   }
 
-  loadChat(box) {
+  public loadChat(box: any): void {
     this.drawerOpen = true;
     this.messages = [];
     this.messages = box.Messages;
@@ -59,10 +59,9 @@ export class MessageChatComponent implements OnInit {
     this.updateRead();
   }
 
-  updateRead() {
+  public updateRead(): void {
     this.messages.forEach(message => {
-      // tslint:disable-next-line:radix
-      if (message.Read === false && parseInt(message.RecipientId) === this.authService.currentUser.id) {
+      if (message.Read === false && message.RecipientId === this.authService.currentUser.id) {
         const unread = { Read: true, id: message.id };
         message.Read = true;
         this.messageService.updateMessageStatus(unread);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as socketIo from 'socket.io-client';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 const LOCAL_URL = 'http://localhost:8080';
 const SERVER_URL = `https://aps-josh.herokuapp.com`;
@@ -10,11 +11,19 @@ const SERVER_URL = `https://aps-josh.herokuapp.com`;
 })
 export class MessageService {
 
-  private socket;
+  private socket: any;
 
-  constructor() { }
+  constructor(private authService: AuthService) {
+    this.authService.loginStatus.subscribe(res => {
+      if (res === false) {
+        if (this.socket) {
+          this.socket.disconnect();
+        }
+      }
+    });
+  }
 
-  initSocket(): void {
+  public initSocket(): void {
     if (window.location.host.indexOf('localhost') > -1) {
       this.socket = socketIo(LOCAL_URL);
     } else {
@@ -22,53 +31,53 @@ export class MessageService {
     }
   }
 
-  sendConnectionInfo(message: any): void {
+  public sendConnectionInfo(message: any): void {
     if (this.socket === undefined) {
       this.initSocket();
     }
     this.socket.emit('connectionInfo', message);
   }
 
-  sendMessage(message: any): void {
+  public sendMessage(message: any): void {
     if (this.socket === undefined) {
       this.initSocket();
     }
     this.socket.emit('message', message);
   }
 
-  updateMessageStatus(message: any) {
+  public updateMessageStatus(message: any) {
     if (this.socket === undefined) {
       this.initSocket();
     }
     this.socket.emit('read', message);
   }
 
-  sendUpdate(message: any) {
+  public sendUpdate(message: any) {
     if (this.socket === undefined) {
       this.initSocket();
     }
     this.socket.emit('update', message);
   }
 
-  onUpdate(): Observable<any> {
+  public onUpdate(): Observable<any> {
     return new Observable<any>(observer => {
       this.socket.on('update', (data: any) => { observer.next(data); });
     });
   }
 
-  onMessage(): Observable<any> {
+  public onMessage(): Observable<any> {
     return new Observable<any>(observer => {
       this.socket.on('message', (data: any) => { observer.next(data); });
     });
   }
 
-  onConnectionMessage(): Observable<any> {
+  public onConnectionMessage(): Observable<any> {
     return new Observable<any>(observer => {
       this.socket.on('allMessages', (data: any) => { observer.next(data); });
     });
   }
 
-  onEvent(event: Event): Observable<any> {
+  public onEvent(event: Event): Observable<any> {
     return new Observable<Event>(observer => {
       this.socket.on(event, () => observer.next());
     });

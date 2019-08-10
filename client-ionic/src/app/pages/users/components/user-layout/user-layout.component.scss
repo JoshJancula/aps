@@ -1,17 +1,3 @@
-
-.mat-card {
-    background: #D7D6D6;
-    opacity: .9;
-    border-radius: 10px !important;
-    // width: 90%;
-    margin-left: 2%;
-    margin-bottom: 1%;
-}
-
-.mat-card:first-child {
-    margin-top: 1%;
-}
-
 .mat-slide-toggle {
     margin-right: 2%;
 }
@@ -29,7 +15,6 @@
 
 .userForm.show, .userRow.show {
     display: block;
-    // width: 87vw;
 }
 
 .datePicker {
@@ -38,32 +23,9 @@
     right: 7%;
 }
 
-@media (max-width: 1200px) { 
-.mat-card {
-    background: #D7D6D6;
-    opacity: .9;
-    border-radius: 10px !important;
-    // width: 92%;
-    margin-left: 2%;
-    margin-bottom: 1%;
-}
-}
-
-@media (min-width: 768px) and (max-width: 992px) {
-    // .userForm.show, .userRow.show {
-    //       width: 104vw;
-    // }
-}
-
 @media (max-width: 767px) { 
-
-    // .mat-card {
-    // width: 96%;
-    // }
-
     .userForm.show, .userRow.show {
         display: block;
-        // width: 100vw;
     }
 
     .datePicker {

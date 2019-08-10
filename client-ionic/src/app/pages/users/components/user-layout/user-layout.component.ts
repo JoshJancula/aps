@@ -10,6 +10,9 @@ import { MessageService } from 'src/app/services/message.service';
 import * as moment from 'moment';
 import { HttpEventType } from '@angular/common/http';
 import { TimesheetDialogComponent } from 'src/app/components/timesheet-dialog/timesheet-dialog.component';
+import { User } from 'src/app/models/user.model';
+import { Franchise } from 'src/app/models/franchise.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-layout',
@@ -17,34 +20,21 @@ import { TimesheetDialogComponent } from 'src/app/components/timesheet-dialog/ti
   styleUrls: ['./user-layout.component.scss'],
 })
 export class UserLayoutComponent implements OnInit, OnDestroy {
+
   @ViewChild('timesheetCalendar', null) timesheetCalendar: any;
-  dayForTimesheet: any;
-  searchUsers = true;
-  addUser = false;
-  User: any = {
-    Username: '',
-    FirstName: '',
-    LastName: '',
-    Role: '',
-    Password: '',
-    Email: '',
-    Phone: '',
-    Avatar: '',
-    FranchiseId: '',
-    Active: true,
-    RequireTimesheet: false
-  };
-  users = [];
-  testPassword = '';
-  testUsername = '';
-  franchises: any;
-  editing = false;
-  selectedId = '';
-  roles = ['Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
+  public dayForTimesheet: any = null;
+  public searchUsers: boolean = true;
+  public addUser: boolean = false;
+  public User: User = new User();
+  public users: User[] = [];
+  public testPassword: string = '';
+  public testUsername: string = '';
+  public franchises: Franchise[] = [];
+  public editing: boolean = false;
+  public selectedId: any = null;
+  public roles: string[] = ['Owner', 'Manager', 'Tech', 'Print shop', 'Reception'];
+  public subscriptions: Subscription[] = [];
 
-  public subscriptions = [];
-
-  // tslint:disable-next-line:max-line-length
   constructor(
     public dialog: MatDialog,
     private timeCardService: TimecardService,
@@ -55,7 +45,7 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     private phonePipe: PhonePipe,
     private messagingService: MessageService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // if (this.authService.currentUser.Role === 'Super') {
     // 	this.loadFranchises();
     // }
@@ -65,28 +55,25 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('destroy lifecycle called');
     this.subscriptions.forEach(s => s.unsubscribe);
   }
 
-  getUsers() {
+  private getUsers(): void {
     this.subService.processUsers();
     this.subscriptions.push(
-    this.subService.users.subscribe(response => {
+    this.subService.users.subscribe((response: User[]) => {
       this.sortUsers(response);
     }));
   }
 
-  editTimesheet(user) {
-    console.log('user: ', user);
+  public editTimesheet(user: User): void {
     const params = {
       EmployeeId: user.id,
       Date: moment(this.dayForTimesheet).format('MM/DD/YYYY')
     };
-    this.timeCardService.getRangeTimecards(params).subscribe((events) => {
+    this.timeCardService.getRangeTimecards(params).then((events) => {
       if (events.type === HttpEventType.Response) {
         if (events.status === 200 && events.type === 4) {
-          console.log('user is... ', user);
           const newDialog = this.dialog.open(TimesheetDialogComponent, {
             data: { Cards: events.body, Range: this.utilService.getDateRange(this.dayForTimesheet), Name: `${user.FirstName} ${user.LastName}` },
             panelClass: 'invoicePreview'
@@ -98,12 +85,12 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  sortUsers(obj) {
-    obj.sort((a, b) => (a.LastName > b.LastName) ? 1 : ((b.LastName > a.LastName) ? -1 : 0));
-    this.users = obj;
+  private sortUsers(arr: User[]): void {
+    arr.sort((a, b) => (a.LastName > b.LastName) ? 1 : ((b.LastName > a.LastName) ? -1 : 0));
+    this.users = arr;
   }
 
-  setView() {
+  public setView(): void {
     if (this.searchUsers === true) {
       this.searchUsers = false;
       this.addUser = true;
@@ -113,12 +100,12 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  notifySocket() {
+  private notifySocket(): void {
     const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'users' };
     this.messagingService.sendUpdate(data);
   }
 
-  loadFranchises() {
+  private loadFranchises(): void {
     this.subService.processFranchises();
     this.subscriptions.push(
     this.subService.franchises.subscribe(response => {
@@ -126,7 +113,7 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     }));
   }
 
-  submitUser() {
+  public submitUser(): void {
     if (this.editing === false) {
       this.userService.createUser(this.User).then(res => {
         console.log('res: ', JSON.stringify(res));
@@ -145,14 +132,14 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  submitSuccess() {
+  private submitSuccess(): void {
     setTimeout(() => this.subService.processUsers(), 500);
     setTimeout(() => this.notifySocket(), 500);
     this.clearForm();
     this.setView();
   }
 
-  testLogin() {
+  private testLogin(): void {
     this.userService.loginUser(this.testUsername, this.testPassword).then(res => {
       console.log('login response: ', res);
     }, error => {
@@ -160,11 +147,11 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  formatPhone() {
+  public formatPhone(): void {
     this.User.Phone = this.phonePipe.transform(this.User.Phone);
   }
 
-  deleteUser(id) {
+  public deleteUser(id: number): void {
     this.userService.deleteUser(id).then(res => {
       console.log(`delete: ${res}`);
       if (res === 1) {
@@ -177,42 +164,29 @@ export class UserLayoutComponent implements OnInit, OnDestroy {
     }).catch(err => { console.log('error deleting user... ', err); });
   }
 
-  editUser(data) {
-    console.log('user to edit: ', data);
+  public editUser(data: User): void {
     this.editing = true;
     this.searchUsers = false;
     this.addUser = true;
     this.User = data;
     this.selectedId = data.id;
-    console.log('selectedId: ', data.id);
   }
 
-  clearForm() {
-    this.User = {
-      Username: '',
-      FirstName: '',
-      LastName: '',
-      Role: '',
-      Password: '',
-      Email: '',
-      Phone: '',
-      FranchiseId: '',
-      Active: true,
-      RequireTimesheet: true
-    };
+  public clearForm(): void {
+    this.User = new User();
     this.editing = false;
-    this.selectedId = '';
+    this.selectedId = null;
   }
 
-  formatDate(date) {
+  public formatDate(date: any): string {
     return moment(date).format('MMMM Do YYYY');
   }
 
-  getMax() {
+  public getMax(): Date {
     return new Date();
   }
 
-  openCalendar(event) {
+  public openCalendar(event: any): void {
     event.preventDefault();
     this.timesheetCalendar.open();
   }

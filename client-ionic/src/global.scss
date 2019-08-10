@@ -35,19 +35,14 @@
 @include mat-core();
 
 .ion-page {
-    overflow: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
 }
-
-// .mainRow {
-//     background-color: black !important;
-//     background-position: center;
-//     background-size: contain;
-//     background-repeat: no-repeat;
-// }
 
 .mat-card {
     background: #D7D6D6;
     opacity: .9;
+    border-radius: 16px !important;
 }
 
 .mat-form-field {
@@ -79,6 +74,16 @@ body {
     bottom: 0px;
     left: 0px;
     right: 0px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;  
+    margin: none;
+    background-color: black;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: none;
+    overflow: hidden !important;
 }
 
 .html2canvas-container { width: 1400px !important; height: 2400px !important; }
@@ -94,19 +99,6 @@ body {
     width: 17vw;
     position: absolute;
     left: 0;
-}
-
-body, html {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;  
-    margin: none;
-    background-color: black;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    padding: none;
-    overflow: hidden !important;
 }
 
 .searchButton {
@@ -237,8 +229,16 @@ body, html {
     z-index: 99;
     height: calc(100vh);
     background: white;
-    padding: 1%;
+    // padding: 1%;
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.8);
+}
+
+.messageButton {
+    cursor:pointer;
+    color:white; 
+    position: absolute; 
+    right: 24px; 
+    top: 24px;
 }
 
 .chatDrawer {
@@ -250,11 +250,88 @@ body, html {
     transform: translateX(0px);
 } 
 
-@media (max-width: 1024px) {
-    // .toolbarLogo {
-    //    display: none;
-    // }
-} 
+
+.mainCard {
+    margin: 2% 5% 2% 5%;
+    width: 96%;
+}
+
+
+//==================================================================================
+// new beginning on css
+//==================================================================================
+.mainRow {
+    position: absolute;
+    height: calc(100vh - 64px);
+    top: 64px;
+    right: 0px !important;
+    left: 0px !important;
+    bottom: 0px !important;
+    overflow-x: hidden !important;
+    padding: 0!important; 
+    margin:0 !important;
+}
+
+.contentRow {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    position: absolute;
+    right: 0;
+    padding: 0; 
+    margin:0;
+}
+
+.desktopView {
+    padding: 0!important;
+    margin: 0 !important;
+    position: fixed;
+    top: 72px !important;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    display: block;
+}
+
+.homeIcon {
+    display: none;
+}
+
+.filterIcon {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .desktopView {
+        display: none;
+    } 
+
+    .contentRow {
+        position: relative; 
+        right: unset;
+        padding: unset; 
+        margin: 5%;
+    }
+
+    .mainCard {
+        margin: 1% 10% 2% 10%;
+        width: 98%;
+    }
+
+    .homeIcon{
+        display: block;
+        z-index: 20;
+        height: 60px;
+        width: 60px;
+        border-radius: 30px;
+        background-color: red;
+        position: fixed;       
+        bottom: 10px;
+        left: calc(90vw);
+        cursor: pointer;
+    }
+    
+}
 
 @media (max-width: 812px) {
 .signaturePad .mat-dialog-container {
@@ -263,6 +340,7 @@ body, html {
     height: 320px;
     width: 600px;
 }
+
 }
 
 @media (max-width: 767px) { 
@@ -303,94 +381,6 @@ body, html {
         left: 2vw;
         z-index: 10;
     }
-}
-
-@media (max-width: 440px) {
-    .calendar .mat-form-field {
-        font-size: 12px;
-        width: 40%;
-        position: relative;
-        top: 7px;
-        left: 2vw;
-        z-index: 10;
-    }
-
-    .invoicePreview, app-invoice-preview  {
-        height: 90vh;
-        width: 96vw;
-    }
-
-    .bottomSnackbar {
-        width: 100vw;
-        position: unset;
-        left: unset;
-    }
-    
-}
-
-
-//==================================================================================
-// new beginning on css
-//==================================================================================
-.mainRow {
-    position: absolute;
-    height: calc(100vh - 64px);
-    top: 64px;
-    right: 0px !important;
-    left: 0px !important;
-    bottom: 0px !important;
-    overflow-x: hidden !important;
-    padding: 0!important; 
-    margin:0 !important;
-}
-
-.contentRow {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    position: absolute;
-    right: 0;
-    padding: 0!important; 
-    margin:0 !important
-}
-
-.desktopView {
-    padding: 0!important;
-    margin: 0 !important;
-    position: fixed;
-    top: 72px !important;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 100%;
-    display: block;
-}
-
-.homeIcon {
-    display: none;
-}
-
-.filterIcon {
-    display: none;
-}
-
-@media (max-width: 992px) {
-    .desktopView {
-        display: none;
-    } 
-
-    .homeIcon{
-        display: block;
-        z-index: 20;
-        height: 60px;
-        width: 60px;
-        border-radius: 30px;
-        background-color: red;
-        position: fixed;       
-        bottom: 10px;
-        left: calc(90vw);
-        cursor: pointer;
-    }
-    
 }
 
 @media (max-width: 767px) {
@@ -452,6 +442,24 @@ body, html {
         left: calc(82vw);
         cursor: pointer;
     }
+}
+
+@media (max-width: 440px) {
+    .calendar .mat-form-field {
+        font-size: 12px;
+        width: 40%;
+        position: relative;
+        top: 7px;
+        left: 2vw;
+        z-index: 10;
+    }
+
+    .bottomSnackbar {
+        width: 100vw;
+        position: unset;
+        left: unset;
+    }
+    
 }
 
 

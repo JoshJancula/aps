@@ -7,6 +7,9 @@ import { MessageService } from 'src/app/services/message.service';
 import { FranchiseService } from 'src/app/services/franchise.service';
 import { UtilService } from 'src/app/services/util.service';
 import * as moment from 'moment';
+import { Franchise } from 'src/app/models/franchise.model';
+import { Subscription } from 'rxjs';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-franchise-layout',
@@ -15,34 +18,16 @@ import * as moment from 'moment';
 })
 export class FranchiseLayoutComponent implements OnInit, OnDestroy {
 
-  Franchise: any = {
-    Name: '',
-    Phone: '',
-    Email: '',
-    Address: '',
-    TaxRate: '',
-    Active: true
-  };
-  franchises: any;
-  editing = false;
-  selectedId = '';
-  searchFranchises = true;
-  addFranchise = false;
+  public Franchise: Franchise = new Franchise();
+  public franchises: Franchise[];
+  public editing: boolean = false;
+  public selectedId: any = null;
+  public searchFranchises: boolean = true;
+  public addFranchise: boolean = false;
+  public User: User = new User();
 
-  User: any = {
-    Username: '',
-    FirstName: '',
-    LastName: '',
-    Role: 'Owner',
-    Password: '',
-    Email: '',
-    Phone: '',
-    FranchiseId: '',
-    Active: true,
-  };
-
-  location: ''; // this is dummy right now;
-  private subscriptions = [];
+  public location: string = null; // this is dummy right now;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private subService: SubscriptionsService,
@@ -53,17 +38,16 @@ export class FranchiseLayoutComponent implements OnInit, OnDestroy {
     private franchiseService: FranchiseService,
     private utilService: UtilService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadFranchises();
   }
 
   ngOnDestroy(): void {
-    console.log('destroy lifecycle called');
     this.subscriptions.forEach(s => s.unsubscribe);
   }
 
 
-  setView() {
+  public setView(): void {
     if (this.searchFranchises === true) {
       this.searchFranchises = false;
       this.addFranchise = true;
@@ -73,7 +57,7 @@ export class FranchiseLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadFranchises() {
+  private loadFranchises(): void {
     this.subService.processFranchises();
     this.subscriptions.push(
       this.subService.franchises.subscribe(response => {
@@ -81,12 +65,12 @@ export class FranchiseLayoutComponent implements OnInit, OnDestroy {
       }));
   }
 
-  notifySocket() {
+  private notifySocket(): void {
     const data = { Franchise: this.authService.currentUser.FranchiseId, MessageType: 'update', Action: 'franchises' };
     this.messagingService.sendUpdate(data);
   }
 
-  submitFranchise() {
+  public submitFranchise(): void {
     if (this.editing === false) {
       this.franchiseService.createFranchise(this.Franchise).then(res => {
         const data = JSON.parse(JSON.stringify(res));
@@ -106,23 +90,22 @@ export class FranchiseLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  postSuccess() {
+  private postSuccess(): void {
     setTimeout(() => this.subService.processFranchises(), 500);
     setTimeout(() => this.notifySocket(), 500);
     this.setView();
   }
 
-  editFranchise(data) {
+  public editFranchise(data: Franchise): void {
     this.searchFranchises = false;
     this.addFranchise = true;
     this.editing = true;
-    this.Franchise = data;
+    this.Franchise = new Franchise(data);
     this.selectedId = data.id;
   }
 
-  submitUser() {
+  public submitUser(): void {
     this.userService.createUser(this.User).then(res => {
-      console.log('res: ', JSON.stringify(res));
       setTimeout(() => this.subService.processUsers(), 500);
       setTimeout(() => this.notifySocket(), 500);
       setTimeout(() => this.subService.processFranchises(), 600);
@@ -131,39 +114,19 @@ export class FranchiseLayoutComponent implements OnInit, OnDestroy {
     }).catch(err => { console.log('error creating user... ', err); });
   }
 
-  clearForm() {
-    if ((<any>window).deviceReady === true) {
-      (<any>window).Keyboard.hide();
-    }
-    this.Franchise = {
-      Name: '',
-      Phone: '',
-      Email: '',
-      Address: '',
-      TaxRate: '',
-      Active: true
-    };
+  public clearForm(): void {
+    this.Franchise = new Franchise();
     this.editing = false;
-    this.selectedId = '';
-    this.location = '';
+    this.selectedId = null;
+    this.location = null;
     this.clearUserForm();
   }
 
-  clearUserForm() {
-    this.User = {
-      Username: '',
-      FirstName: '',
-      LastName: '',
-      Role: 'Owner',
-      Password: '',
-      Email: '',
-      Phone: '',
-      FranchiseId: '',
-      Active: true,
-    };
+  public clearUserForm(): void {
+    this.User = new User();
   }
 
-  deleteFranchise(id) {
+  public deleteFranchise(id: number): void {
     this.franchiseService.deleteFranchise(id).then(res => {
       console.log(`delete: ${res}`);
       if (res === 1) {
@@ -178,15 +141,15 @@ export class FranchiseLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  formatDate(date) {
+  public formatDate(date: string): string {
     return moment(date).format('MMMM Do YYYY');
   }
 
-  formatPhone() {
+  public formatPhone(): void {
     this.Franchise.Phone = this.phonePipe.transform(this.Franchise.Phone);
   }
 
-  formatUserPhone() {
+  public formatUserPhone(): void {
     this.User.Phone = this.phonePipe.transform(this.User.Phone);
   }
 

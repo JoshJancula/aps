@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Client } from '../models/client.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class ClientService {
   private url = `https://aps-josh.herokuapp.com/api/clients`;
   private localUrl = `http://localhost:8080/api/clients`;
 
-  async createClient(newClient: string) {
+  async createClient(newClient: Client) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -28,7 +30,7 @@ export class ClientService {
     }
   }
 
-  async getClients() {
+  async getClient(id: number) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -38,28 +40,9 @@ export class ClientService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(this.localUrl, httpOptions).toPromise();
+        return this.http.get(this.localUrl.replace('clients', `clients/${id}`), httpOptions).pipe(map(c => new Client(c))).toPromise();
       } else {
-        return this.http.get(this.url, httpOptions).toPromise();
-      }
-    } else {
-      console.log('no token found');
-    }
-  }
-
-  async getClient(id) {
-    if (localStorage.getItem('jwtToken')) {
-      const httpOptions = {
-        headers: new HttpHeaders({
-          Authorization: localStorage.getItem('jwtToken'),
-        }),
-        reportProgress: true,
-        observe: 'events' as 'events'
-      };
-      if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(this.localUrl.replace('clients', `clients/${id}`), httpOptions).toPromise();
-      } else {
-        return this.http.get(this.url.replace('clients', `clients/${id}`), httpOptions).toPromise();
+        return this.http.get(this.url.replace('clients', `clients/${id}`), httpOptions).pipe(map(c => new Client(c))).toPromise();
       }
     } else {
       console.log('no token found');
@@ -83,7 +66,7 @@ export class ClientService {
     }
   }
 
-  async updateClient(id, updatedClient) {
+  async updateClient(id: number, updatedClient: Client) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({

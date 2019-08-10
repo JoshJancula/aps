@@ -1,6 +1,14 @@
-<div class='col-lg-12 col-md-12 col-sm-12' style='overflow-x: hidden;'>
-  <div class='row form' [ngClass]="{'show': addFranchise === true}">
-    <mat-card>
+<div class="row">
+    <ng-container *ngIf="searchFranchises === true">
+      <ng-container *ngTemplateOutlet="searchLayout"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="searchFranchises === false">
+      <ng-container *ngTemplateOutlet="formLayout"></ng-container>
+    </ng-container>
+  </div>
+  
+  <ng-template #formLayout>
+    <mat-card class="mainCard">
       <div class="card-heading">Create Franchise</div>
       <mat-form-field>
         <input matInput placeholder="Name" [readonly]="editing === true" [(ngModel)]="Franchise.Name" />
@@ -44,10 +52,10 @@
       <button *ngIf="editing === true && authService.currentUser.Role === 'Super'" (click)="deleteFranchise(Franchise.id);" [disabled]="Franchise.Name === 'Master'"
         mat-button>Delete</button>
     </mat-card>
-  </div>
+  </ng-template>
 
-  <div class='row results' [ngClass]="{'show': searchFranchises === true}">
-    <mat-card *ngFor="let franchise of franchises">
+  <ng-template #searchLayout>
+    <mat-card class="mainCard" *ngFor="let franchise of franchises">
       <div>
         <p>Name: {{franchise.Name}}<br>
           Proudly striping since: {{ formatDate(franchise.createdAt) }}<br>
@@ -59,18 +67,4 @@
         <button (click)="editFranchise(franchise);" mat-button>Edit</button>
       </div>
     </mat-card>
-  </div>
-
-  <!-- end data area and display options below -->
-
-  <button class='add' *ngIf='searchFranchises === true' mat-button (click)="searchFranchises = false; addFranchise = true; editing = false;">
-    <mat-icon style='color:white'>add</mat-icon>
-    Add Franchise
-  </button>
-  <button class='searchButton' *ngIf='searchFranchises === false' (click)="addFranchise = false; searchFranchises = true;"
-    mat-button>
-    <mat-icon>search</mat-icon>
-    Search Franchises
-  </button>
-
-</div>
+</ng-template>

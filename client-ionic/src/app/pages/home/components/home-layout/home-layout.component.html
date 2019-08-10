@@ -1,72 +1,108 @@
-<div class='row' class='search'>
-    <mat-card>
-    <div class='row'>
-      <div class='col-md-6'>
-        <img *ngIf="authService.currentUser.Avatar !== null && authService.currentUser.Avatar !== '' " class='userAvatar' src="{{authService.currentUser.Avatar}}" />
-        <span *ngIf="authService.currentUser.Avatar === null || authService.currentUser.Avatar === ''" class='userInitials'>{{ authService.currentUser.Initials
-          }}</span><br>
-        <button class='uploadImageButton' (click)="imageUploader.click();" mat-button>Upload</button>
-        <input hidden type="file" #imageUploader accept="image/*" (change)="uploadImage($event)">
-      </div>
-      <div class='col-md-5'>
-        <mat-radio-group class="radio-group" color='primary' [(ngModel)]="userAction">
-          <div class='radioDivs' *ngFor="let action of actions">
-            <span style='cursor:pointer;' (click)="userAction = action"> {{ action }}</span>&nbsp;<span style='display: inline-block; width: 12px;'>&nbsp;</span>
-            <mat-radio-button color='primary' class="radio-button" [value]="action"> </mat-radio-button>
-          </div>
-        </mat-radio-group><br>
-      </div>
+<div class="row" style="width: 100%;">
+    <ng-container *ngTemplateOutlet="mainLayout"></ng-container>
+  </div>
+
+<ng-template #mainLayout>
+  <mat-card class="mainCard">
+    <ng-container *ngTemplateOutlet="topLayout"></ng-container>
+    <ng-container *ngIf="userAction === 'Timesheet'">
+      <ng-container *ngTemplateOutlet="timeSheetLayout"></ng-container>
+      <app-timesheet #timeSheet class='timesheetComponent' [ngClass]="{'show': userAction === 'Timesheet'}"></app-timesheet>
+    </ng-container>
+    <ng-container *ngIf="userAction === 'Change password'">
+      <ng-container *ngTemplateOutlet="changePasswordLayout"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="userAction === 'Set background'">
+      <ng-container *ngTemplateOutlet="changeBackgroundLayout"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="userAction === 'Request time off' ">
+      <ng-container *ngTemplateOutlet="ptoLayout"></ng-container>
+    </ng-container>
+  </mat-card>
+</ng-template>
+
+<ng-template #timesheetLayout>
+  <div class='row timesheet'>
+    <div class='row' style='width: 100%;'><span class='actionHeader'>Timesheet</span></div>
+    <div class='row' style='width: 100%;' *ngIf='timeSheet.dayTotal'><span class='actionHeader'>Day total:
+        {{ timeSheet.dayTotal }} </span></div>
+  </div>
+</ng-template>
+
+<ng-template #topLayout>
+  <div class='row'>
+    <div class='col-md-6'>
+      <img *ngIf="authService.currentUser.Avatar !== null && authService.currentUser.Avatar !== '' " class='userAvatar'
+        src="{{authService.currentUser.Avatar}}" />
+      <span *ngIf="authService.currentUser.Avatar === null || authService.currentUser.Avatar === ''"
+        class='userInitials'>{{ authService.currentUser.Initials
+        }}</span><br>
+      <button class='uploadImageButton' (click)="imageUploader.click();" mat-button>Upload</button>
+      <input hidden type="file" #imageUploader accept="image/*" (change)="uploadImage($event)">
     </div>
-    <div class='row' style='width: 100%;'>
-      <!-- Timesheet -->
-      <div class='row timesheet' *ngIf="userAction === 'Timesheet'">
-        <div class='row' style='width: 100%;'><span class='actionHeader'>Timesheet</span></div>
-        <div class='row' style='width: 100%;' *ngIf='timeSheet.dayTotal'><span class='actionHeader'>Day total: {{ timeSheet.dayTotal }} </span></div>
-        <app-timesheet #timeSheet class='timesheetComponent' [ngClass]="{'show': userAction === 'Timesheet'}"></app-timesheet>
-      </div>
-      <!-- change password -->
-      <div class='row changePassword' style='width: 100%;' *ngIf="userAction === 'Change password'">
-        <span class='actionHeader'>Change password</span>
-        <mat-form-field>
-          <input matInput type='password' placeholder="Old password" [(ngModel)]="oldPassword" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type='password' placeholder="New password" [(ngModel)]="newPassword" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type='password' placeholder="Confirm new password" [(ngModel)]="confirmNewPassword" />
-        </mat-form-field>
-        <br>
-        <br>
-        <button style='position: absolute; bottom: 20px; right: 50px;' mat-button (click)='submitPasswordChange();'>Submit</button>
-      </div>
-      <!-- change background image -->
-      <div class='row changePassword' style='width: 100%;' *ngIf="userAction === 'Set background'">
-        <div class='row' style='width: 100%;'><span class='actionHeader'>Set background image</span></div><br><br>
-        <div class='row' style='width: 100%;'>
-          <mat-radio-group class="radio-group2" color='primary' [(ngModel)]="backgroundImage">
-            <div class='radioDivs2' style='cursor:pointer;' *ngFor="let image of images">
-              <mat-radio-button color='primary' id='radioImage{{image.id}}' class="radio-button" [value]="image.src"></mat-radio-button><img style='cursor:pointer;'src='{{image.src}}'
-                class='backgroundSelect' (click)="selectImage(image);" /><span style='cursor:pointer;' (click)="selectImage(image);" > {{ image.name }}</span>&nbsp;<span style='display: inline-block; width: 12px;'>&nbsp;</span>
-            </div>
-          </mat-radio-group>
+    <div class='col-md-5'>
+      <mat-radio-group class="radio-group" color='primary' [(ngModel)]="userAction">
+        <div class='radioDivs' *ngFor="let action of actions">
+          <span style='cursor:pointer;' (click)="userAction = action"> {{ action }}</span>&nbsp;<span
+            style='display: inline-block; width: 12px;'>&nbsp;</span>
+          <mat-radio-button color='primary' class="radio-button" [value]="action"> </mat-radio-button>
         </div>
-        <button style='position: absolute; bottom: 55vh; right: 25px;' mat-button (click)='saveBackground();'>Save</button>
-        <br> <br>
-      </div>
-      <!-- Request time off -->
-      <div class='row changePassword' *ngIf="userAction === 'Request time off' ">
+      </mat-radio-group><br>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #changePasswordLayout>
+  <div class='row changePassword' style='width: 100%;'>
+    <span class='actionHeader'>Change password</span>
+    <mat-form-field>
+      <input matInput type='password' placeholder="Old password" [(ngModel)]="oldPassword" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type='password' placeholder="New password" [(ngModel)]="newPassword" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type='password' placeholder="Confirm new password" [(ngModel)]="confirmNewPassword" />
+    </mat-form-field>
+    <br>
+    <br>
+    <button style='position: absolute; bottom: 20px; right: 50px;' mat-button
+      (click)='submitPasswordChange();'>Submit</button>
+  </div>
+</ng-template>
+
+<ng-template #changeBackgroundLayout>
+  <div class='row changePassword' style='width: 100%;'>
+    <div class='row' style='width: 100%;'><span class='actionHeader'>Set background image</span></div><br><br>
+    <div class='row' style='width: 100%;'>
+      <mat-radio-group class="radio-group2" color='primary' [(ngModel)]="backgroundImage">
+        <div class='radioDivs2' style='cursor:pointer;' *ngFor="let image of images">
+          <mat-radio-button color='primary' id='radioImage{{image.id}}' class="radio-button" [value]="image.src">
+          </mat-radio-button><img style='cursor:pointer;' src='{{image.src}}' class='backgroundSelect'
+            (click)="selectImage(image);" /><span style='cursor:pointer;' (click)="selectImage(image);">
+            {{ image.name }}</span>&nbsp;<span style='display: inline-block; width: 12px;'>&nbsp;</span>
+        </div>
+      </mat-radio-group>
+    </div>
+    <button style='position: absolute; bottom: 55vh; right: 25px;' mat-button (click)='saveBackground();'>Save</button>
+    <br> <br>
+  </div>
+</ng-template>
+
+<ng-template #ptoLayout>
+   <div class='row changePassword' *ngIf="userAction === 'Request time off' ">
         <div class='row' style='width: 100%;'><span class='actionHeader'>Request time off</span></div><br><br>
-        <mat-form-field  class='leave' style='cursor: pointer;'>
-          <input style='cursor: pointer;' [(ngModel)]="leaveDate" [min]="getMinDate()"  (dateInput)="updateReturn($event);" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
+        <mat-form-field class='leave' style='cursor: pointer;'>
+          <input style='cursor: pointer;' [(ngModel)]="leaveDate" [min]="getMinDate()"
+            (dateInput)="updateReturn($event);" (click)="openCalendar($event)" matInput [matDatepicker]="calendar"
             placeholder="Leave date" readonly>
           <mat-datepicker-toggle matSuffix [for]="calendar"></mat-datepicker-toggle>
           <mat-datepicker tabindex="-1" #calendar></mat-datepicker>
           <mat-hint align="start">All requests must be submitted one week in advance.</mat-hint>
         </mat-form-field>
         <mat-form-field style='cursor: pointer;'>
-          <input style='cursor: pointer;' [(ngModel)]="returnDate" [min]="getMinDateReturn()" (click)="openCalendar2($event)" matInput
-            [matDatepicker]="calendar2" placeholder="Return date" readonly>
+          <input style='cursor: pointer;' [(ngModel)]="returnDate" [min]="getMinDateReturn()"
+            (click)="openCalendar2($event)" matInput [matDatepicker]="calendar2" placeholder="Return date" readonly>
           <mat-datepicker-toggle matSuffix [for]="calendar2"></mat-datepicker-toggle>
           <mat-datepicker tabindex="-1" #calendar2></mat-datepicker>
         </mat-form-field>
@@ -77,9 +113,7 @@
           <input matInput placeholder="Comments" [(ngModel)]="ptoComments" />
         </mat-form-field>
         <br><br>
-        <button style='position: absolute; bottom: 20px; right: 50px;' mat-button (click)='submitPtoRequest();'>Submit Request</button>
+        <button style='position: absolute; bottom: 20px; right: 50px;' mat-button (click)='submitPtoRequest();'>Submit
+          Request</button>
       </div>
-    </div>
-  </mat-card>
-  <button class="add"  (click)="authService.logout();" mat-button>Logout</button>
-</div>
+</ng-template>

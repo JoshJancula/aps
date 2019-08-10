@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
+import { Franchise } from '../models/franchise.model';
+import { Client } from '../models/client.model';
+import { Appointment } from '../models/appointment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +19,23 @@ export class SubscriptionsService {
     });
   }
 
-  private userStore = [];
+  private userStore: User[] = [];
   private userSubject = new BehaviorSubject(this.userStore);
-  users = this.userSubject.asObservable();
-  private franchiseStore = [];
+  public users: Observable<User[]> = this.userSubject.asObservable();
+  private franchiseStore: Franchise[] = [];
   private franchiseSubject = new BehaviorSubject(this.franchiseStore);
-  franchises = this.franchiseSubject.asObservable();
-  private clientStore = [];
+  public franchises: Observable<Franchise[]> = this.franchiseSubject.asObservable();
+  private clientStore: Client[] = [];
   private clientSubject = new BehaviorSubject(this.clientStore);
-  clients = this.clientSubject.asObservable();
-  private appointmentStore = [];
+  public clients: Observable<Client[]> = this.clientSubject.asObservable();
+  private appointmentStore: Appointment[] = [];
   private appointmentSubject = new BehaviorSubject(this.appointmentStore);
-  appointments = this.appointmentSubject.asObservable();
+  public appointments: Observable<Appointment[]> = this.appointmentSubject.asObservable();
   private invoiceStore = [];
   private invoiceSubject = new BehaviorSubject(this.invoiceStore);
-  invoices = this.invoiceSubject.asObservable();
+  public invoices = this.invoiceSubject.asObservable();
 
-  clearData() {
+  private clearData() {
     this.invoiceStore = [];
     this.userStore = [];
     this.franchiseStore = [];
@@ -40,7 +44,7 @@ export class SubscriptionsService {
     this.router.navigate([`/`], {});
   }
 
-  getFranchises() {
+  async getFranchises() {
     let url;
     let localUrl;
     if (this.authService.currentUser.Role === 'Super') {
@@ -59,19 +63,19 @@ export class SubscriptionsService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(localUrl, httpOptions);
+        return this.http.get(localUrl, httpOptions).toPromise();
       } else {
-        return this.http.get(url, httpOptions);
+        return this.http.get(url, httpOptions).toPromise();
       }
     } else {
       console.log('no token found');
     }
   }
 
-  processFranchises() {
-    this.getFranchises().subscribe((events) => {
+  public processFranchises() {
+    this.getFranchises().then((events) => {
       if (events.type === HttpEventType.Response) {
-        this.franchiseStore = JSON.parse(JSON.stringify(events.body));
+        this.franchiseStore = (<any>events).body.map(f => new Franchise(f));
         this.franchiseSubject.next(this.franchiseStore);
       }
     }, error => {
@@ -79,7 +83,7 @@ export class SubscriptionsService {
     });
   }
 
-  getUsers() {
+  async getUsers() {
     const url = `https://aps-josh.herokuapp.com/api/users/${this.authService.currentUser.FranchiseId}`;
     const localUrl = `http://localhost:8080/api/users/${this.authService.currentUser.FranchiseId}`;
     if (localStorage.getItem('jwtToken')) {
@@ -91,17 +95,17 @@ export class SubscriptionsService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(localUrl, httpOptions);
+        return this.http.get(localUrl, httpOptions).toPromise();
       } else {
-        return this.http.get(url, httpOptions);
+        return this.http.get(url, httpOptions).toPromise();
       }
     }
   }
 
-  processUsers() {
-    this.getUsers().subscribe((events) => {
+  public processUsers() {
+    this.getUsers().then((events) => {
       if (events.type === HttpEventType.Response) {
-        this.userStore = JSON.parse(JSON.stringify(events.body));
+        this.userStore = (<any>events).body.map(u => new User(u));
         this.userSubject.next(this.userStore);
       }
     }, error => {
@@ -109,7 +113,7 @@ export class SubscriptionsService {
     });
   }
 
-  getClients() {
+  async getClients() {
     const url = `https://aps-josh.herokuapp.com/api/clients/${this.authService.currentUser.FranchiseId}`;
     const localUrl = `http://localhost:8080/api/clients/${this.authService.currentUser.FranchiseId}`;
     if (localStorage.getItem('jwtToken')) {
@@ -121,17 +125,17 @@ export class SubscriptionsService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(localUrl, httpOptions);
+        return this.http.get(localUrl, httpOptions).toPromise();
       } else {
-        return this.http.get(url, httpOptions);
+        return this.http.get(url, httpOptions).toPromise();
       }
     }
   }
 
-  processClients() {
-    this.getClients().subscribe((events) => {
-      if (events.type === HttpEventType.Response) {
-        this.clientStore = JSON.parse(JSON.stringify(events.body));
+  public processClients() {
+    this.getClients().then((events) => {
+      if ((<any>events).type === HttpEventType.Response) {
+        this.clientStore = (<any>events).body.map(c => new Client(c));
         this.clientSubject.next(this.clientStore);
       }
     }, error => {
@@ -139,7 +143,7 @@ export class SubscriptionsService {
     });
   }
 
-  getAppointments() {
+  async getAppointments() {
     let url;
     let localUrl;
     url = `https://aps-josh.herokuapp.com/api/appointments/sub/${this.authService.currentUser.FranchiseId}`;
@@ -153,19 +157,19 @@ export class SubscriptionsService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(localUrl, httpOptions);
+        return this.http.get(localUrl, httpOptions).toPromise();
       } else {
-        return this.http.get(url, httpOptions);
+        return this.http.get(url, httpOptions).toPromise();
       }
     } else {
       console.log('no token found');
     }
   }
 
-  processAppointments() {
-    this.getAppointments().subscribe((events) => {
-      if (events.type === HttpEventType.Response) {
-        this.appointmentStore = JSON.parse(JSON.stringify(events.body));
+  public processAppointments() {
+    this.getAppointments().then((events) => {
+      if ((<any>events).type === HttpEventType.Response) {
+        this.appointmentStore = (<any>events).body.map(a => new Appointment(a));
         this.appointmentSubject.next(this.appointmentStore);
       }
     }, error => {
@@ -173,7 +177,7 @@ export class SubscriptionsService {
     });
   }
 
-  getInvoices(filter) {
+  async getInvoices(filter) {
     const url = `https://aps-josh.herokuapp.com/api/invoices/sub/`;
     const localUrl = `http://localhost:8080/api/invoices/sub/`;
     if (localStorage.getItem('jwtToken')) {
@@ -185,17 +189,17 @@ export class SubscriptionsService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.post(localUrl, filter, httpOptions);
+        return this.http.post(localUrl, filter, httpOptions).toPromise();
       } else {
-        return this.http.post(url, filter, httpOptions);
+        return this.http.post(url, filter, httpOptions).toPromise();
       }
     } else {
       console.log('no token found');
     }
   }
 
-  processInvoices(filter) {
-    this.getInvoices(filter).subscribe((events) => {
+  public processInvoices(filter) {
+    this.getInvoices(filter).then((events) => {
       this.invoiceStore = JSON.parse(JSON.stringify(events));
       this.invoiceSubject.next(this.invoiceStore);
     }, error => {

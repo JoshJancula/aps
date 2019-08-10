@@ -8,14 +8,14 @@
 .topRow {
     height: 64px;
     background: blue;
-    width: 105%;
+    /* width: 105%; */
     position: fixed;
     top: 0px;
     right: 0px;
 }
 
 .cardRow {
-    width: 110%;
+    width: 100%;
     margin-top: 23%;
     overflow-y: auto;
     overflow-x: hidden !important;
@@ -33,7 +33,7 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
-    width: 103%;
+    /* width: 103%; */
     /* margin-left: 1%; */
     background:white
 }
@@ -70,7 +70,7 @@
     .topRow {
         height: 56px;
         background: blue;
-        width: 105%;
+        /* width: 100%; */
         position: fixed;
         top: 0px;
         right: 0px;

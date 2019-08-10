@@ -1,4 +1,4 @@
-<div class='row container drawerRow' style='width: 110%;'>
+<div class='drawerRow'>
   <div class='row topRow container'>
     <span class='drawerHeader'(click)='close.emit();'><mat-icon style='color:white; height: 24px; width:24px; position: relative;top: 6px;left: -4px;'>keyboard_arrow_left</mat-icon>{{ otherUser }}</span>
   </div>
@@ -9,7 +9,7 @@
     </div>
     <div class='row container' id='scrollHere'></div>
   </div>
-  <div class='row container messageInput'>
+  <div class='messageInput'>
     <mat-form-field class="example-full-width">
       <textarea [(ngModel)]="newMessage" matInput></textarea>
     </mat-form-field>

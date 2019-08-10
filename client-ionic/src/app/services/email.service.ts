@@ -12,8 +12,7 @@ export class EmailService {
   private url = `https://aps-josh.herokuapp.com/api/email`;
   private localUrl = `http://localhost:8080/api/email`;
 
-  sendInvoice(invoice: any) {
-    console.log('invoice inside sendInvoice: ', invoice);
+  async sendInvoice(invoice: any) {
     const msg = {
       to: 'joshjancula@gmail.com',
       from: this.authService._franchiseInfo.Email,
@@ -28,9 +27,9 @@ export class EmailService {
         })
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.post(this.localUrl, msg, httpOptions);
+        return this.http.post(this.localUrl, msg, httpOptions).toPromise();
       } else {
-        return this.http.post(this.url, msg, httpOptions);
+        return this.http.post(this.url, msg, httpOptions).toPromise();
       }
     } else {
       console.log('no token found');

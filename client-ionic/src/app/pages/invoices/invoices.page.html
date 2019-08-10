@@ -1,4 +1,4 @@
-<app-toolbar #nav style="position: sticky; top: 0; left: 0;"></app-toolbar>
+<app-toolbar #nav (actionClick)="setView();" style="z-index: 999; position: sticky; top: 0; left: 0;" [search]="searchInvoices" [searchText]=" 'Search Invoices' " [addText]=" 'Add New Invoice' " [addIcon]=" 'add' " [searchIcon]=" 'search' "></app-toolbar>
 <div class='row  mainRow'>
   <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
     <app-side-nav></app-side-nav>

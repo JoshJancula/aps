@@ -1,0 +1,9 @@
+.calendar {
+    display: none;
+}
+
+.calendar.show {
+    display: block;
+    overflow-x: hidden !important;
+    overflow-y: auto;
+}

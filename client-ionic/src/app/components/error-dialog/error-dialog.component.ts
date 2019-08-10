@@ -9,13 +9,14 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource } from '@angular/mate
 })
 export class ErrorDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<ErrorDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(
+    public dialogRef: MatDialogRef<ErrorDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
-  ngOnInit() {
-  }
+  ngOnInit(): void { }
 
-  close() {
+  public close(): void {
     this.dialogRef.close();
   }
 

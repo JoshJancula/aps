@@ -1,4 +1,4 @@
-<app-toolbar #nav style="position: sticky; top: 0; left: 0;"></app-toolbar>
+<app-toolbar #nav (messageClick)="showMessages = !showMessages" (actionClick)="layout ? layout.setView() : null" style="z-index: 999; position: sticky; top: 0; left: 0;" [search]="layout ? layout.searchUsers : null" [searchText]=" 'All Staff' " [addText]=" 'Add New Staff Member' " [addIcon]=" 'add' " [searchIcon]=" 'search' "></app-toolbar>
 <div class='row  mainRow'>
   <div class='col-xl-2 col-lg-2  hidden-md hidden-sm hidden-xs  desktopView'>
     <app-side-nav></app-side-nav>
@@ -13,3 +13,4 @@
   <mat-icon style='color:white;'>home</mat-icon>
 </button>
 </div>
+<!-- <app-messaging (close)='showMessages = false;' #messagingComponent class='messageDrawer' [ngClass]="{'open': showMessages === true}"></app-messaging> -->

@@ -13,36 +13,41 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./home-layout.component.scss'],
 })
 export class HomeLayoutComponent implements OnInit {
+
   @ViewChild('timeSheet', null) timeSheet: TimesheetComponent;
   @ViewChild('calendar', null) calendar: any;
   @ViewChild('calendar2', null) calendar2: any;
-
-  screen = 'screen title';
-  targetFile: any;
-  newPassword = '';
-  oldPassword = '';
-  confirmNewPassword = '';
-  backgroundImage = '';
-  ptoTime = '';
-  ptoComments = '';
-  date = moment(new Date()).add(7, 'days');
-  minDate = (<any>this.date)._d;
-  leaveDate = this.minDate;
-  returnDate = this.minDate;
-  progress: { percentage: number } = { percentage: 0 };
-  actions = ['Timesheet', 'Request time off', 'Change password', 'Set background'];
-  images = [
+  public screen: string = 'screen title';
+  public targetFile: any = null;
+  public newPassword: string = '';
+  public oldPassword: string = '';
+  public confirmNewPassword: string = '';
+  public backgroundImage: string = '';
+  public ptoTime: string = '';
+  public ptoComments: string = '';
+  public date = moment(new Date().toISOString()).add(7, 'days');
+  public minDate = (<any>this.date)._d;
+  public leaveDate: any = this.minDate;
+  public returnDate: any = this.minDate;
+  public progress: { percentage: number } = { percentage: 0 };
+  public actions: string[] = ['Timesheet', 'Request time off', 'Change password', 'Set background'];
+  public images: any[] = [
     { id: 1, name: 'SharkNado', src: 'assets/logo.jpeg' },
     { id: 2, name: 'Classic', src: 'assets/logo5.png' },
     { id: 3, name: 'Stripes 1', src: 'assets/stripes1.png' },
     { id: 4, name: 'Stripes 2', src: 'assets/stripes2.png' },
     { id: 5, name: 'Stripes 3', src: 'assets/stripes5.png' },
   ];
-  userAction = this.actions[1];
+  public userAction: any = this.actions[1];
 
-  constructor(private subService: SubscriptionsService, private utilService: UtilService, private userService: UserService, public uploadService: UploadFileService, public authService: AuthService) { }
+  constructor(
+    private subService: SubscriptionsService,
+    private utilService: UtilService,
+    private userService: UserService,
+    public uploadService: UploadFileService,
+    public authService: AuthService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (localStorage.getItem('background')) {
       this.backgroundImage = localStorage.getItem('background');
     } else {
@@ -50,25 +55,25 @@ export class HomeLayoutComponent implements OnInit {
     }
   }
 
-  uploadImage($event) {
-    console.log('upload image was called');
+  public uploadImage($event: any): void {
     if ($event.target.files.length > 0) {
-      console.log('event.target.files: ', $event.target.files.length);
       const reader = new FileReader();
-      reader.onload = (event) => { console.log('reader.onload was called'); this.submitImage(event); };
+      reader.onload = (event) => { this.submitImage(event); };
       reader.onerror = (error) => { this.utilService.alertError(`error uploading image ${error}`); };
       reader.readAsBinaryString($event.target.files[0]);
       this.targetFile = $event.target.files[0];
     }
   }
 
-  submitImage(event) {
-    console.log('reader onload event passed is.... ', event);
-    console.log('should be submitting file');
+  public logout(): void {
+    this.authService.logout();
+  }
+
+  private submitImage(event: any): void {
     this.uploadService.pushFileToStorage(this.targetFile, this.progress, 'avatar');
   }
 
-  submitPasswordChange() {
+  public submitPasswordChange(): void {
     if (this.newPassword === this.confirmNewPassword) {
       this.authService.loginUser(this.authService.currentUser.Username, this.oldPassword).then(res => {
         if ((<any>res).status === 200) {
@@ -99,7 +104,7 @@ export class HomeLayoutComponent implements OnInit {
     this.returnDate = this.minDate;
   }
 
-  saveBackground() {
+  public saveBackground(): void {
     if (localStorage.getItem('background')) {
       localStorage.removeItem('background');
     }
@@ -107,37 +112,36 @@ export class HomeLayoutComponent implements OnInit {
     document.body.style.backgroundImage = `url(${this.backgroundImage})`;
   }
 
-  openCalendar(event) {
+  public openCalendar(event: any): any {
     event.preventDefault();
     this.calendar.open();
   }
 
-  openCalendar2(event) {
+  public openCalendar2(event: any): void {
     event.preventDefault();
     this.calendar2.open();
   }
 
-  getMinDate() {
-    const date = moment(new Date()).add(7, 'days');
+  public getMinDate(): any {
+    const date = moment(new Date().toISOString()).add(7, 'days');
     const minDate = (<any>date)._d;
     return minDate;
   }
 
-  getMinDateReturn() {
+  public getMinDateReturn(): any {
     return this.leaveDate;
   }
 
-  updateReturn(event) {
-    console.log('should be updating return date');
+  public updateReturn(event: any): void {
     this.returnDate = this.leaveDate;
   }
 
-  submitPtoRequest() {
+  public submitPtoRequest(): void {
     // not sure if we need to connect to timesheet or just email request, will come back to this
     this.clearForms();
   }
 
-  selectImage(image) {
+  public selectImage(image: any): void {
     const button: HTMLButtonElement = document.querySelector(`#radioImage${image.id}`);
     button.click();
     this.backgroundImage = image.src;

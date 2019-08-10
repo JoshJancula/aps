@@ -1,4 +1,4 @@
-<div class='row mainRow' id='mainContent'>
+<div class='row mainTimeRow' id='mainContent'>
   <div class='row'>
     <div class='row header'>{{ employeeName }}</div>
     <div class='row header'>Starting: {{ data.Range.Start }}</div>
@@ -12,7 +12,7 @@
         <th>Day total</th>
       </tr>
     </table>
-    <div class='row mainRow'>
+    <div class='row mainTimeRow'>
         <div class='row' style='width: 100%; border-bottom: solid black 1px;' *ngFor='let date of dates'>
             <div class='col-md-3'>{{ date.model }}</div>
             <div class='col-md-6' style='text-align: center;'>
@@ -29,7 +29,7 @@
     <span> Week total: {{ weekTotal }}</span>
   </div>
 </div>
-<div class='row mainRow'>
+<div class='row mainTimeRow'>
   <button mat-button (click)="getPDF('download');">Download copy</button>
   <button mat-button (click)="getPDF('print');">Print copy</button>
 </div>

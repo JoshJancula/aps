@@ -1,6 +1,14 @@
-<div class='col-lg-10 col-md-12 col-sm-12'>
-  <div class='row form' *ngIf="addAppointment === true">
-    <mat-card class='formCard'>
+<div class="row">
+    <ng-container *ngIf="addAppointment === false">
+      <ng-container *ngTemplateOutlet="searchLayout"></ng-container>
+    </ng-container>
+    <ng-container *ngIf="addAppointment === true">
+      <ng-container *ngTemplateOutlet="formLayout"></ng-container>
+    </ng-container>
+  </div>
+  
+  <ng-template #formLayout>
+    <mat-card class='mainCard'>
       <div class='appointment-content'>
         <div class="card-heading" *ngIf='editing === false'>Add Appointment</div>
         <div class="card-heading" *ngIf='editing === true'>Edit Appointment</div>
@@ -65,10 +73,10 @@
         <button *ngIf='editing === true' (click)="deleteAppointment(Appointment.id);" mat-button>Delete</button>
       </div>
     </mat-card>
-  </div>
+  </ng-template>
 
-  <div class='row search' *ngIf="searchAppointments === true">
-    <mat-card class='appointmentCard' *ngFor="let appointment of appointments">
+  <ng-template #searchLayout>
+    <mat-card class='mainCard' *ngFor="let appointment of appointments">
       <div class='row'>
         <p>
           Client: {{ appointment.Client }}<br>
@@ -84,21 +92,9 @@
       </div>
     </mat-card>
 
-    <mat-card class='appointmentCard' *ngIf='appointments.length < 1'>
+    <mat-card class='mainCard' *ngIf='appointments.length < 1'>
       No appointments scheduled for {{ formatDate(searchDate) }}.
     </mat-card>
-  </div>
+  </ng-template>
 
-  <br>
-  <button class='add' *ngIf='searchAppointments === true' mat-button
-    (click)="searchAppointments = false; addAppointment = true;">
-    <mat-icon style='color:white'>create</mat-icon>
-    Schedule
-  </button>
-  <button class='searchButton' *ngIf='addAppointment === true'
-    (click)="addAppointment = false; searchAppointments = true;" mat-button>
-    <mat-icon>today</mat-icon>
-    View appointments
-  </button>
-
-</div>
+  

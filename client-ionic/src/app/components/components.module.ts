@@ -23,10 +23,17 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { SignaturePadModule } from 'angular2-signaturepad';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { InvoicePreviewComponent } from './invoice-preview/invoice-preview.component';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @NgModule({
-  declarations: [TimesheetComponent, ToolbarComponent, SideNavComponent, SignatureDialogComponent, InputEmailDialogComponent, UserSelectorComponent, MessageChatComponent, BottomPopupComponent, ErrorDialogComponent, TimesheetDialogComponent, TimeChangeDialogComponent, MessagingComponent],
-  entryComponents: [SignatureDialogComponent, InputEmailDialogComponent, BottomPopupComponent, ErrorDialogComponent, TimesheetDialogComponent, TimeChangeDialogComponent, MessagingComponent],
+  declarations: [TimesheetComponent, InvoicePreviewComponent, ToolbarComponent, SideNavComponent, SignatureDialogComponent, InputEmailDialogComponent, UserSelectorComponent, MessageChatComponent, BottomPopupComponent, ErrorDialogComponent, TimesheetDialogComponent, TimeChangeDialogComponent, MessagingComponent],
+  entryComponents: [SignatureDialogComponent, InvoicePreviewComponent, InputEmailDialogComponent, BottomPopupComponent, ErrorDialogComponent, TimesheetDialogComponent, TimeChangeDialogComponent, MessagingComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -92,7 +99,15 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     NgxMaterialTimepickerModule
   ],
   exports: [
-    SignatureDialogComponent, ToolbarComponent, SideNavComponent,  TimesheetComponent, InputEmailDialogComponent, UserSelectorComponent, MessageChatComponent, BottomPopupComponent, ErrorDialogComponent, TimesheetDialogComponent, TimeChangeDialogComponent, MessagingComponent
-  ]
+    SignatureDialogComponent, InvoicePreviewComponent, ToolbarComponent, SideNavComponent,  TimesheetComponent, InputEmailDialogComponent, UserSelectorComponent, MessageChatComponent, BottomPopupComponent, ErrorDialogComponent, TimesheetDialogComponent, TimeChangeDialogComponent, MessagingComponent
+  ],
+  providers: [
+    StatusBar,
+    LaunchNavigator,
+    SplashScreen,
+    BackgroundMode,
+    BarcodeScanner,
+    PhonegapLocalNotification
+  ],
 })
 export class ComponentsModule {}

@@ -16,7 +16,7 @@
     transform: translateX(0px);
 } 
 
-.mainRow {
+.outerRow {
     overflow-x: hidden !important;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .drawerHeader {
-    position: absolute;
+    /* position: absolute; */
     top: 20px;
     font-size: 18px;
     color: white;
@@ -54,14 +54,14 @@
 .topRow {
     height: 64px;
     background: blue;
-    width: 105%;
+    /* width: 105%; */
     position: fixed;
     top: 0px;
-    right: 0px;
+    /* right: 0px; */
 }
 
 .cardRow {
-    width: 111%;
+    /* width: 111%; */
     margin-top: 19%;
 }
 
@@ -75,10 +75,10 @@
     .topRow {
         height: 56px;
         background: blue;
-        width: 105%;
+        /* width: 105%; */
         position: fixed;
         top: 0px;
-        right: 0px;
+        /* right: 0px; */
     }
 
     .newMessage {

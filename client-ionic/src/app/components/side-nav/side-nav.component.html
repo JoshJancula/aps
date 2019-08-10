@@ -1,9 +1,6 @@
-<div class='options'
-mat-button>Staff</div>
-<div class='options'
->Franchises</div>
-<div class='options'>Clients</div>
-<div class='options'>Appointments
-</div>
-<div class='options'>Invoices</div>
-<div class='options'>My account</div>
+<div class='options' [ngClass]="{'selected': isActiveScreen('staff') === true }" (click)="routeUser('staff')" mat-button>Staff</div>
+<div class='options' [ngClass]="{'selected': isActiveScreen('franchises') === true }" (click)="routeUser('franchises')">Franchises</div>
+<div class='options' [ngClass]="{'selected': isActiveScreen('clients') === true }"  (click)="routeUser('clients')">Clients</div>
+<div class='options' [ngClass]="{'selected': isActiveScreen('appointments') === true }"  (click)="routeUser('appointments')">Appointments</div>
+<div class='options' [ngClass]="{'selected': isActiveScreen('invoices') === true }"  (click)="routeUser('invoices')">Invoices</div>
+<div class='options' [ngClass]="{'selected': isActiveScreen('home') === true }"  (click)="routeUser('home')">My account</div>

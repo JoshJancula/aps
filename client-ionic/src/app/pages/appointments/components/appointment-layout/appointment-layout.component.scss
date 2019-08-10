@@ -16,59 +16,8 @@
     display: inline-block;
 }
 
-.formCard {
-    background: #D7D6D6;
-    opacity: .9;
-    border-radius: 10px !important;
-    // width: 90%;
-    margin-left: 2%;
-    margin-bottom: 1%;
-}
-
-.appointmentCard {
-    background: #D7D6D6;
-    opacity: .9;
-    border-radius: 10px !important;
-    // width: 90%;
-    margin-left: 2%;
-    margin-bottom: 1%;
-    padding-left: 5%;
-}
-
-// .mat-card:first-child {
-//     margin-top: 1%;
-// }
-
-// .form, .search {
-//     width: 87vw;
-//     overflow-x: hidden;
-// }
-
-@media (max-width: 1200px) { 
-    .appointmentCard, .formCard {
-        background: #D7D6D6;
-        opacity: .9;
-        border-radius: 10px !important;
-        // width: 92%;
-        // margin-left: 2%;
-    }
-    }
-
-    @media (min-width: 769px) and (max-width: 992px) {
-        // .search, .form {
-        //       width: 105vw;
-        // }
-    }
-    
-
 @media (max-width: 768px) { 
-
-    // .appointmentCard, .formCard {
-    //     // width: 96%;
-    // }
-
     .form, .search {
-        // width: 100vw;
         overflow-x: hidden;
     }
 }

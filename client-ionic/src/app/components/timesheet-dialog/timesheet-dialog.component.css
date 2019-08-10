@@ -1,4 +1,4 @@
-.mainRow {
+.mainTimeRow {
     width: 98%;
     margin-left: 2%;
     /* margin-right: 2%; */
@@ -49,7 +49,7 @@ table {
        display: none
     }
 
-    .mainRow {
+    .mainTimeRow {
         margin-left: 3%;
     }
 
@@ -60,7 +60,7 @@ table {
 }
 
 @media (max-width: 540px) {
-    .mainRow {
+    .mainTimeRow {
         margin-left: 5%;
     }
 

@@ -14,18 +14,23 @@ import html2canvas from 'html2canvas';
 export class UtilService {
 
   // tslint:disable-next-line:variable-name
-  _printIframe: any;
+  public _printIframe: any;
 
-  constructor(public dialog: MatDialog, private router: Router, public snackBar: MatSnackBar, private authService: AuthService, private http: HttpClient) { }
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    public snackBar: MatSnackBar,
+    private authService: AuthService,
+    private http: HttpClient) { }
 
-  alertError(message) {
+  public alertError(message: string): void {
     const newDialog = this.dialog.open(ErrorDialogComponent, {
       data: message,
       panelClass: 'errorAlert'
     });
   }
 
-  openSnackBar(message: string) {
+  public openSnackBar(message: string): void {
     this.snackBar.open(message, null, {
       duration: 2000,
       verticalPosition: 'bottom',
@@ -33,7 +38,7 @@ export class UtilService {
     });
   }
 
-  getDiff(a, b, total) {
+  public getDiff(a: any, b: any, total: any): string {
     let diff;
     if (b !== null && b !== '' && b !== undefined) {
       const x = moment(a);
@@ -41,7 +46,7 @@ export class UtilService {
       diff = moment.duration(x.diff(y));
     } else {
       const x = moment(a);
-      const y = moment(new Date());
+      const y = moment(new Date().toISOString());
       diff = moment.duration(x.diff(y));
     }
     if (total) {
@@ -56,7 +61,7 @@ export class UtilService {
     }
   }
 
-  getTotalTime(activity) {
+  public getTotalTime(activity: any): string {
     let total = 0;
     activity.forEach(card => {
       // tslint:disable-next-line:radix
@@ -70,7 +75,7 @@ export class UtilService {
     }
   }
 
-  sortDates(data) {
+  public sortDates(data: any): any {
     const obj = {
       Monday: { data: [], model: 'Monday' },
       Tuesday: { data: [], model: 'Tuesday' },
@@ -94,14 +99,14 @@ export class UtilService {
     return obj;
   }
 
-  getDateRange(date) {
+  public getDateRange(date: string): any {
     const start = moment(date).startOf('isoWeek');
     const end = moment(date).endOf('isoWeek');
     const range = { Start: moment(start).format('dddd, MMMM Do YYYY'), End: moment(end).format('dddd, MMMM Do YYYY') };
     return range;
   }
 
-  generatePDF(action, div, message) {
+  public generatePDF(action: string, div: any, message: string): void {
     html2canvas(div).then(canvas => {
       const imgWidth = 210;
       const imgHeight = canvas.height * imgWidth / canvas.width;
@@ -119,14 +124,14 @@ export class UtilService {
     });
   }
 
-  print(blob) {
+ public print(blob: any): void {
     const fileUrl = URL.createObjectURL(blob);
     let iframe = this._printIframe;
     if (!this._printIframe) {
       iframe = this._printIframe = document.createElement('iframe');
       document.body.appendChild(iframe);
       iframe.style.display = 'none';
-      iframe.onload =  () => {
+      iframe.onload = () => {
         setTimeout(() => {
           iframe.focus();
           iframe.contentWindow.print();

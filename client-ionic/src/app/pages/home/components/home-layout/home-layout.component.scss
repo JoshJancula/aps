@@ -14,22 +14,7 @@
     display: inline-block;
 }
 
-.mat-card {
-    background: #D7D6D6;
-    opacity: .9;
-    border-radius: 10px !important;
-    // width: 90%;
-    // margin-left: 2%;
-    // margin-bottom: 1%;
-    margin: 8%;
-}
-
-.mat-card:first-child {
-    margin-top: 1%;
-}
-
 .form, .search {
-    // width: 87vw;
     overflow-x: hidden !important;
     overflow-y: auto !important;
 }
@@ -38,7 +23,6 @@
     height: 80px;
     width: 80px;
     border-radius: 90px;
-   /* margin-left: 21%; */
 }
 
 .userInitials {
@@ -118,25 +102,6 @@
     width: 100%;
 }
 
-@media (max-width: 1200px) { 
-
-    .mat-card {
-        background: #D7D6D6;
-        opacity: .9;
-        border-radius: 10px !important;
-        // width: 92%;
-        // margin-left: 2%;
-        // margin-bottom: 1%;
-    }
-    }
-
-@media (min-width: 769px) and (max-width: 992px) {
-
-    // .search, .form{
-    //         // width: 105vw;
-    // }
-}
-
 @media (max-width: 768px) { 
 
     .radio-group {
@@ -147,13 +112,7 @@
         right: 10px;
     }
 
-    // .mat-card {
-    // width: 96%;
-    // margin-left: 2%;
-    // }
-
     .form, .search {
-        // width: 100vw;
         overflow-x: hidden;
     }
 

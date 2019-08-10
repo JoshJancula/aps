@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { InvoiceSearchComponent } from './components/invoice-search/invoice-search.component';
 import { InvoiceFormComponent } from './components/invoice-form/invoice-form.component';
 
@@ -7,20 +7,22 @@ import { InvoiceFormComponent } from './components/invoice-form/invoice-form.com
   templateUrl: './invoices.page.html',
   styleUrls: ['./invoices.page.scss'],
 })
-export class InvoicesPage implements OnInit {
+export class InvoicesPage implements OnInit, OnDestroy {
 
   @ViewChild('invoiceSearch', null) invoiceSearch: InvoiceSearchComponent;
   @ViewChild('invoiceForm', null) invoiceForm: InvoiceFormComponent;
-  searchInvoices = true;
-  addInvoice = false;
+  public searchInvoices: boolean = true;
+  public addInvoice: boolean = false;
+  public showMessages: boolean = false;
 
   constructor() {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit(): void {}
 
-  setView() {
+  ngOnDestroy(): void {}
+
+  public setView(): void {
     if (this.searchInvoices === true) {
       this.searchInvoices = false;
       this.addInvoice = true;

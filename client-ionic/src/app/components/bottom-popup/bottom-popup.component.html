@@ -1,6 +1,6 @@
-<div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'" [ngClass]="{'selected': userMode === true}" (click)="openUsers();" mat-button>Staff</div>
-<div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner'" [ngClass]="{'selected': userMode === true}" (click)="openFranchises();">Franchises</div>
-<div class='options' (click)="openClients();" >Clients</div>
-<div class='options' (click)="openAppointments();">Appointments</div>
-<div class='options' (click)="openInvoices();" >Invoices</div>
-<div class='options' (click)="openSettings();" >My account</div>
+<div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner' || authService.currentUser.Role === 'Manager'" [ngClass]="{'selected': isActiveScreen('staff') === true }" (click)="routeUser('staff');" mat-button>Staff</div>
+<div class='options' *ngIf="authService.currentUser.Role === 'Super' || authService.currentUser.Role === 'Honcho' || authService.currentUser.Role === 'Owner'" (click)="routeUser('franchises');">Franchises</div>
+<div class='options' (click)="routeUser('clients');" >Clients</div>
+<div class='options' (click)="routeUser('appointments');">Appointments</div>
+<div class='options' (click)="routeUser('invoices');" >Invoices</div>
+<div class='options' (click)="routeUser('home');" >My account</div>

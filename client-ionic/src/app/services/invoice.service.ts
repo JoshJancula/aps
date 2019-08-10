@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Invoice } from '../models/invoice.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class InvoiceService {
   private url = `https://aps-josh.herokuapp.com/api/invoices`;
   private localUrl = `http://localhost:8080/api/invoices`;
 
-  createInvoice(newInvoice: string) {
+  async createInvoice(newInvoice: Invoice) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -19,16 +21,16 @@ export class InvoiceService {
         })
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.post(this.localUrl, newInvoice, httpOptions);
+        return this.http.post(this.localUrl, newInvoice, httpOptions).toPromise();
       } else {
-        return this.http.post(this.url, newInvoice, httpOptions);
+        return this.http.post(this.url, newInvoice, httpOptions).toPromise();
       }
     } else {
       console.log('no token found');
     }
   }
 
-  getInvoices() {
+  async getInvoice(id: number) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -38,35 +40,16 @@ export class InvoiceService {
         observe: 'events' as 'events'
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(this.localUrl, httpOptions);
+        return this.http.get(this.localUrl.replace('invoices', `invoices/${id}`), httpOptions).pipe(map(i => new Invoice(i))).toPromise();
       } else {
-        return this.http.get(this.url, httpOptions);
+        return this.http.get(this.url.replace('invoices', `invoices/${id}`), httpOptions).pipe(map(i => new Invoice(i))).toPromise();
       }
     } else {
       console.log('no token found');
     }
   }
 
-  getInvoice(id) {
-    if (localStorage.getItem('jwtToken')) {
-      const httpOptions = {
-        headers: new HttpHeaders({
-          Authorization: localStorage.getItem('jwtToken'),
-        }),
-        reportProgress: true,
-        observe: 'events' as 'events'
-      };
-      if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.get(this.localUrl.replace('invoices', `invoices/${id}`), httpOptions);
-      } else {
-        return this.http.get(this.url.replace('invoices', `invoices/${id}`), httpOptions);
-      }
-    } else {
-      console.log('no token found');
-    }
-  }
-
-  deleteInvoice(id) {
+  async deleteInvoice(id: number) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -74,16 +57,16 @@ export class InvoiceService {
         })
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.delete(this.localUrl.replace('invoices', `invoices/${id}`), httpOptions);
+        return this.http.delete(this.localUrl.replace('invoices', `invoices/${id}`), httpOptions).toPromise();
       } else {
-        return this.http.delete(this.url.replace('invoices', `invoices/${id}`), httpOptions);
+        return this.http.delete(this.url.replace('invoices', `invoices/${id}`), httpOptions).toPromise();
       }
     } else {
       console.log('no token found');
     }
   }
 
-  updateInvoice(id, updatedInvoice) {
+  async updateInvoice(id: number, updatedInvoice: Invoice) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -91,17 +74,16 @@ export class InvoiceService {
         })
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.put(this.localUrl.replace('invoices', `invoices/${id}`), updatedInvoice, httpOptions);
+        return this.http.put(this.localUrl.replace('invoices', `invoices/${id}`), updatedInvoice, httpOptions).toPromise();
       } else {
-        return this.http.put(this.url.replace('invoices', `invoices/${id}`), updatedInvoice, httpOptions);
+        return this.http.put(this.url.replace('invoices', `invoices/${id}`), updatedInvoice, httpOptions).toPromise();
       }
     } else {
       console.log('no token found');
     }
   }
 
-  addInvoiceSignature(data) {
-    console.log('data passed to addSignature', data);
+  async addInvoiceSignature(data: any) {
     if (localStorage.getItem('jwtToken')) {
       const httpOptions = {
         headers: new HttpHeaders({
@@ -109,9 +91,9 @@ export class InvoiceService {
         })
       };
       if (window.location.host.indexOf('localhost') > -1) {
-        return this.http.put(this.localUrl.replace('invoices', `invoices/signature/${data.id}`), data, httpOptions);
+        return this.http.put(this.localUrl.replace('invoices', `invoices/signature/${data.id}`), data, httpOptions).toPromise();
       } else {
-        return this.http.put(this.url.replace('invoices', `invoices/signature/${data.id}`), data, httpOptions);
+        return this.http.put(this.url.replace('invoices', `invoices/signature/${data.id}`), data, httpOptions).toPromise();
       }
     } else {
       console.log('no token found');
